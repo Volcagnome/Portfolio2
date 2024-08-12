@@ -92,6 +92,11 @@ public class playerControl : MonoBehaviour
             Camera.main.transform.forward, out hit, shootDist, ~ignoreMask))
         {
             Debug.Log(hit.collider.name);
+            IDamage dmg = hit.collider.GetComponent<IDamage>();
+
+            if (dmg != null)
+                    dmg.takeDamage(shootDamage);
+
         }
 
         yield return new WaitForSeconds(shootRate);
