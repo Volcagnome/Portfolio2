@@ -1,25 +1,27 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-[CustomEditor(typeof(enemyAI))]
-public class FieldOfViewDebug : Editor
-{
-    private void OnSceneGUI()
-    {
-        enemyAI fov = (enemyAI)target;
-        Handles.color = Color.white;
-        Handles.DrawWireArc(fov.transform.position, Vector3.up, Vector3.forward, 360, fov.viewRadius);
 
-        Vector3 viewAngle01 = DirectionFromAngle(fov.transform.eulerAngles.y, -fov.FOV_Angle / 2);
-        Vector3 viewAngle02 = DirectionFromAngle(fov.transform.eulerAngles.y, fov.FOV_Angle / 2);
+public class FieldOfViewDebug : MonoBehaviour
+{
+    private void OnDrawGizmosSelected()
+    {   
+        
+        Handles.color = Color.white;
+        Handles.DrawWireArc(gameObject.GetComponent<enemyAI>().transform.position, Vector3.up, Vector3.forward, 360, gameObject.GetComponent<SphereCollider>().radius);
+
+        Vector3 viewAngle01 = DirectionFromAngle(gameObject.GetComponent<enemyAI>().transform.eulerAngles.y, -gameObject.GetComponent<enemyAI>().FOV_Angle / 2);
+        Vector3 viewAngle02 = DirectionFromAngle(gameObject.GetComponent<enemyAI>().transform.eulerAngles.y, gameObject.GetComponent<enemyAI>().FOV_Angle / 2); 
 
         Handles.color = Color.yellow;
-        Handles.DrawLine(fov.transform.position, fov.transform.position + viewAngle01 * fov.viewRadius);
-        Handles.DrawLine(fov.transform.position, fov.transform.position + viewAngle02 * fov.viewRadius);
+        Handles.DrawLine(gameObject.GetComponent<enemyAI>().transform.position, gameObject.GetComponent<enemyAI>().transform.position + viewAngle01 * gameObject.GetComponent<SphereCollider>().radius);
+        Handles.DrawLine(gameObject.GetComponent<enemyAI>().transform.position, gameObject.GetComponent<enemyAI>().transform.position + viewAngle02 * gameObject.GetComponent<SphereCollider>().radius);
 
-        if (fov.playerInView)
+        if (gameObject.GetComponent<enemyAI>().playerInView)
         {
             Handles.color = Color.green;
-            Handles.DrawLine(fov.transform.position, GameManager.instance.player.transform.position);
+            Handles.DrawLine(gameObject.GetComponent<enemyAI>().transform.position, GameManager.instance.player.transform.position);
         }
 
     }
