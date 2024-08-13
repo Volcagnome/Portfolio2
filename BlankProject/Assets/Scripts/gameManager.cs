@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public playerControl playerScript;
 
+    public List<GameObject> enemyList;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -21,6 +23,16 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void AddToEnemyList(GameObject enemy)
+    {
+        enemyList.Add(enemy);
+    }
+
+    public void RemoveFromEnemyList(GameObject enemy)
+    {
+        enemyList.Remove(enemy);
     }
 
 

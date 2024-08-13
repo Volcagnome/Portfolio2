@@ -98,7 +98,7 @@ namespace DreamingEarthling
             }
 
             yield return new WaitForSeconds(1);
-            DestroyObject(popUp);
+            Object.Destroy(popUp);
         }
 
 
