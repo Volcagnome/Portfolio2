@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5893541824286395804}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52,7 +52,8 @@ MonoBehaviour:
   controller: {fileID: 2322421749383608607}
   ignoreMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
+  HP: 5
   speed: 4
   sprintMod: 2
   jumpMax: 1
@@ -106,8 +107,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.001
+  m_Height: 0.0001
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &5880013718850315327

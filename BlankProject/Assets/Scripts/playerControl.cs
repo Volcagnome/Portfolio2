@@ -7,6 +7,7 @@ public class playerControl : MonoBehaviour
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreMask;
 
+    [SerializeField] int HP;
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpMax;
@@ -21,13 +22,15 @@ public class playerControl : MonoBehaviour
     Vector3 playerVel;
 
     int jumpCount;
+    int hpOG;
 
+    bool isSprinting;
     bool isShooting;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        hpOG = HP;
     }
 
     // Update is called once per frame
@@ -95,8 +98,9 @@ public class playerControl : MonoBehaviour
             IDamage dmg = hit.collider.GetComponent<IDamage>();
 
             if (dmg != null)
-                    dmg.takeDamage(shootDamage);
-
+            {
+                dmg.takeDamage(shootDamage);
+            }
         }
 
         yield return new WaitForSeconds(shootRate);
