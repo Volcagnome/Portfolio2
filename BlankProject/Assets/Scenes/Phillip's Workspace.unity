@@ -578,9 +578,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5665456164785799685, guid: d193e03e3bc2dfc4c9559ce0015052ac, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 5665456164785799689, guid: d193e03e3bc2dfc4c9559ce0015052ac, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 5665456164785799693, guid: d193e03e3bc2dfc4c9559ce0015052ac, type: 3}
       propertyPath: m_Name
       value: Assault Droid
+      objectReference: {fileID: 0}
+    - target: {fileID: 5665456164785799695, guid: d193e03e3bc2dfc4c9559ce0015052ac, type: 3}
+      propertyPath: m_TagString
+      value: WeakSpot
       objectReference: {fileID: 0}
     - target: {fileID: 5665456164785970733, guid: d193e03e3bc2dfc4c9559ce0015052ac, type: 3}
       propertyPath: m_LocalPosition.x
@@ -588,7 +600,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5665456164785970733, guid: d193e03e3bc2dfc4c9559ce0015052ac, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.43425298
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 5665456164785970733, guid: d193e03e3bc2dfc4c9559ce0015052ac, type: 3}
       propertyPath: m_LocalPosition.z
@@ -678,6 +690,18 @@ PrefabInstance:
     - target: {fileID: 1873779335719706887, guid: aede6e7aed339c24fb121765245114e7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8557231161366733411, guid: aede6e7aed339c24fb121765245114e7, type: 3}
+      propertyPath: interactDist
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8557231161366733411, guid: aede6e7aed339c24fb121765245114e7, type: 3}
+      propertyPath: interactRate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8557231161366733411, guid: aede6e7aed339c24fb121765245114e7, type: 3}
+      propertyPath: dmgMultiplier
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1083,7 +1107,7 @@ Transform:
   m_GameObject: {fileID: 2033322577}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.861741, y: 0.4300003, z: -7.72}
+  m_LocalPosition: {x: -7.861741, y: 0.8842532, z: -7.72}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
