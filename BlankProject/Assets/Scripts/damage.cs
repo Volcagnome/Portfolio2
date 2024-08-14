@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class damage : MonoBehaviour
 {
-    [SerializeField] enum damageType {bullet}
+    [SerializeField] enum damageType {bullet, stationary}
     [SerializeField] damageType type;
     [SerializeField] Rigidbody rb;
 
@@ -37,9 +37,9 @@ public class damage : MonoBehaviour
         if (dmg != null)
         {
             dmg.takeDamage(damageAmount);
-      Destroy(gameObject);
+            Destroy(gameObject);
         }
 
-       Destroy(gameObject);
+       
     }
 }

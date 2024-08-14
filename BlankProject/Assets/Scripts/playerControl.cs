@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playerControl : MonoBehaviour
+public class playerControl : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreMask;
@@ -94,6 +94,7 @@ public class playerControl : MonoBehaviour
         }
     }
 
+
     IEnumerator shoot()
     {
         isShooting = true;
@@ -143,5 +144,16 @@ public class playerControl : MonoBehaviour
         }
 
         isInteracting = false;
+    }
+
+    public void takeDamage(int amount)
+    {
+        HP -= amount;
+
+        //Im dead
+        if (HP <= 0)
+        {
+            //GameManager.instance.youLose();
+        }
     }
 }
