@@ -3796,23 +3796,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4235368001237121391, guid: 21765e1389c1574498d9e4bfcb496aae, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.5000001
+      value: 0.49999967
       objectReference: {fileID: 0}
     - target: {fileID: 4235368001237121391, guid: 21765e1389c1574498d9e4bfcb496aae, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.49999997
+      value: 0.5000003
       objectReference: {fileID: 0}
     - target: {fileID: 4235368001237121391, guid: 21765e1389c1574498d9e4bfcb496aae, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.50000006
+      value: 0.5000003
       objectReference: {fileID: 0}
     - target: {fileID: 4235368001237121391, guid: 21765e1389c1574498d9e4bfcb496aae, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.49999997
+      value: -0.49999973
       objectReference: {fileID: 0}
     - target: {fileID: 4235368001237121391, guid: 21765e1389c1574498d9e4bfcb496aae, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 4235368001237121391, guid: 21765e1389c1574498d9e4bfcb496aae, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -3821,6 +3821,10 @@ PrefabInstance:
     - target: {fileID: 4235368001237121391, guid: 21765e1389c1574498d9e4bfcb496aae, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4328662194682811271, guid: 21765e1389c1574498d9e4bfcb496aae, type: 3}
+      propertyPath: vital
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7060,7 +7064,6 @@ MonoBehaviour:
   menuPause: {fileID: 1234679380}
   player: {fileID: 820253636}
   playerScript: {fileID: 820253641}
-  levers_List: []
   youWin: 0
   isPaused: 0
 --- !u!114 &1924043193
