@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playerControl : MonoBehaviour
+public class playerControl : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreMask;
@@ -19,6 +19,7 @@ public class playerControl : MonoBehaviour
     [SerializeField] int shootDist;
     [SerializeField] float interactDist;
     [SerializeField] float interactRate;
+    [SerializeField] int dmgMultiplier;
 
     Vector3 move;
     Vector3 playerVel;
@@ -94,6 +95,7 @@ public class playerControl : MonoBehaviour
         }
     }
 
+
     IEnumerator shoot()
     {
         isShooting = true;
@@ -108,7 +110,15 @@ public class playerControl : MonoBehaviour
 
             if (dmg != null)
             {
-                dmg.takeDamage(shootDamage);
+                if (hit.collider.CompareTag("WeakSpot"))
+                {
+                    dmg.takeDamage((shootDamage) * (dmgMultiplier));
+                }
+
+                else
+                {
+                    dmg.takeDamage(shootDamage);
+                }
             }
         }
 
@@ -136,5 +146,16 @@ public class playerControl : MonoBehaviour
 
         yield return new WaitForSeconds(interactRate);
         isInteracting = false;
+    }
+
+    public void takeDamage(int amount)
+    {
+        HP -= amount;
+
+        //Im dead
+        if (HP <= 0)
+        {
+            //GameManager.instance.youLose();
+        }
     }
 }
