@@ -6,6 +6,7 @@ public class togglingItem : MonoBehaviour, IInteract
 {
     [SerializeField] GameObject itemOnState;
     [SerializeField] GameObject itemOffState;
+    [SerializeField] bool vital;
 
     public bool itemState;
 
@@ -13,6 +14,8 @@ public class togglingItem : MonoBehaviour, IInteract
     void Start()
     {
         setState(itemState);
+
+        
     }
 
     // Update is called once per frame
