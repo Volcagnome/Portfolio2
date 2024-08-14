@@ -13,9 +13,12 @@ public class togglingItem : MonoBehaviour, IInteract
     // Start is called before the first frame update
     void Start()
     {
-        setState(itemState);
+        if (vital) 
+        { 
+            itemState = true;
+        }
 
-        
+        setState(itemState);
     }
 
     // Update is called once per frame
@@ -30,5 +33,11 @@ public class togglingItem : MonoBehaviour, IInteract
     {
         itemOnState.SetActive(state);
         itemOffState.SetActive(!state);
+
+        if (vital)
+        {
+            if (state) GameManager.instance.UpdateWinCondition(1);
+            else GameManager.instance.UpdateWinCondition(-1);
+        }
     }
 }

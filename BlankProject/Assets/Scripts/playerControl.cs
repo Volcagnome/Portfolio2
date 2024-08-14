@@ -18,7 +18,6 @@ public class playerControl : MonoBehaviour, IDamage
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
     [SerializeField] float interactDist;
-    [SerializeField] float interactRate;
     [SerializeField] int dmgMultiplier;
 
     Vector3 move;
@@ -75,9 +74,9 @@ public class playerControl : MonoBehaviour, IDamage
         if (Input.GetButton("Shoot") && !isShooting)
             StartCoroutine(shoot());
 
-        if (Input.GetButton("Interact") && !isInteracting)
+        if (Input.GetButtonDown("Interact"))
         {
-            StartCoroutine(interact());
+            interact();
         }
             
     }
@@ -126,10 +125,8 @@ public class playerControl : MonoBehaviour, IDamage
         isShooting = false;
     }
 
-    IEnumerator interact()
+    void interact()
     {
-        isInteracting = true;
-
         RaycastHit hit;
         // Physics.Raycast (Origin, Direction, hit info, max distance)
         if (Physics.Raycast(Camera.main.transform.position,
@@ -144,8 +141,6 @@ public class playerControl : MonoBehaviour, IDamage
             }
         }
 
-        yield return new WaitForSeconds(interactRate);
-        isInteracting = false;
     }
 
     public void takeDamage(int amount)
