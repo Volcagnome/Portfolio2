@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class togglingItem : MonoBehaviour
+public class togglingItem : MonoBehaviour, IInteract
 {
     [SerializeField] GameObject itemOnState;
     [SerializeField] GameObject itemOffState;
@@ -16,9 +16,9 @@ public class togglingItem : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void interact()
     {
-        if (Input.GetButtonDown("Shoot")) itemState = !itemState;
+        itemState = !itemState;
 
         setState(itemState);
     }

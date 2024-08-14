@@ -596,6 +596,7 @@ GameObject:
   - component: {fileID: 2486884139856815105}
   - component: {fileID: 1737538815404774900}
   - component: {fileID: 8710189060241603132}
+  - component: {fileID: 306624644392671197}
   m_Layer: 0
   m_Name: Lightbulb
   m_TagString: Untagged
@@ -693,3 +694,18 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &306624644392671197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7485767817249105939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f80bf6a1a64f892408e100047bfe5c2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggleRecipientOn: {fileID: 5531798631389358348}
+  toggleRecipientOff: {fileID: 4719853329863638121}
+  controller: {fileID: 0}

@@ -18,7 +18,7 @@ public class playerControl : MonoBehaviour
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
     [SerializeField] float interactDist;
-    [SerializeField] int interactRate;
+    [SerializeField] float interactRate;
 
     Vector3 move;
     Vector3 playerVel;
@@ -76,7 +76,7 @@ public class playerControl : MonoBehaviour
 
         if (Input.GetButton("Interact") && !isInteracting)
         {
-            grab();
+            StartCoroutine(interact());
         }
             
     }
@@ -101,7 +101,7 @@ public class playerControl : MonoBehaviour
         RaycastHit hit;
         // Physics.Raycast (Origin, Direction, hit info, max distance)
         if (Physics.Raycast(Camera.main.transform.position,
-            Camera.main.transform.forward, out hit, interactDist, ~ignoreMask))
+            Camera.main.transform.forward, out hit, shootDist, ~ignoreMask))
         {
             Debug.Log(hit.collider.name);
             IDamage dmg = hit.collider.GetComponent<IDamage>();
@@ -116,7 +116,7 @@ public class playerControl : MonoBehaviour
         isShooting = false;
     }
 
-    void grab()
+    IEnumerator interact()
     {
         isInteracting = true;
 
@@ -134,6 +134,7 @@ public class playerControl : MonoBehaviour
             }
         }
 
+        yield return new WaitForSeconds(interactRate);
         isInteracting = false;
     }
 }

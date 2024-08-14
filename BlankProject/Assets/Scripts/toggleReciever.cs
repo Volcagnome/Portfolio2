@@ -6,19 +6,19 @@ public class toggleReciever : MonoBehaviour, IToggle
 {
     [SerializeField] GameObject toggleRecipientOn;
     [SerializeField] GameObject toggleRecipientOff;
-    [SerializeField] togglingItem controller;
+    [SerializeField] GameObject controller;
     private bool currentState;
 
     // Start is called before the first frame update
     void Start()
     {
-        toggle(controller.itemState);
+        toggle(controller.GetComponent<togglingItem>().itemState);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (controller.itemState != currentState) toggle(controller.itemState);
+        if (controller.GetComponent<togglingItem>().itemState != currentState) toggle(controller.GetComponent<togglingItem>().itemState);
     }
 
     public void toggle(bool state)
