@@ -31,10 +31,15 @@ public class enviromentHazard : MonoBehaviour
             return;
         }
 
-        IDamage damage = other.GetComponent<IDamage>();
+        IDamage dmg = other.GetComponent<IDamage>();
 
-       
-        
+        if (dmg != null)
+        {
+            dmg.takeDamage(damageAmount);
+
+        }
+
+
     }
 
 

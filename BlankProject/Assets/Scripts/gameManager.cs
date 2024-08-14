@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
 
     public GameObject player;
     public playerControl playerScript;
+    public List<GameObject> levers_List;
+    private int activeLevers;
+    public bool youWin;
 
     // Start is called before the first frame update
     void Awake()
@@ -22,6 +25,22 @@ public class GameManager : MonoBehaviour
     {
         
     }
+
+    public void AddLeverToList(GameObject lever)
+    {
+        levers_List.Add(lever);
+        activeLevers++;
+    }
+
+    public void UpdateWinCondition(int leverPulled)
+    {
+        activeLevers = activeLevers - leverPulled;
+
+        if (activeLevers == 0)
+            youWin = true;
+    }
+
+
 
   
 
