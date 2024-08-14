@@ -21,7 +21,10 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnEnemies()
     {
-        while(true)
+
+        yield return new WaitForSeconds(0.5f);
+
+        while (true)
         {
             if (EnemyManager.instance.guardUnits.Count < EnemyManager.instance.guardUnitsMax)
             {

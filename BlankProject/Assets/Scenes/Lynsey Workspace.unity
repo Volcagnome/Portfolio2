@@ -1693,7 +1693,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemySpawnInterval: 10
-  guardUnitsMax: 1
+  guardUnitsMax: 4
   guardUnits: []
   guardPosts: []
 --- !u!1 &1866025166
@@ -2049,6 +2049,7 @@ MonoBehaviour:
   ignoreMask:
     serializedVersion: 2
     m_Bits: 8
+  HP: 0
   speed: 5
   sprintMod: 2
   jumpMax: 1
@@ -2057,6 +2058,8 @@ MonoBehaviour:
   shootDamage: 1
   shootRate: 0.25
   shootDist: 500
+  interactDist: 0
+  dmgMultiplier: 0
 --- !u!4 &1963918708
 Transform:
   m_ObjectHideFlags: 0

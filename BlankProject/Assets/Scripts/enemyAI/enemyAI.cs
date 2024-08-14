@@ -27,7 +27,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] float shootRate;
 
     //EnemyBehavior
-    [SerializeField] public enum behaviorType { guard, patrol};
+    [SerializeField] public enum behaviorType { none, guard, patrol};
     [SerializeField] behaviorType enemyBehavior;
     [SerializeField] float combatStoppingDistance;
     [SerializeField] float passiveStoppingDistance;

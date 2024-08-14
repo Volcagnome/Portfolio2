@@ -12,7 +12,6 @@ public class EnemyManager : MonoBehaviour
     public List<GameObject> guardUnits;
     public List<GameObject> guardPosts;
 
-    // Start is called before the first frame update
     void Awake()
     {
         instance = this;
@@ -27,12 +26,14 @@ public class EnemyManager : MonoBehaviour
 
     public void NewGuard(GameObject newGuard)
     {
+
         guardUnits.Add(newGuard);
         newGuard.GetComponent<enemyAI>().SetBehavior(enemyAI.behaviorType.guard);
 
-        for (int guardPostIndex = 0; guardPostIndex < guardPosts.Count; guardPostIndex++)
+        for (int i = 0; i < guardPosts.Count; i++)
         {
-            GameObject temp = guardPosts[guardPostIndex];
+            Debug.Log("test");
+            GameObject temp = guardPosts[i];
 
             if (!temp.GetComponent<GuardPost>().CheckIfOccupied())
             {
@@ -47,6 +48,8 @@ public class EnemyManager : MonoBehaviour
     public void AddGuardPostToList(GameObject newGuardPost)
     {
         guardPosts.Add(newGuardPost);
+
+        
     }
 
     public void RemoveFromGuardUnits(GameObject deadRobot)
