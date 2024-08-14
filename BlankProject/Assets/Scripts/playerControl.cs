@@ -17,6 +17,8 @@ public class playerControl : MonoBehaviour
     [SerializeField] int shootDamage;
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
+    [SerializeField] float interactDist;
+    [SerializeField] int interactRate;
 
     Vector3 move;
     Vector3 playerVel;
@@ -26,6 +28,7 @@ public class playerControl : MonoBehaviour
 
     bool isSprinting;
     bool isShooting;
+    bool isInteracting;
 
     // Start is called before the first frame update
     void Start()
@@ -70,6 +73,12 @@ public class playerControl : MonoBehaviour
 
         if (Input.GetButton("Shoot") && !isShooting)
             StartCoroutine(shoot());
+
+        if (Input.GetButton("Interact") && !isInteracting)
+        {
+            grab();
+        }
+            
     }
 
     void sprint()
@@ -92,7 +101,7 @@ public class playerControl : MonoBehaviour
         RaycastHit hit;
         // Physics.Raycast (Origin, Direction, hit info, max distance)
         if (Physics.Raycast(Camera.main.transform.position,
-            Camera.main.transform.forward, out hit, shootDist, ~ignoreMask))
+            Camera.main.transform.forward, out hit, interactDist, ~ignoreMask))
         {
             Debug.Log(hit.collider.name);
             IDamage dmg = hit.collider.GetComponent<IDamage>();
@@ -107,4 +116,24 @@ public class playerControl : MonoBehaviour
         isShooting = false;
     }
 
+    void grab()
+    {
+        isInteracting = true;
+
+        RaycastHit hit;
+        // Physics.Raycast (Origin, Direction, hit info, max distance)
+        if (Physics.Raycast(Camera.main.transform.position,
+            Camera.main.transform.forward, out hit, interactDist, ~ignoreMask))
+        {
+            Debug.Log(hit.collider.name);
+            IInteract interactWith = hit.collider.GetComponent<IInteract>();
+
+            if (interactWith != null)
+            {
+                interactWith.interact();
+            }
+        }
+
+        isInteracting = false;
+    }
 }
