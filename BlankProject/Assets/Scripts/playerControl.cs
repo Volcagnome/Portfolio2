@@ -34,6 +34,7 @@ public class playerControl : MonoBehaviour, IDamage
     void Start()
     {
         hpOG = HP;
+        adjustHPBar();
     }
 
     // Update is called once per frame
@@ -146,6 +147,8 @@ public class playerControl : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+        adjustHPBar();
+         if (HP > 0)StartCoroutine(flashRed());
 
         //Im dead
         if (HP <= 0)
@@ -153,5 +156,17 @@ public class playerControl : MonoBehaviour, IDamage
 
             //GameManager.instance.youLose();
         }
+    }
+
+    void adjustHPBar()
+    {
+        GameManager.instance.healthbar.fillAmount = (float)HP / hpOG;
+    }
+
+    IEnumerator flashRed()
+    {
+        GameManager.instance.redFlash.SetActive(true);
+        yield return new WaitForSeconds(.1F);
+        GameManager.instance.redFlash.SetActive(false);
     }
 }
