@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuLose;
 
     [SerializeField] TMP_Text leverCountText;
+    public Image healthbar;
+    public GameObject redFlash;
 
 
     public GameObject player;
@@ -83,7 +86,7 @@ public class GameManager : MonoBehaviour
     {
         statePause();
         menuActive = menuLose;
-        menuActive.SetActive(isPaused);
+        menuActive.SetActive(true);
     }
 
 
