@@ -112,7 +112,7 @@ public class playerControl : MonoBehaviour, IDamage
             {
                 if (hit.collider.CompareTag("WeakSpot"))
                 {
-                    dmg.takeDamage(shootDamage * dmgMultiplier);
+                    dmg.criticalHit(shootDamage * dmgMultiplier);
                 }
 
                 else
@@ -156,6 +156,11 @@ public class playerControl : MonoBehaviour, IDamage
 
             GameManager.instance.youLose();
         }
+    }
+
+    public void criticalHit(int amount)
+    {
+        
     }
 
     void adjustHPBar()

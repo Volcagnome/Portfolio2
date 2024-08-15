@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4843921499983563534}
   - component: {fileID: 5880013718850315327}
   - component: {fileID: 5893541824286395804}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1.2162, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8849804705843815382}
@@ -53,15 +53,15 @@ MonoBehaviour:
   ignoreMask:
     serializedVersion: 2
     m_Bits: 8
-  HP: 5
-  speed: 4
+  HP: 75
+  speed: 5
   sprintMod: 2
   jumpMax: 1
   jumpSpeed: 4
   gravity: 10
   shootDamage: 1
-  shootRate: 1
-  shootDist: 10
+  shootRate: 0.25
+  shootDist: 100
   interactDist: 1
   dmgMultiplier: 2
 --- !u!143 &2322421749383608607
@@ -110,7 +110,7 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.001
-  m_Height: 0.0001
+  m_Height: 0.001
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &5880013718850315327
@@ -252,7 +252,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 255
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

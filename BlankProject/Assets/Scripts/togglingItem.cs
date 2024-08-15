@@ -16,7 +16,6 @@ public class togglingItem : MonoBehaviour, IInteract
         if (vital) 
         { 
             itemState = true;
-            
         }
 
         setState(itemState);

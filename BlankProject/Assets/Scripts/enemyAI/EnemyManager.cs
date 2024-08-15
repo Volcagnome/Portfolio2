@@ -41,7 +41,7 @@ public class EnemyManager : MonoBehaviour
         else
             AssignGuardPost(newRobot);
 
-        newRobot.GetComponent<enemyAI>().SetEnemyMaterial();
+        newRobot.GetComponent<enemyAI>().SetEnemyStats();
     }
 
     public void AssignGuardPost(GameObject newRobot)
@@ -61,6 +61,7 @@ public class EnemyManager : MonoBehaviour
                 currentGuardPost.GetComponent<GuardPost>().SetIsOccupied(true);
                 break;
             }
+            newRobot.GetComponent<enemyAI>().SetEnemyStats();
         }
     }
 
@@ -85,6 +86,8 @@ public class EnemyManager : MonoBehaviour
                 break;
             }
         }
+
+        newRobot.GetComponent<enemyAI>().SetEnemyStats();
     }
 
     public void RemoveFromGuardRobotsCount()

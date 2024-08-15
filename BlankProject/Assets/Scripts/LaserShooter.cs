@@ -44,6 +44,11 @@ public class LaserShooter : MonoBehaviour, IDamage
         }
     }
 
+    public void criticalHit(int amount)
+    {
+
+    }
+
     IEnumerator shoot()
     {
         isShooting = true;

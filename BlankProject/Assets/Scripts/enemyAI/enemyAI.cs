@@ -22,6 +22,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
     [SerializeField] GameObject bullet;
+    [SerializeField] GameObject guardBullet;
     [SerializeField] Texture emissionAlerted;
     [SerializeField] Texture emissionIdle;
     [SerializeField] Material guard;
@@ -38,7 +39,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
     //EnemyBehavior
     [SerializeField] public enum behaviorType { none, guard, patrol};
-    [SerializeField] public enum enemyType { none, AssaultDroid, Turret };
+    [SerializeField] public enum enemyType { none, AssaultDroid, elite, Turret };
     [SerializeField] behaviorType enemyBehavior;
     [SerializeField] enemyType enemy_Type;
     [SerializeField] GameObject defaultPost;
@@ -69,7 +70,7 @@ public class enemyAI : MonoBehaviour, IDamage
     void Start()
     {
         colorOrig = gameObject.GetComponentInChildren<Renderer>().sharedMaterial.color;
-        if (enemyBehavior == behaviorType.none)
+        if (enemyBehavior == behaviorType.none && tag != "Elite")
             EnemyManager.instance.AssignRole(gameObject);
         else if (enemyBehavior == behaviorType.guard)
         {
@@ -153,12 +154,18 @@ public class enemyAI : MonoBehaviour, IDamage
 
             AlertEnemy();
             AlertAllies();
-            StartCoroutine(flashRed());
+            StartCoroutine(flashYellow());
 
         if (HP <= 0)
         {
             Death();
         }
+    }
+
+    public void criticalHit(int amount)
+    {
+        takeDamage(amount);
+        StartCoroutine(flashRed());
     }
 
     //Enemy model flashes red when hit
@@ -282,7 +289,7 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         //Calculates direction from enemy to player.
         Vector3 playerDirection = (GameManager.instance.player.transform.position - headPos.position);
-        Debug.DrawRay(headPos.position, playerDirection * gameObject.GetComponent<SphereCollider>().radius, Color.red);
+       
         if (playerInRange)
         {
             if (Vector3.Angle(transform.forward, playerDirection) < FOV_Angle / 2)
@@ -307,13 +314,16 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         onDuty = true;
 
-        if (enemyBehavior == behaviorType.guard)
+        if (enemy_Type == enemyType.elite)
+            agent.SetDestination(defaultPost.transform.position);
+        else if (enemyBehavior == behaviorType.guard)
             agent.SetDestination(defaultPost.transform.position);
 
-        else if (enemyBehavior == behaviorType.patrol)
+        else if(enemyBehavior == behaviorType.patrol)
         {
-           OnPatrol();
+            OnPatrol();
         }
+        
     }
 
     public void SetDefaultPost(GameObject post)
@@ -361,15 +371,30 @@ public class enemyAI : MonoBehaviour, IDamage
     }
 
 
-    public void SetEnemyMaterial()
+    public void SetEnemyStats()
     {
-        if(enemyBehavior == behaviorType.guard)
+        if (enemyBehavior == behaviorType.guard)
+        {
             gameObject.GetComponentInChildren<Renderer>().materials[0] = guard;
-        else
-            gameObject.GetComponentInChildren<Renderer>().materials[0] = patrol;
+            HP = 15;
+            combatSpeed = 3;
+            if (enemy_Type == enemyType.AssaultDroid)
+                gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = guard;
+            bullet = guardBullet;
+
+        }
+        else if (enemyBehavior == behaviorType.patrol)
+        {
+            if (enemy_Type == enemyType.AssaultDroid)
+                gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = patrol;
+            HP = 5;
+            combatSpeed = 4;
+        }
+        else if (enemy_Type == enemyType.elite)
+            HP = 50;
     }
-    
 }
+ 
 
 
 

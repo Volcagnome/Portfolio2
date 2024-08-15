@@ -25,4 +25,9 @@ public class breakableObject : MonoBehaviour, IDamage
 
         if (HP <= 0) Destroy(gameObject);
     }
+
+    public void criticalHit(int amount)
+    {
+
+    }
 }
