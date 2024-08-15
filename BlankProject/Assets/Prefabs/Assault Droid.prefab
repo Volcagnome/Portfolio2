@@ -599,25 +599,25 @@ MonoBehaviour:
   bullet: {fileID: 4005459997384909482, guid: f3df2a379677235429bf837d6aa0e3c7, type: 3}
   emissionAlerted: {fileID: 2800000, guid: b5036c56ec4ee89419b3dada015d7ce3, type: 3}
   emissionIdle: {fileID: 2800000, guid: dc17edc092d4d8347b5faa6cfb2e95e4, type: 3}
+  guard: {fileID: 2100000, guid: 3248e43d2e8ffa94cb9c86dd6742bc57, type: 2}
+  patrol: {fileID: 2100000, guid: dc56d848015841b4da9eeccbeb643c16, type: 2}
   HP: 6
   shootRate: 0.5
-  enemyBehavior: 0
-  enemy_Type: 1
+  combatSpeed: 4
   combatStoppingDistance: 8
   idleStoppingDistance: 0.3
   idleSpeed: 2.5
-  combatSpeed: 4
+  rotationSpeed: 1
+  enemyBehavior: 0
+  enemy_Type: 1
   defaultPost: {fileID: 0}
   currentDestination: {fileID: 0}
   FOV_Angle: 100
   targetMask:
     serializedVersion: 2
     m_Bits: 8
-  rotationSpeed: 1
-  viewDistance: 30
-  isAlerted: 0
   playerInView: 0
-  allyRadius: 15
+  allyRadius: 8
   allyLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -697,7 +697,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 12
+  m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &5665456164785970735 stripped
 Transform:

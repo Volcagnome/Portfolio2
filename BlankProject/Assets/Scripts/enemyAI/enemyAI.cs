@@ -24,38 +24,36 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] GameObject bullet;
     [SerializeField] Texture emissionAlerted;
     [SerializeField] Texture emissionIdle;
+    [SerializeField] Material guard;
+    [SerializeField] Material patrol;
    
-    //Basic stats
+    //Stats
     [SerializeField] int HP;
     [SerializeField] float shootRate;
-   
+    [SerializeField] float combatSpeed;
+    [SerializeField] float combatStoppingDistance;
+    [SerializeField] float idleStoppingDistance;
+    [SerializeField] float idleSpeed;
+    [SerializeField] public float rotationSpeed;
 
     //EnemyBehavior
     [SerializeField] public enum behaviorType { none, guard, patrol};
     [SerializeField] public enum enemyType { none, AssaultDroid, Turret };
     [SerializeField] behaviorType enemyBehavior;
     [SerializeField] enemyType enemy_Type;
-    [SerializeField] float combatStoppingDistance;
-    [SerializeField] float idleStoppingDistance;
-    [SerializeField] float idleSpeed;
-    [SerializeField] float combatSpeed;
     [SerializeField] GameObject defaultPost;
     [SerializeField] GameObject currentDestination;
-    private bool onPatrol;
 
-    
     //Player detection
     [SerializeField] public float FOV_Angle;
     [SerializeField] LayerMask targetMask;
     private Vector3 lastKnownPlayerLocation;
-   [SerializeField] public float rotationSpeed;
-    [SerializeField] float viewDistance;
-
-    //CurrentStatus
-    public bool isAlerted;
-    private bool isShooting;
     public bool playerInView;
     private bool playerInRange;
+
+    //CurrentStatus
+    private bool isAlerted;
+    private bool isShooting;
     private bool onDuty;
 
     //Ally Detection
@@ -77,11 +75,13 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             EnemyManager.instance.AddRobotToGuardCount();
             defaultPost.GetComponent<GuardPost>().SetIsOccupied(true);
+            gameObject.GetComponentInChildren<Renderer>().materials[0] = guard;
         }
         else if (enemyBehavior == behaviorType.patrol)
+        {
             EnemyManager.instance.AddRobotToPatrolCount();
-
-        CalmEnemy();
+            gameObject.GetComponentInChildren<Renderer>().materials[0] = patrol;
+        }
     }
 
     // Update is called once per frame
@@ -155,7 +155,6 @@ public class enemyAI : MonoBehaviour, IDamage
             AlertAllies();
             StartCoroutine(flashRed());
 
-
         if (HP <= 0)
         {
             Death();
@@ -166,6 +165,13 @@ public class enemyAI : MonoBehaviour, IDamage
     IEnumerator flashRed()
     {
         model.material.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        model.material.color = colorOrig;
+    }
+
+    IEnumerator flashYellow()
+    {
+        model.material.color = Color.yellow;
         yield return new WaitForSeconds(0.1f);
         model.material.color = colorOrig;
     }
@@ -221,12 +227,12 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         if (enemyBehavior == behaviorType.guard)
         {
-            //EnemyManager.instance.RemoveFromGuardRobotsCount();
+            EnemyManager.instance.RemoveFromGuardRobotsCount();
             defaultPost.GetComponent<GuardPost>().SetIsOccupied(false);
         } 
         else if (enemyBehavior == behaviorType.patrol)
         {
-            //EnemyManager.instance.RemoveFromPatrolRobotsCount();
+            EnemyManager.instance.RemoveFromPatrolRobotsCount();
             defaultPost.GetComponent<PatrolWaypoint>().RemoveRobotFromRoute();
         }
         Destroy(gameObject);
@@ -252,13 +258,14 @@ public class enemyAI : MonoBehaviour, IDamage
     //When player exits detection range notes their last known location and toggles playerInRange and isAlerted bools
     private void OnTriggerExit(Collider other)
     {
-        lastKnownPlayerLocation = GameManager.instance.player.transform.position;
-
         if (other.CompareTag("Player"))
         {
+            lastKnownPlayerLocation = GameManager.instance.player.transform.position;
             playerInRange = false;
             CalmEnemy();
         }
+        else
+            return;
     }
 
     //While player is in range, calls function to check if in line of sight
@@ -275,12 +282,12 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         //Calculates direction from enemy to player.
         Vector3 playerDirection = (GameManager.instance.player.transform.position - headPos.position);
-        Debug.DrawRay(headPos.position, playerDirection * viewDistance, Color.red);
+        Debug.DrawRay(headPos.position, playerDirection * gameObject.GetComponent<SphereCollider>().radius, Color.red);
         if (playerInRange)
         {
             if (Vector3.Angle(transform.forward, playerDirection) < FOV_Angle / 2)
             {
-                if (Physics.Raycast(headPos.position, playerDirection, viewDistance, targetMask))
+                if (Physics.Raycast(headPos.position, playerDirection, gameObject.GetComponent<SphereCollider>().radius, targetMask))
                     playerInView = true;
                 else
                     playerInView = false;
@@ -352,6 +359,16 @@ public class enemyAI : MonoBehaviour, IDamage
     {
             agent.SetDestination(currentDestination.transform.position);
     }
+
+
+    public void SetEnemyMaterial()
+    {
+        if(enemyBehavior == behaviorType.guard)
+            gameObject.GetComponentInChildren<Renderer>().materials[0] = guard;
+        else
+            gameObject.GetComponentInChildren<Renderer>().materials[0] = patrol;
+    }
+    
 }
 
 

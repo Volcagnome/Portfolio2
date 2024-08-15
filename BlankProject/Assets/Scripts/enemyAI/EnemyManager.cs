@@ -36,13 +36,15 @@ public class EnemyManager : MonoBehaviour
 
         if (guardPosts_List.Count - NumCurrentGuardRobots < CalculateMaxAllowedPatrolRobots() - NumCurrentPatrolRobots)
         {
-            AssignAsPatrol(newRobot);
+            AssignPatrolPost(newRobot);
         }
         else
-            AssignAsGuard(newRobot);
+            AssignGuardPost(newRobot);
+
+        newRobot.GetComponent<enemyAI>().SetEnemyMaterial();
     }
 
-    public void AssignAsGuard(GameObject newRobot)
+    public void AssignGuardPost(GameObject newRobot)
     {
         NumCurrentGuardRobots++;
         newRobot.GetComponent<enemyAI>().SetBehavior(enemyAI.behaviorType.guard);
@@ -60,10 +62,9 @@ public class EnemyManager : MonoBehaviour
                 break;
             }
         }
-
     }
 
-    public void AssignAsPatrol(GameObject newRobot)
+    public void AssignPatrolPost(GameObject newRobot)
     {
         NumCurrentPatrolRobots++;
         newRobot.GetComponent<enemyAI>().SetBehavior(enemyAI.behaviorType.patrol);
@@ -117,7 +118,8 @@ public class EnemyManager : MonoBehaviour
 
     public int GetCurrentNumberRobots()
     {
-        return NumCurrentGuardRobots + NumCurrentPatrolRobots;
+        NumCurrentTotalRobots = NumCurrentGuardRobots + NumCurrentPatrolRobots;
+        return NumCurrentTotalRobots;
     }
 
     public void AddRobotToGuardCount()

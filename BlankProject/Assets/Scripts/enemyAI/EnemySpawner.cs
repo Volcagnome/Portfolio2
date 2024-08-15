@@ -30,8 +30,9 @@ public class EnemySpawner : MonoBehaviour
             if (EnemyManager.instance.GetCurrentNumberRobots() < EnemyManager.instance.maxAllowedRobots)
             {
                 GameObject newEnemy = Instantiate(entityToSpawn, gameObject.transform.position, gameObject.transform.rotation);
+                EnemyManager.instance.AssignRole(newEnemy);
             }
-
+        
             yield return new WaitForSeconds(EnemyManager.instance.EnemySpawnInterval);
         }
     }
