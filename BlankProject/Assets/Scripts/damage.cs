@@ -8,10 +8,11 @@ public class damage : MonoBehaviour
     [SerializeField] damageType type;
     [SerializeField] Rigidbody rb;
 
+
     [SerializeField] int damageAmount;
     [SerializeField] int speed;
     [SerializeField] int destroyTime;
-
+    private GameObject source;
 
 
     // Start is called before the first frame update
@@ -34,7 +35,7 @@ public class damage : MonoBehaviour
 
         IDamage dmg = other.GetComponent<IDamage>();
 
-        if (dmg != null)
+        if (dmg != null && other.gameObject.tag != "Enemy")
         {
             dmg.takeDamage(damageAmount);
             Destroy(gameObject);
@@ -42,4 +43,5 @@ public class damage : MonoBehaviour
 
         Destroy(gameObject);
     }
+
 }

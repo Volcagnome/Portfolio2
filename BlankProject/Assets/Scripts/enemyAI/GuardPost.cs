@@ -43,7 +43,7 @@ public class GuardPost : MonoBehaviour
         if (guardRobot.CompareTag("Enemy")
             && guardRobot.GetComponent<enemyAI>().GetDefaultPost() == gameObject.GetComponent<GuardPost>().gameObject
             && guardRobot.GetComponent<enemyAI>().CheckIfOnDuty() == true)
-        { 
+        {   
             guardRobot.gameObject.transform.rotation = gameObject.transform.rotation;
             //Quaternion rotationToDirection = Quaternion.LookRotation(gameObject.transform.position - guardRobot.gameObject.transform.position);
             //guardRobot.gameObject.transform.rotation = Quaternion.Lerp(transform.rotation, rotationToDirection, Time.deltaTime * guardRobot.gameObject.GetComponent<enemyAI>().rotationSpeed);

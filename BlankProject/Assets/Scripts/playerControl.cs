@@ -105,13 +105,13 @@ public class playerControl : MonoBehaviour, IDamage
             Camera.main.transform.forward, out hit, shootDist, ~ignoreMask))
         {
             Debug.Log(hit.collider.name);
-            IDamage dmg = hit.collider.GetComponent<IDamage>();
+            IDamage dmg = hit.collider.gameObject.GetComponentInParent<IDamage>();
 
             if (dmg != null)
             {
                 if (hit.collider.CompareTag("WeakSpot"))
                 {
-                    dmg.takeDamage((shootDamage) * (dmgMultiplier));
+                    dmg.takeDamage(shootDamage * dmgMultiplier);
                 }
 
                 else
@@ -150,6 +150,7 @@ public class playerControl : MonoBehaviour, IDamage
         //Im dead
         if (HP <= 0)
         {
+
             //GameManager.instance.youLose();
         }
     }

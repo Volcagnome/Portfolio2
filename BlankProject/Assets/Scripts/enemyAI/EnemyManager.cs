@@ -10,18 +10,19 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField] public int EnemySpawnInterval;
 
-    private int NumCurrentGuardRobots;
-    private int NumCurrentPatrolRobots;
+    public int NumCurrentGuardRobots;
+    public int NumCurrentPatrolRobots;
+    public int NumCurrentTotalRobots;
     public List<GameObject> guardPosts_List;
     public List<GameObject> patrolRoutes_List;
-    private int maxAllowedRobots;
+    public int maxAllowedRobots;
 
     //max guards + max robots for each patrol = max robots
 
     void Awake()
     {
         instance = this;
-        
+        StartCoroutine(CalculateMaxAllowedRobots());
     }
 
     // Update is called once per frame
@@ -32,10 +33,8 @@ public class EnemyManager : MonoBehaviour
 
     public void AssignRole(GameObject newRobot)
     {
-       // Debug.Log(("Guards:" + NumCurrentGuardRobots + "/" + guardPosts_List.Count));
-        //Debug.Log(("Patrol:" + NumCurrentPatrolRobots + "/" + GetMaxAllowedPatrolRobots()));
 
-        if (guardPosts_List.Count - NumCurrentGuardRobots < GetMaxAllowedPatrolRobots() - NumCurrentPatrolRobots)
+        if (guardPosts_List.Count - NumCurrentGuardRobots < CalculateMaxAllowedPatrolRobots() - NumCurrentPatrolRobots)
         {
             AssignAsPatrol(newRobot);
         }
@@ -97,12 +96,14 @@ public class EnemyManager : MonoBehaviour
         NumCurrentPatrolRobots--;
     }
 
-    public int GetMaxAllowedRobots()
+    IEnumerator CalculateMaxAllowedRobots()
     {
-        return maxAllowedRobots = GetMaxAllowedPatrolRobots() + guardPosts_List.Count;
+        yield return new WaitForSeconds(0.6f);
+
+        maxAllowedRobots = CalculateMaxAllowedPatrolRobots() + guardPosts_List.Count;
     }
 
-    public int GetMaxAllowedPatrolRobots()
+    public int CalculateMaxAllowedPatrolRobots()
     {
         int tempCount = 0;
 
@@ -117,6 +118,16 @@ public class EnemyManager : MonoBehaviour
     public int GetCurrentNumberRobots()
     {
         return NumCurrentGuardRobots + NumCurrentPatrolRobots;
+    }
+
+    public void AddRobotToGuardCount()
+    {
+        NumCurrentGuardRobots++;
+    }
+
+    public void AddRobotToPatrolCount()
+    {
+        NumCurrentPatrolRobots++;
     }
 
 }

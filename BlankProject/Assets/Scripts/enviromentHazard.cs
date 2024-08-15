@@ -33,7 +33,7 @@ public class enviromentHazard : MonoBehaviour
 
         IDamage dmg = other.GetComponent<IDamage>();
 
-        if (dmg != null)
+        if (dmg != null && other.gameObject.tag != "Enemy")
         {
             dmg.takeDamage(damageAmount);
 

@@ -22,6 +22,8 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
     [SerializeField] GameObject bullet;
+    [SerializeField] Texture emissionAlerted;
+    [SerializeField] Texture emissionIdle;
    
     //Basic stats
     [SerializeField] int HP;
@@ -30,13 +32,15 @@ public class enemyAI : MonoBehaviour, IDamage
 
     //EnemyBehavior
     [SerializeField] public enum behaviorType { none, guard, patrol};
+    [SerializeField] public enum enemyType { none, AssaultDroid, Turret };
     [SerializeField] behaviorType enemyBehavior;
+    [SerializeField] enemyType enemy_Type;
     [SerializeField] float combatStoppingDistance;
     [SerializeField] float idleStoppingDistance;
     [SerializeField] float idleSpeed;
     [SerializeField] float combatSpeed;
-    private GameObject defaultPost;
-    private GameObject currentDestination;
+    [SerializeField] GameObject defaultPost;
+    [SerializeField] GameObject currentDestination;
     private bool onPatrol;
 
     
@@ -45,6 +49,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] LayerMask targetMask;
     private Vector3 lastKnownPlayerLocation;
    [SerializeField] public float rotationSpeed;
+    [SerializeField] float viewDistance;
 
     //CurrentStatus
     public bool isAlerted;
@@ -66,6 +71,17 @@ public class enemyAI : MonoBehaviour, IDamage
     void Start()
     {
         colorOrig = gameObject.GetComponentInChildren<Renderer>().sharedMaterial.color;
+        if (enemyBehavior == behaviorType.none)
+            EnemyManager.instance.AssignRole(gameObject);
+        else if (enemyBehavior == behaviorType.guard)
+        {
+            EnemyManager.instance.AddRobotToGuardCount();
+            defaultPost.GetComponent<GuardPost>().SetIsOccupied(true);
+        }
+        else if (enemyBehavior == behaviorType.patrol)
+            EnemyManager.instance.AddRobotToPatrolCount();
+
+        CalmEnemy();
     }
 
     // Update is called once per frame
@@ -135,9 +151,9 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         HP -= amount;
 
-        AlertEnemy();
-        AlertAllies();
-        StartCoroutine(flashRed());
+            AlertEnemy();
+            AlertAllies();
+            StartCoroutine(flashRed());
 
 
         if (HP <= 0)
@@ -185,6 +201,9 @@ public class enemyAI : MonoBehaviour, IDamage
         isAlerted = true;
         agent.speed = combatSpeed;
         onDuty = false;
+        //Changes emission texture to red on Assault Droid
+        if (enemy_Type == enemyType.AssaultDroid)
+            gameObject.GetComponentInChildren<Renderer>().sharedMaterial.SetTexture("_EmissionMap", emissionAlerted);
     }
 
     //Toggles isAlerted to false.
@@ -194,6 +213,8 @@ public class enemyAI : MonoBehaviour, IDamage
         ReturnToPost();
         agent.speed = idleSpeed;
         onDuty = true;
+        if (enemy_Type == enemyType.AssaultDroid)
+            gameObject.GetComponentInChildren<Renderer>().sharedMaterial.SetTexture("_EmissionMap", emissionIdle);
     }
 
     private void Death()
@@ -254,12 +275,12 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         //Calculates direction from enemy to player.
         Vector3 playerDirection = (GameManager.instance.player.transform.position - headPos.position);
-
+        Debug.DrawRay(headPos.position, playerDirection * viewDistance, Color.red);
         if (playerInRange)
         {
             if (Vector3.Angle(transform.forward, playerDirection) < FOV_Angle / 2)
             {
-                if (Physics.Raycast(headPos.position, playerDirection, gameObject.GetComponent<SphereCollider>().radius, targetMask))
+                if (Physics.Raycast(headPos.position, playerDirection, viewDistance, targetMask))
                     playerInView = true;
                 else
                     playerInView = false;
@@ -335,9 +356,5 @@ public class enemyAI : MonoBehaviour, IDamage
 
 
 
-////Changes emission texture to red on Assault Droid
-//if (gameObject.name == "Assault Droid")
-//    gameObject.GetComponentInChildren<Renderer>().sharedMaterial.SetTexture("_EmissionMap", emissionAlerted);
 
-//if (gameObject.name == "Assault Droid")
-//    gameObject.GetComponentInChildren<Renderer>().sharedMaterial.SetTexture("_EmissionMap", emissionOrig);
+
