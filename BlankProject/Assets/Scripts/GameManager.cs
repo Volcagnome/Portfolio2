@@ -71,7 +71,12 @@ public class GameManager : MonoBehaviour
         activeLevers += lever;
         leverCountText.text = activeLevers.ToString("F0");
 
-        if (activeLevers == 0) youWin = true;
+        if (activeLevers == 0)
+        {
+            statePause();
+            menuActive = menuWin;
+            menuActive.SetActive(true);
+        }
     }
 
     public void youLose()

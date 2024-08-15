@@ -2665,6 +2665,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1315007490}
     m_Modifications:
+    - target: {fileID: 455911556256123124, guid: 7d61469293365c9419df168c855424f0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1924043193}
+    - target: {fileID: 455911556256123124, guid: 7d61469293365c9419df168c855424f0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: restart
+      objectReference: {fileID: 0}
     - target: {fileID: 2422699549846535345, guid: 7d61469293365c9419df168c855424f0, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2744,6 +2752,14 @@ PrefabInstance:
     - target: {fileID: 2422699549846535345, guid: 7d61469293365c9419df168c855424f0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5959878179722302427, guid: 7d61469293365c9419df168c855424f0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1924043193}
+    - target: {fileID: 5959878179722302427, guid: 7d61469293365c9419df168c855424f0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: quit
       objectReference: {fileID: 0}
     - target: {fileID: 7454095439524161002, guid: 7d61469293365c9419df168c855424f0, type: 3}
       propertyPath: m_Name
