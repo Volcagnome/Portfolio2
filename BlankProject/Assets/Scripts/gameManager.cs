@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -9,6 +10,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
+    [SerializeField] GameObject menuLose;
+
+    [SerializeField] TMP_Text leverCountText;
 
 
     public GameObject player;
@@ -26,51 +30,56 @@ public class GameManager : MonoBehaviour
         playerScript = player.GetComponent<playerControl>();
     }
 
-    // Update is called once per frame
-    //void Update()
-    //{
-    //    if (Input.GetButtonDown("Cancel"))
-    //    {
-    //        if (menuActive == null)
-    //        {
-    //            statePause();
-    //            menuActive = menuPause;
-    //            menuActive.SetActive(isPaused);
-    //        }
-    //        else if (menuActive == menuPause)
-    //        {
-    //            stateUnpaused();
-    //        }
-    //    }
-    //}
+    //Update is called once per frame
+    void Update()
+    {
+        if (Input.GetButtonDown("Cancel"))
+        {
+            if (menuActive == null)
+            {
+                statePause();
+                menuActive = menuPause;
+                menuActive.SetActive(isPaused);
+            }
+            else if (menuActive == menuPause)
+            {
+                stateUnpaused();
+            }
+        }
+    }
 
-    //public void statePause()
-    //{
-    //    isPaused = !isPaused;
-    //    Time.timeScale = 0;
-    //    Cursor.visible = true;
-    //    Cursor.lockState = CursorLockMode.Confined;
-    //}
+    public void statePause()
+    {
+        isPaused = !isPaused;
+        Time.timeScale = 0;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+    }
 
-    //public void stateUnpaused()
-    //{
-    //    isPaused = !isPaused;
-    //    Time.timeScale = 1;
-    //    Cursor.visible = false;
-    //    Cursor.lockState = CursorLockMode.Locked;
-    //    menuActive.SetActive(isPaused);
-    //    menuActive = null;
-    //}
+    public void stateUnpaused()
+    {
+        isPaused = !isPaused;
+        Time.timeScale = 1;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        menuActive.SetActive(isPaused);
+        menuActive = null;
+    }
 
     public void UpdateWinCondition(int lever)
     {
         activeLevers += lever;
+        leverCountText.text = activeLevers.ToString("F0");
 
         if (activeLevers == 0) youWin = true;
     }
 
+    public void youLose()
+    {
+        statePause();
+        menuActive = menuLose;
+        menuActive.SetActive(isPaused);
+    }
 
-
-  
 
 }

@@ -150,7 +150,7 @@ public class playerControl : MonoBehaviour, IDamage
         //Im dead
         if (HP <= 0)
         {
-            //GameManager.instance.youLose();
+            GameManager.instance.youLose();
         }
     }
 }
