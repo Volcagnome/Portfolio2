@@ -20,33 +20,38 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer model;
     [SerializeField] Transform shootPos;
+    [SerializeField] Transform headPos;
     [SerializeField] GameObject bullet;
    
     //Basic stats
     [SerializeField] int HP;
     [SerializeField] float shootRate;
+   
 
     //EnemyBehavior
     [SerializeField] public enum behaviorType { none, guard, patrol};
     [SerializeField] behaviorType enemyBehavior;
     [SerializeField] float combatStoppingDistance;
-    [SerializeField] float passiveStoppingDistance;
+    [SerializeField] float idleStoppingDistance;
+    [SerializeField] float idleSpeed;
+    [SerializeField] float combatSpeed;
     private GameObject defaultPost;
+    private GameObject currentDestination;
+    private bool onPatrol;
 
     
     //Player detection
     [SerializeField] public float FOV_Angle;
     [SerializeField] LayerMask targetMask;
-
     private Vector3 lastKnownPlayerLocation;
-    private Vector3 playerDirection;
+   [SerializeField] public float rotationSpeed;
 
     //CurrentStatus
     public bool isAlerted;
     private bool isShooting;
     public bool playerInView;
     private bool playerInRange;
-    private bool atPost;
+    private bool onDuty;
 
     //Ally Detection
     [SerializeField] int allyRadius;
@@ -61,7 +66,6 @@ public class enemyAI : MonoBehaviour, IDamage
     void Start()
     {
         colorOrig = gameObject.GetComponentInChildren<Renderer>().sharedMaterial.color;
-        passiveStoppingDistance = agent.stoppingDistance;
     }
 
     // Update is called once per frame
@@ -77,11 +81,10 @@ public class enemyAI : MonoBehaviour, IDamage
             agent.stoppingDistance = combatStoppingDistance;
         }
         else
-            agent.stoppingDistance = passiveStoppingDistance;
+            agent.stoppingDistance = idleStoppingDistance;
 
         if (isAlerted)
         {
-            atPost = false;
 
             if (!playerInView && !playerInRange)
             {
@@ -90,6 +93,8 @@ public class enemyAI : MonoBehaviour, IDamage
             else if (playerInRange)
             {
                 //Rotates the enemy towards the player's current position
+                //RotateTo(playerDirection);
+
                 Vector3 playerDirection = GameManager.instance.player.transform.position - transform.position;
                 playerDirection.y = 0;
                 transform.rotation = Quaternion.LookRotation(playerDirection);
@@ -98,11 +103,8 @@ public class enemyAI : MonoBehaviour, IDamage
                     agent.SetDestination(GameManager.instance.player.transform.position);
             }
         }
-        else if (!atPost)
-        {
+        else if(!onDuty)
             ReturnToPost();
-            atPost = true;
-        }
     }
 
 
@@ -181,6 +183,8 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         lastKnownPlayerLocation = GameManager.instance.player.transform.position;
         isAlerted = true;
+        agent.speed = combatSpeed;
+        onDuty = false;
     }
 
     //Toggles isAlerted to false.
@@ -188,15 +192,22 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         isAlerted = false;
         ReturnToPost();
+        agent.speed = idleSpeed;
+        onDuty = true;
     }
 
     private void Death()
     {
         if (enemyBehavior == behaviorType.guard)
         {
-            EnemyManager.instance.RemoveFromGuardUnits(gameObject);
+            //EnemyManager.instance.RemoveFromGuardRobotsCount();
             defaultPost.GetComponent<GuardPost>().SetIsOccupied(false);
         } 
+        else if (enemyBehavior == behaviorType.patrol)
+        {
+            //EnemyManager.instance.RemoveFromPatrolRobotsCount();
+            defaultPost.GetComponent<PatrolWaypoint>().RemoveRobotFromRoute();
+        }
         Destroy(gameObject);
     }
 
@@ -242,13 +253,13 @@ public class enemyAI : MonoBehaviour, IDamage
     private void FieldOfViewCheck()
     {
         //Calculates direction from enemy to player.
-        playerDirection = (GameManager.instance.player.transform.position - transform.position);
+        Vector3 playerDirection = (GameManager.instance.player.transform.position - headPos.position);
 
         if (playerInRange)
         {
             if (Vector3.Angle(transform.forward, playerDirection) < FOV_Angle / 2)
             {
-                if (Physics.Raycast(transform.position, playerDirection, gameObject.GetComponent<SphereCollider>().radius, targetMask))
+                if (Physics.Raycast(headPos.position, playerDirection, gameObject.GetComponent<SphereCollider>().radius, targetMask))
                     playerInView = true;
                 else
                     playerInView = false;
@@ -258,19 +269,33 @@ public class enemyAI : MonoBehaviour, IDamage
             playerInView = false;
     }
 
-    
+    public void RotateTo(Vector3 direction)
+    {
+        Quaternion rotationToDirection = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Lerp(transform.rotation,rotationToDirection, Time.deltaTime * rotationSpeed);
+    }
 
     private void ReturnToPost()
     {
+        onDuty = true;
+
         if (enemyBehavior == behaviorType.guard)
-        {
             agent.SetDestination(defaultPost.transform.position);
+
+        else if (enemyBehavior == behaviorType.patrol)
+        {
+           OnPatrol();
         }
     }
 
-    public void SetDefaultPost(GameObject guardPost)
+    public void SetDefaultPost(GameObject post)
     {
-        defaultPost = guardPost;
+        defaultPost = post;
+    }
+
+    public GameObject GetDefaultPost()
+    {
+        return defaultPost;
     }
 
     public void SetBehavior(behaviorType behavior)
@@ -287,6 +312,25 @@ public class enemyAI : MonoBehaviour, IDamage
             return false;
     }
 
+    public void SetCurrentDestination(GameObject destination)
+    {
+        currentDestination = destination;
+    }
+
+    public GameObject GetCurrentDestination()
+    {
+        return currentDestination;
+    }
+
+    public bool CheckIfOnDuty()
+    {
+        return onDuty;
+    }
+
+    public void OnPatrol()
+    {
+            agent.SetDestination(currentDestination.transform.position);
+    }
 }
 
 

@@ -12,7 +12,8 @@ public class GuardPost : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-           EnemyManager.instance.AddGuardPostToList(gameObject);
+        EnemyManager.instance.guardPosts_List.Add(gameObject);
+        
     }
 
     // Update is called once per frame
@@ -35,4 +36,19 @@ public class GuardPost : MonoBehaviour
     {
         guard = newGuard;
     }
+
+    private void OnTriggerEnter(Collider guardRobot)
+    {
+
+        if (guardRobot.CompareTag("Enemy")
+            && guardRobot.GetComponent<enemyAI>().GetDefaultPost() == gameObject.GetComponent<GuardPost>().gameObject
+            && guardRobot.GetComponent<enemyAI>().CheckIfOnDuty() == true)
+        { 
+            guardRobot.gameObject.transform.rotation = gameObject.transform.rotation;
+            //Quaternion rotationToDirection = Quaternion.LookRotation(gameObject.transform.position - guardRobot.gameObject.transform.position);
+            //guardRobot.gameObject.transform.rotation = Quaternion.Lerp(transform.rotation, rotationToDirection, Time.deltaTime * guardRobot.gameObject.GetComponent<enemyAI>().rotationSpeed);
+
+        }
+    }
+
 }

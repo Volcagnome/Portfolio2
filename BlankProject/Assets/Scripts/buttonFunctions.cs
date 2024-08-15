@@ -6,16 +6,16 @@ using UnityEngine.SceneManagement;
 
 public class buttonFunctions : MonoBehaviour
 {
-    public void resume()
-    {
-        GameManager.instance.stateUnpaused();
-    }
+    //public void resume()
+    //{
+    //    GameManager.instance.stateUnpaused();
+    //}
 
-    public void restart()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        GameManager.instance.stateUnpaused();
-    }
+    //public void restart()
+    //{
+    //    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    //    GameManager.instance.stateUnpaused();
+    //}
 
     public void quit()
     {

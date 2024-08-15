@@ -10,11 +10,10 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField] public int EnemySpawnInterval;
 
-    public List<GameObject> currentGuardRobots_List;
-    public List<GameObject> currentPatrolRobots_List;
+    private int NumCurrentGuardRobots;
+    private int NumCurrentPatrolRobots;
     public List<GameObject> guardPosts_List;
     public List<GameObject> patrolRoutes_List;
-
     private int maxAllowedRobots;
 
     //max guards + max robots for each patrol = max robots
@@ -22,6 +21,7 @@ public class EnemyManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+        
     }
 
     // Update is called once per frame
@@ -32,67 +32,74 @@ public class EnemyManager : MonoBehaviour
 
     public void AssignRole(GameObject newRobot)
     {
-        if (guardPosts_List.Count - currentGuardRobots_List.Count < GetMaxAllowedPatrolRobots() - currentPatrolRobots_List.Count)
+       // Debug.Log(("Guards:" + NumCurrentGuardRobots + "/" + guardPosts_List.Count));
+        //Debug.Log(("Patrol:" + NumCurrentPatrolRobots + "/" + GetMaxAllowedPatrolRobots()));
+
+        if (guardPosts_List.Count - NumCurrentGuardRobots < GetMaxAllowedPatrolRobots() - NumCurrentPatrolRobots)
+        {
             AssignAsPatrol(newRobot);
+        }
         else
             AssignAsGuard(newRobot);
     }
 
     public void AssignAsGuard(GameObject newRobot)
     {
-            currentGuardRobots_List.Add(newRobot);
-            newRobot.GetComponent<enemyAI>().SetBehavior(enemyAI.behaviorType.guard);
+        NumCurrentGuardRobots++;
+        newRobot.GetComponent<enemyAI>().SetBehavior(enemyAI.behaviorType.guard);
 
-            for (int index = 0; index < guardPosts_List.Count; index++)
+        for (int index = 0; index < guardPosts_List.Count; index++)
+        {
+
+            GameObject currentGuardPost = guardPosts_List[index];
+
+            if (!currentGuardPost.GetComponent<GuardPost>().CheckIfOccupied())
             {
-                
-                GameObject currentGuardPost = guardPosts_List[index];
-
-                if (!currentGuardPost.GetComponent<GuardPost>().CheckIfOccupied())
-                {
-                    newRobot.GetComponent<enemyAI>().SetDefaultPost(currentGuardPost);
-                    currentGuardPost.GetComponent<GuardPost>().AssignGuard(newRobot);
-                    currentGuardPost.GetComponent<GuardPost>().SetIsOccupied(true);
-                    break;
-                }
+                newRobot.GetComponent<enemyAI>().SetDefaultPost(currentGuardPost);
+                currentGuardPost.GetComponent<GuardPost>().AssignGuard(newRobot);
+                currentGuardPost.GetComponent<GuardPost>().SetIsOccupied(true);
+                break;
             }
-        
+        }
+
     }
 
     public void AssignAsPatrol(GameObject newRobot)
     {
-        currentPatrolRobots_List.Add(newRobot);
-        newRobot.GetComponent<enemyAI>().SetBehavior(enemyAI.behaviorType.guard);
+        NumCurrentPatrolRobots++;
+        newRobot.GetComponent<enemyAI>().SetBehavior(enemyAI.behaviorType.patrol);
 
-        for(int index =0; index <patrolRoutes_List.Count;index++)
+
+        for (int index = 0; index < patrolRoutes_List.Count; index++)
         {
             GameObject currentRoute = patrolRoutes_List[index];
+
             int currentRobotsAssigned = currentRoute.GetComponent<PatrolWaypoint>().GetNumberRobotsOnThisRoute();
             int maxAllowedRobotsAssigned = currentRoute.GetComponent<PatrolWaypoint>().GetMaxRobotsOnThisRoute();
 
             if (currentRobotsAssigned < maxAllowedRobotsAssigned)
             {
-                currentRoute.GetComponent<PatrolWaypoint>().AddRobotToRoute(newRobot);
+                currentRoute.GetComponent<PatrolWaypoint>().AddRobotToRoute();
                 newRobot.GetComponent<enemyAI>().SetDefaultPost(currentRoute);
+                newRobot.GetComponent<enemyAI>().SetCurrentDestination(currentRoute);
                 break;
             }
         }
     }
 
-    public void AddGuardPostToList(GameObject newGuardPost)
+    public void RemoveFromGuardRobotsCount()
     {
-        guardPosts_List.Add(newGuardPost);
+        NumCurrentGuardRobots--;
     }
 
-    public void RemoveFromGuardUnits(GameObject deadRobot)
+    public void RemoveFromPatrolRobotsCount()
     {
-        currentGuardRobots_List.Remove(deadRobot);  
+        NumCurrentPatrolRobots--;
     }
 
-    
     public int GetMaxAllowedRobots()
-    { 
-       return maxAllowedRobots = GetMaxAllowedPatrolRobots() + guardPosts_List.Count;
+    {
+        return maxAllowedRobots = GetMaxAllowedPatrolRobots() + guardPosts_List.Count;
     }
 
     public int GetMaxAllowedPatrolRobots()
@@ -109,7 +116,7 @@ public class EnemyManager : MonoBehaviour
 
     public int GetCurrentNumberRobots()
     {
-        return currentGuardRobots_List.Count + currentPatrolRobots_List.Count;
+        return NumCurrentGuardRobots + NumCurrentPatrolRobots;
     }
-    
+
 }
