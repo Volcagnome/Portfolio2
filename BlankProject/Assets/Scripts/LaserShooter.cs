@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserShooter : MonoBehaviour
+public class LaserShooter : MonoBehaviour, IDamage
 {
     [SerializeField] Renderer model;
     [SerializeField] Transform shootPos;
@@ -60,4 +60,6 @@ public class LaserShooter : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         model.material.color = colorOrig;
     }
+
+
 }

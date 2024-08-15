@@ -40,6 +40,6 @@ public class damage : MonoBehaviour
             Destroy(gameObject);
         }
 
-       
+        Destroy(gameObject);
     }
 }
