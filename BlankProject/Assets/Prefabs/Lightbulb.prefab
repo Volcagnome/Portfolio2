@@ -287,7 +287,6 @@ GameObject:
   - component: {fileID: 2816971273120977223}
   - component: {fileID: 4963712554784348899}
   - component: {fileID: 1422323327839007134}
-  - component: {fileID: 3934232540627251668}
   m_Layer: 0
   m_Name: Bulb Taper
   m_TagString: Untagged
@@ -383,21 +382,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3934232540627251668
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6285948431075950177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f80bf6a1a64f892408e100047bfe5c2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toggleRecipientOn: {fileID: 5531798631389358348}
-  toggleRecipientOff: {fileID: 4719853329863638121}
-  controller: {fileID: 0}
 --- !u!1 &7104175714015391245
 GameObject:
   m_ObjectHideFlags: 0
@@ -410,7 +394,6 @@ GameObject:
   - component: {fileID: 7314759524378070515}
   - component: {fileID: 2389819719035591339}
   - component: {fileID: 1932064126106849002}
-  - component: {fileID: 8954431418110855311}
   - component: {fileID: 4054012038418767620}
   m_Layer: 0
   m_Name: Bulb Taper
@@ -507,21 +490,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8954431418110855311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7104175714015391245}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f80bf6a1a64f892408e100047bfe5c2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toggleRecipientOn: {fileID: 5531798631389358348}
-  toggleRecipientOff: {fileID: 4719853329863638121}
-  controller: {fileID: 0}
 --- !u!108 &4054012038418767620
 Light:
   m_ObjectHideFlags: 0

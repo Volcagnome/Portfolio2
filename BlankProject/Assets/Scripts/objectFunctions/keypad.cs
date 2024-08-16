@@ -29,7 +29,10 @@ public class keypad : MonoBehaviour, ISendState
     // Start is called before the first frame update
     void Start()
     {
+        currentCombo = "";
         currentComboSize = currentCombo.Length;
+        correct = false;
+        updateDisplay();
     }
 
     // Update is called once per frame
@@ -42,7 +45,7 @@ public class keypad : MonoBehaviour, ISendState
     {
         bool somethingWasTouched = false;
 
-        if (backspaceButton.GetComponent<basicInteractive>().GetInteracted())
+        if (backspaceButton.GetComponent<ISendState>().getState())
         {
             string holder = "";
 
@@ -50,7 +53,7 @@ public class keypad : MonoBehaviour, ISendState
 
             currentCombo = holder;
         }
-        else if (confirmButton.GetComponent<basicInteractive>().GetInteracted())
+        else if (confirmButton.GetComponent<ISendState>().getState())
         {
             if (currentCombo == goalCombo)
             {
@@ -62,18 +65,18 @@ public class keypad : MonoBehaviour, ISendState
                 currentCombo = "";
             }
         }
-        else if (currentComboSize < goalCombo.Length)
+        else if (currentCombo.Length < goalCombo.Length)
         {
-            if (zeroButton.GetComponent<basicInteractive>().GetInteracted()) currentCombo += '0';
-            else if (oneButton.GetComponent<basicInteractive>().GetInteracted()) currentCombo += '1';
-            else if (twoButton.GetComponent<basicInteractive>().GetInteracted()) currentCombo += '2';
-            else if (threeButton.GetComponent<basicInteractive>().GetInteracted()) currentCombo += '3';
-            else if (fourButton.GetComponent<basicInteractive>().GetInteracted()) currentCombo += '4';
-            else if (fiveButton.GetComponent<basicInteractive>().GetInteracted()) currentCombo += '5';
-            else if (sixButton.GetComponent<basicInteractive>().GetInteracted()) currentCombo += '6';
-            else if (sevenButton.GetComponent<basicInteractive>().GetInteracted()) currentCombo += '7';
-            else if (eightButton.GetComponent<basicInteractive>().GetInteracted()) currentCombo += '8';
-            else if (nineButton.GetComponent<basicInteractive>().GetInteracted()) currentCombo += '9';
+            if (zeroButton.GetComponent<ISendState>().getState()) currentCombo += '0';
+            else if (oneButton.GetComponent<ISendState>().getState()) currentCombo += '1';
+            else if (twoButton.GetComponent<ISendState>().getState()) currentCombo += '2';
+            else if (threeButton.GetComponent<ISendState>().getState()) currentCombo += '3';
+            else if (fourButton.GetComponent<ISendState>().getState()) currentCombo += '4';
+            else if (fiveButton.GetComponent<ISendState>().getState()) currentCombo += '5';
+            else if (sixButton.GetComponent<ISendState>().getState()) currentCombo += '6';
+            else if (sevenButton.GetComponent<ISendState>().getState()) currentCombo += '7';
+            else if (eightButton.GetComponent<ISendState>().getState()) currentCombo += '8';
+            else if (nineButton.GetComponent<ISendState>().getState()) currentCombo += '9';
         }
 
         if (currentComboSize != currentCombo.Length)
@@ -88,6 +91,8 @@ public class keypad : MonoBehaviour, ISendState
     void updateDisplay()
     {
         display.text = currentCombo;
+        display.enabled = false;
+        display.enabled = true; 
     }
 
     public bool getState()

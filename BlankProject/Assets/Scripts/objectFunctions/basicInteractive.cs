@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class basicInteractive : MonoBehaviour, IInteract
+public class basicInteractive : MonoBehaviour, IInteract, ISendState
 {
     bool isInteracted;
 
@@ -15,14 +15,19 @@ public class basicInteractive : MonoBehaviour, IInteract
     // Update is called once per frame
     void Update()
     {
-        if (isInteracted) isInteracted = false;
+        
     }
 
     public void interact()
     {
         isInteracted = true;
     }
+    public bool getState() 
+    {
+        bool holder = isInteracted;
 
-    public void SetInteracted(bool state) { isInteracted = state; }
-    public bool GetInteracted() { return isInteracted; }  
+        if (isInteracted) isInteracted = !isInteracted;
+
+        return holder; 
+    }  
 }
