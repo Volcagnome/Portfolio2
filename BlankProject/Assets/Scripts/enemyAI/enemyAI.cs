@@ -27,8 +27,9 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] Texture emissionIdle;
     [SerializeField] Material guard;
     [SerializeField] Material patrol;
-   
+
     //Stats
+    int HPOrig;
     [SerializeField] int HP;
     [SerializeField] float shootRate;
     [SerializeField] float combatSpeed;
@@ -56,6 +57,7 @@ public class enemyAI : MonoBehaviour, IDamage
     private bool isAlerted;
     private bool isShooting;
     private bool onDuty;
+    private bool isPlayerTarget;
 
     //Ally Detection
     [SerializeField] int allyRadius;
@@ -69,6 +71,8 @@ public class enemyAI : MonoBehaviour, IDamage
     //Adds enemy to enemy list in GameManager
     void Start()
     {
+        HPOrig = HP;
+
         colorOrig = gameObject.GetComponentInChildren<Renderer>().sharedMaterial.color;
         if (enemyBehavior == behaviorType.none && tag != "Elite")
             EnemyManager.instance.AssignRole(gameObject);
@@ -151,15 +155,22 @@ public class enemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+        isPlayerTarget = true;
 
             AlertEnemy();
             AlertAllies();
+            UpdateEnemyUI();
             StartCoroutine(flashYellow());
 
         if (HP <= 0)
         {
             Death();
         }
+    }
+
+    public void UpdateEnemyUI()
+    {
+        EnemyManager.instance.enemyHPBar.fillAmount = (float)HP / HPOrig;
     }
 
     public void criticalHit(int amount)

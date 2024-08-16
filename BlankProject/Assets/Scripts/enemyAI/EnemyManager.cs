@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Lumin;
+using UnityEngine.UI;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class EnemyManager : MonoBehaviour
     public List<GameObject> guardPosts_List;
     public List<GameObject> patrolRoutes_List;
     public int maxAllowedRobots;
+
+    public Image enemyHPBar;
 
     //max guards + max robots for each patrol = max robots
 
