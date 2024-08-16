@@ -12,13 +12,13 @@ public class toggleReciever : MonoBehaviour, IToggle
     // Start is called before the first frame update
     void Start()
     {
-        toggle(controller.GetComponent<togglingItem>().itemState);
+        toggle(controller.GetComponent<ISendState>().getState());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (controller.GetComponent<togglingItem>().itemState != currentState) toggle(controller.GetComponent<togglingItem>().itemState);
+        if (controller.GetComponent<ISendState>().getState() != currentState) toggle(controller.GetComponent<ISendState>().getState());
     }
 
     public void toggle(bool state)

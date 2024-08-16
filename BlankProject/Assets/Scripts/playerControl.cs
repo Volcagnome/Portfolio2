@@ -148,7 +148,7 @@ public class playerControl : MonoBehaviour, IDamage
     {
         HP -= amount;
         adjustHPBar();
-         if (HP > 0)StartCoroutine(flashRed());
+        StartCoroutine(flashRed());
 
         //Im dead
         if (HP <= 0)

@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class togglingItem : MonoBehaviour, IInteract
+public class togglingItem : MonoBehaviour, IInteract, ISendState
 {
     [SerializeField] GameObject itemOnState;
     [SerializeField] GameObject itemOffState;
+    [SerializeField] bool itemState;
     [SerializeField] bool vital;
-
-    public bool itemState;
 
     // Start is called before the first frame update
     void Start()
@@ -16,7 +15,6 @@ public class togglingItem : MonoBehaviour, IInteract
         if (vital) 
         { 
             itemState = true;
-            
         }
 
         setState(itemState);
@@ -40,5 +38,10 @@ public class togglingItem : MonoBehaviour, IInteract
             if (state) GameManager.instance.UpdateWinCondition(1);
             else GameManager.instance.UpdateWinCondition(-1);
         }
+    }
+
+    public bool getState()
+    {
+        return itemState;
     }
 }
