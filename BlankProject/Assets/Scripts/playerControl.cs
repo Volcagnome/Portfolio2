@@ -7,9 +7,15 @@ public class playerControl : MonoBehaviour, IDamage
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreMask;
 
+    [SerializeField] float stamina;
+    [SerializeField] float staminaWait;
+    [SerializeField] float staminaDecrease;
+    [SerializeField] float staminaIncrease;
+
     [SerializeField] int HP;
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
+
     [SerializeField] int jumpMax;
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
@@ -25,7 +31,10 @@ public class playerControl : MonoBehaviour, IDamage
 
     int jumpCount;
     int hpOG;
+    int speedOG;
+    float staminaOG;
 
+    bool hasStamina;
     bool isSprinting;
     bool isShooting;
     bool isInteracting;
@@ -33,7 +42,10 @@ public class playerControl : MonoBehaviour, IDamage
     // Start is called before the first frame update
     void Start()
     {
+        // Sets original starting stats:
         hpOG = HP;
+        staminaOG = stamina;
+        speedOG = speed;
         adjustHPBar();
     }
 
@@ -42,6 +54,7 @@ public class playerControl : MonoBehaviour, IDamage
     {
         movement();
         sprint();
+        staminaUsage();
     }
 
     void movement()
@@ -85,16 +98,71 @@ public class playerControl : MonoBehaviour, IDamage
     void sprint()
     {
         // Sprint modifiers modify speed:
-        if (Input.GetButtonDown("Sprint"))
+        if (Input.GetButtonDown("Sprint") && hasStamina)
         {
             speed *= sprintMod;
+            isSprinting = true;
         }
-        else if (Input.GetButtonUp("Sprint"))
+
+       
+        else if (Input.GetButtonUp("Sprint") && hasStamina)
         {
-            speed /= sprintMod;
+            stopSprint();
         }
     }
 
+    // Resets speed to original settings and stops sprinting:
+    void stopSprint()
+    {
+        speed = speedOG;
+        isSprinting = false;
+    }
+
+    void staminaUsage()
+    {
+        if (stamina > 0) 
+            hasStamina = true;
+
+        if (isSprinting)
+        {
+            stamina -= staminaDecrease * Time.deltaTime;
+            // Sets back to 0 if stamina goes below and starts staminaOut() :
+            if (stamina <= 0) 
+            { 
+                StartCoroutine(staminaOut());
+            }
+        }
+
+        if (!isSprinting && hasStamina)
+        {
+            regenStamina();
+        }
+    }
+
+    // Recover stamina:
+    void regenStamina() 
+    {
+        stamina += staminaIncrease * Time.deltaTime;
+        hasStamina = true;
+
+        // Sets back to max stamina if value goes above:
+        if (stamina > staminaOG)
+        {
+            stamina = staminaOG;
+        }
+    }
+
+    // Stamina runs out:
+    IEnumerator staminaOut()
+    {
+        stamina = 0;
+        hasStamina = false;
+        stopSprint();
+
+        yield return new WaitForSeconds(staminaWait);
+
+        regenStamina();
+    }
 
     IEnumerator shoot()
     {
@@ -112,7 +180,7 @@ public class playerControl : MonoBehaviour, IDamage
             {
                 if (hit.collider.CompareTag("WeakSpot"))
                 {
-                    dmg.takeDamage(shootDamage * dmgMultiplier);
+                    dmg.criticalHit(shootDamage * dmgMultiplier);
                 }
 
                 else
@@ -153,9 +221,13 @@ public class playerControl : MonoBehaviour, IDamage
         //Im dead
         if (HP <= 0)
         {
-
             GameManager.instance.youLose();
         }
+    }
+
+    public void criticalHit(int amount)
+    {
+        
     }
 
     void adjustHPBar()

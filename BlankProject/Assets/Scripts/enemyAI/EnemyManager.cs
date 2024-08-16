@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Lumin;
+using UnityEngine.UI;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class EnemyManager : MonoBehaviour
     public List<GameObject> guardPosts_List;
     public List<GameObject> patrolRoutes_List;
     public int maxAllowedRobots;
+
+    public Image enemyHPBar;
 
     //max guards + max robots for each patrol = max robots
 
@@ -41,7 +44,7 @@ public class EnemyManager : MonoBehaviour
         else
             AssignGuardPost(newRobot);
 
-        newRobot.GetComponent<enemyAI>().SetEnemyMaterial();
+        newRobot.GetComponent<enemyAI>().SetEnemyStats();
     }
 
     public void AssignGuardPost(GameObject newRobot)
@@ -61,6 +64,7 @@ public class EnemyManager : MonoBehaviour
                 currentGuardPost.GetComponent<GuardPost>().SetIsOccupied(true);
                 break;
             }
+            newRobot.GetComponent<enemyAI>().SetEnemyStats();
         }
     }
 
@@ -85,6 +89,8 @@ public class EnemyManager : MonoBehaviour
                 break;
             }
         }
+
+        newRobot.GetComponent<enemyAI>().SetEnemyStats();
     }
 
     public void RemoveFromGuardRobotsCount()
