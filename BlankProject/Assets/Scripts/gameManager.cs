@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuLose;
 
     [SerializeField] TMP_Text leverCountText;
+    public Image staminaBar;
     public Image healthbar;
     public GameObject redFlash;
 
