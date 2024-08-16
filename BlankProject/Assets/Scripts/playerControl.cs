@@ -120,6 +120,8 @@ public class playerControl : MonoBehaviour, IDamage
 
     void staminaUsage()
     {
+        GameManager.instance.staminaBar.fillAmount = (float)stamina / staminaOG;
+
         if (stamina > 0) 
             hasStamina = true;
 
