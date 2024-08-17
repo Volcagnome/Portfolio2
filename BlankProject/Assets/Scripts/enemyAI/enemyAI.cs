@@ -13,6 +13,7 @@ using UnityEngine.Animations;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 using static UnityEngine.GraphicsBuffer;
+using System;
 
 public class enemyAI : MonoBehaviour, IDamage
 {
@@ -36,6 +37,7 @@ public class enemyAI : MonoBehaviour, IDamage
     //Stats
     int HPOrig;
     [SerializeField] int HP;
+    [SerializeField] float HPIncrease;
     [SerializeField] float shootRate;
     [SerializeField] float combatSpeed;
     [SerializeField] float combatStoppingDistance;
@@ -111,11 +113,13 @@ public class enemyAI : MonoBehaviour, IDamage
         if (isPlayerTarget())
         {
             UpdateEnemyUI();
+            //RegenerateHealth();
         }
+        else
+            enemyHPBar.SetActive(false);
 
         if (isAlerted)
         {
-
             if (!playerInView && !playerInRange)
             {
                 StartCoroutine(PursuePlayer());
@@ -172,6 +176,16 @@ public class enemyAI : MonoBehaviour, IDamage
         if (HP <= 0)
         {
             Death();
+        }
+    }
+
+    void RegenerateHealth()
+    {
+        HP += (int)(HPIncrease);
+
+        if (HP > HPOrig)
+        {
+            HP = HPOrig;
         }
     }
 
@@ -395,7 +409,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
     public void OnPatrol()
     {
-            agent.SetDestination(currentDestination.transform.position);
+         agent.SetDestination(currentDestination.transform.position);
     }
 
 
