@@ -39,9 +39,8 @@ public class damage : MonoBehaviour
         {
             dmg.takeDamage(damageAmount);
             Destroy(gameObject);
-        }
-
-        Destroy(gameObject);
+        }else
+            Destroy(gameObject);
     }
 
 }

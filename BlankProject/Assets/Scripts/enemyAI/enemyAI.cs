@@ -1,7 +1,9 @@
+//using Unity.PlasticSCM.Editor.WebApi;
+//using static UnityEditor.FilePathAttribute;
+//using static UnityEditor.LightingExplorerTableColumn;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security;
-using Unity.PlasticSCM.Editor.WebApi;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -9,8 +11,7 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 using UnityEngine.Animations;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
-using static UnityEditor.FilePathAttribute;
-using static UnityEditor.LightingExplorerTableColumn;
+
 using static UnityEngine.GraphicsBuffer;
 
 public class enemyAI : MonoBehaviour, IDamage
@@ -77,7 +78,7 @@ public class enemyAI : MonoBehaviour, IDamage
         HPOrig = HP;
 
         colorOrig = gameObject.GetComponentInChildren<Renderer>().sharedMaterial.color;
-        if (enemyBehavior == behaviorType.none && tag != "Elite")
+        if (enemyBehavior == behaviorType.none && enemy_Type != enemyType.elite)
             EnemyManager.instance.AssignRole(gameObject);
         else if (enemyBehavior == behaviorType.guard)
         {
@@ -419,6 +420,11 @@ public class enemyAI : MonoBehaviour, IDamage
         }
         else if (enemy_Type == enemyType.elite)
             HP = 50;
+    }
+
+    public enemyType GetEnemyType(GameObject enemy)
+    {
+        return enemy_Type;
     }
 }
  
