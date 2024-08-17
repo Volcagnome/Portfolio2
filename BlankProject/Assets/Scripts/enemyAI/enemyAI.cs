@@ -6,8 +6,8 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 using UnityEngine.Animations;
-using UnityEngine.UIElements;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 using static UnityEditor.FilePathAttribute;
 using static UnityEditor.LightingExplorerTableColumn;
@@ -21,12 +21,16 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] Renderer model;
     [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
+    //[SerializeField] Transform headTopPos;
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject guardBullet;
     [SerializeField] Texture emissionAlerted;
     [SerializeField] Texture emissionIdle;
     [SerializeField] Material guard;
     [SerializeField] Material patrol;
+    public GameObject enemyHPBar;
+    public Image enemyHPBarFill;
+    //[SerializeField] Vector3 HPBarPos;
 
     //Stats
     int HPOrig;
@@ -57,7 +61,6 @@ public class enemyAI : MonoBehaviour, IDamage
     private bool isAlerted;
     private bool isShooting;
     private bool onDuty;
-    private bool isPlayerTarget;
 
     //Ally Detection
     [SerializeField] int allyRadius;
@@ -103,6 +106,11 @@ public class enemyAI : MonoBehaviour, IDamage
         }
         else
             agent.stoppingDistance = idleStoppingDistance;
+
+        if (isPlayerTarget())
+        {
+            UpdateEnemyUI();
+        }
 
         if (isAlerted)
         {
@@ -155,11 +163,9 @@ public class enemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
-        isPlayerTarget = true;
 
             AlertEnemy();
             AlertAllies();
-            UpdateEnemyUI();
             StartCoroutine(flashYellow());
 
         if (HP <= 0)
@@ -168,9 +174,19 @@ public class enemyAI : MonoBehaviour, IDamage
         }
     }
 
+    private bool isPlayerTarget()
+    {
+        if (HP < HPOrig)
+            return true;
+        return false;
+    }
+
     public void UpdateEnemyUI()
     {
-        EnemyManager.instance.enemyHPBar.fillAmount = (float)HP / HPOrig;
+        enemyHPBar.SetActive(true);
+        enemyHPBarFill.fillAmount = (float)HP / HPOrig;
+        //EnemyManager.instance.enemyHPBar.transform.position = headTopPos.position + HPBarPos;
+        enemyHPBar.transform.parent.rotation = Camera.main.transform.rotation;
     }
 
     public void criticalHit(int amount)
