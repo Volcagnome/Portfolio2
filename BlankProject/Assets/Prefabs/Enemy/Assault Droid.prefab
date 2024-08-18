@@ -597,15 +597,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: d06cdfe4ae390d446bd68ce9cf8b25ab, type: 3}
       propertyPath: m_LocalScale.x
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: d06cdfe4ae390d446bd68ce9cf8b25ab, type: 3}
       propertyPath: m_LocalScale.y
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: d06cdfe4ae390d446bd68ce9cf8b25ab, type: 3}
       propertyPath: m_LocalScale.z
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: d06cdfe4ae390d446bd68ce9cf8b25ab, type: 3}
       propertyPath: m_LocalPosition.x
@@ -710,7 +710,6 @@ MonoBehaviour:
   model: {fileID: 5665456164780527369}
   shootPos: {fileID: 2429012608310342896}
   headPos: {fileID: 3718649076463593151}
-  headTopPos: {fileID: 5665456164785970721}
   bullet: {fileID: 4005459997384909482, guid: f3df2a379677235429bf837d6aa0e3c7, type: 3}
   guardBullet: {fileID: 6804835773319123192, guid: 691bd9694255b394ba715e419013b5c0, type: 3}
   emissionAlerted: {fileID: 2800000, guid: b5036c56ec4ee89419b3dada015d7ce3, type: 3}
@@ -720,6 +719,7 @@ MonoBehaviour:
   enemyHPBar: {fileID: 5151813184323870704}
   enemyHPBarFill: {fileID: 2012491061337781753}
   HP: 6
+  HPIncrease: 0
   shootRate: 0.5
   combatSpeed: 4
   combatStoppingDistance: 8
@@ -805,11 +805,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
---- !u!4 &5665456164785970721 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400008, guid: d06cdfe4ae390d446bd68ce9cf8b25ab, type: 3}
-  m_PrefabInstance: {fileID: 5665456164785833129}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5665456164785970733 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400004, guid: d06cdfe4ae390d446bd68ce9cf8b25ab, type: 3}

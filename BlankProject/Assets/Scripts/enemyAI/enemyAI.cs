@@ -1,9 +1,7 @@
-//using Unity.PlasticSCM.Editor.WebApi;
-//using static UnityEditor.FilePathAttribute;
-//using static UnityEditor.LightingExplorerTableColumn;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security;
+using Unity.PlasticSCM.Editor.WebApi;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -11,7 +9,8 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 using UnityEngine.Animations;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
-
+using static UnityEditor.FilePathAttribute;
+using static UnityEditor.LightingExplorerTableColumn;
 using static UnityEngine.GraphicsBuffer;
 using System;
 
@@ -80,7 +79,7 @@ public class enemyAI : MonoBehaviour, IDamage
         HPOrig = HP;
 
         colorOrig = gameObject.GetComponentInChildren<Renderer>().sharedMaterial.color;
-        if (enemyBehavior == behaviorType.none && enemy_Type != enemyType.elite)
+        if (enemyBehavior == behaviorType.none && tag != "Elite")
             EnemyManager.instance.AssignRole(gameObject);
         else if (enemyBehavior == behaviorType.guard)
         {
@@ -145,6 +144,8 @@ public class enemyAI : MonoBehaviour, IDamage
     ////////////////////////////////////////
     ///           COMBAT                 ///
     ////////////////////////////////////////
+    
+    
     private void FoundPlayer()
     {
         agent.SetDestination(GameManager.instance.player.transform.position);
@@ -292,8 +293,6 @@ public class enemyAI : MonoBehaviour, IDamage
     ///       PLAYER DETECTION            ///
     ////////////////////////////////////////
 
-
-
     //When player enters detection range toggles playerInRange variable
     private void OnTriggerEnter(Collider other)
     {
@@ -352,6 +351,13 @@ public class enemyAI : MonoBehaviour, IDamage
         transform.rotation = Quaternion.Lerp(transform.rotation,rotationToDirection, Time.deltaTime * rotationSpeed);
     }
 
+
+
+    ////////////////////////////////////////
+    ///          ENEMY BEHAVIOR         ///
+    ///////////////////////////////////////
+
+
     private void ReturnToPost()
     {
         onDuty = true;
@@ -365,7 +371,32 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             OnPatrol();
         }
-        
+    }
+
+    public void OnPatrol()
+    {
+        agent.SetDestination(currentDestination.transform.position);
+    }
+
+    private bool CheckIfArrived(Vector3 location)
+    {
+        if (Vector3.Distance(transform.position, location) <= 1.3)
+        {
+            return true;
+        }
+        else
+            return false;
+    }
+
+
+    ////////////////////////////////////////
+    ///          GETTERS/SETTERS         ///
+    ///////////////////////////////////////
+
+
+    public GameObject GetDefaultPost()
+    {
+        return defaultPost;
     }
 
     public void SetDefaultPost(GameObject post)
@@ -373,28 +404,15 @@ public class enemyAI : MonoBehaviour, IDamage
         defaultPost = post;
     }
 
-    public GameObject GetDefaultPost()
+
+    public behaviorType GetBehaviorType()
     {
-        return defaultPost;
+        return enemyBehavior;
     }
 
     public void SetBehavior(behaviorType behavior)
     {
         enemyBehavior = behavior;
-    }
-    private bool CheckIfArrived(Vector3 location)
-    {
-        if (Vector3.Distance(transform.position,location) <= 1.3)
-        { 
-            return true;
-        }
-        else
-            return false;
-    }
-
-    public void SetCurrentDestination(GameObject destination)
-    {
-        currentDestination = destination;
     }
 
     public GameObject GetCurrentDestination()
@@ -402,14 +420,15 @@ public class enemyAI : MonoBehaviour, IDamage
         return currentDestination;
     }
 
+    public void SetCurrentDestination(GameObject destination)
+    {
+        currentDestination = destination;
+    }
+
+
     public bool CheckIfOnDuty()
     {
         return onDuty;
-    }
-
-    public void OnPatrol()
-    {
-         agent.SetDestination(currentDestination.transform.position);
     }
 
 
@@ -436,7 +455,7 @@ public class enemyAI : MonoBehaviour, IDamage
             HP = 50;
     }
 
-    public enemyType GetEnemyType(GameObject enemy)
+    public enemyType GetEnemyType()
     {
         return enemy_Type;
     }

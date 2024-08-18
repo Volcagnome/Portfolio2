@@ -121,7 +121,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: ed9707f813d8da2428703cf5f1382cab, type: 2}
 --- !u!1001 &6553289
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -133,6 +133,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (59)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -216,7 +220,7 @@ GameObject:
   - component: {fileID: 10139491}
   - component: {fileID: 10139490}
   - component: {fileID: 10139489}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (79)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -326,7 +330,7 @@ GameObject:
   - component: {fileID: 12594777}
   - component: {fileID: 12594776}
   - component: {fileID: 12594775}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (130)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -437,6 +441,10 @@ PrefabInstance:
       value: Wall (21)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -523,7 +531,7 @@ GameObject:
   - component: {fileID: 26580811}
   - component: {fileID: 26580810}
   - component: {fileID: 26580809}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (138)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -628,7 +636,7 @@ GameObject:
   - component: {fileID: 28187049}
   - component: {fileID: 28187048}
   - component: {fileID: 28187047}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (73)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -726,88 +734,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
   m_PrefabInstance: {fileID: 2246840361143423840}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &32192949
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 8026946559226727317}
-    m_Modifications:
-    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_Name
-      value: Wall (65)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_NavMeshLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -71.74981
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -62.0002
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
---- !u!4 &32192950 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-  m_PrefabInstance: {fileID: 32192949}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &44971545
 GameObject:
   m_ObjectHideFlags: 0
@@ -820,7 +746,7 @@ GameObject:
   - component: {fileID: 44971549}
   - component: {fileID: 44971548}
   - component: {fileID: 44971547}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (134)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -926,6 +852,10 @@ PrefabInstance:
       value: Wall (46)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -1006,6 +936,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (68)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -1089,7 +1023,7 @@ GameObject:
   - component: {fileID: 83384699}
   - component: {fileID: 83384698}
   - component: {fileID: 83384697}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (65)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1199,7 +1133,7 @@ GameObject:
   - component: {fileID: 107322753}
   - component: {fileID: 107322752}
   - component: {fileID: 107322751}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (70)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1304,7 +1238,7 @@ GameObject:
   - component: {fileID: 121691484}
   - component: {fileID: 121691483}
   - component: {fileID: 121691482}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (32)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1405,22 +1339,46 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8026946557338554232}
     m_Modifications:
+    - target: {fileID: 24529480291272400, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 113462387358326373, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
       propertyPath: m_Name
       value: EastFence (15)
+      objectReference: {fileID: 0}
+    - target: {fileID: 113462387358326373, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 717599546421110255, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 131a59d35ddfb154ea54316d6cef853a, type: 2}
+    - target: {fileID: 1128024286032640536, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 2336450270159735745, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 131a59d35ddfb154ea54316d6cef853a, type: 2}
+    - target: {fileID: 2993359417962792571, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3012614266166225150, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3430639377788237577, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 131a59d35ddfb154ea54316d6cef853a, type: 2}
+    - target: {fileID: 6210626843128288295, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8026946559299628366, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1524,7 +1482,7 @@ GameObject:
   - component: {fileID: 173668458}
   - component: {fileID: 173668457}
   - component: {fileID: 173668456}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (157)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1629,7 +1587,7 @@ GameObject:
   - component: {fileID: 181536844}
   - component: {fileID: 181536843}
   - component: {fileID: 181536842}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (82)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1735,6 +1693,10 @@ PrefabInstance:
       value: Wall (23)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -1821,7 +1783,7 @@ GameObject:
   - component: {fileID: 190380583}
   - component: {fileID: 190380582}
   - component: {fileID: 190380581}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (74)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1927,6 +1889,10 @@ PrefabInstance:
       value: Wall (36)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -2008,7 +1974,7 @@ GameObject:
   - component: {fileID: 195244075}
   - component: {fileID: 195244074}
   - component: {fileID: 195244073}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (75)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2114,6 +2080,10 @@ PrefabInstance:
       value: Wall (87)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -2194,6 +2164,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (23)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -2282,7 +2256,7 @@ GameObject:
   - component: {fileID: 252739766}
   - component: {fileID: 252739765}
   - component: {fileID: 252739764}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (78)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2497,7 +2471,7 @@ GameObject:
   - component: {fileID: 255752342}
   - component: {fileID: 255752341}
   - component: {fileID: 255752340}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (102)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2602,7 +2576,7 @@ GameObject:
   - component: {fileID: 257943878}
   - component: {fileID: 257943877}
   - component: {fileID: 257943876}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (64)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2712,7 +2686,7 @@ GameObject:
   - component: {fileID: 266951032}
   - component: {fileID: 266951031}
   - component: {fileID: 266951030}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (70)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2817,7 +2791,7 @@ GameObject:
   - component: {fileID: 267215709}
   - component: {fileID: 267215708}
   - component: {fileID: 267215707}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (088)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2922,7 +2896,7 @@ GameObject:
   - component: {fileID: 274057275}
   - component: {fileID: 274057274}
   - component: {fileID: 274057273}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (159)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3027,7 +3001,7 @@ GameObject:
   - component: {fileID: 276304779}
   - component: {fileID: 276304778}
   - component: {fileID: 276304777}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (114)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3133,6 +3107,10 @@ PrefabInstance:
       value: Wall (23)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -3209,7 +3187,7 @@ GameObject:
   - component: {fileID: 281148687}
   - component: {fileID: 281148686}
   - component: {fileID: 281148685}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (115)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3320,6 +3298,10 @@ PrefabInstance:
       value: Wall (75)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -3407,6 +3389,10 @@ PrefabInstance:
       value: Wall (72)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -3488,6 +3474,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: EastFence (13)
       objectReference: {fileID: 0}
+    - target: {fileID: 113462387358326373, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2993359417962792571, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4989202672137505497, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5062829892598441933, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6210626843128288295, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8026946559299628366, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.000059008587
@@ -3548,7 +3554,7 @@ GameObject:
   - component: {fileID: 313744711}
   - component: {fileID: 313744710}
   - component: {fileID: 313744709}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (153)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3653,7 +3659,7 @@ GameObject:
   - component: {fileID: 314439208}
   - component: {fileID: 314439207}
   - component: {fileID: 314439206}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (152)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3759,6 +3765,10 @@ PrefabInstance:
       value: Wall (27)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -3839,6 +3849,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (48)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -3927,6 +3941,10 @@ PrefabInstance:
       value: Wall (44)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -4007,6 +4025,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (27)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -4090,7 +4112,7 @@ GameObject:
   - component: {fileID: 331917388}
   - component: {fileID: 331917387}
   - component: {fileID: 331917386}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (109)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4195,7 +4217,7 @@ GameObject:
   - component: {fileID: 339370171}
   - component: {fileID: 339370170}
   - component: {fileID: 339370169}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (143)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4301,6 +4323,10 @@ PrefabInstance:
       value: Wall (63)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -4392,7 +4418,7 @@ GameObject:
   - component: {fileID: 357468573}
   - component: {fileID: 357468572}
   - component: {fileID: 357468571}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (086)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4497,7 +4523,7 @@ GameObject:
   - component: {fileID: 362433029}
   - component: {fileID: 362433028}
   - component: {fileID: 362433027}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (79)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4602,7 +4628,7 @@ GameObject:
   - component: {fileID: 362739263}
   - component: {fileID: 362739262}
   - component: {fileID: 362739261}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (136)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4708,6 +4734,10 @@ PrefabInstance:
       value: Wall (23)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -4783,6 +4813,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (31)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -4876,7 +4910,7 @@ GameObject:
   - component: {fileID: 387306188}
   - component: {fileID: 387306187}
   - component: {fileID: 387306186}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (96)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4981,7 +5015,7 @@ GameObject:
   - component: {fileID: 391215790}
   - component: {fileID: 391215789}
   - component: {fileID: 391215788}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (147)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5086,7 +5120,7 @@ GameObject:
   - component: {fileID: 401789143}
   - component: {fileID: 401789142}
   - component: {fileID: 401789141}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (145)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5191,7 +5225,7 @@ GameObject:
   - component: {fileID: 417083674}
   - component: {fileID: 417083673}
   - component: {fileID: 417083672}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (112)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5401,7 +5435,7 @@ GameObject:
   - component: {fileID: 435867196}
   - component: {fileID: 435867195}
   - component: {fileID: 435867194}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (31)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5506,7 +5540,7 @@ GameObject:
   - component: {fileID: 448246245}
   - component: {fileID: 448246244}
   - component: {fileID: 448246243}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (106)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5611,7 +5645,7 @@ GameObject:
   - component: {fileID: 451737721}
   - component: {fileID: 451737720}
   - component: {fileID: 451737719}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (150)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5716,7 +5750,7 @@ GameObject:
   - component: {fileID: 452234348}
   - component: {fileID: 452234347}
   - component: {fileID: 452234346}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (26)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5821,7 +5855,7 @@ GameObject:
   - component: {fileID: 466535924}
   - component: {fileID: 466535923}
   - component: {fileID: 466535922}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (93)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5927,6 +5961,10 @@ PrefabInstance:
       value: Wall (29)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -6005,7 +6043,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 484299114}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6039,7 +6077,7 @@ GameObject:
   - component: {fileID: 485234748}
   - component: {fileID: 485234747}
   - component: {fileID: 485234746}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (55)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6144,7 +6182,7 @@ GameObject:
   - component: {fileID: 490285502}
   - component: {fileID: 490285501}
   - component: {fileID: 490285500}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (103)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6255,6 +6293,10 @@ PrefabInstance:
       value: Wall (32)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -6341,7 +6383,7 @@ GameObject:
   - component: {fileID: 511058928}
   - component: {fileID: 511058927}
   - component: {fileID: 511058926}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (110)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6457,6 +6499,10 @@ PrefabInstance:
       value: Wall (26)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -6543,7 +6589,7 @@ GameObject:
   - component: {fileID: 529568471}
   - component: {fileID: 529568470}
   - component: {fileID: 529568469}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (35)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6649,6 +6695,10 @@ PrefabInstance:
       value: Wall (20)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -6730,7 +6780,7 @@ GameObject:
   - component: {fileID: 543337659}
   - component: {fileID: 543337658}
   - component: {fileID: 543337657}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (106)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6841,6 +6891,10 @@ PrefabInstance:
       value: Wall (71)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -6922,7 +6976,7 @@ GameObject:
   - component: {fileID: 554849280}
   - component: {fileID: 554849279}
   - component: {fileID: 554849278}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (81)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7026,6 +7080,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (61)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -7219,7 +7277,7 @@ GameObject:
   - component: {fileID: 586471383}
   - component: {fileID: 586471382}
   - component: {fileID: 586471381}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (123)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7434,7 +7492,7 @@ GameObject:
   - component: {fileID: 622975315}
   - component: {fileID: 622975314}
   - component: {fileID: 622975313}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (85)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7540,6 +7598,10 @@ PrefabInstance:
       value: Wall (61)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -7621,7 +7683,7 @@ GameObject:
   - component: {fileID: 636396996}
   - component: {fileID: 636396995}
   - component: {fileID: 636396994}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (109)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7726,7 +7788,7 @@ GameObject:
   - component: {fileID: 638389925}
   - component: {fileID: 638389924}
   - component: {fileID: 638389923}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (80)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7837,6 +7899,10 @@ PrefabInstance:
       value: Wall (34)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -7918,7 +7984,7 @@ GameObject:
   - component: {fileID: 660879743}
   - component: {fileID: 660879742}
   - component: {fileID: 660879741}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (34)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8023,7 +8089,7 @@ GameObject:
   - component: {fileID: 662189823}
   - component: {fileID: 662189822}
   - component: {fileID: 662189821}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (100)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8128,7 +8194,7 @@ GameObject:
   - component: {fileID: 663302972}
   - component: {fileID: 663302971}
   - component: {fileID: 663302970}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (112)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8238,7 +8304,7 @@ GameObject:
   - component: {fileID: 668178087}
   - component: {fileID: 668178086}
   - component: {fileID: 668178085}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (30)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8343,7 +8409,7 @@ GameObject:
   - component: {fileID: 668316406}
   - component: {fileID: 668316405}
   - component: {fileID: 668316404}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (129)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8448,7 +8514,7 @@ GameObject:
   - component: {fileID: 677330802}
   - component: {fileID: 677330801}
   - component: {fileID: 677330800}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (77)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8553,7 +8619,7 @@ GameObject:
   - component: {fileID: 704723196}
   - component: {fileID: 704723195}
   - component: {fileID: 704723194}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (97)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8659,6 +8725,10 @@ PrefabInstance:
       value: Wall (60)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -8739,6 +8809,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (64)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -8832,7 +8906,7 @@ GameObject:
   - component: {fileID: 739874905}
   - component: {fileID: 739874904}
   - component: {fileID: 739874903}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (111)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8938,6 +9012,10 @@ PrefabInstance:
       value: Wall (28)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -9030,6 +9108,10 @@ PrefabInstance:
       value: Wall (69)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -9116,7 +9198,7 @@ GameObject:
   - component: {fileID: 770461642}
   - component: {fileID: 770461641}
   - component: {fileID: 770461640}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (127)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9221,7 +9303,7 @@ GameObject:
   - component: {fileID: 771131274}
   - component: {fileID: 771131273}
   - component: {fileID: 771131272}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (116)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9327,6 +9409,10 @@ PrefabInstance:
       value: Wall (59)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -9413,7 +9499,7 @@ GameObject:
   - component: {fileID: 810314279}
   - component: {fileID: 810314278}
   - component: {fileID: 810314277}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (56)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9625,6 +9711,10 @@ PrefabInstance:
       value: Wall (39)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -9706,7 +9796,7 @@ GameObject:
   - component: {fileID: 814682655}
   - component: {fileID: 814682654}
   - component: {fileID: 814682653}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (37)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9811,7 +9901,7 @@ GameObject:
   - component: {fileID: 816715606}
   - component: {fileID: 816715605}
   - component: {fileID: 816715604}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (99)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9922,6 +10012,10 @@ PrefabInstance:
       value: Wall (47)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -10009,6 +10103,10 @@ PrefabInstance:
       value: Wall (76)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -10091,9 +10189,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8026946557337783343}
     m_Modifications:
+    - target: {fileID: 24529480291272400, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 113462387358326373, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
       propertyPath: m_Name
       value: EastFence (15)
+      objectReference: {fileID: 0}
+    - target: {fileID: 113462387358326373, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1128024286032640536, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2993359417962792571, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3012614266166225150, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6210626843128288295, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8026946559299628366, guid: 904d8d08b6315e04fbf94fea53737220, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10164,7 +10286,7 @@ GameObject:
   - component: {fileID: 859849858}
   - component: {fileID: 859849857}
   - component: {fileID: 859849856}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (82)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10269,7 +10391,7 @@ GameObject:
   - component: {fileID: 869698988}
   - component: {fileID: 869698987}
   - component: {fileID: 869698986}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (84)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10379,7 +10501,7 @@ GameObject:
   - component: {fileID: 881531042}
   - component: {fileID: 881531041}
   - component: {fileID: 881531040}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (113)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10484,7 +10606,7 @@ GameObject:
   - component: {fileID: 883985894}
   - component: {fileID: 883985893}
   - component: {fileID: 883985892}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (23)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10594,7 +10716,7 @@ GameObject:
   - component: {fileID: 893366972}
   - component: {fileID: 893366971}
   - component: {fileID: 893366970}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (156)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10705,6 +10827,10 @@ PrefabInstance:
       value: Wall (40)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -10785,6 +10911,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (43)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -10873,7 +11003,7 @@ GameObject:
   - component: {fileID: 932789262}
   - component: {fileID: 932789261}
   - component: {fileID: 932789260}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (121)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10984,6 +11114,10 @@ PrefabInstance:
       value: Wall (25)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -11070,7 +11204,7 @@ GameObject:
   - component: {fileID: 950791401}
   - component: {fileID: 950791400}
   - component: {fileID: 950791399}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (94)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11176,6 +11310,10 @@ PrefabInstance:
       value: Wall (62)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -11256,6 +11394,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (85)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -11340,6 +11482,10 @@ PrefabInstance:
       value: Wall (42)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -11421,7 +11567,7 @@ GameObject:
   - component: {fileID: 978804165}
   - component: {fileID: 978804164}
   - component: {fileID: 978804163}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (118)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11526,7 +11672,7 @@ GameObject:
   - component: {fileID: 984005449}
   - component: {fileID: 984005448}
   - component: {fileID: 984005447}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (78)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11631,7 +11777,7 @@ GameObject:
   - component: {fileID: 990839002}
   - component: {fileID: 990839001}
   - component: {fileID: 990839000}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (88)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11741,7 +11887,7 @@ GameObject:
   - component: {fileID: 1016733297}
   - component: {fileID: 1016733296}
   - component: {fileID: 1016733295}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (58)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11846,7 +11992,7 @@ GameObject:
   - component: {fileID: 1016830677}
   - component: {fileID: 1016830676}
   - component: {fileID: 1016830675}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (128)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11951,7 +12097,7 @@ GameObject:
   - component: {fileID: 1018081059}
   - component: {fileID: 1018081058}
   - component: {fileID: 1018081057}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (77)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12071,7 +12217,7 @@ GameObject:
   - component: {fileID: 1038306155}
   - component: {fileID: 1038306154}
   - component: {fileID: 1038306153}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (69)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12182,6 +12328,10 @@ PrefabInstance:
       value: Wall (41)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -12268,7 +12418,7 @@ GameObject:
   - component: {fileID: 1055582447}
   - component: {fileID: 1055582446}
   - component: {fileID: 1055582445}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (73)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12373,7 +12523,7 @@ GameObject:
   - component: {fileID: 1059079498}
   - component: {fileID: 1059079497}
   - component: {fileID: 1059079496}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (119)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12477,6 +12627,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (73)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -12585,7 +12739,7 @@ GameObject:
   - component: {fileID: 1102217501}
   - component: {fileID: 1102217500}
   - component: {fileID: 1102217499}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (84)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12701,6 +12855,10 @@ PrefabInstance:
       value: Wall (158)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -12792,7 +12950,7 @@ GameObject:
   - component: {fileID: 1154079413}
   - component: {fileID: 1154079412}
   - component: {fileID: 1154079411}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (74)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12897,7 +13055,7 @@ GameObject:
   - component: {fileID: 1154506737}
   - component: {fileID: 1154506736}
   - component: {fileID: 1154506735}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (117)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13008,6 +13166,10 @@ PrefabInstance:
       value: Wall (24)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -13089,7 +13251,7 @@ GameObject:
   - component: {fileID: 1166366518}
   - component: {fileID: 1166366517}
   - component: {fileID: 1166366516}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (60)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13204,7 +13366,7 @@ GameObject:
   - component: {fileID: 1178685987}
   - component: {fileID: 1178685986}
   - component: {fileID: 1178685985}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (107)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13314,7 +13476,7 @@ GameObject:
   - component: {fileID: 1191331053}
   - component: {fileID: 1191331052}
   - component: {fileID: 1191331051}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (142)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13424,7 +13586,7 @@ GameObject:
   - component: {fileID: 1197208890}
   - component: {fileID: 1197208889}
   - component: {fileID: 1197208888}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (149)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13529,7 +13691,7 @@ GameObject:
   - component: {fileID: 1230438415}
   - component: {fileID: 1230438414}
   - component: {fileID: 1230438413}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (87)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13634,7 +13796,7 @@ GameObject:
   - component: {fileID: 1243676668}
   - component: {fileID: 1243676667}
   - component: {fileID: 1243676666}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (71)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13740,6 +13902,10 @@ PrefabInstance:
       value: Wall (24)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -13820,6 +13986,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (52)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -13917,7 +14087,7 @@ GameObject:
   - component: {fileID: 1282134043}
   - component: {fileID: 1282134042}
   - component: {fileID: 1282134041}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (105)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14028,6 +14198,10 @@ PrefabInstance:
       value: Wall (80)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -14115,6 +14289,10 @@ PrefabInstance:
       value: Wall (38)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -14196,7 +14374,7 @@ GameObject:
   - component: {fileID: 1312092018}
   - component: {fileID: 1312092017}
   - component: {fileID: 1312092016}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (120)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14301,7 +14479,7 @@ GameObject:
   - component: {fileID: 1314692803}
   - component: {fileID: 1314692802}
   - component: {fileID: 1314692801}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (087)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14406,6 +14584,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Floor
       objectReference: {fileID: 0}
+    - target: {fileID: 4174749436653416396, guid: fb0530dbfd3ffdb41be14c774d1d242b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7312880804062565517, guid: fb0530dbfd3ffdb41be14c774d1d242b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -15
@@ -14472,6 +14654,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (30)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -14556,6 +14742,10 @@ PrefabInstance:
       value: Wall (78)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -14637,7 +14827,7 @@ GameObject:
   - component: {fileID: 1338142389}
   - component: {fileID: 1338142388}
   - component: {fileID: 1338142387}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (111)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14748,6 +14938,10 @@ PrefabInstance:
       value: Wall (84)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -14828,6 +15022,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (70)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -14911,7 +15109,7 @@ GameObject:
   - component: {fileID: 1358228459}
   - component: {fileID: 1358228458}
   - component: {fileID: 1358228457}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (131)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15016,7 +15214,7 @@ GameObject:
   - component: {fileID: 1361336367}
   - component: {fileID: 1361336366}
   - component: {fileID: 1361336365}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (104)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15122,6 +15320,10 @@ PrefabInstance:
       value: Wall (53)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -15203,7 +15405,7 @@ GameObject:
   - component: {fileID: 1374641265}
   - component: {fileID: 1374641264}
   - component: {fileID: 1374641263}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (75)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15308,7 +15510,7 @@ GameObject:
   - component: {fileID: 1375701142}
   - component: {fileID: 1375701141}
   - component: {fileID: 1375701140}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (81)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15419,6 +15621,10 @@ PrefabInstance:
       value: Wall (56)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -15499,6 +15705,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (29)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -15583,6 +15793,10 @@ PrefabInstance:
       value: Wall (86)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -15664,7 +15878,7 @@ GameObject:
   - component: {fileID: 1397343078}
   - component: {fileID: 1397343077}
   - component: {fileID: 1397343076}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (108)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15769,7 +15983,7 @@ GameObject:
   - component: {fileID: 1415276164}
   - component: {fileID: 1415276163}
   - component: {fileID: 1415276162}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (67)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15978,7 +16192,7 @@ GameObject:
   - component: {fileID: 1431286822}
   - component: {fileID: 1431286821}
   - component: {fileID: 1431286820}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (140)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16083,7 +16297,7 @@ GameObject:
   - component: {fileID: 1451700310}
   - component: {fileID: 1451700309}
   - component: {fileID: 1451700308}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (98)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16188,7 +16402,7 @@ GameObject:
   - component: {fileID: 1452345686}
   - component: {fileID: 1452345685}
   - component: {fileID: 1452345684}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (113)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16294,6 +16508,10 @@ PrefabInstance:
       value: Wall (62)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -16375,7 +16593,7 @@ GameObject:
   - component: {fileID: 1455682764}
   - component: {fileID: 1455682763}
   - component: {fileID: 1455682762}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (151)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16485,7 +16703,7 @@ GameObject:
   - component: {fileID: 1463895043}
   - component: {fileID: 1463895042}
   - component: {fileID: 1463895041}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (95)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16596,6 +16814,10 @@ PrefabInstance:
       value: Wall (71)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -16677,7 +16899,7 @@ GameObject:
   - component: {fileID: 1485885129}
   - component: {fileID: 1485885128}
   - component: {fileID: 1485885127}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (72)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16774,6 +16996,11 @@ MeshFilter:
 Transform:
   m_CorrespondingSourceObject: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
   m_PrefabInstance: {fileID: 6254133796955780302}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1495939715 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1393024804093755387, guid: aede6e7aed339c24fb121765245114e7, type: 3}
+  m_PrefabInstance: {fileID: 1526526049}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1514709834
 GameObject:
@@ -16882,6 +17109,10 @@ PrefabInstance:
       value: Wall (57)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -16965,7 +17196,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1873779335719706887, guid: aede6e7aed339c24fb121765245114e7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -85.75
+      value: -38
       objectReference: {fileID: 0}
     - target: {fileID: 1873779335719706887, guid: aede6e7aed339c24fb121765245114e7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -16973,7 +17204,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1873779335719706887, guid: aede6e7aed339c24fb121765245114e7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -141.25
+      value: -155.75
       objectReference: {fileID: 0}
     - target: {fileID: 1873779335719706887, guid: aede6e7aed339c24fb121765245114e7, type: 3}
       propertyPath: m_LocalRotation.w
@@ -17020,7 +17251,7 @@ GameObject:
   - component: {fileID: 1528792928}
   - component: {fileID: 1528792927}
   - component: {fileID: 1528792926}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (154)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17125,7 +17356,7 @@ GameObject:
   - component: {fileID: 1539956562}
   - component: {fileID: 1539956561}
   - component: {fileID: 1539956560}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (76)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17336,6 +17567,10 @@ PrefabInstance:
       value: Wall (83)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -17416,6 +17651,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (51)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -17499,6 +17738,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 311933658342899043, guid: 17dfd505d6ac8f94385c38b826632bed, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1495939715}
     - target: {fileID: 2244296634606225896, guid: 17dfd505d6ac8f94385c38b826632bed, type: 3}
       propertyPath: m_Name
       value: UI
@@ -17591,6 +17834,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9007345001173383165, guid: 17dfd505d6ac8f94385c38b826632bed, type: 3}
+      propertyPath: EnemySpawnInterval
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -17607,6 +17854,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (23)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -17685,7 +17936,7 @@ GameObject:
   - component: {fileID: 1581612170}
   - component: {fileID: 1581612169}
   - component: {fileID: 1581612168}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (135)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17790,7 +18041,7 @@ GameObject:
   - component: {fileID: 1597225354}
   - component: {fileID: 1597225353}
   - component: {fileID: 1597225352}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (148)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17905,7 +18156,7 @@ GameObject:
   - component: {fileID: 1621969292}
   - component: {fileID: 1621969291}
   - component: {fileID: 1621969290}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (126)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18015,7 +18266,7 @@ GameObject:
   - component: {fileID: 1624519835}
   - component: {fileID: 1624519834}
   - component: {fileID: 1624519833}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (29)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18125,7 +18376,7 @@ GameObject:
   - component: {fileID: 1650665794}
   - component: {fileID: 1650665793}
   - component: {fileID: 1650665792}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (108)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18230,7 +18481,7 @@ GameObject:
   - component: {fileID: 1665235807}
   - component: {fileID: 1665235806}
   - component: {fileID: 1665235805}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (36)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18335,7 +18586,7 @@ GameObject:
   - component: {fileID: 1668327227}
   - component: {fileID: 1668327226}
   - component: {fileID: 1668327225}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (72)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18446,6 +18697,10 @@ PrefabInstance:
       value: Wall (24)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -18526,6 +18781,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (49)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -18614,6 +18873,10 @@ PrefabInstance:
       value: Wall (37)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -18694,6 +18957,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (22)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -18783,6 +19050,10 @@ PrefabInstance:
       value: Wall (33)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -18863,6 +19134,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (50)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -18947,6 +19222,10 @@ PrefabInstance:
       value: Wall (45)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -19027,6 +19306,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (26)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -19116,6 +19399,10 @@ PrefabInstance:
       value: Wall (82)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -19197,7 +19484,7 @@ GameObject:
   - component: {fileID: 1769808084}
   - component: {fileID: 1769808083}
   - component: {fileID: 1769808082}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (107)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19302,7 +19589,7 @@ GameObject:
   - component: {fileID: 1780523702}
   - component: {fileID: 1780523701}
   - component: {fileID: 1780523700}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (146)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19407,7 +19694,7 @@ GameObject:
   - component: {fileID: 1786099388}
   - component: {fileID: 1786099387}
   - component: {fileID: 1786099386}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (25)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19512,7 +19799,7 @@ GameObject:
   - component: {fileID: 1786829141}
   - component: {fileID: 1786829140}
   - component: {fileID: 1786829139}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (132)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19618,6 +19905,10 @@ PrefabInstance:
       value: Wall (88)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -19699,7 +19990,7 @@ GameObject:
   - component: {fileID: 1798391546}
   - component: {fileID: 1798391545}
   - component: {fileID: 1798391544}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (83)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19804,7 +20095,7 @@ GameObject:
   - component: {fileID: 1809714359}
   - component: {fileID: 1809714358}
   - component: {fileID: 1809714357}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (28)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19915,6 +20206,10 @@ PrefabInstance:
       value: Wall (58)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -19995,6 +20290,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (74)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -20084,6 +20383,10 @@ PrefabInstance:
       value: Wall (55)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -20165,7 +20468,7 @@ GameObject:
   - component: {fileID: 1856081815}
   - component: {fileID: 1856081814}
   - component: {fileID: 1856081813}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (85)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20270,7 +20573,7 @@ GameObject:
   - component: {fileID: 1864470766}
   - component: {fileID: 1864470765}
   - component: {fileID: 1864470764}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (69)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20375,7 +20678,7 @@ GameObject:
   - component: {fileID: 1865676874}
   - component: {fileID: 1865676873}
   - component: {fileID: 1865676872}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (33)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20490,7 +20793,7 @@ GameObject:
   - component: {fileID: 1880896184}
   - component: {fileID: 1880896183}
   - component: {fileID: 1880896182}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (83)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20600,7 +20903,7 @@ GameObject:
   - component: {fileID: 1894964706}
   - component: {fileID: 1894964705}
   - component: {fileID: 1894964704}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (76)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20706,6 +21009,10 @@ PrefabInstance:
       value: Wall (23)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -20787,7 +21094,7 @@ GameObject:
   - component: {fileID: 1897831826}
   - component: {fileID: 1897831825}
   - component: {fileID: 1897831824}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (122)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20892,7 +21199,7 @@ GameObject:
   - component: {fileID: 1920497558}
   - component: {fileID: 1920497557}
   - component: {fileID: 1920497556}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (137)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21002,7 +21309,7 @@ GameObject:
   - component: {fileID: 1933996287}
   - component: {fileID: 1933996286}
   - component: {fileID: 1933996285}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (125)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21107,7 +21414,7 @@ GameObject:
   - component: {fileID: 1936058859}
   - component: {fileID: 1936058858}
   - component: {fileID: 1936058857}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (110)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21212,7 +21519,7 @@ GameObject:
   - component: {fileID: 1940260674}
   - component: {fileID: 1940260673}
   - component: {fileID: 1940260672}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (86)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21318,6 +21625,10 @@ PrefabInstance:
       value: Wall (25)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -21399,7 +21710,7 @@ GameObject:
   - component: {fileID: 1954395282}
   - component: {fileID: 1954395281}
   - component: {fileID: 1954395280}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (80)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21504,7 +21815,7 @@ GameObject:
   - component: {fileID: 1958831129}
   - component: {fileID: 1958831128}
   - component: {fileID: 1958831127}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (139)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21609,7 +21920,7 @@ GameObject:
   - component: {fileID: 1960218122}
   - component: {fileID: 1960218121}
   - component: {fileID: 1960218120}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (57)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21714,7 +22025,7 @@ GameObject:
   - component: {fileID: 1968215740}
   - component: {fileID: 1968215739}
   - component: {fileID: 1968215738}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (91)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21819,7 +22130,7 @@ GameObject:
   - component: {fileID: 1969882450}
   - component: {fileID: 1969882449}
   - component: {fileID: 1969882448}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (66)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21925,6 +22236,10 @@ PrefabInstance:
       value: Wall (23)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -22006,7 +22321,7 @@ GameObject:
   - component: {fileID: 1978818172}
   - component: {fileID: 1978818171}
   - component: {fileID: 1978818170}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (133)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22111,7 +22426,7 @@ GameObject:
   - component: {fileID: 1980316187}
   - component: {fileID: 1980316186}
   - component: {fileID: 1980316185}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (155)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22217,6 +22532,10 @@ PrefabInstance:
       value: Wall (54)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -22309,6 +22628,10 @@ PrefabInstance:
       value: Wall (81)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -22395,7 +22718,7 @@ GameObject:
   - component: {fileID: 1995927424}
   - component: {fileID: 1995927423}
   - component: {fileID: 1995927422}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (144)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22506,6 +22829,10 @@ PrefabInstance:
       value: Wall (77)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -22591,6 +22918,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (22)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -22679,7 +23010,7 @@ GameObject:
   - component: {fileID: 2023516468}
   - component: {fileID: 2023516467}
   - component: {fileID: 2023516466}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (141)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22784,7 +23115,7 @@ GameObject:
   - component: {fileID: 2025628889}
   - component: {fileID: 2025628888}
   - component: {fileID: 2025628887}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (90)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22889,7 +23220,7 @@ GameObject:
   - component: {fileID: 2033030678}
   - component: {fileID: 2033030677}
   - component: {fileID: 2033030676}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (124)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22993,6 +23324,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (28)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -23101,7 +23436,7 @@ GameObject:
   - component: {fileID: 2079594414}
   - component: {fileID: 2079594413}
   - component: {fileID: 2079594412}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (27)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23212,6 +23547,10 @@ PrefabInstance:
       value: Wall (63)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -23286,88 +23625,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
   m_PrefabInstance: {fileID: 2246840359827622770}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &2110701757
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 8026946559226727317}
-    m_Modifications:
-    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_Name
-      value: Wall (66)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_NavMeshLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -66.74981
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -62.0002
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
---- !u!4 &2110701758 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
-  m_PrefabInstance: {fileID: 2110701757}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2122610122
 GameObject:
   m_ObjectHideFlags: 0
@@ -23380,7 +23637,7 @@ GameObject:
   - component: {fileID: 2122610126}
   - component: {fileID: 2122610125}
   - component: {fileID: 2122610124}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (89)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23485,7 +23742,7 @@ GameObject:
   - component: {fileID: 2123916842}
   - component: {fileID: 2123916841}
   - component: {fileID: 2123916840}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (101)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23589,6 +23846,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (67)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -23746,7 +24007,7 @@ GameObject:
   - component: {fileID: 2146903757}
   - component: {fileID: 2146903756}
   - component: {fileID: 2146903755}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (92)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23851,7 +24112,7 @@ GameObject:
   - component: {fileID: 2147243094}
   - component: {fileID: 2147243093}
   - component: {fileID: 2147243092}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (68)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23956,7 +24217,7 @@ GameObject:
   - component: {fileID: 4937579845912444924}
   - component: {fileID: 2336450270731613690}
   - component: {fileID: 1284071782173197936}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (22)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23975,7 +24236,7 @@ GameObject:
   - component: {fileID: 4937579845575838921}
   - component: {fileID: 2336450270931879631}
   - component: {fileID: 1284071782509802821}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (22)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23994,7 +24255,7 @@ GameObject:
   - component: {fileID: 4937579847216725586}
   - component: {fileID: 2336450269293147220}
   - component: {fileID: 1284071784081950686}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (22)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24238,7 +24499,7 @@ GameObject:
   - component: {fileID: 5011633712765365993}
   - component: {fileID: 2406494360409466095}
   - component: {fileID: 1213958148389607269}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (50)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24254,7 +24515,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946558620626562}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24270,7 +24531,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946558746833632}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24286,7 +24547,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946558733050421}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24302,7 +24563,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946558735356789}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24318,7 +24579,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946558409791160}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24334,7 +24595,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946558412814572}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24350,7 +24611,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946558532984896}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24366,7 +24627,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946558500567181}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24382,7 +24643,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946558493355075}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24398,7 +24659,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946559262253625}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24414,7 +24675,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946559231547458}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24430,7 +24691,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946559226727317}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24446,7 +24707,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946559368084244}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24462,7 +24723,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946559324975156}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24478,7 +24739,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946558925976585}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24494,7 +24755,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946559062067411}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24510,7 +24771,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946559050694653}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24526,7 +24787,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946557645689853}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24542,7 +24803,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946557613972826}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Science Lab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24558,7 +24819,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946557586075272}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24574,7 +24835,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946557337783343}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24590,7 +24851,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946557338554232}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24606,7 +24867,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946557489041982}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24622,7 +24883,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946558155279073}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24638,7 +24899,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946557862854736}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (22)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24654,7 +24915,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946558034498267}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24670,13 +24931,70 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026946557939260847}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1001 &118779383347931691
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7264315288619021843, guid: 85b4cd3286077db43a3056faa1b5ac8f, type: 3}
+      propertyPath: m_Name
+      value: RobotFabricator
+      objectReference: {fileID: 0}
+    - target: {fileID: 8426529866338268739, guid: 85b4cd3286077db43a3056faa1b5ac8f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8426529866338268739, guid: 85b4cd3286077db43a3056faa1b5ac8f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8426529866338268739, guid: 85b4cd3286077db43a3056faa1b5ac8f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -157.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8426529866338268739, guid: 85b4cd3286077db43a3056faa1b5ac8f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8426529866338268739, guid: 85b4cd3286077db43a3056faa1b5ac8f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8426529866338268739, guid: 85b4cd3286077db43a3056faa1b5ac8f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8426529866338268739, guid: 85b4cd3286077db43a3056faa1b5ac8f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8426529866338268739, guid: 85b4cd3286077db43a3056faa1b5ac8f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8426529866338268739, guid: 85b4cd3286077db43a3056faa1b5ac8f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8426529866338268739, guid: 85b4cd3286077db43a3056faa1b5ac8f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 85b4cd3286077db43a3056faa1b5ac8f, type: 3}
 --- !u!23 &137115433777067008
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -24934,7 +25252,7 @@ GameObject:
   - component: {fileID: 4652982787405638419}
   - component: {fileID: 2628911002040557845}
   - component: {fileID: 1569093250011468447}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (38)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24991,7 +25309,7 @@ GameObject:
   - component: {fileID: 4829205024146529317}
   - component: {fileID: 2877162393071687203}
   - component: {fileID: 1608056285784008105}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (25)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25558,7 +25876,7 @@ GameObject:
   - component: {fileID: 5723535895554031130}
   - component: {fileID: 3136587830476567580}
   - component: {fileID: 1889870670431881110}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (52)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25577,7 +25895,7 @@ GameObject:
   - component: {fileID: 5240244871584451902}
   - component: {fileID: 3193163614386456376}
   - component: {fileID: 2156424036050990258}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25595,6 +25913,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (20)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -25677,6 +25999,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -25820,7 +26146,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6969439694282711619}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (24)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25896,7 +26222,7 @@ GameObject:
   - component: {fileID: 5437366231986139068}
   - component: {fileID: 3430639377507902906}
   - component: {fileID: 2171114392774022704}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25915,7 +26241,7 @@ GameObject:
   - component: {fileID: 5437366232537460737}
   - component: {fileID: 3430639377090804231}
   - component: {fileID: 2171114393296505229}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25934,7 +26260,7 @@ GameObject:
   - component: {fileID: 5437366232200856372}
   - component: {fileID: 3430639377291069746}
   - component: {fileID: 2171114393633110712}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25953,7 +26279,7 @@ GameObject:
   - component: {fileID: 5437366232365809347}
   - component: {fileID: 3430639377128207557}
   - component: {fileID: 2171114393761892175}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25972,7 +26298,7 @@ GameObject:
   - component: {fileID: 5437366233119752858}
   - component: {fileID: 3430639376506357916}
   - component: {fileID: 2171114393813318422}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25991,7 +26317,7 @@ GameObject:
   - component: {fileID: 5437366232965552800}
   - component: {fileID: 3430639376662663334}
   - component: {fileID: 2171114394227434284}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26120,7 +26446,7 @@ GameObject:
   - component: {fileID: 6078459408754693682}
   - component: {fileID: 3508995914794261556}
   - component: {fileID: 76341766055276478}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26139,7 +26465,7 @@ GameObject:
   - component: {fileID: 6078459409000092596}
   - component: {fileID: 3508995914683079090}
   - component: {fileID: 76341766069987896}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (23)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26158,7 +26484,7 @@ GameObject:
   - component: {fileID: 6078459408546867840}
   - component: {fileID: 3508995915136278662}
   - component: {fileID: 76341766254842636}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Entry Doorway
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26177,7 +26503,7 @@ GameObject:
   - component: {fileID: 6078459409291506469}
   - component: {fileID: 3508995914257463587}
   - component: {fileID: 76341766592596649}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (24)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26196,7 +26522,7 @@ GameObject:
   - component: {fileID: 6078459409063523355}
   - component: {fileID: 3508995914485415453}
   - component: {fileID: 76341766838078871}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (22)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26215,7 +26541,7 @@ GameObject:
   - component: {fileID: 6078459409714119790}
   - component: {fileID: 3508995913832697448}
   - component: {fileID: 76341767520157154}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (23)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26234,7 +26560,7 @@ GameObject:
   - component: {fileID: 6078459409784790411}
   - component: {fileID: 3508995913898383245}
   - component: {fileID: 76341767459185671}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (24)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26253,7 +26579,7 @@ GameObject:
   - component: {fileID: 6078459409815891510}
   - component: {fileID: 3508995913867289648}
   - component: {fileID: 76341767418451898}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (22)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26269,7 +26595,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9095571661722469422}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26308,6 +26634,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (22)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -26387,6 +26717,10 @@ PrefabInstance:
       value: Wall (22)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -26462,6 +26796,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (22)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -26541,6 +26879,10 @@ PrefabInstance:
       value: Wall (22)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -26616,6 +26958,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Western Wall5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -26695,6 +27041,10 @@ PrefabInstance:
       value: Wall (22)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -26770,6 +27120,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Western Wall10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -26849,6 +27203,10 @@ PrefabInstance:
       value: Wall (22)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -26924,6 +27282,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Western Wall16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -27003,6 +27365,10 @@ PrefabInstance:
       value: Wall (22)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -27078,6 +27444,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (22)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -27157,6 +27527,10 @@ PrefabInstance:
       value: Western Wall7
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -27232,6 +27606,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (22)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -27843,7 +28221,7 @@ GameObject:
   - component: {fileID: 6803563990556516887}
   - component: {fileID: 4216054208109815825}
   - component: {fileID: 810405667125255067}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (53)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28075,6 +28453,10 @@ PrefabInstance:
       value: Western Wall6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -28150,6 +28532,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (21)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -28233,6 +28619,10 @@ PrefabInstance:
       value: Wall (21)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -28308,6 +28698,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (21)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -28387,6 +28781,10 @@ PrefabInstance:
       value: Western Wall3
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -28462,6 +28860,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (21)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -28541,6 +28943,10 @@ PrefabInstance:
       value: Wall (21)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -28616,6 +29022,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (21)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -28695,6 +29105,10 @@ PrefabInstance:
       value: Wall (21)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -28770,6 +29184,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Western Wall9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -28849,6 +29267,10 @@ PrefabInstance:
       value: Wall (21)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -28924,6 +29346,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Western Wall14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -29003,6 +29429,10 @@ PrefabInstance:
       value: Wall (21)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -29079,7 +29509,7 @@ GameObject:
   - component: {fileID: 6577659597444831970}
   - component: {fileID: 4585219795180114148}
   - component: {fileID: 1016885819360093038}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (24)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29253,7 +29683,7 @@ GameObject:
   - component: {fileID: 7343697312206931299}
   - component: {fileID: 73040961092603749}
   - component: {fileID: 3512300843466603759}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (34)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29314,7 +29744,7 @@ GameObject:
   - component: {fileID: 7281848165155667462}
   - component: {fileID: 137115433777067008}
   - component: {fileID: 3484216684889933706}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (37)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29354,7 +29784,7 @@ GameObject:
   - component: {fileID: 7372103350792668945}
   - component: {fileID: 191274761213005079}
   - component: {fileID: 3682473615594536605}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29435,6 +29865,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (22)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -29679,7 +30113,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5148212750439461334}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (22)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29698,7 +30132,7 @@ GameObject:
   - component: {fileID: 7879161196082740985}
   - component: {fileID: 698362289117607167}
   - component: {fileID: 4038701452325668725}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29717,7 +30151,7 @@ GameObject:
   - component: {fileID: 7879161195735721667}
   - component: {fileID: 698362289466715333}
   - component: {fileID: 4038701452412772175}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29736,7 +30170,7 @@ GameObject:
   - component: {fileID: 7879161196526441678}
   - component: {fileID: 698362288673889992}
   - component: {fileID: 4038701452669250882}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29755,7 +30189,7 @@ GameObject:
   - component: {fileID: 7879161196649794658}
   - component: {fileID: 698362288552658532}
   - component: {fileID: 4038701452824032750}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29774,7 +30208,7 @@ GameObject:
   - component: {fileID: 7879161196201181856}
   - component: {fileID: 698362288867018918}
   - component: {fileID: 4038701453012466476}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29793,7 +30227,7 @@ GameObject:
   - component: {fileID: 7879161196313214807}
   - component: {fileID: 698362288752948561}
   - component: {fileID: 4038701453160613595}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29812,7 +30246,7 @@ GameObject:
   - component: {fileID: 7879161197105239007}
   - component: {fileID: 698362287963003353}
   - component: {fileID: 4038701453442525779}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29846,7 +30280,7 @@ GameObject:
   - component: {fileID: 7885544675237046175}
   - component: {fileID: 686348743361277337}
   - component: {fileID: 4051880480839982611}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (48)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29865,7 +30299,7 @@ GameObject:
   - component: {fileID: 7862193605031472165}
   - component: {fileID: 717599547048601123}
   - component: {fileID: 4055528450558776745}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29884,7 +30318,7 @@ GameObject:
   - component: {fileID: 7862193605159997906}
   - component: {fileID: 717599546918001620}
   - component: {fileID: 4055528450723457118}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29903,7 +30337,7 @@ GameObject:
   - component: {fileID: 7862193604825506535}
   - component: {fileID: 717599547120380129}
   - component: {fileID: 4055528451057949547}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29922,7 +30356,7 @@ GameObject:
   - component: {fileID: 7862193606389338236}
   - component: {fileID: 717599545554410106}
   - component: {fileID: 4055528452690504176}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29948,6 +30382,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (21)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -30151,7 +30589,7 @@ GameObject:
   - component: {fileID: 7569487413332983839}
   - component: {fileID: 1001289107607865881}
   - component: {fileID: 4348232572098361747}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (31)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30170,7 +30608,7 @@ GameObject:
   - component: {fileID: 7781982199019231892}
   - component: {fileID: 1087148743580176530}
   - component: {fileID: 4515730927246123800}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (49)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30798,7 +31236,7 @@ GameObject:
   - component: {fileID: 8386018708260133945}
   - component: {fileID: 1191320867792983615}
   - component: {fileID: 2392855454403552693}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (39)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30853,7 +31291,7 @@ GameObject:
   - component: {fileID: 8514511536334749725}
   - component: {fileID: 1351340131501296155}
   - component: {fileID: 2557378213165054353}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (30)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30893,7 +31331,7 @@ GameObject:
   - component: {fileID: 8583291758000054315}
   - component: {fileID: 1437925850640951853}
   - component: {fileID: 2470722125281221031}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (26)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30912,7 +31350,7 @@ GameObject:
   - component: {fileID: 8093312951316218854}
   - component: {fileID: 1493025388810078688}
   - component: {fileID: 2667547088781441642}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (51)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30958,7 +31396,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6560907898256353260}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30977,7 +31415,7 @@ GameObject:
   - component: {fileID: 8243191191798975346}
   - component: {fileID: 1624885938974949748}
   - component: {fileID: 2824192892220404478}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (40)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30996,7 +31434,7 @@ GameObject:
   - component: {fileID: 8223128590896001092}
   - component: {fileID: 1654818271647070786}
   - component: {fileID: 2831168966402148808}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (43)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31291,7 +31729,7 @@ GameObject:
   - component: {fileID: 8936514115156748300}
   - component: {fileID: 1796254195746152970}
   - component: {fileID: 2977124490613019008}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31309,6 +31747,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -31388,6 +31830,10 @@ PrefabInstance:
       value: Western Wall13
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -31463,6 +31909,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -31542,6 +31992,10 @@ PrefabInstance:
       value: Wall (18)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -31617,6 +32071,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -31696,6 +32154,10 @@ PrefabInstance:
       value: Western Wall20
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -31771,6 +32233,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -31850,6 +32316,10 @@ PrefabInstance:
       value: Wall (18)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -31925,6 +32395,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -32004,6 +32478,10 @@ PrefabInstance:
       value: Wall (18)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -32079,6 +32557,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -32158,6 +32640,10 @@ PrefabInstance:
       value: Wall (18)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -32233,6 +32719,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Western Wall25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -32312,6 +32802,10 @@ PrefabInstance:
       value: Western Wall2
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -32387,6 +32881,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -32466,6 +32964,10 @@ PrefabInstance:
       value: Wall (20)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -32541,6 +33043,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Western Wall1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -32620,6 +33126,10 @@ PrefabInstance:
       value: Wall (20)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -32695,6 +33205,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (20)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -32778,6 +33292,10 @@ PrefabInstance:
       value: Wall (20)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -32853,6 +33371,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Western Wall24
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -32932,6 +33454,10 @@ PrefabInstance:
       value: Western Wall12
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -33007,6 +33533,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (20)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -33086,6 +33616,10 @@ PrefabInstance:
       value: Wall (20)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -33161,6 +33695,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (20)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -33240,6 +33778,10 @@ PrefabInstance:
       value: Wall (20)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -33315,6 +33857,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (20)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -33394,6 +33940,10 @@ PrefabInstance:
       value: Western Wall19
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -33469,6 +34019,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (20)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -33633,7 +34187,7 @@ GameObject:
   - component: {fileID: 8780374795171619342}
   - component: {fileID: 2104126378064537608}
   - component: {fileID: 3210528413631323010}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (35)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33670,7 +34224,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5872328908331779352}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33810,7 +34364,7 @@ GameObject:
   - component: {fileID: 527271265844754779}
   - component: {fileID: 7185578957966537565}
   - component: {fileID: 5910130782378524887}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (32)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33916,7 +34470,7 @@ GameObject:
   - component: {fileID: 139575022549309548}
   - component: {fileID: 7279696267976774250}
   - component: {fileID: 6105720492573188576}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33935,7 +34489,7 @@ GameObject:
   - component: {fileID: 139575022205046274}
   - component: {fileID: 7279696268184716292}
   - component: {fileID: 6105720492901595022}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33954,7 +34508,7 @@ GameObject:
   - component: {fileID: 139575022369633269}
   - component: {fileID: 7279696268022282739}
   - component: {fileID: 6105720493031000697}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33973,7 +34527,7 @@ GameObject:
   - component: {fileID: 139575023125815165}
   - component: {fileID: 7279696267263989115}
   - component: {fileID: 6105720493348366065}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34124,7 +34678,7 @@ GameObject:
   - component: {fileID: 184686263508333161}
   - component: {fileID: 7384021834055907439}
   - component: {fileID: 6324212639886642149}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34143,7 +34697,7 @@ GameObject:
   - component: {fileID: 184686263942591864}
   - component: {fileID: 7384021833757933438}
   - component: {fileID: 6324212640248057076}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34162,7 +34716,7 @@ GameObject:
   - component: {fileID: 184686263729348321}
   - component: {fileID: 7384021833836975335}
   - component: {fileID: 6324212640739436397}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34201,6 +34755,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (19)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -34280,6 +34838,10 @@ PrefabInstance:
       value: Wall (19)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -34355,6 +34917,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (19)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -34434,6 +35000,10 @@ PrefabInstance:
       value: Western Wall17
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -34509,6 +35079,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (19)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -34588,6 +35162,10 @@ PrefabInstance:
       value: Wall (19)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -34663,6 +35241,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (19)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -34742,6 +35324,10 @@ PrefabInstance:
       value: Wall (19)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -34817,6 +35403,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (19)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -34896,6 +35486,10 @@ PrefabInstance:
       value: Wall (19)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -34971,6 +35565,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Western Wall22
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -35050,6 +35648,10 @@ PrefabInstance:
       value: Wall (19)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -35125,6 +35727,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Western Wall8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -35204,6 +35810,10 @@ PrefabInstance:
       value: Wall (19)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -35279,6 +35889,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Western Wall27
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -35358,6 +35972,10 @@ PrefabInstance:
       value: Wall (19)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -35433,6 +36051,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (19)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -35679,7 +36301,7 @@ GameObject:
   - component: {fileID: 1149863236150336813}
   - component: {fileID: 7718133010312861483}
   - component: {fileID: 6530532045061481633}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (36)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35767,7 +36389,7 @@ GameObject:
   - component: {fileID: 650848578329822031}
   - component: {fileID: 7917667638762096969}
   - component: {fileID: 6655328058102168259}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (28)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35872,7 +36494,7 @@ GameObject:
   - component: {fileID: 1496458212403955508}
   - component: {fileID: 8083133678858947890}
   - component: {fileID: 4724348709431262904}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (45)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35956,6 +36578,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -36290,6 +36916,10 @@ PrefabInstance:
       value: Wall (16)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -36365,6 +36995,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (16)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -36444,6 +37078,10 @@ PrefabInstance:
       value: Wall (16)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -36519,6 +37157,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Western Wall11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -36598,6 +37240,10 @@ PrefabInstance:
       value: Wall (16)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -36673,6 +37319,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (16)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -36752,6 +37402,10 @@ PrefabInstance:
       value: Western Wall18
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -36827,6 +37481,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (16)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -36906,6 +37564,10 @@ PrefabInstance:
       value: Wall (16)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -36981,6 +37643,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (16)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -37060,6 +37726,10 @@ PrefabInstance:
       value: Wall (16)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -37135,6 +37805,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (16)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -37214,6 +37888,10 @@ PrefabInstance:
       value: Wall (16)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -37291,6 +37969,10 @@ PrefabInstance:
       value: Western Wall23
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -37366,6 +38048,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Western Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -37526,6 +38212,10 @@ PrefabInstance:
       value: Wall (16)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -37602,7 +38292,7 @@ GameObject:
   - component: {fileID: 1237943284170318593}
   - component: {fileID: 8486889780974643463}
   - component: {fileID: 4934309211681659533}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37621,7 +38311,7 @@ GameObject:
   - component: {fileID: 1360790698643322015}
   - component: {fileID: 8505906064135683737}
   - component: {fileID: 5167389228845108499}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37640,7 +38330,7 @@ GameObject:
   - component: {fileID: 1360790698220678309}
   - component: {fileID: 8505906064560416419}
   - component: {fileID: 5167389228990797097}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37659,7 +38349,7 @@ GameObject:
   - component: {fileID: 1360790699005357323}
   - component: {fileID: 8505906063641487117}
   - component: {fileID: 5167389229305222279}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37678,7 +38368,7 @@ GameObject:
   - component: {fileID: 1360790698916628114}
   - component: {fileID: 8505906063864450196}
   - component: {fileID: 5167389229652688670}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37697,7 +38387,7 @@ GameObject:
   - component: {fileID: 1360790699224269187}
   - component: {fileID: 8505906063420459909}
   - component: {fileID: 5167389230160115727}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37715,6 +38405,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Western Wall26
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -37794,6 +38488,10 @@ PrefabInstance:
       value: Western Wall4
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -37869,6 +38567,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (17)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -37948,6 +38650,10 @@ PrefabInstance:
       value: Wall (17)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -38023,6 +38729,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (17)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -38102,6 +38812,10 @@ PrefabInstance:
       value: Western Wall21
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -38177,6 +38891,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (17)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -38256,6 +38974,10 @@ PrefabInstance:
       value: Wall (17)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -38331,6 +39053,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (17)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -38410,6 +39136,10 @@ PrefabInstance:
       value: Wall (17)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -38485,6 +39215,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (17)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -38564,6 +39298,10 @@ PrefabInstance:
       value: Wall (17)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -38639,6 +39377,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Western Wall15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -38718,6 +39460,10 @@ PrefabInstance:
       value: Wall (17)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -38793,6 +39539,10 @@ PrefabInstance:
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_Name
       value: Wall (17)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -38872,6 +39622,10 @@ PrefabInstance:
       value: Wall (17)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -38948,7 +39702,7 @@ GameObject:
   - component: {fileID: 1299487962680869604}
   - component: {fileID: 8566346748624292066}
   - component: {fileID: 5142138414569175912}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (33)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39003,6 +39757,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5297803040280554969, guid: b781d244bf91a17409bb0795e0d9a166, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5297803040280554969, guid: b781d244bf91a17409bb0795e0d9a166, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6245704098013927237, guid: b781d244bf91a17409bb0795e0d9a166, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6245704098013927237, guid: b781d244bf91a17409bb0795e0d9a166, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8371776933160456510, guid: b781d244bf91a17409bb0795e0d9a166, type: 3}
       propertyPath: m_Name
       value: Doorway
@@ -39024,7 +39794,7 @@ GameObject:
   - component: {fileID: 1426333115074600854}
   - component: {fileID: 8584469988147615120}
   - component: {fileID: 5088896773050705434}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (27)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39142,7 +39912,7 @@ GameObject:
   - component: {fileID: 2162940914688028241}
   - component: {fileID: 8857802960412664919}
   - component: {fileID: 5426962359729461213}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (54)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39271,7 +40041,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3836530603532170048}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39445,7 +40215,7 @@ GameObject:
   - component: {fileID: 1920940054761135129}
   - component: {fileID: 9097833495638890015}
   - component: {fileID: 5763677350322447765}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (42)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39509,7 +40279,7 @@ GameObject:
   - component: {fileID: 2668236828230351651}
   - component: {fileID: 4750744362888425765}
   - component: {fileID: 8093889423793226415}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (46)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39621,7 +40391,7 @@ GameObject:
   - component: {fileID: 2347524107399907499}
   - component: {fileID: 4935214209921401517}
   - component: {fileID: 8484828371309080871}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (41)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40065,7 +40835,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 409575211195088375}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EastFence (23)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40287,7 +41057,7 @@ GameObject:
   - component: {fileID: 3058307562373950600}
   - component: {fileID: 5663339305701942926}
   - component: {fileID: 9161856870246569220}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (29)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40968,8 +41738,6 @@ Transform:
   - {fileID: 779552550}
   - {fileID: 624422935}
   - {fileID: 711048380}
-  - {fileID: 32192950}
-  - {fileID: 2110701758}
   - {fileID: 2132674786}
   - {fileID: 63249560}
   - {fileID: 1453674383}
@@ -41241,6 +42009,10 @@ PrefabInstance:
       value: Wall (19)
       objectReference: {fileID: 0}
     - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191744692813339764, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -41322,7 +42094,7 @@ GameObject:
   - component: {fileID: 3964027768333557602}
   - component: {fileID: 6046783787250079076}
   - component: {fileID: 7086185928699029230}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41855,7 +42627,7 @@ GameObject:
   - component: {fileID: 4093516758688725643}
   - component: {fileID: 6640105047983157389}
   - component: {fileID: 7897951467280761607}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (44)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42054,7 +42826,7 @@ GameObject:
   - component: {fileID: 4047232892043372998}
   - component: {fileID: 6684427403196507072}
   - component: {fileID: 7889908598345683018}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (24)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42073,7 +42845,7 @@ GameObject:
   - component: {fileID: 4244232339256181556}
   - component: {fileID: 6777910028871960882}
   - component: {fileID: 8048693521963776696}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (47)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42174,4 +42946,5 @@ SceneRoots:
   - {fileID: 1546181496}
   - {fileID: 599891243}
   - {fileID: 569895909}
+  - {fileID: 118779383347931691}
   - {fileID: 6264566178334383176}

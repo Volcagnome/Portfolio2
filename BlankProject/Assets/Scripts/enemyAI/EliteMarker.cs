@@ -8,7 +8,7 @@ public class EliteMarker : MonoBehaviour
     {
 
 
-        if (eliteRobot.gameObject.GetComponent<enemyAI>().GetEnemyType(eliteRobot.gameObject) == enemyAI.enemyType.elite
+        if (eliteRobot.gameObject.GetComponent<enemyAI>().GetEnemyType() == enemyAI.enemyType.elite
             && eliteRobot.GetComponent<enemyAI>().GetDefaultPost() == gameObject.GetComponentInParent<EliteMarker>().gameObject)
         {
             eliteRobot.gameObject.transform.rotation = gameObject.transform.rotation;
