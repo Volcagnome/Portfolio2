@@ -21,18 +21,16 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnEnemies()
     {
-
-
         yield return new WaitForSeconds(0.5f);
 
         while (true)
         {
             if (EnemyManager.instance.GetCurrentNumberRobots() < EnemyManager.instance.maxAllowedRobots)
-            {
-                GameObject newEnemy = Instantiate(entityToSpawn, gameObject.transform.position, gameObject.transform.rotation);
-                EnemyManager.instance.AssignRole(newEnemy);
+            { 
+                    GameObject newEnemy = Instantiate(entityToSpawn, gameObject.transform.position, gameObject.transform.rotation);
+                    EnemyManager.instance.AssignRole(newEnemy);
             }
-        
+
             yield return new WaitForSeconds(EnemyManager.instance.EnemySpawnInterval);
         }
     }

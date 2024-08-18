@@ -6,12 +6,13 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 using UnityEngine.Animations;
-using UnityEngine.UIElements;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 using static UnityEditor.FilePathAttribute;
 using static UnityEditor.LightingExplorerTableColumn;
 using static UnityEngine.GraphicsBuffer;
+using System;
 
 public class enemyAI : MonoBehaviour, IDamage
 {
@@ -21,16 +22,21 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] Renderer model;
     [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
+    //[SerializeField] Transform headTopPos;
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject guardBullet;
     [SerializeField] Texture emissionAlerted;
     [SerializeField] Texture emissionIdle;
     [SerializeField] Material guard;
     [SerializeField] Material patrol;
+    public GameObject enemyHPBar;
+    public Image enemyHPBarFill;
+    //[SerializeField] Vector3 HPBarPos;
 
     //Stats
     int HPOrig;
     [SerializeField] int HP;
+    [SerializeField] float HPIncrease;
     [SerializeField] float shootRate;
     [SerializeField] float combatSpeed;
     [SerializeField] float combatStoppingDistance;
@@ -57,7 +63,6 @@ public class enemyAI : MonoBehaviour, IDamage
     private bool isAlerted;
     private bool isShooting;
     private bool onDuty;
-    private bool isPlayerTarget;
 
     //Ally Detection
     [SerializeField] int allyRadius;
@@ -104,9 +109,16 @@ public class enemyAI : MonoBehaviour, IDamage
         else
             agent.stoppingDistance = idleStoppingDistance;
 
+        if (isPlayerTarget())
+        {
+            UpdateEnemyUI();
+            //RegenerateHealth();
+        }
+        else
+            enemyHPBar.SetActive(false);
+
         if (isAlerted)
         {
-
             if (!playerInView && !playerInRange)
             {
                 StartCoroutine(PursuePlayer());
@@ -132,6 +144,8 @@ public class enemyAI : MonoBehaviour, IDamage
     ////////////////////////////////////////
     ///           COMBAT                 ///
     ////////////////////////////////////////
+    
+    
     private void FoundPlayer()
     {
         agent.SetDestination(GameManager.instance.player.transform.position);
@@ -155,11 +169,9 @@ public class enemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
-        isPlayerTarget = true;
 
             AlertEnemy();
             AlertAllies();
-            UpdateEnemyUI();
             StartCoroutine(flashYellow());
 
         if (HP <= 0)
@@ -168,9 +180,29 @@ public class enemyAI : MonoBehaviour, IDamage
         }
     }
 
+    void RegenerateHealth()
+    {
+        HP += (int)(HPIncrease);
+
+        if (HP > HPOrig)
+        {
+            HP = HPOrig;
+        }
+    }
+
+    private bool isPlayerTarget()
+    {
+        if (HP < HPOrig)
+            return true;
+        return false;
+    }
+
     public void UpdateEnemyUI()
     {
-        EnemyManager.instance.enemyHPBar.fillAmount = (float)HP / HPOrig;
+        enemyHPBar.SetActive(true);
+        enemyHPBarFill.fillAmount = (float)HP / HPOrig;
+        //EnemyManager.instance.enemyHPBar.transform.position = headTopPos.position + HPBarPos;
+        enemyHPBar.transform.parent.rotation = Camera.main.transform.rotation;
     }
 
     public void criticalHit(int amount)
@@ -261,8 +293,6 @@ public class enemyAI : MonoBehaviour, IDamage
     ///       PLAYER DETECTION            ///
     ////////////////////////////////////////
 
-
-
     //When player enters detection range toggles playerInRange variable
     private void OnTriggerEnter(Collider other)
     {
@@ -321,6 +351,13 @@ public class enemyAI : MonoBehaviour, IDamage
         transform.rotation = Quaternion.Lerp(transform.rotation,rotationToDirection, Time.deltaTime * rotationSpeed);
     }
 
+
+
+    ////////////////////////////////////////
+    ///          ENEMY BEHAVIOR         ///
+    ///////////////////////////////////////
+
+
     private void ReturnToPost()
     {
         onDuty = true;
@@ -334,7 +371,32 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             OnPatrol();
         }
-        
+    }
+
+    public void OnPatrol()
+    {
+        agent.SetDestination(currentDestination.transform.position);
+    }
+
+    private bool CheckIfArrived(Vector3 location)
+    {
+        if (Vector3.Distance(transform.position, location) <= 1.3)
+        {
+            return true;
+        }
+        else
+            return false;
+    }
+
+
+    ////////////////////////////////////////
+    ///          GETTERS/SETTERS         ///
+    ///////////////////////////////////////
+
+
+    public GameObject GetDefaultPost()
+    {
+        return defaultPost;
     }
 
     public void SetDefaultPost(GameObject post)
@@ -342,28 +404,15 @@ public class enemyAI : MonoBehaviour, IDamage
         defaultPost = post;
     }
 
-    public GameObject GetDefaultPost()
+
+    public behaviorType GetBehaviorType()
     {
-        return defaultPost;
+        return enemyBehavior;
     }
 
     public void SetBehavior(behaviorType behavior)
     {
         enemyBehavior = behavior;
-    }
-    private bool CheckIfArrived(Vector3 location)
-    {
-        if (Vector3.Distance(transform.position,location) <= 1.3)
-        { 
-            return true;
-        }
-        else
-            return false;
-    }
-
-    public void SetCurrentDestination(GameObject destination)
-    {
-        currentDestination = destination;
     }
 
     public GameObject GetCurrentDestination()
@@ -371,14 +420,15 @@ public class enemyAI : MonoBehaviour, IDamage
         return currentDestination;
     }
 
+    public void SetCurrentDestination(GameObject destination)
+    {
+        currentDestination = destination;
+    }
+
+
     public bool CheckIfOnDuty()
     {
         return onDuty;
-    }
-
-    public void OnPatrol()
-    {
-            agent.SetDestination(currentDestination.transform.position);
     }
 
 
@@ -403,6 +453,11 @@ public class enemyAI : MonoBehaviour, IDamage
         }
         else if (enemy_Type == enemyType.elite)
             HP = 50;
+    }
+
+    public enemyType GetEnemyType()
+    {
+        return enemy_Type;
     }
 }
  
