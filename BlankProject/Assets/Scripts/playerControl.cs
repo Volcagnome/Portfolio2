@@ -12,7 +12,9 @@ public class playerControl : MonoBehaviour, IDamage
     [SerializeField] float staminaDecrease;
     [SerializeField] float staminaIncrease;
 
-    [SerializeField] int HP;
+    [SerializeField] float HP;
+    [SerializeField] float HPRegenRate;
+    [SerializeField] float HPRegenWaitTime;
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
 
@@ -29,8 +31,10 @@ public class playerControl : MonoBehaviour, IDamage
     Vector3 move;
     Vector3 playerVel;
 
+    Coroutine regenCoroutine;
+
     int jumpCount;
-    int hpOG;
+    float hpOG;
     int speedOG;
     float staminaOG;
 
@@ -38,6 +42,7 @@ public class playerControl : MonoBehaviour, IDamage
     bool isSprinting;
     bool isShooting;
     bool isInteracting;
+    bool isTakingDamage;
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +60,14 @@ public class playerControl : MonoBehaviour, IDamage
         movement();
         sprint();
         staminaUsage();
+
+        if (isEnemyTarget())
+        {
+            adjustHPBar();
+
+            if (!isTakingDamage)
+                RegenerateHealth();
+        }
     }
 
     void movement()
@@ -120,7 +133,7 @@ public class playerControl : MonoBehaviour, IDamage
 
     void staminaUsage()
     {
-        GameManager.instance.staminaBar.fillAmount = (float)stamina / staminaOG;
+        GameManager.instance.staminaBar.fillAmount = stamina / staminaOG;
 
         if (stamina > 0) 
             hasStamina = true;
@@ -214,9 +227,18 @@ public class playerControl : MonoBehaviour, IDamage
 
     }
 
+    bool isEnemyTarget()
+    {
+        if (HP < hpOG)
+            return true;
+        return false;
+    }
+
     public void takeDamage(int amount)
     {
         HP -= amount;
+        isTakingDamage = true;
+
         adjustHPBar();
         StartCoroutine(flashRed());
 
@@ -225,6 +247,30 @@ public class playerControl : MonoBehaviour, IDamage
         {
             GameManager.instance.youLose();
         }
+
+        if (regenCoroutine != null)
+        {
+            StopCoroutine(regenCoroutine);
+        }
+        regenCoroutine = StartCoroutine(EnableHealthRegen());
+    }
+
+    void RegenerateHealth()
+    {
+        //Debug.Log("Regenerating player health: " + HPRegenRate * Time.deltaTime);
+        HP += HPRegenRate * Time.deltaTime;
+
+        if (HP > hpOG)
+        {
+            HP = hpOG;
+        }
+    }
+
+    IEnumerator EnableHealthRegen()
+    {
+        yield return new WaitForSeconds(HPRegenWaitTime);
+        isTakingDamage = false;
+        regenCoroutine = null;
     }
 
     public void criticalHit(int amount)
@@ -234,7 +280,7 @@ public class playerControl : MonoBehaviour, IDamage
 
     void adjustHPBar()
     {
-        GameManager.instance.healthbar.fillAmount = (float)HP / hpOG;
+        GameManager.instance.healthbar.fillAmount = HP / hpOG;
     }
 
     IEnumerator flashRed()
