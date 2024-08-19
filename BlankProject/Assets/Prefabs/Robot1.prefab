@@ -269,7 +269,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.5
+      value: 14.499999
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}
       propertyPath: m_LocalPosition.y
@@ -277,7 +277,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.500001
+      value: -2.5000005
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}
       propertyPath: m_LocalRotation.w
@@ -394,6 +394,8 @@ MonoBehaviour:
   enemyHPBar: {fileID: 6562890840765349373}
   enemyHPBarFill: {fileID: 542460881579546612}
   HP: 50
+  HPRegenRate: 5
+  HPRegenWaitTime: 5
   shootRate: 0.3
   combatSpeed: 3
   combatStoppingDistance: 8

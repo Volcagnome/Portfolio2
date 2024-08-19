@@ -1,18 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Security;
-using Unity.PlasticSCM.Editor.WebApi;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
-using UnityEngine.Animations;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
-using static UnityEditor.FilePathAttribute;
-using static UnityEditor.LightingExplorerTableColumn;
-using static UnityEngine.GraphicsBuffer;
-using System;
 
 public class enemyAI : MonoBehaviour, IDamage
 {
@@ -34,9 +23,10 @@ public class enemyAI : MonoBehaviour, IDamage
     //[SerializeField] Vector3 HPBarPos;
 
     //Stats
-    int HPOrig;
-    [SerializeField] int HP;
-    [SerializeField] float HPIncrease;
+    float HPOrig;
+    [SerializeField] float HP;
+    [SerializeField] float HPRegenRate;
+    [SerializeField] float HPRegenWaitTime;
     [SerializeField] float shootRate;
     [SerializeField] float combatSpeed;
     [SerializeField] float combatStoppingDistance;
@@ -60,6 +50,7 @@ public class enemyAI : MonoBehaviour, IDamage
     private bool playerInRange;
 
     //CurrentStatus
+    private bool isTakingDamage;
     private bool isAlerted;
     private bool isShooting;
     private bool onDuty;
@@ -70,6 +61,7 @@ public class enemyAI : MonoBehaviour, IDamage
     private GameObject[] alliesInRange;
 
     Color colorOrig;
+    Coroutine regenCoroutine;
 
     // Start is called before the first frame update
     //Saves original color to variable for reference
@@ -112,7 +104,9 @@ public class enemyAI : MonoBehaviour, IDamage
         if (isPlayerTarget())
         {
             UpdateEnemyUI();
-            //RegenerateHealth();
+
+            if (!isTakingDamage)
+                RegenerateHealth();
         }
         else
             enemyHPBar.SetActive(false);
@@ -169,6 +163,7 @@ public class enemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+        isTakingDamage = true;
 
             AlertEnemy();
             AlertAllies();
@@ -178,11 +173,18 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             Death();
         }
+
+        if (regenCoroutine != null)
+        {
+            StopCoroutine(regenCoroutine);
+        }
+        regenCoroutine = StartCoroutine(EnableHealthRegen());
     }
 
     void RegenerateHealth()
     {
-        HP += (int)(HPIncrease);
+        //Debug.Log("Regenerating enemy health: " + HPRegenRate * Time.deltaTime);
+        HP += HPRegenRate * Time.deltaTime;
 
         if (HP > HPOrig)
         {
@@ -190,7 +192,14 @@ public class enemyAI : MonoBehaviour, IDamage
         }
     }
 
-    private bool isPlayerTarget()
+    IEnumerator EnableHealthRegen()
+    {
+        yield return new WaitForSeconds(HPRegenWaitTime);
+        isTakingDamage = false;
+        regenCoroutine = null;
+    }
+
+    bool isPlayerTarget()
     {
         if (HP < HPOrig)
             return true;
@@ -200,7 +209,7 @@ public class enemyAI : MonoBehaviour, IDamage
     public void UpdateEnemyUI()
     {
         enemyHPBar.SetActive(true);
-        enemyHPBarFill.fillAmount = (float)HP / HPOrig;
+        enemyHPBarFill.fillAmount = HP / HPOrig;
         //EnemyManager.instance.enemyHPBar.transform.position = headTopPos.position + HPBarPos;
         enemyHPBar.transform.parent.rotation = Camera.main.transform.rotation;
     }
