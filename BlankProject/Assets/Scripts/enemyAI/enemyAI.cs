@@ -36,7 +36,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
     //EnemyBehavior
     [SerializeField] public enum behaviorType { none, guard, patrol};
-    [SerializeField] public enum enemyType { none, AssaultDroid, elite, Turret };
+    [SerializeField] public enum enemyType { none, AssaultDroid, Elite, Turret, Boss };
     [SerializeField] behaviorType enemyBehavior;
     [SerializeField] enemyType enemy_Type;
     [SerializeField] GameObject defaultPost;
@@ -71,9 +71,14 @@ public class enemyAI : MonoBehaviour, IDamage
         HPOrig = HP;
 
         colorOrig = gameObject.GetComponentInChildren<Renderer>().sharedMaterial.color;
-        if (enemyBehavior == behaviorType.none && tag != "Elite")
-            EnemyManager.instance.AssignRole(gameObject);
-        else if (enemyBehavior == behaviorType.guard)
+
+        CheckIfBehaviorAssigned();
+    }
+
+    private void CheckIfBehaviorAssigned()
+    {
+
+        if (enemyBehavior == behaviorType.guard)
         {
             EnemyManager.instance.AddRobotToGuardCount();
             defaultPost.GetComponent<GuardPost>().SetIsOccupied(true);
@@ -81,9 +86,14 @@ public class enemyAI : MonoBehaviour, IDamage
         }
         else if (enemyBehavior == behaviorType.patrol)
         {
-            EnemyManager.instance.AddRobotToPatrolCount();
-            gameObject.GetComponentInChildren<Renderer>().materials[0] = patrol;
+           EnemyManager.instance.AddRobotToPatrolCount();
+           gameObject.GetComponentInChildren<Renderer>().materials[0] = patrol;
         }
+        else if(enemyBehavior == behaviorType.none && enemy_Type == enemyType.AssaultDroid)
+        {
+            EnemyManager.instance.AssignRole(gameObject);
+        }
+
     }
 
     // Update is called once per frame
@@ -130,7 +140,7 @@ public class enemyAI : MonoBehaviour, IDamage
                     agent.SetDestination(GameManager.instance.player.transform.position);
             }
         }
-        else if(!onDuty)
+        else if (!onDuty)
             ReturnToPost();
     }
 
@@ -138,8 +148,8 @@ public class enemyAI : MonoBehaviour, IDamage
     ////////////////////////////////////////
     ///           COMBAT                 ///
     ////////////////////////////////////////
-    
-    
+
+
     private void FoundPlayer()
     {
         agent.SetDestination(GameManager.instance.player.transform.position);
@@ -165,9 +175,9 @@ public class enemyAI : MonoBehaviour, IDamage
         HP -= amount;
         isTakingDamage = true;
 
-            AlertEnemy();
-            AlertAllies();
-            StartCoroutine(flashYellow());
+        AlertEnemy();
+        AlertAllies();
+        StartCoroutine(flashYellow());
 
         if (HP <= 0)
         {
@@ -288,7 +298,7 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             EnemyManager.instance.RemoveFromGuardRobotsCount();
             defaultPost.GetComponent<GuardPost>().SetIsOccupied(false);
-        } 
+        }
         else if (enemyBehavior == behaviorType.patrol)
         {
             EnemyManager.instance.RemoveFromPatrolRobotsCount();
@@ -309,7 +319,7 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             playerInRange = true;
             StartCoroutine(FOVRoutine());
-        } 
+        }
     }
 
     //When player exits detection range notes their last known location and toggles playerInRange and isAlerted bools
@@ -339,7 +349,7 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         //Calculates direction from enemy to player.
         Vector3 playerDirection = (GameManager.instance.player.transform.position - headPos.position);
-       
+
         if (playerInRange)
         {
             if (Vector3.Angle(transform.forward, playerDirection) < FOV_Angle / 2)
@@ -357,7 +367,7 @@ public class enemyAI : MonoBehaviour, IDamage
     public void RotateTo(Vector3 direction)
     {
         Quaternion rotationToDirection = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Lerp(transform.rotation,rotationToDirection, Time.deltaTime * rotationSpeed);
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotationToDirection, Time.deltaTime * rotationSpeed);
     }
 
 
@@ -371,12 +381,14 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         onDuty = true;
 
-        if (enemy_Type == enemyType.elite)
+        if (enemy_Type == enemyType.Elite)
             agent.SetDestination(defaultPost.transform.position);
         else if (enemyBehavior == behaviorType.guard)
+        {
             agent.SetDestination(defaultPost.transform.position);
+        }
 
-        else if(enemyBehavior == behaviorType.patrol)
+        else if (enemyBehavior == behaviorType.patrol)
         {
             OnPatrol();
         }
@@ -460,7 +472,7 @@ public class enemyAI : MonoBehaviour, IDamage
             HP = 5;
             combatSpeed = 4;
         }
-        else if (enemy_Type == enemyType.elite)
+        else if (enemy_Type == enemyType.Elite)
             HP = 50;
     }
 
@@ -469,9 +481,3 @@ public class enemyAI : MonoBehaviour, IDamage
         return enemy_Type;
     }
 }
- 
-
-
-
-
-
