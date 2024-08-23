@@ -7,10 +7,11 @@ public class EliteMarker : MonoBehaviour
     private void OnTriggerEnter(Collider eliteRobot)
     {
 
-
-        if (eliteRobot.gameObject.GetComponent<enemyAI>().GetEnemyType() == enemyAI.enemyType.elite
-            && eliteRobot.GetComponent<enemyAI>().GetDefaultPost() == gameObject.GetComponentInParent<EliteMarker>().gameObject)
+        if (eliteRobot.gameObject.GetComponentInParent<enemyAI>().GetEnemyType() == enemyAI.enemyType.Elite
+            && eliteRobot.GetComponent<enemyAI>().GetDefaultPost() == this)
         {
+            Debug.Log("Test");
+
             eliteRobot.gameObject.transform.rotation = gameObject.transform.rotation;
         }
     }

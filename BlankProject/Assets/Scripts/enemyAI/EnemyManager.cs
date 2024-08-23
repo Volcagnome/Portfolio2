@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Lumin;
+using static enemyAI;
 
 
 public class EnemyManager : MonoBehaviour
@@ -47,7 +48,7 @@ public class EnemyManager : MonoBehaviour
 
     public void AssignGuardPost(GameObject newRobot)
     {
-        NumCurrentGuardRobots++;
+        AddRobotToGuardCount();
         newRobot.GetComponent<enemyAI>().SetBehavior(enemyAI.behaviorType.guard);
 
         for (int index = 0; index < guardPosts_List.Count; index++)
@@ -68,7 +69,7 @@ public class EnemyManager : MonoBehaviour
 
     public void AssignPatrolPost(GameObject newRobot)
     {
-        NumCurrentPatrolRobots++;
+        AddRobotToPatrolCount();
         newRobot.GetComponent<enemyAI>().SetBehavior(enemyAI.behaviorType.patrol);
 
 
@@ -94,11 +95,13 @@ public class EnemyManager : MonoBehaviour
     public void RemoveFromGuardRobotsCount()
     {
         NumCurrentGuardRobots--;
+        NumCurrentTotalRobots--;
     }
 
     public void RemoveFromPatrolRobotsCount()
     {
         NumCurrentPatrolRobots--;
+        NumCurrentTotalRobots--;
     }
 
     IEnumerator CalculateMaxAllowedRobots()
@@ -122,18 +125,19 @@ public class EnemyManager : MonoBehaviour
 
     public int GetCurrentNumberRobots()
     {
-        NumCurrentTotalRobots = NumCurrentGuardRobots + NumCurrentPatrolRobots;
         return NumCurrentTotalRobots;
     }
 
     public void AddRobotToGuardCount()
     {
         NumCurrentGuardRobots++;
+        NumCurrentTotalRobots++;
     }
 
     public void AddRobotToPatrolCount()
     {
         NumCurrentPatrolRobots++;
+        NumCurrentTotalRobots++;
     }
 
 }

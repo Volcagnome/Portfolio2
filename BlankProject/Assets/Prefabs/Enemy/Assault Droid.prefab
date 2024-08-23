@@ -673,7 +673,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100004, guid: d06cdfe4ae390d446bd68ce9cf8b25ab, type: 3}
       insertIndex: 1
-      addedObject: {fileID: 7302407692054687951}
+      addedObject: {fileID: -6086474858322853479}
     - targetCorrespondingSourceObject: {fileID: 100004, guid: d06cdfe4ae390d446bd68ce9cf8b25ab, type: 3}
       insertIndex: 2
       addedObject: {fileID: 4830313184887248644}
@@ -694,7 +694,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 100004, guid: d06cdfe4ae390d446bd68ce9cf8b25ab, type: 3}
   m_PrefabInstance: {fileID: 5665456164785833129}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7302407692054687951
+--- !u!114 &-6086474858322853479
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -723,11 +723,11 @@ MonoBehaviour:
   HPRegenWaitTime: 5
   shootRate: 0.5
   combatSpeed: 4
-  combatStoppingDistance: 8
-  idleStoppingDistance: 0.3
+  combatStoppingDistance: 10
+  idleStoppingDistance: 0.1
   idleSpeed: 2.5
-  rotationSpeed: 1
-  enemyBehavior: 1
+  rotationSpeed: 7
+  enemyBehavior: 0
   enemy_Type: 1
   defaultPost: {fileID: 0}
   currentDestination: {fileID: 0}
@@ -736,7 +736,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   playerInView: 0
-  allyRadius: 8
+  allyRadius: 10
   allyLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -759,7 +759,7 @@ NavMeshAgent:
   m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: -0.08
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!136 &8561703698974052375
@@ -842,7 +842,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 707323034264628265, guid: 4a89e5cc6373f5442b058e68313125c6, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6143980488813495840, guid: 4a89e5cc6373f5442b058e68313125c6, type: 3}
       propertyPath: m_FillAmount

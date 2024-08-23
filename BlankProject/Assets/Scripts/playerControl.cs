@@ -18,6 +18,7 @@ public class playerControl : MonoBehaviour, IDamage
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
 
+    [SerializeField] float crouchHeight;
     [SerializeField] int jumpMax;
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
@@ -36,6 +37,7 @@ public class playerControl : MonoBehaviour, IDamage
     int jumpCount;
     float hpOG;
     int speedOG;
+    float heightOG;
     float staminaOG;
 
     bool hasStamina;
@@ -44,6 +46,9 @@ public class playerControl : MonoBehaviour, IDamage
     bool isInteracting;
     bool isTakingDamage;
 
+    bool crouchToggle;
+    bool isCrouched;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,6 +56,7 @@ public class playerControl : MonoBehaviour, IDamage
         hpOG = HP;
         staminaOG = stamina;
         speedOG = speed;
+        heightOG = controller.height;
         adjustHPBar();
     }
 
@@ -90,6 +96,22 @@ public class playerControl : MonoBehaviour, IDamage
                Input.GetAxis("Horizontal") * transform.right;
         controller.Move(move * speed * Time.deltaTime);
 
+
+        // *** CROUCHING *** //
+        if (Input.GetButtonDown("Crouch"))
+        {
+            // On button press, lowers player height to crouch height.
+            controller.height = crouchHeight;
+        }
+
+        if (Input.GetButtonUp("Crouch"))
+        {
+            // On key up, returns to regular height.
+            controller.height = heightOG;
+        }
+ 
+
+        // *** JUMPING *** //
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
             jumpCount++;
@@ -98,9 +120,13 @@ public class playerControl : MonoBehaviour, IDamage
 
         controller.Move(playerVel * Time.deltaTime);
 
+
+        // *** SHOOTING *** //
         if (Input.GetButton("Shoot") && !isShooting)
             StartCoroutine(shoot());
 
+
+        // *** INTERACTING *** //
         if (Input.GetButtonDown("Interact"))
         {
             interact();
@@ -108,6 +134,9 @@ public class playerControl : MonoBehaviour, IDamage
             
     }
 
+
+    // *** SPRINTING METHODS *** //
+    // VVV
     void sprint()
     {
         // Sprint modifiers modify speed:
@@ -179,6 +208,9 @@ public class playerControl : MonoBehaviour, IDamage
         regenStamina();
     }
 
+
+    // *** HEALTH, DAMAGE AND INTERACTING METHODS *** //
+    //  VVV
     IEnumerator shoot()
     {
         isShooting = true;
@@ -278,6 +310,9 @@ public class playerControl : MonoBehaviour, IDamage
         
     }
 
+
+    // *** HUD METHODS *** //
+    // VVV
     void adjustHPBar()
     {
         GameManager.instance.healthbar.fillAmount = HP / hpOG;

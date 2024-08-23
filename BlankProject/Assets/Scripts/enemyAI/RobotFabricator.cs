@@ -101,8 +101,6 @@ public class RobotFabricator : MonoBehaviour
     private void OnTriggerExit(Collider newRobot)
     {
 
-        Debug.Log(newRobot.gameObject.tag);
-
         if (newRobot.gameObject.tag == "Enemy")
         {
             spawningRobot = false;

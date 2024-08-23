@@ -8,7 +8,7 @@ public class EliteMarkerReturn : MonoBehaviour
     private void OnTriggerExit(Collider eliteRobot)
     {
 
-        if (eliteRobot.gameObject.GetComponent<enemyAI>().GetEnemyType() == enemyAI.enemyType.elite
+        if (eliteRobot.gameObject.GetComponent<enemyAI>().GetEnemyType() == enemyAI.enemyType.Elite
             && eliteRobot.GetComponent<enemyAI>().GetDefaultPost() == gameObject.GetComponentInParent<EliteMarker>().gameObject)
         {
             eliteRobot.gameObject.GetComponent<enemyAI>().CalmEnemy();
