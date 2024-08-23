@@ -13,9 +13,11 @@ public class securityCamera : MonoBehaviour, IDamage, IToggle
 
     bool isActive;
 
+    //Taken to potentially fix a bug
+    private GameObject[] alliesInRange;
+
     //Fields lifted directly from Lynsey's enemyAI script
     [SerializeField] float FOV;
-    [SerializeField] LayerMask targetMask;
     [SerializeField] LayerMask enemyLayer;
     public bool playerInView;
 
@@ -56,13 +58,13 @@ public class securityCamera : MonoBehaviour, IDamage, IToggle
     //Copied directly from another chunk of Lynsey's code becuase I'm too lazy to be original here
     public void AlertEnemies()
     {
-        Collider[] enemiesInRange = Physics.OverlapSphere(gameObject.transform.position, alarmRadius, enemyLayer);
+        Collider[] alliesInRange = Physics.OverlapSphere(searchPoint.transform.position, alarmRadius, enemyLayer);
 
-        if (enemiesInRange.Length > 0)
+        if (alliesInRange.Length > 0)
         {
-            foreach (Collider foe in enemiesInRange)
+            foreach (Collider ally in alliesInRange)
             {
-                foe.gameObject.GetComponent<enemyAI>().AlertEnemy();
+                ally.gameObject.GetComponent<enemyAI>().AlertEnemy();
             }
         }
     }
