@@ -9,13 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4086651527912523888}
+  - component: {fileID: 1522572410001734092}
   - component: {fileID: 72719890181230723}
   - component: {fileID: 6629114323259232349}
   - component: {fileID: 6639941470250078096}
   - component: {fileID: 2581581762124725768}
-  - component: {fileID: 1522572410001734092}
   m_Layer: 8
-  m_Name: Elite Post
+  m_Name: TitanPost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37,6 +37,18 @@ Transform:
   - {fileID: 987598508938970943}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1522572410001734092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960902262076455981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb0bcc17984983844a473eb816f28624, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!33 &72719890181230723
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -137,18 +149,6 @@ CapsuleCollider:
   m_Height: 1.3291948
   m_Direction: 1
   m_Center: {x: 0.11871779, y: -0.19287348, z: 0.1031847}
---- !u!114 &1522572410001734092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 960902262076455981}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb0bcc17984983844a473eb816f28624, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4207450154314668871
 GameObject:
   m_ObjectHideFlags: 0

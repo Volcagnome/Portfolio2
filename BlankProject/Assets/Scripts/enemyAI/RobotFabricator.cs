@@ -8,7 +8,9 @@ public class RobotFabricator : MonoBehaviour
 {
     [SerializeField] GameObject fabricatorDoor;
     [SerializeField] Light fabricatorDoorLight;
-    [SerializeField] GameObject entityToSpawn;
+    [SerializeField] GameObject guard;
+    [SerializeField] GameObject patrol;
+    [SerializeField] GameObject titan;
     [SerializeField] GameObject spawnPosition;
 
     private Vector3 doorCurrentPosition;
@@ -17,16 +19,19 @@ public class RobotFabricator : MonoBehaviour
 
     private bool spawningRobot;
     private bool doorOpen;
+    private bool isReadyToSpawn;
+    private bool isFunctional;
 
     // Start is called before the first frame update
     void Start()
     {
         doorOpen = false;
+        isFunctional = true;
+        isReadyToSpawn = true;
         fabricatorDoorLight.GetComponent<Light>().enabled = false;
         doorClosedPosition = fabricatorDoor.transform.localPosition;
         doorOpenPosition = new Vector3(doorClosedPosition.x, doorClosedPosition.y + 3.8f, doorClosedPosition.z);
-
-        StartCoroutine(MonitorForEmptyPost());
+        EnemyManager.instance.robotFabricators_List.Add(gameObject);
     }
 
     // Update is called once per frame
@@ -36,6 +41,7 @@ public class RobotFabricator : MonoBehaviour
             OpenDoor();
         else if(!spawningRobot && doorOpen)
             CloseDoor();
+
     }
 
 
@@ -67,36 +73,50 @@ public class RobotFabricator : MonoBehaviour
 
         fabricatorDoor.transform.localPosition = Vector3.MoveTowards(doorCurrentPosition, doorClosedPosition, Time.deltaTime * 4f);
     }
-    public bool GetDoorOpen()
+    
+
+    public IEnumerator SpawnRobot(SharedEnemyAI.enemyType entityToSpawn)
     {
-        return doorOpen;
+        spawningRobot = true;
+
+        yield return new WaitForSeconds(2f);
+
+        if (entityToSpawn == SharedEnemyAI.enemyType.Guard)
+            Instantiate(guard, spawnPosition.transform.position, spawnPosition.transform.localRotation);
+
+        else if (entityToSpawn == SharedEnemyAI.enemyType.Patrol)
+            Instantiate(patrol, spawnPosition.transform.position, spawnPosition.transform.localRotation);
+
+
+        
+        isReadyToSpawn = false;
+        StartCoroutine(SpawnCooldown());
     }
 
-    private void SpawnEnemy()
+    IEnumerator SpawnCooldown()
     {
-        GameObject newEnemy = Instantiate(entityToSpawn, spawnPosition.transform.position, spawnPosition.transform.localRotation);
-        EnemyManager.instance.AssignRole(newEnemy);
+        yield return new WaitForSeconds(EnemyManager.instance.GetEnemySpawnInterval());
+
+        isReadyToSpawn = true;
     }
 
-    IEnumerator MonitorForEmptyPost()
-    {
-        yield return new WaitForSeconds(0.5f);
+    //IEnumerator SpawnRobot()
+    //{
+    //    while (spawningRobot)
+    //    {
+    //        if (EnemyManager.instance.GetCurrentNumberRobots() < EnemyManager.instance.GetMaxAllowedRobots())
+    //        {
+    //            spawningRobot = true;
 
-        while (true)
-        {
-            if (EnemyManager.instance.GetCurrentNumberRobots() < EnemyManager.instance.maxAllowedRobots)
-            {
-                spawningRobot = true;
+    //            if (doorOpen)
+    //            {
+    //                SpawnEnemy();
+    //            }
+    //        }
 
-                if (doorOpen)
-                {
-                    SpawnEnemy();
-                }
-            }
-
-            yield return new WaitForSeconds(EnemyManager.instance.EnemySpawnInterval);
-        }
-    }
+    //        yield return new WaitForSeconds(EnemyManager.instance.EnemySpawnInterval);
+    //    }
+    //}
 
     private void OnTriggerExit(Collider newRobot)
     {
@@ -107,4 +127,8 @@ public class RobotFabricator : MonoBehaviour
         }
 
     }
+
+    public bool GetIsReadyToSpawn() { return isReadyToSpawn; }
+
+    public bool GetIsFunctional() { return isFunctional; }
 }

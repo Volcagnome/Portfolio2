@@ -1755,7 +1755,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fabricatorDoor: {fileID: 3447483985185283465}
   fabricatorDoorLight: {fileID: 1621498778642639651}
-  entityToSpawn: {fileID: 5665456164785799693, guid: d193e03e3bc2dfc4c9559ce0015052ac, type: 3}
+  guard: {fileID: 5665456164785799693, guid: d193e03e3bc2dfc4c9559ce0015052ac, type: 3}
+  patrol: {fileID: 4744974096311210552, guid: b2c5178c02aded448b84086b73aa7d87, type: 3}
+  titan: {fileID: 5888592768810817920, guid: 443a52ff71d4e6249b6ee17f7f56974c, type: 3}
   spawnPosition: {fileID: 391956937095108341}
 --- !u!65 &6175621529393049108
 BoxCollider:
@@ -1801,7 +1803,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1

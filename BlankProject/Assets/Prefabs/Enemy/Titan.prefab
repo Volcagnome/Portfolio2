@@ -233,7 +233,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100092, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}
       propertyPath: m_Name
-      value: Robot1
+      value: Titan
       objectReference: {fileID: 0}
     - target: {fileID: 100092, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}
       propertyPath: m_Layer
@@ -269,15 +269,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.499999
+      value: -30.687576
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.00000047683716
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.5000005
+      value: -175.42438
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}
       propertyPath: m_LocalRotation.w
@@ -381,16 +381,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5f70de4b250f304dbcf973e03cee65e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 3055071466684873855}
-  model: {fileID: 5888592768799315164}
-  shootPos: {fileID: 1181036061509573421}
   headPos: {fileID: 214659991441312882}
-  bullet: {fileID: 6804835773319123192, guid: 691bd9694255b394ba715e419013b5c0, type: 3}
-  guardBullet: {fileID: 6804835773319123192, guid: 691bd9694255b394ba715e419013b5c0, type: 3}
-  emissionAlerted: {fileID: 0}
-  emissionIdle: {fileID: 0}
-  guard: {fileID: 0}
-  patrol: {fileID: 0}
+  model: {fileID: 5888592768799315164}
+  defaultPost: {fileID: 0}
+  currentDestination: {fileID: 0}
+  agent: {fileID: 3055071466684873855}
+  FOV_Angle: 100
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 8
+  rotationSpeed: 5
+  enemyBehavior: 0
+  enemy_Type: 3
   HP: 50
   HPRegenRate: 5
   HPRegenWaitTime: 5
@@ -399,20 +401,17 @@ MonoBehaviour:
   combatStoppingDistance: 8
   idleStoppingDistance: 0.3
   idleSpeed: 2.5
-  rotationSpeed: 5
-  enemyBehavior: 0
-  enemy_Type: 2
-  defaultPost: {fileID: 0}
-  currentDestination: {fileID: 0}
-  FOV_Angle: 100
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 8
-  playerInView: 0
   allyRadius: 10
   allyLayer:
     serializedVersion: 2
     m_Bits: 128
+  shootPos: {fileID: 1181036061509573421}
+  ammoType: {fileID: 6804835773319123192, guid: 691bd9694255b394ba715e419013b5c0, type: 3}
+  emissionAlerted: {fileID: 0}
+  emissionIdle: {fileID: 0}
+  enemyHPBar: {fileID: 6562890840765349373}
+  enemyHPBarFill: {fileID: 542460881579546612}
+  HPBarPos: {x: 0, y: 0, z: 0}
 --- !u!195 &3055071466684873855
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -616,8 +615,24 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a89e5cc6373f5442b058e68313125c6, type: 3}
+--- !u!114 &542460881579546612 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6143980488813495840, guid: 4a89e5cc6373f5442b058e68313125c6, type: 3}
+  m_PrefabInstance: {fileID: 5964165584834843092}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &3598126998392247403 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7146057636135912895, guid: 4a89e5cc6373f5442b058e68313125c6, type: 3}
+  m_PrefabInstance: {fileID: 5964165584834843092}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6562890840765349373 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 707323034264628265, guid: 4a89e5cc6373f5442b058e68313125c6, type: 3}
   m_PrefabInstance: {fileID: 5964165584834843092}
   m_PrefabAsset: {fileID: 0}
