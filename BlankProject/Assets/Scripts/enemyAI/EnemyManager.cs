@@ -167,13 +167,12 @@ public class EnemyManager : MonoBehaviour
             GameObject currentRoute = patrolRoutes_List[index];
 
             int currentRobotsAssigned = currentRoute.GetComponent<PatrolWaypoint>().GetNumberRobotsOnThisRoute();
-            Debug.Log("currentRobotsAssigned: " + currentRobotsAssigned);
+
             int maxAllowedRobotsAssigned = currentRoute.GetComponent<PatrolWaypoint>().GetMaxRobotsOnThisRoute();
-            Debug.Log("maxAllowedRobotsAssigned: " + maxAllowedRobotsAssigned);
+
 
             if (currentRobotsAssigned < maxAllowedRobotsAssigned)
-            {
-                Debug.Log("found slot");
+            { 
 
                 currentRoute.GetComponent<PatrolWaypoint>().AddRobotToRoute(newRobot);
                 newRobot.GetComponent<SharedEnemyAI>().SetDefaultPost(currentRoute);

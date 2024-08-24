@@ -77,7 +77,7 @@ public class enemyAI : SharedEnemyAI, IDamage
             else if (playerInRange && !playerInView)
                 agent.SetDestination(GameManager.instance.player.transform.position);
 
-            else if (playerInRange && agent.velocity.magnitude > 0.1f)
+            else if (playerInRange)
             {
                 RotateToPlayer();
 

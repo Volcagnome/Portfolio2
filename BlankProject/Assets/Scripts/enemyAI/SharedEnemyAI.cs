@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using static enemyAI;
+using static UnityEngine.GraphicsBuffer;
 
 public class SharedEnemyAI : MonoBehaviour
 {
@@ -142,11 +143,21 @@ public class SharedEnemyAI : MonoBehaviour
     }
 
     protected void RotateToPlayer()
-    { 
-        playerDirection = GameManager.instance.player.transform.position - transform.position;
+    {
 
-        Quaternion rotationToPlayer = Quaternion.LookRotation(playerDirection);
-        transform.rotation = Quaternion.Lerp(transform.rotation, rotationToPlayer, Time.deltaTime * rotationSpeed);
+        //transform.LookAt(GameManager.instance.player.transform.position);
+        //playerDirection = GameManager.instance.player.transform.position - transform.position;
+        //;
+        //Quaternion rotationToPlayer = Quaternion.LookRotation(playerDirection);
+        //transform.rotation = Quaternion.Lerp(transform.rotation, rotationToPlayer, Time.deltaTime * rotationSpeed);
+
+        Vector3 directionToPlayer = GameManager.instance.player.transform.position - transform.position;
+        directionToPlayer.y = 0; // Constrain to horizontal plane
+
+        // Create the target rotation to face the player
+        Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+
+        transform.rotation = Quaternion.LookRotation(directionToPlayer);
 
     }
 

@@ -16,12 +16,10 @@ public class patrolAI : enemyAI,IDamage
 
         if (defaultPost == null)
         {
-            Debug.Log("assigning post");
             EnemyManager.instance.AssignPatrolPost(gameObject);
         }
         else
-        {
-            Debug.Log("updating post");
+        {   
             defaultPost.GetComponent<PatrolWaypoint>().AddRobotToRoute(gameObject);
             EnemyManager.instance.AddRobotToPatrolCount();
         }
