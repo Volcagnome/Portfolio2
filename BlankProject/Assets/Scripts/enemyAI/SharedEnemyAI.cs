@@ -172,7 +172,7 @@ public class SharedEnemyAI : MonoBehaviour
         agent.SetDestination(defaultPost.transform.position);   
     }
 
-    protected virtual void AlertEnemy()
+    public virtual void AlertEnemy()
     {
         isAlerted = true;
         lastKnownPlayerLocation = GameManager.instance.player.transform.position;
