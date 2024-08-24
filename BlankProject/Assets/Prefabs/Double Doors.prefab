@@ -223,7 +223,6 @@ GameObject:
   - component: {fileID: 1118054958777581605}
   - component: {fileID: 8791143709092224612}
   - component: {fileID: 1403096176079661739}
-  - component: {fileID: 3585934562809072926}
   m_Layer: 0
   m_Name: Door ClosedState
   m_TagString: Untagged
@@ -318,22 +317,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3585934562809072926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2212433092462346189}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3457bc0e38286a344af75c7f2fec16ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemOnState: {fileID: 0}
-  itemOffState: {fileID: 0}
-  itemState: 0
-  vital: 0
 --- !u!1 &2769253254478568399
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,7 +450,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2769253254478568399}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f80bf6a1a64f892408e100047bfe5c2d, type: 3}
   m_Name: 
@@ -594,7 +577,6 @@ GameObject:
   - component: {fileID: 601296198110627942}
   - component: {fileID: 8954080360467683105}
   - component: {fileID: 7941638283957065257}
-  - component: {fileID: 3965202665208623182}
   m_Layer: 0
   m_Name: Side 2
   m_TagString: Untagged
@@ -688,21 +670,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3965202665208623182
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4339338438780965523}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f80bf6a1a64f892408e100047bfe5c2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toggleRecipientOn: {fileID: 0}
-  toggleRecipientOff: {fileID: 0}
-  controller: {fileID: 0}
 --- !u!1 &4744813185577182290
 GameObject:
   m_ObjectHideFlags: 0
