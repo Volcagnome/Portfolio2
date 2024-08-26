@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
 
+    [SerializeField] public GameObject crouchWindow;
+    [SerializeField] public GameObject proneWindow;
+
     [SerializeField] TMP_Text leverCountText;
     public Image staminaBar;
     public Image healthbar;
@@ -20,7 +23,8 @@ public class GameManager : MonoBehaviour
 
 
     public GameObject player;
-    public playerControl playerScript;
+    public playerMovement playerScript;
+    public playerCrouch crouchScript;
     private int activeLevers;
     public bool youWin;
 
@@ -31,7 +35,8 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         player = GameObject.FindWithTag("Player");
-        playerScript = player.GetComponent<playerControl>();
+        playerScript = player.GetComponent<playerMovement>();
+        crouchScript = player.GetComponent<playerCrouch>();
     }
 
     //Update is called once per frame
@@ -89,6 +94,4 @@ public class GameManager : MonoBehaviour
         menuActive = menuLose;
         menuActive.SetActive(true);
     }
-
-
 }
