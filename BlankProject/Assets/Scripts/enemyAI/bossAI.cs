@@ -22,6 +22,8 @@ public class bossAI : SharedEnemyAI, IDamage
     [SerializeField] GameObject bigCannon_R2;
 
 
+
+
     //Basic Stats
     [SerializeField] float speed;
 
@@ -108,7 +110,7 @@ public class bossAI : SharedEnemyAI, IDamage
         //    Charge();
     }
 
-    protected void FoundPlayer()
+    protected override void FoundPlayer()
     {
         Attack();
     }

@@ -31,10 +31,19 @@ public class LevelManager : MonoBehaviour
     [SerializeField] int breachLevel_4_numTitans;
     [SerializeField] int breachLevel_5_numTitans;
 
+    [SerializeField] int breachLevel_1_numSpiders;
+    [SerializeField] int breachLevel_2_numSpiders;
+    [SerializeField] int breachLevel_3_numSpiders;
+    [SerializeField] int breachLevel_4_numSpiders;
+    [SerializeField] int breachLevel_5_numSpiders;
+
+    int numGuardResponders;
+    int numTitanResponders;
 
     [SerializeField] int maximumSecurityBreachLevel;
     [SerializeField] int minTimeBeforeReduceBreachLevel;
     [SerializeField] int minTimeBeforeIncreaseBreachLevel;
+    [SerializeField] int secondsBetweenSpiderSpawns;
     Coroutine breachIncreaseTimer;
     bool readyToIncrease;
 
@@ -45,6 +54,8 @@ public class LevelManager : MonoBehaviour
 
     public List<GameObject> intruderAlertButtons;
     public List<GameObject> responseTeam;
+    public List<GameObject> spiderSpawners;
+
     bool intruderAlert;
     bool isRaisingAlarm;
     bool intruderFound;
@@ -118,8 +129,9 @@ public class LevelManager : MonoBehaviour
         if (breachIncreaseTimer == null)
             StartCoroutine(BreachLevelIncreaseCoolDown());
 
-        int numGuardResponders = GetNumGuardResponders();
-        int numTitanResponders = GetNumTitanResponders();
+        ToggleSpiderSpawners(true);
+
+        GetNumResponders();
 
         AddToResponseTeam(numGuardResponders, EnemyManager.instance.GetCurrentNumberGuards());
         StartCoroutine(CallReinforcements(numTitanResponders, titanReinforcement));
@@ -158,56 +170,41 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private int GetNumGuardResponders()
+    private void ToggleSpiderSpawners(bool status)
     {
-        int numGuardResponders = 0;
+        spiderSpawners.ForEach(spawner =>
+        {
+            spawner.GetComponent<SpiderSpawner>().ToggleActive(status);
+        });
+    }
+
+    private void GetNumResponders()
+    { 
 
         switch (securityBreachLevel)
         {
             case 1:
                 numGuardResponders = breachLevel_1_numGuards;
+                numTitanResponders = breachLevel_1_numTitans;
                 break;
             case 2:
                 numGuardResponders = breachLevel_2_numGuards;
+                numTitanResponders = breachLevel_2_numTitans;
                 break;
             case 3:
                 numGuardResponders = breachLevel_3_numGuards;
-                break;
-            case 4:
-                numGuardResponders = breachLevel_4_numGuards;
-                break;
-            case 5:
-                numGuardResponders = breachLevel_5_numGuards;
-                break;
-        }
-
-        return numGuardResponders;
-    }
-
-    private int GetNumTitanResponders()
-    {
-        int numTitanResponders = 0;
-
-        switch (securityBreachLevel)
-        {
-            case 1:
-                numTitanResponders = breachLevel_2_numTitans;
-                break;
-            case 2:
-                numTitanResponders = breachLevel_2_numTitans;
-                break;
-            case 3:
                 numTitanResponders = breachLevel_3_numTitans;
                 break;
             case 4:
+                numGuardResponders = breachLevel_4_numGuards;
                 numTitanResponders = breachLevel_4_numTitans;
                 break;
             case 5:
+                numGuardResponders = breachLevel_5_numGuards;
                 numTitanResponders = breachLevel_5_numTitans;
+
                 break;
         }
-
-        return numTitanResponders;  
     }
 
     private 
@@ -338,6 +335,8 @@ public class LevelManager : MonoBehaviour
         if(responseTeam.Count >0)
             ReAssignExtras();
 
+        ToggleSpiderSpawners(false);
+
         responseTeam.Clear();
     }
 
@@ -391,6 +390,8 @@ public class LevelManager : MonoBehaviour
 
     public float GetSearchTimer() { return searchTimer; }
 
+    public void AddSpiderSpawnerToList(GameObject spawner) { spiderSpawners.Add(spawner); }
+
     public void FoundTheIntruder(Vector3 location)
     {
         intruderLocation = location;
@@ -400,4 +401,6 @@ public class LevelManager : MonoBehaviour
             responder.GetComponent<enemyAI>().StartOrUpdateFindIntruder(intruderLocation);
         });
     }
+
+    public int GetMinTimeBetweenSpiderSpawn() { return secondsBetweenSpiderSpawns; }
 }

@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class patrolAI : enemyAI,IDamage
 {
+
 
     bool isWhistleBlower;
 
@@ -30,65 +32,67 @@ public class patrolAI : enemyAI,IDamage
     // Update is called once per frame
     void Update()
     {
-        if (!isWhistleBlower)
-        {
-            if (playerInView)
-            {
-                AlertEnemy();
-                AlertAllies();
+        CallMovementAnimation();
 
-                if (!LevelManager.instance.GetIntruderAlert() && !LevelManager.instance.GetIsRaisingAlarm())
+        if (!isDead)
+        {
+            if (!isWhistleBlower)
+            {
+                if (playerInView)
                 {
-                    RaiseAlarm();
+                    AlertEnemy();
+                    AlertAllies();
+
+                    if (!LevelManager.instance.GetIntruderAlert() && !LevelManager.instance.GetIsRaisingAlarm())
+                        RaiseAlarm();
+
+                    else
+                    {
+                        FoundPlayer();
+                        agent.stoppingDistance = combatStoppingDistance;
+                    }
                 }
                 else
+                    agent.stoppingDistance = idleStoppingDistance;
+
+                if (isAlerted)
                 {
-                    FoundPlayer();
-                    agent.stoppingDistance = combatStoppingDistance;
+                    if (!playerInView && !playerInRange)
+                        StartCoroutine(PursuePlayer());
+
+                    else if (playerInRange)
+                    {
+                        RotateToPlayer();
+
+                        if (!playerInView)
+                            agent.SetDestination(GameManager.instance.player.transform.position);
+                    }
                 }
+                else if (!onDuty)
+                    ReturnToPost();
+
+            }
+            else if (LevelManager.instance.GetIntruderAlert())
+            {
+                isWhistleBlower = false;
+            }
+
+            if (isPlayerTarget())
+            {
+                UpdateEnemyUI();
+
+                if (!isTakingDamage)
+                    RegenerateHealth();
             }
             else
-                agent.stoppingDistance = idleStoppingDistance;
-
-            if (isAlerted)
-            {
-                if (!playerInView && !playerInRange)
-                    StartCoroutine(PursuePlayer());
-
-                else if (playerInRange)
-                {
-                    RotateToPlayer();
-
-                    //Vector3 playerDirection = GameManager.instance.player.transform.position - transform.position;
-                    //playerDirection.y = 0;
-                    //transform.rotation = Quaternion.LookRotation(playerDirection);
-
-                    if (!playerInView)
-                        agent.SetDestination(GameManager.instance.player.transform.position);
-                }
-            }
-            else if (!onDuty)
-                ReturnToPost();
-
+                enemyHPBar.SetActive(false);
         }
-        else if (LevelManager.instance.GetIntruderAlert())
-        {
-            isWhistleBlower = false;
-        }
-
-        if (isPlayerTarget())
-        {
-            UpdateEnemyUI();
-
-            if (!isTakingDamage)
-                RegenerateHealth();
-        }
-        else
-            enemyHPBar.SetActive(false);
     }
 
     protected override void Death()
     {
+        DeathShared();
+
         EnemyManager.instance.RemoveDeadPatrol(gameObject);
         defaultPost.GetComponent<PatrolWaypoint>().RemoveRobotFromRoute(gameObject);
         
@@ -97,7 +101,9 @@ public class patrolAI : enemyAI,IDamage
             LevelManager.instance.WhistleBlowerKilled();
         }
 
-        Destroy(gameObject);
+        StartCoroutine(DespawnDeadRobot(gameObject));
+
+        GetComponent<patrolAI>().enabled = false;
     }
 
     public void OnPatrol()
@@ -111,7 +117,7 @@ public class patrolAI : enemyAI,IDamage
 
         GameObject nearestButton = LevelManager.instance.SetIsRaisingAlarm(gameObject);
 
-        agent.stoppingDistance = idleStoppingDistance;
+        agent.stoppingDistance = 2f;
         agent.SetDestination(nearestButton.transform.position);
 
     }

@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Animations;
 using static enemyAI;
 using static UnityEngine.GraphicsBuffer;
+using UnityEditor.Experimental.GraphView;
+using UnityEditor.Search;
+using UnityEngine.UI;
 
 public class SharedEnemyAI : MonoBehaviour
 {
@@ -14,7 +18,10 @@ public class SharedEnemyAI : MonoBehaviour
     [SerializeField] protected GameObject defaultPost;
     [SerializeField] protected GameObject currentDestination;
     [SerializeField] protected NavMeshAgent agent;
-    
+    [SerializeField] protected Animator anim;
+    [SerializeField] protected ParticleSystem DeathVFX;
+    [SerializeField] protected Transform DeathFXPos;
+
 
     //PlayerDetection
     [SerializeField] protected float FOV_Angle;
@@ -30,6 +37,7 @@ public class SharedEnemyAI : MonoBehaviour
     protected bool isAlerted;
     protected bool onDuty;
     protected bool isShooting;
+    protected bool isDead;
     protected Color colorOrig;
 
     //Stats
@@ -52,7 +60,29 @@ public class SharedEnemyAI : MonoBehaviour
     [SerializeField] protected LayerMask allyLayer;
     protected GameObject[] alliesInRange;
 
+    //Basic Components
+    [SerializeField] protected Transform shootPos;
+    [SerializeField] protected GameObject weapon;
 
+    //[SerializeField] Transform headTopPos;
+    [SerializeField] protected GameObject ammoType;
+    [SerializeField] Texture emissionAlerted;
+    [SerializeField] Texture emissionIdle;
+
+    //CurrentStatus
+    protected bool isRespondingToAlert;
+
+    //Health Regen
+    protected bool isTakingDamage;
+    protected Coroutine regenCoroutine;
+    protected float HPOrig;
+    public GameObject enemyHPBar;
+    public Image enemyHPBarFill;
+    [SerializeField] Vector3 HPBarPos;
+
+    Coroutine FindIntruderCoroutine;
+
+    public float minDistance = 15f;
 
 
     // Start is called before the first frame update
@@ -65,12 +95,58 @@ public class SharedEnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+        CallMovementAnimation();
+
+        if (!isDead)
+        {
+            if (playerInView)
+            {
+                AlertEnemy();
+                AlertAllies();
+                FoundPlayer();
+                agent.stoppingDistance = combatStoppingDistance;
+            }
+            else
+            {
+                agent.stoppingDistance = idleStoppingDistance;
+                anim.SetBool("Aiming", false);
+            }
+
+            if (isAlerted)
+            {
+                if (!playerInView && !playerInRange && !isRespondingToAlert)
+                    StartCoroutine(PursuePlayer());
+
+                else if (playerInRange)
+                {
+                    RotateToPlayer();
+
+                    //Vector3 playerDirection = GameManager.instance.player.transform.position - transform.position;
+                    //playerDirection.y = 0;
+                    //transform.rotation = Quaternion.LookRotation(playerDirection);
+                }
+                else if (playerInRange && !playerInView)
+                    agent.SetDestination(GameManager.instance.player.transform.position);
+            }
+            else if (!onDuty)
+                ReturnToPost();
+
+
+            if (isPlayerTarget())
+            {
+                UpdateEnemyUI();
+
+                if (!isTakingDamage)
+                    RegenerateHealth();
+            }
+            else
+                enemyHPBar.SetActive(false);
+        }
     }
 
-    protected void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !isDead)
         {
             playerInRange = true;
             StartCoroutine(FOVRoutine());
@@ -95,7 +171,7 @@ public class SharedEnemyAI : MonoBehaviour
     }
 
 
-    private IEnumerator FOVRoutine()
+    protected IEnumerator FOVRoutine()
     {
         while (playerInRange)
         {
@@ -142,23 +218,12 @@ public class SharedEnemyAI : MonoBehaviour
         }
     }
 
-    protected void RotateToPlayer()
+    protected virtual void RotateToPlayer()
     {
+        playerDirection = GameManager.instance.player.transform.position - transform.position;
 
-        //transform.LookAt(GameManager.instance.player.transform.position);
-        //playerDirection = GameManager.instance.player.transform.position - transform.position;
-        //;
-        //Quaternion rotationToPlayer = Quaternion.LookRotation(playerDirection);
-        //transform.rotation = Quaternion.Lerp(transform.rotation, rotationToPlayer, Time.deltaTime * rotationSpeed);
-
-        Vector3 directionToPlayer = GameManager.instance.player.transform.position - transform.position;
-        directionToPlayer.y = 0; // Constrain to horizontal plane
-
-        // Create the target rotation to face the player
-        Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
-
-        transform.rotation = Quaternion.LookRotation(directionToPlayer);
-
+        Quaternion rotationToPlayer = Quaternion.LookRotation(playerDirection);
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotationToPlayer, Time.deltaTime * rotationSpeed);  
     }
 
     
@@ -189,7 +254,7 @@ public class SharedEnemyAI : MonoBehaviour
         lastKnownPlayerLocation = GameManager.instance.player.transform.position;
         agent.speed = combatSpeed;
         onDuty = false;
-        transform.GetChild(2).tag = "Alerted";
+        transform.GetChild(0).tag = "Alerted";
     }
 
     public virtual void CalmEnemy()
@@ -198,7 +263,7 @@ public class SharedEnemyAI : MonoBehaviour
         ReturnToPost();
         agent.speed = idleSpeed;
         onDuty = true;
-        transform.GetChild(2).tag = "Idle";
+        transform.GetChild(0).tag = "Idle";
     }
 
     protected virtual void AlertAllies()
@@ -214,7 +279,234 @@ public class SharedEnemyAI : MonoBehaviour
             }
         }
     }
-    public GameObject GetDefaultPost() { return defaultPost; }
+
+    protected IEnumerator DespawnDeadRobot(GameObject robot)
+    {
+        yield return new WaitForSeconds(60f);
+
+        Destroy(robot);
+    }
+
+    protected virtual void FoundPlayer()
+    {
+        lastKnownPlayerLocation = GameManager.instance.player.transform.position;
+
+        agent.SetDestination(GameManager.instance.player.transform.position);
+        agent.stoppingDistance = combatStoppingDistance;
+
+        anim.SetBool("Aiming", true);
+
+        weapon.transform.LookAt(GameManager.instance.player.transform.position + new Vector3(0f, 1f, 0f));
+
+
+        if (!isShooting && !isDead)
+            StartCoroutine(shoot());
+
+        if (LevelManager.instance.GetIntruderAlert())
+            LevelManager.instance.FoundTheIntruder(lastKnownPlayerLocation);
+    }
+
+    protected virtual IEnumerator shoot()
+    {
+        Debug.Log("Shooting");
+
+        anim.SetTrigger("Shoot");
+
+        isShooting = true;
+
+        yield return new WaitForSeconds(shootRate);
+        isShooting = false;
+    }
+
+    private void CreateBullet()
+    {
+        Instantiate(ammoType, shootPos.position, transform.rotation);
+    }
+
+    //When enemy is damaged will lose health, become alerted, alert allies within its configured ally radius,and flash red
+    //If HP falls to or below zero enemy calls Death function
+    public void takeDamage(int amount)
+    {
+        HP -= amount;
+        isTakingDamage = true;
+
+        AlertEnemy();
+        AlertAllies();
+        StartCoroutine(flashYellow());
+
+        if (HP <= 0)
+        {
+            isDead = true;
+
+            Death();
+        }
+
+        if (regenCoroutine != null)
+        {
+            StopCoroutine(regenCoroutine);
+        }
+        regenCoroutine = StartCoroutine(EnableHealthRegen());
+    }
+
+    public void criticalHit(int amount)
+    {
+        takeDamage(amount);
+        StartCoroutine(flashRed());
+    }
+
+
+    protected void DeathShared()
+    {
+        agent.isStopped = true;
+
+        anim.SetBool("isDead", true);
+        playerInRange = false;
+        playerInView = false;
+        isAlerted = false;
+
+        enemyHPBar.SetActive(false);
+
+        Instantiate(DeathVFX, DeathFXPos.position, Quaternion.identity);
+    }
+
+    protected virtual void Death()
+    {
+        Destroy(gameObject);
+    }
+
+    ////////////////////////////////////////
+    ///          HEALTH REGEN            ///
+    ///////////////////////////////////////
+
+
+    protected void RegenerateHealth()
+    {
+        //Debug.Log("Regenerating enemy health: " + HPRegenRate * Time.deltaTime);
+        HP += HPRegenRate * Time.deltaTime;
+
+        if (HP > HPOrig)
+        {
+            HP = HPOrig;
+        }
+    }
+
+    protected IEnumerator EnableHealthRegen()
+    {
+        yield return new WaitForSeconds(HPRegenWaitTime);
+        isTakingDamage = false;
+        regenCoroutine = null;
+    }
+
+    protected bool isPlayerTarget()
+    {
+        if (HP < HPOrig)
+            return true;
+        return false;
+    }
+
+    public void UpdateEnemyUI()
+    {
+        enemyHPBar.SetActive(true);
+        enemyHPBarFill.fillAmount = HP / HPOrig;
+        //EnemyManager.instance.enemyHPBar.transform.position = headTopPos.position + HPBarPos;
+        enemyHPBar.transform.parent.rotation = Camera.main.transform.rotation;
+    }
+
+
+    ////////////////////////////////////////
+    ///          ENEMY BEHAVIOR         ///
+    ///////////////////////////////////////
+
+
+    protected void CallMovementAnimation()
+    {
+        anim.SetFloat("Speed", agent.velocity.magnitude);
+    }
+
+    public void StartOrUpdateFindIntruder(Vector3 location)
+    {
+        if (FindIntruderCoroutine != null)
+            StopCoroutine(FindIntruder(location));
+
+        FindIntruderCoroutine = StartCoroutine(FindIntruder(location));
+    }
+
+    public IEnumerator FindIntruder(Vector3 intruderLocation)
+    {
+        isRespondingToAlert = true;
+        AlertEnemy();
+        lastKnownPlayerLocation = intruderLocation;
+
+        agent.SetDestination(lastKnownPlayerLocation);
+
+        while (true)
+        {
+
+            yield return new WaitForSeconds(0.05f);
+
+            if (playerInView)
+            {
+                isRespondingToAlert = false;
+                break;
+            }
+
+            if (agent.remainingDistance <= 0.5f)    
+            {
+                isRespondingToAlert = false;
+                StartCoroutine(SearchArea());
+                break;
+            }
+        }
+    }
+
+    public IEnumerator SearchArea()
+    {
+
+        int maxSearchAttempts = LevelManager.instance.GetSearchAttempts();
+        float searchRadius = LevelManager.instance.GetSearchRadius();
+        float searchTimer = LevelManager.instance.GetSearchTimer();
+        bool playerFound = false;
+
+
+
+        for (int attempts = 0; attempts < maxSearchAttempts; attempts++)
+        {
+            Vector3 randomDist = Random.insideUnitSphere * searchRadius;
+            randomDist += LevelManager.instance.GetIntruderLocation();
+
+            NavMeshHit hit;
+            NavMesh.SamplePosition(randomDist, out hit, searchRadius, 1);
+            agent.SetDestination(hit.position);
+
+            yield return new WaitForSeconds(searchTimer);
+
+            if (playerInView)
+            {
+                playerFound = true;
+
+                yield break;
+            }
+        }
+
+        if (!playerFound)
+        {
+            Debug.Log("Must have been the wind.");
+            CalmEnemy();
+        }
+    }
+
+    ////////////////////////////////////////
+    ///          GETTERS/SETTERS         ///
+    ///////////////////////////////////////
+
+
+    public void SetIsRespondingToAlert(bool status) { isRespondingToAlert = status; }
+
+
+
+
+
+public GameObject GetDefaultPost() { return defaultPost; }
 
     public enemyType GetEnemyType() { return enemy_Type; }
 
@@ -227,4 +519,6 @@ public class SharedEnemyAI : MonoBehaviour
     public Vector3 GetLastKnownPlayerLocation() { return lastKnownPlayerLocation; }
     public void SetCurrentDestination(GameObject destination) { currentDestination = destination; }
     public GameObject GetCurrentDestination() { return currentDestination; }
+
+    public void SetLastKnownPlayerLocation(Vector3 location) { lastKnownPlayerLocation = location; }
 }
