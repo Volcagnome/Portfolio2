@@ -6,7 +6,6 @@ public class playerMovement : MonoBehaviour
 {
 
     [SerializeField] CharacterController controller;
-    [SerializeField] LayerMask ignoreMask;
 
     [SerializeField] float stamina;
     [SerializeField] float staminaWait;

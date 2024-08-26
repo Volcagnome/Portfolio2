@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class playerCrouch : MonoBehaviour
 {
+    [SerializeField] Camera mainCam;
+    [SerializeField] CharacterController controller;
+
     [SerializeField] float standingHeight;
     [SerializeField] float crouchHeight;
     [SerializeField] float proneHeight;
-
     [SerializeField] float proneTime;
 
     float heightOG;
@@ -32,7 +34,8 @@ public class playerCrouch : MonoBehaviour
         {
             // On button press, lowers player height to crouch height.
             transform.localPosition = new Vector3 (0, crouchHeight, 0);
-           
+            crouchCam();
+
             // Turn on indicator. (crouch true, prone false)
             GameManager.instance.crouchWindow.SetActive(true);
             GameManager.instance.proneWindow.SetActive(false);
@@ -45,6 +48,7 @@ public class playerCrouch : MonoBehaviour
         {
             // On key up, returns to regular height.
             transform.localPosition = new Vector3(0, standingHeight, 0);
+            standCam();
 
             // Turn off indicator. (both false)
             GameManager.instance.crouchWindow.SetActive(false);
@@ -63,6 +67,7 @@ public class playerCrouch : MonoBehaviour
             {
                 // Transform:
                 transform.localPosition = new Vector3(0, proneHeight, 0);
+                proneCam();
 
                 holdCrouch = 0;
 
@@ -81,36 +86,20 @@ public class playerCrouch : MonoBehaviour
         }
     }
 
+    // Methods for changing the camera's height when crouching/standing.
+    void standCam()
+    {
+        mainCam.transform.localPosition = new Vector3(0, standingHeight, 0);
+    }
+
+    void crouchCam()
+    {
+        mainCam.transform.localPosition = new Vector3(0, crouchHeight, 0);
+    }
+
+    void proneCam()
+    {
+        mainCam.transform.localPosition = new Vector3(0, proneHeight, 0);
+    }
 }
-
-    ////////////////////////
-    // *** CROUCHING *** //
-    ///////////////////////
-    /*
-    if (Input.GetButtonDown("Crouch") && isCrouched == false)
-    {
-        // On button press, lowers player height to crouch height.
-        playerPosition.transform.Translate(0, crouchHeight, 0);
-
-        isCrouched = true;
-    }
-
-    else if (Input.GetButtonDown("Crouch") && isCrouched == true)
-    {
-        // On key up, returns to regular height.
-        playerPosition.transform.Translate(0, heightOG, 0);
-        isCrouched = false;
-    }
-
-    // PRONE (Commented out temporarily)
-    if (Input.GetButton("Crouch"))
-    {
-        holdCrouch += Time.deltaTime;
-        if (holdCrouch >= proneTime)
-        {
-            controller.height = proneHeight;
-            holdCrouch = 0;
-            isCrouched = true;
-        }
-    }*/
 
