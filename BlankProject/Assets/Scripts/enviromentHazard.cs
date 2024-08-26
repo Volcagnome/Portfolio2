@@ -4,25 +4,14 @@ using UnityEngine;
 
 public class enviromentHazard : MonoBehaviour
 {
-    [SerializeField] enum damageType { stationary }
+    [SerializeField] enum damageType { stationary, trap }
     [SerializeField] damageType type;
     [SerializeField] Rigidbody rb;
+    [SerializeField] GameObject itemOnState;
+    [SerializeField] GameObject itemOffState;
 
     [SerializeField] int damageAmount;
 
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -33,15 +22,21 @@ public class enviromentHazard : MonoBehaviour
 
         IDamage dmg = other.GetComponent<IDamage>();
 
-        if (dmg != null && other.gameObject.tag != "Enemy")
+        if (dmg != null && other.gameObject.tag != "Enemy" && type == damageType.stationary)
         {
             dmg.takeDamage(damageAmount);
 
         }
-
+        else if (dmg != null && other.gameObject.tag != "Enemy" && type == damageType.trap)
+        {
+            itemOnState.SetActive(true);
+            itemOffState.SetActive(false);
+            dmg.takeDamage(damageAmount);
+        }
 
     }
 
+    
 
 
 }

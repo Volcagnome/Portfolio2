@@ -20,7 +20,7 @@ public class damage : MonoBehaviour
     {
         if (type == damageType.bullet || type == damageType.web)
         {
-            rb.velocity = (GameManager.instance.player.transform.position - transform.position + new Vector3(0, 0.5f, 0)).normalized * speed;
+            rb.velocity = (GameManager.instance.player.transform.position - transform.position).normalized * speed;
             Destroy(gameObject, destroyTime);
         }
     }
