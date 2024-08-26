@@ -50,6 +50,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] float searchTimer;
     [SerializeField] float searchRadius;
     [SerializeField] int maxSearchAttempts;
+    [SerializeField] float webSpeedDebuff;
+ 
 
 
     public List<GameObject> intruderAlertButtons;
@@ -403,4 +405,6 @@ public class LevelManager : MonoBehaviour
     }
 
     public int GetMinTimeBetweenSpiderSpawn() { return secondsBetweenSpiderSpawns; }
+
+    public float GetWebSpeedDebuff() { return webSpeedDebuff; }
 }

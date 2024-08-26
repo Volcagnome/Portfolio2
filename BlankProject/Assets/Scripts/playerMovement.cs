@@ -13,7 +13,7 @@ public class playerMovement : MonoBehaviour
     [SerializeField] float staminaDecrease;
     [SerializeField] float staminaIncrease;
 
-    [SerializeField] int speed;
+    [SerializeField] float speed;
     [SerializeField] int sprintMod;
 
     [SerializeField] int jumpMax;
@@ -24,11 +24,14 @@ public class playerMovement : MonoBehaviour
     Vector3 playerVel;
 
     int jumpCount;
-    int speedOG;
+    float speedOG;
     float staminaOG;
 
     bool hasStamina;
     bool isSprinting;
+    bool isCaught;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +46,12 @@ public class playerMovement : MonoBehaviour
         movement();
         sprint();
         staminaUsage();
+
+
+        //If player is currently caught by a spider web, debuffs speed per the serialized field in LevelManager
+        if (isCaught)
+            speed = speedOG * LevelManager.instance.GetWebSpeedDebuff();
+
     }
 
     void movement()
@@ -153,4 +162,12 @@ public class playerMovement : MonoBehaviour
 
         regenStamina();
     }
+
+
+    //Functions to allow the arachnoids to influence player's current speed when they are webbed. 
+    public void SetIsCaught(bool status) { isCaught = status; }
+
+    public void SetSpeed(float newSpeed) { speed = newSpeed; }
+
+    public float GetSpeedOG() { return speedOG; }
 }

@@ -109,8 +109,8 @@ public class ArachnoidAI : enemyAI,IDamage
 
         if (caughtPlayer)
         {
-           // GameManager.instance.playerScript.SetIsCaught(false);
-            // GameManager.instance.playerScript.SetSpeed(GameManager.instance.playerScript.GetSpeedOG());
+           GameManager.instance.playerScript.SetIsCaught(false);
+            GameManager.instance.playerScript.SetSpeed(GameManager.instance.playerScript.GetSpeedOG());
         }
 
         Destroy(gameObject);
@@ -133,6 +133,5 @@ public class ArachnoidAI : enemyAI,IDamage
         else
             return;
     }
-
    
 }
