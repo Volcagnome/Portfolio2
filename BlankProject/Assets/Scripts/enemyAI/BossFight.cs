@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BossFight : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class BossFight : MonoBehaviour
     private void BossExitMainframe()
     {
         boss.GetComponent<SharedEnemyAI>().SetDefaultPost(bossDefaultPost2);
+        boss.GetComponent<NavMeshAgent>().SetDestination(bossDefaultPost2.transform.position);
+        boss.GetComponent<Animator>().SetTrigger("FightStart");
     }
 
 }

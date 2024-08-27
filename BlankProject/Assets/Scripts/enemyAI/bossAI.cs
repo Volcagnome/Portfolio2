@@ -51,7 +51,9 @@ public class bossAI : SharedEnemyAI, IDamage
     // Update is called once per frame
     void Update()
     {
-        
+
+        anim.SetFloat("Speed", agent.velocity.magnitude);
+
         if (playerInView)
         {
             AlertEnemy();
@@ -211,15 +213,19 @@ public class bossAI : SharedEnemyAI, IDamage
         }
     }
 
+    protected override void Death()
+    {
+        DeathShared();
+
+        StartCoroutine(DespawnDeadRobot(gameObject));
+
+        GetComponent<bossAI>().enabled = false;
+    }
+
     public void criticalHit(int amount)
     {
         takeDamage(amount);
         StartCoroutine(flashRed());
-    }
-
-    private void Death()
-    {
-        Destroy(gameObject);
     }
 
     public int GetTrampleDamage() { return trampleDamage; }
