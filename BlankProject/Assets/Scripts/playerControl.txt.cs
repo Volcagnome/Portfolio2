@@ -35,6 +35,7 @@ public class playerControl : MonoBehaviour, IDamage
     {
         hpOG = HP;
         adjustHPBar();
+        spawnPlayer();
     }
 
     // Update is called once per frame
@@ -173,5 +174,14 @@ public class playerControl : MonoBehaviour, IDamage
     public void criticalHit(int amount)
     {
         throw new System.NotImplementedException();
+    }
+
+    public void spawnPlayer()
+    {
+        HP = hpOG;
+        adjustHPBar();
+        controller.enabled = false;
+        transform.position = GameManager.instance.playerSpawn.transform.position;
+        controller.enabled = true;
     }
 }
