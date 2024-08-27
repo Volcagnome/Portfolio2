@@ -33,7 +33,7 @@ public class playerCrouch : MonoBehaviour
         if (Input.GetButtonDown("Crouch") && isCrouched == false)
         {
             // On button press, lowers player height to crouch height.
-            transform.localPosition = new Vector3 (0, crouchHeight, 0);
+            transform.localPosition = new Vector3(0, crouchHeight, 0);
             crouchCam();
 
             // Turn on indicator. (crouch true, prone false)
@@ -41,7 +41,6 @@ public class playerCrouch : MonoBehaviour
             GameManager.instance.proneWindow.SetActive(false);
 
             isCrouched = true;
-            
         }
 
         else if (Input.GetButtonDown("Crouch") && isCrouched == true)
@@ -82,7 +81,7 @@ public class playerCrouch : MonoBehaviour
             {
                 // If prone time is not enough and player lets go of key, reset count timer.
                 holdCrouch = 0;
-            } 
+            }
         }
     }
 
@@ -102,4 +101,3 @@ public class playerCrouch : MonoBehaviour
         mainCam.transform.localPosition = new Vector3(0, proneHeight, 0);
     }
 }
-

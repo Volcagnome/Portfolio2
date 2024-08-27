@@ -24,8 +24,6 @@ public class playerDamage : MonoBehaviour, IDamage
     int bulletUpgradeTotal;
     float maxAmmoMultiplier;
 
-    bool hasStamina;
-    bool isSprinting;
     bool isShooting;
     bool isInteracting;
     bool isTakingDamage;
