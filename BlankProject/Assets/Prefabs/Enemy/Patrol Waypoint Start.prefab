@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6465584814495000897}
+  - component: {fileID: 2833825478983145000}
   - component: {fileID: 3254712834861029528}
   - component: {fileID: 3748062615932097719}
-  - component: {fileID: 2833825478983145000}
   - component: {fileID: 1345889915019324532}
   - component: {fileID: 5309693670915353092}
   m_Layer: 8
@@ -36,6 +36,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2833825478983145000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4945953252560244502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad308d2321845e84fa1da25c9d315025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextWaypoint: {fileID: 0}
+  MaxRobotsOnThisRoute: 3
+  robotsAssignedToRoute: []
 --- !u!33 &3254712834861029528
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -86,20 +101,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2833825478983145000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4945953252560244502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad308d2321845e84fa1da25c9d315025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nextWaypoint: {fileID: 0}
-  MaxRobotsOnThisRoute: 3
 --- !u!135 &1345889915019324532
 SphereCollider:
   m_ObjectHideFlags: 0

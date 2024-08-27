@@ -275,7 +275,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100046, guid: fec746e46c2fd354fa0bc92720075dbd, type: 3}
       propertyPath: m_Name
-      value: BattleMech
+      value: Juggernaut
       objectReference: {fileID: 0}
     - target: {fileID: 100046, guid: fec746e46c2fd354fa0bc92720075dbd, type: 3}
       propertyPath: m_Layer
@@ -480,33 +480,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 829b35388cb1ffb4db2689d40e259ac9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 652797826645562228}
-  model: {fileID: 3104046350365109538}
   headPos: {fileID: 5867523564138582628}
+  model: {fileID: 3104046350365109538}
+  defaultPost: {fileID: 0}
+  currentDestination: {fileID: 0}
+  agent: {fileID: 652797826645562228}
+  FOV_Angle: 100
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 8
+  rotationSpeed: 7
+  enemyBehavior: 0
+  enemy_Type: 5
+  HP: 100
+  HPRegenRate: 0
+  HPRegenWaitTime: 0
+  shootRate: 0.75
+  combatSpeed: 5
+  combatStoppingDistance: 15
+  idleStoppingDistance: 0.5
+  idleSpeed: 3
+  allyRadius: 20
+  allyLayer:
+    serializedVersion: 2
+    m_Bits: 128
   body: {fileID: 3104046350351507506}
   lowerBody: {fileID: 3104046350351507536}
   bigCannon_L: {fileID: 3104046350351507494}
   bigCannon_R: {fileID: 3104046350351507492}
   bigCannon_L2: {fileID: 3104046350351507502}
   bigCannon_R2: {fileID: 3104046350351507500}
-  HP: 100
-  shootRate: 0.75
-  rotationSpeed: 7
   speed: 4
   bigCannonShootPos_L: {fileID: 1393829598253187553}
   bigCannonShootPos_R: {fileID: 5199642236541763827}
   mainCannonAmmo: {fileID: 565178124543744718, guid: 15fe3d622f015cd42a8c7487098e8668, type: 3}
   trampleDamage: 15
   minTimeBetweenTrampleAttempts: 5
-  defaultPost: {fileID: 0}
-  FOV_Angle: 100
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 8
   maxTiltAngle: 60
-  shootingStoppingDistance: 20
-  idleStoppingDistance: 0.5
-  playerInView: 0
 --- !u!195 &652797826645562228
 NavMeshAgent:
   m_ObjectHideFlags: 0

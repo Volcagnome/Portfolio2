@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class damage : MonoBehaviour
 {
-    [SerializeField] enum damageType {bullet, stationary}
+    [SerializeField] enum damageType {bullet, web, stationary, shield}
     [SerializeField] damageType type;
     [SerializeField] Rigidbody rb;
 
@@ -18,29 +18,26 @@ public class damage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (type == damageType.bullet)
+        if (type == damageType.bullet || type == damageType.web)
         {
-            rb.velocity = transform.forward * speed;  
-           Destroy(gameObject, destroyTime);
+            rb.velocity = (GameManager.instance.player.transform.position - transform.position).normalized * speed;
+            Destroy(gameObject, destroyTime);
         }
-
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.isTrigger)
-        {
-            return;
-        }
-
         IDamage dmg = other.GetComponent<IDamage>();
 
-        if (dmg != null && other.gameObject.tag != "Enemy")
+        if (other.isTrigger || other.gameObject.tag == "Enemy")
+        {
+            return;
+        } 
+        else if (dmg != null && other.gameObject.tag == "Player")
         {
             dmg.takeDamage(damageAmount);
             Destroy(gameObject);
         }else
             Destroy(gameObject);
     }
-
 }

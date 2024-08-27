@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3666397868493017080}
+  - component: {fileID: 5578609599761174112}
   - component: {fileID: 2900749097083629158}
   - component: {fileID: 7287139337310893197}
   - component: {fileID: 7596020316788516910}
@@ -38,6 +39,52 @@ Transform:
   - {fileID: 6549743294314308006}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 72.351, y: 34.276, z: -55.874}
+--- !u!114 &5578609599761174112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 339477133906459498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1258971b2b1da06448a961fa867fd075, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headPos: {fileID: 0}
+  model: {fileID: 0}
+  defaultPost: {fileID: 0}
+  agent: {fileID: 0}
+  FOV_Angle: 0
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 0
+  rotationSpeed: 0
+  enemyBehavior: 0
+  enemy_Type: 0
+  HP: 0
+  HPRegenRate: 0
+  HPRegenWaitTime: 0
+  shootRate: 0
+  combatSpeed: 0
+  combatStoppingDistance: 0
+  idleStoppingDistance: 0
+  idleSpeed: 0
+  allyRadius: 0
+  allyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  shootPos: {fileID: 0}
+  bullet: {fileID: 0}
+  guardBullet: {fileID: 0}
+  emissionAlerted: {fileID: 0}
+  emissionIdle: {fileID: 0}
+  guard: {fileID: 0}
+  patrol: {fileID: 0}
+  currentDestination: {fileID: 0}
+  enemyHPBar: {fileID: 0}
+  enemyHPBarFill: {fileID: 0}
+  HPBarPos: {x: 0, y: 0, z: 0}
 --- !u!33 &2900749097083629158
 MeshFilter:
   m_ObjectHideFlags: 0

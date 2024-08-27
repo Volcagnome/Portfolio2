@@ -6,14 +6,13 @@ public class PatrolWaypoint : MonoBehaviour
 {
     [SerializeField] GameObject nextWaypoint;
     [SerializeField] int MaxRobotsOnThisRoute;
-    private int robotsAssignedToRoute;
+    [SerializeField] List<GameObject> robotsAssignedToRoute;
 
     // Start is called before the first frame update
     void Start()
     {
         if (gameObject.tag == "Patrol Route Start")
         {
-            robotsAssignedToRoute = 0;
             EnemyManager.instance.patrolRoutes_List.Add(gameObject);
         }
     }
@@ -24,10 +23,9 @@ void Update()
 
     }
 
-
     public int GetNumberRobotsOnThisRoute()
     {
-        return robotsAssignedToRoute;
+        return robotsAssignedToRoute.Count;
     }
 
     public int GetMaxRobotsOnThisRoute()
@@ -35,14 +33,14 @@ void Update()
         return MaxRobotsOnThisRoute;
     }
 
-    public void AddRobotToRoute()
+    public void AddRobotToRoute(GameObject newPatrolBot)
     {
-        robotsAssignedToRoute++;
+        robotsAssignedToRoute.Add(newPatrolBot);
     }
 
-    public void RemoveRobotFromRoute()
+    public void RemoveRobotFromRoute(GameObject deadPatrolBot)
     {
-        robotsAssignedToRoute--;
+        robotsAssignedToRoute.Remove(deadPatrolBot);
     }
 
 
@@ -52,7 +50,7 @@ void Update()
     {
 
         if (patrolRobot.CompareTag("Enemy")
-            && patrolRobot.GetComponent<enemyAI>().GetCurrentDestination() == gameObject
+            && patrolRobot.GetComponent<SharedEnemyAI>().GetCurrentDestination() == gameObject
             && patrolRobot.GetComponent<enemyAI>().CheckIfOnDuty() == true)
         {
 
@@ -63,6 +61,6 @@ void Update()
 
     private void SendToNextWaypoint(GameObject patrolRobot)
     {
-        patrolRobot.GetComponent<enemyAI>().OnPatrol();
+        patrolRobot.GetComponent<patrolAI>().OnPatrol();
     }
 }

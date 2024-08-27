@@ -1,392 +1,310 @@
 using System.Collections;
+using UnityEditor;
+using UnityEditor.Experimental.GraphView;
+using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class enemyAI : MonoBehaviour, IDamage
+public class enemyAI : SharedEnemyAI, IDamage
 {
 
-    //Basic Components
-    [SerializeField] NavMeshAgent agent;
-    [SerializeField] Renderer model;
-    [SerializeField] Transform shootPos;
-    [SerializeField] Transform headPos;
-    //[SerializeField] Transform headTopPos;
-    [SerializeField] GameObject bullet;
-    [SerializeField] GameObject guardBullet;
-    [SerializeField] Texture emissionAlerted;
-    [SerializeField] Texture emissionIdle;
-    [SerializeField] Material guard;
-    [SerializeField] Material patrol;
-    public GameObject enemyHPBar;
-    public Image enemyHPBarFill;
+    ////Basic Components
+    //[SerializeField] protected Transform shootPos;
+    //[SerializeField] protected GameObject weapon;
+
+    ////[SerializeField] Transform headTopPos;
+    //[SerializeField] protected GameObject ammoType;
+    //[SerializeField] Texture emissionAlerted;
+    //[SerializeField] Texture emissionIdle;
+
+    ////CurrentStatus
+    //protected bool isRespondingToAlert;
+
+    ////Health Regen
+    //protected bool isTakingDamage;
+    //protected Coroutine regenCoroutine;
+    //protected float HPOrig;
+    //public GameObject enemyHPBar;
+    //public Image enemyHPBarFill;
     //[SerializeField] Vector3 HPBarPos;
+        
+    //Coroutine FindIntruderCoroutine;
 
-    //Stats
-    float HPOrig;
-    [SerializeField] float HP;
-    [SerializeField] float HPRegenRate;
-    [SerializeField] float HPRegenWaitTime;
-    [SerializeField] float shootRate;
-    [SerializeField] float combatSpeed;
-    [SerializeField] float combatStoppingDistance;
-    [SerializeField] float idleStoppingDistance;
-    [SerializeField] float idleSpeed;
-    [SerializeField] public float rotationSpeed;
-
-    //EnemyBehavior
-    [SerializeField] public enum behaviorType { none, guard, patrol};
-    [SerializeField] public enum enemyType { none, AssaultDroid, Elite, Turret, Boss };
-    [SerializeField] behaviorType enemyBehavior;
-    [SerializeField] enemyType enemy_Type;
-    [SerializeField] GameObject defaultPost;
-    [SerializeField] GameObject currentDestination;
-
-    //Player detection
-    [SerializeField] public float FOV_Angle;
-    [SerializeField] LayerMask targetMask;
-    private Vector3 lastKnownPlayerLocation;
-    public bool playerInView;
-    private bool playerInRange;
-
-    //CurrentStatus
-    private bool isTakingDamage;
-    private bool isAlerted;
-    private bool isShooting;
-    private bool onDuty;
-
-    //Ally Detection
-    [SerializeField] int allyRadius;
-    [SerializeField] LayerMask allyLayer;
-    private GameObject[] alliesInRange;
-
-    Color colorOrig;
-    Coroutine regenCoroutine;
+    //public float minDistance = 15f;
 
     // Start is called before the first frame update
-    //Saves original color to variable for reference
-    //Adds enemy to enemy list in GameManager
-    void Start()
-    {
-        HPOrig = HP;
 
-        colorOrig = gameObject.GetComponentInChildren<Renderer>().sharedMaterial.color;
+    //void Start()
+    //{
 
-        CheckIfBehaviorAssigned();
-    }
+    //}
 
-    private void CheckIfBehaviorAssigned()
-    {
+    //// Update is called once per frame
 
-        if (enemyBehavior == behaviorType.guard)
-        {
-            EnemyManager.instance.AddRobotToGuardCount();
-            defaultPost.GetComponent<GuardPost>().SetIsOccupied(true);
-            gameObject.GetComponentInChildren<Renderer>().materials[0] = guard;
-        }
-        else if (enemyBehavior == behaviorType.patrol)
-        {
-           EnemyManager.instance.AddRobotToPatrolCount();
-           gameObject.GetComponentInChildren<Renderer>().materials[0] = patrol;
-        }
-        else if(enemyBehavior == behaviorType.none && enemy_Type == enemyType.AssaultDroid)
-        {
-            EnemyManager.instance.AssignRole(gameObject);
-        }
+    //void Update()
+    //{
+    //    Debug.Log(agent.velocity.magnitude);
 
-    }
+    //    anim.SetFloat("Speed", agent.velocity.magnitude);
 
-    // Update is called once per frame
-    //If player is in enemy field of view will become alerted and attack
-    //If enemy is alerted player is out of range will move to the player's last known location (at the time it was alerted)
-    //If enemy is alerted and player is within range will rotate to face them, if they can't see them will move to their position
-    void Update()
-    {
-        if (playerInView)
-        {
-            AlertEnemy();
-            FoundPlayer();
-            agent.stoppingDistance = combatStoppingDistance;
-        }
-        else
-            agent.stoppingDistance = idleStoppingDistance;
+    //    if (!isDead)
+    //    {
+    //        if (playerInView)
+    //        {
+    //            AlertEnemy();
+    //            AlertAllies();
+    //            FoundPlayer();
+    //            agent.stoppingDistance = combatStoppingDistance;
+    //        }
+    //        else
+    //        {
+    //            agent.stoppingDistance = idleStoppingDistance;
+    //            anim.SetBool("Aiming", false);
+    //        }
 
-        if (isPlayerTarget())
-        {
-            UpdateEnemyUI();
+    //        if (isAlerted)
+    //        {
+    //            if (!playerInView && !playerInRange && !isRespondingToAlert)
+    //                StartCoroutine(PursuePlayer());
 
-            if (!isTakingDamage)
-                RegenerateHealth();
-        }
-        else
-            enemyHPBar.SetActive(false);
+    //            else if (playerInRange)
+    //            {
+    //                RotateToPlayer();
 
-        if (isAlerted)
-        {
-            if (!playerInView && !playerInRange)
-            {
-                StartCoroutine(PursuePlayer());
-            }
-            else if (playerInRange)
-            {
-                //Rotates the enemy towards the player's current position
-                //RotateTo(playerDirection);
-
-                Vector3 playerDirection = GameManager.instance.player.transform.position - transform.position;
-                playerDirection.y = 0;
-                transform.rotation = Quaternion.LookRotation(playerDirection);
-
-                if (!playerInView)
-                    agent.SetDestination(GameManager.instance.player.transform.position);
-            }
-        }
-        else if (!onDuty)
-            ReturnToPost();
-    }
+    //                //Vector3 playerDirection = GameManager.instance.player.transform.position - transform.position;
+    //                //playerDirection.y = 0;
+    //                //transform.rotation = Quaternion.LookRotation(playerDirection);
+    //            }
+    //            else if (playerInRange && !playerInView)
+    //                agent.SetDestination(GameManager.instance.player.transform.position);
+    //        }
+    //        else if (!onDuty)
+    //            ReturnToPost();
 
 
-    ////////////////////////////////////////
-    ///           COMBAT                 ///
-    ////////////////////////////////////////
+    //        if (isPlayerTarget())
+    //        {
+    //            UpdateEnemyUI();
+
+    //            if (!isTakingDamage)
+    //                RegenerateHealth();
+    //        }
+    //        else
+    //            enemyHPBar.SetActive(false);
+    //    }
+
+    //}
+    //////////////////////////////////////////
+    /////           COMBAT                 ///
+    //////////////////////////////////////////
 
 
-    private void FoundPlayer()
-    {
-        agent.SetDestination(GameManager.instance.player.transform.position);
+    //protected virtual void FoundPlayer()
+    //{
+    //    agent.SetDestination(GameManager.instance.player.transform.position);
+    //    agent.stoppingDistance = combatStoppingDistance;
 
-        if (!isShooting)
-            StartCoroutine(shoot());
-    }
+    //    anim.SetBool("Aiming", true);
 
-    //Shoots a bullet in the direction the enemy is facing at the configured fire rate
-    IEnumerator shoot()
-    {
-        isShooting = true;
-        Instantiate(bullet, shootPos.position, transform.rotation);
+    //    weapon.transform.LookAt(GameManager.instance.player.transform.position + new Vector3(0f,1f,0f));
 
-        yield return new WaitForSeconds(shootRate);
-        isShooting = false;
-    }
 
-    //When enemy is damaged will lose health, become alerted, alert allies within its configured ally radius,and flash red
-    //If HP falls to or below zero enemy calls Death function
-    public void takeDamage(int amount)
-    {
-        HP -= amount;
-        isTakingDamage = true;
+    //    if (!isShooting && !isDead)
+    //        StartCoroutine(shoot());
 
-        AlertEnemy();
-        AlertAllies();
-        StartCoroutine(flashYellow());
+    //    if (LevelManager.instance.GetIntruderAlert())
+    //        LevelManager.instance.FoundTheIntruder(lastKnownPlayerLocation);
+    //}
 
-        if (HP <= 0)
-        {
-            Death();
-        }
+    //protected virtual IEnumerator shoot()
+    //{
+    //    anim.SetTrigger("Shoot");
 
-        if (regenCoroutine != null)
-        {
-            StopCoroutine(regenCoroutine);
-        }
-        regenCoroutine = StartCoroutine(EnableHealthRegen());
-    }
+    //    isShooting = true;
 
-    void RegenerateHealth()
-    {
-        //Debug.Log("Regenerating enemy health: " + HPRegenRate * Time.deltaTime);
-        HP += HPRegenRate * Time.deltaTime;
+    //    yield return new WaitForSeconds(shootRate);
+    //    isShooting = false;
+    //}
 
-        if (HP > HPOrig)
-        {
-            HP = HPOrig;
-        }
-    }
+    //private void CreateBullet()
+    //{
+    //    Instantiate(ammoType, shootPos.position, transform.rotation);
+    //}
 
-    IEnumerator EnableHealthRegen()
-    {
-        yield return new WaitForSeconds(HPRegenWaitTime);
-        isTakingDamage = false;
-        regenCoroutine = null;
-    }
+    ////When enemy is damaged will lose health, become alerted, alert allies within its configured ally radius,and flash red
+    ////If HP falls to or below zero enemy calls Death function
+    //public void takeDamage(int amount)
+    //{
+    //    HP -= amount;
+    //    isTakingDamage = true;
 
-    bool isPlayerTarget()
-    {
-        if (HP < HPOrig)
-            return true;
-        return false;
-    }
+    //    AlertEnemy();
+    //    AlertAllies();
+    //    StartCoroutine(flashYellow());
 
-    public void UpdateEnemyUI()
-    {
-        enemyHPBar.SetActive(true);
-        enemyHPBarFill.fillAmount = HP / HPOrig;
-        //EnemyManager.instance.enemyHPBar.transform.position = headTopPos.position + HPBarPos;
-        enemyHPBar.transform.parent.rotation = Camera.main.transform.rotation;
-    }
+    //    if (HP <= 0)
+    //    {
+    //        isDead = true;
+    //        Death();
+    //    }
 
-    public void criticalHit(int amount)
-    {
-        takeDamage(amount);
-        StartCoroutine(flashRed());
-    }
+    //    if (regenCoroutine != null)
+    //    {
+    //        StopCoroutine(regenCoroutine);
+    //    }
+    //    regenCoroutine = StartCoroutine(EnableHealthRegen());
+    //}
 
-    //Enemy model flashes red when hit
-    IEnumerator flashRed()
-    {
-        model.material.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        model.material.color = colorOrig;
-    }
+    //public void criticalHit(int amount)
+    //{
+    //    takeDamage(amount);
+    //    StartCoroutine(flashRed());
+    //}
 
-    IEnumerator flashYellow()
-    {
-        model.material.color = Color.yellow;
-        yield return new WaitForSeconds(0.1f);
-        model.material.color = colorOrig;
-    }
 
-    //Checks if any other enemies within it's configured ally radius, if so alerts them.
-    private void AlertAllies()
-    {
-        Collider[] alliesInRange = Physics.OverlapSphere(gameObject.transform.position, allyRadius, allyLayer);
+    //protected virtual void Death()
+    //{
+    //    if (enemy_Type == SharedEnemyAI.enemyType.Titan)
+    //    {
+    //        if (defaultPost.GetComponent<TitanPost>())
+    //        {
+    //            EnemyManager.instance.RemoveDeadTitan(gameObject);
+    //            defaultPost.GetComponent<TitanPost>().SetIsOccupied(false);
+    //        }
 
-        if (alliesInRange.Length > 0)
-        {
-            foreach (Collider ally in alliesInRange)
-            {
-                ally.gameObject.GetComponent<enemyAI>().AlertEnemy();
-            }
-        }
-    }
+    //        if (LevelManager.instance.responseTeam.Contains(gameObject))
+    //            LevelManager.instance.responseTeam.Remove(gameObject);
+    //    }
 
-    IEnumerator PursuePlayer()
-    {
-        agent.SetDestination(lastKnownPlayerLocation);
-        if (CheckIfArrived(lastKnownPlayerLocation) == true && !playerInRange)
-        {
-            yield return new WaitForSeconds(1.5f);
-            CalmEnemy();
-        }
-    }
-
-    //Notes player's current location at the time of alert and sets isAlerted to true. 
-    public void AlertEnemy()
-    {
-        lastKnownPlayerLocation = GameManager.instance.player.transform.position;
-        isAlerted = true;
-        agent.speed = combatSpeed;
-        onDuty = false;
-        //Changes emission texture to red on Assault Droid
-        if (enemy_Type == enemyType.AssaultDroid)
-            gameObject.GetComponentInChildren<Renderer>().sharedMaterial.SetTexture("_EmissionMap", emissionAlerted);
-    }
-
-    //Toggles isAlerted to false.
-    public void CalmEnemy()
-    {
-        isAlerted = false;
-        ReturnToPost();
-        agent.speed = idleSpeed;
-        onDuty = true;
-        if (enemy_Type == enemyType.AssaultDroid)
-            gameObject.GetComponentInChildren<Renderer>().sharedMaterial.SetTexture("_EmissionMap", emissionIdle);
-    }
-
-    private void Death()
-    {
-        if (enemyBehavior == behaviorType.guard)
-        {
-            EnemyManager.instance.RemoveFromGuardRobotsCount();
-            defaultPost.GetComponent<GuardPost>().SetIsOccupied(false);
-        }
-        else if (enemyBehavior == behaviorType.patrol)
-        {
-            EnemyManager.instance.RemoveFromPatrolRobotsCount();
-            defaultPost.GetComponent<PatrolWaypoint>().RemoveRobotFromRoute();
-        }
-        Destroy(gameObject);
-    }
+    //    Destroy(gameObject);
+    //}
 
 
     //////////////////////////////////////////
-    ///       PLAYER DETECTION            ///
-    ////////////////////////////////////////
-
-    //When player enters detection range toggles playerInRange variable
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = true;
-            StartCoroutine(FOVRoutine());
-        }
-    }
-
-    //When player exits detection range notes their last known location and toggles playerInRange and isAlerted bools
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            lastKnownPlayerLocation = GameManager.instance.player.transform.position;
-            playerInRange = false;
-            CalmEnemy();
-        }
-        else
-            return;
-    }
-
-    //While player is in range, calls function to check if in line of sight
-    private IEnumerator FOVRoutine()
-    {
-        while (playerInRange)
-        {
-            yield return new WaitForSeconds(0.3f);
-            FieldOfViewCheck();
-        }
-    }
-
-    private void FieldOfViewCheck()
-    {
-        //Calculates direction from enemy to player.
-        Vector3 playerDirection = (GameManager.instance.player.transform.position - headPos.position);
-
-        if (playerInRange)
-        {
-            if (Vector3.Angle(transform.forward, playerDirection) < FOV_Angle / 2)
-            {
-                if (Physics.Raycast(headPos.position, playerDirection, gameObject.GetComponent<SphereCollider>().radius, targetMask))
-                    playerInView = true;
-                else
-                    playerInView = false;
-            }
-        }
-        else
-            playerInView = false;
-    }
-
-    public void RotateTo(Vector3 direction)
-    {
-        Quaternion rotationToDirection = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Lerp(transform.rotation, rotationToDirection, Time.deltaTime * rotationSpeed);
-    }
+    /////          HEALTH REGEN            ///
+    /////////////////////////////////////////
 
 
+    //protected void RegenerateHealth()
+    //{
+    //    //Debug.Log("Regenerating enemy health: " + HPRegenRate * Time.deltaTime);
+    //    HP += HPRegenRate * Time.deltaTime;
 
-    ////////////////////////////////////////
-    ///          ENEMY BEHAVIOR         ///
-    ///////////////////////////////////////
+    //    if (HP > HPOrig)
+    //    {
+    //        HP = HPOrig;
+    //    }
+    //}
+
+    //protected IEnumerator EnableHealthRegen()
+    //{
+    //    yield return new WaitForSeconds(HPRegenWaitTime);
+    //    isTakingDamage = false;
+    //    regenCoroutine = null;
+    //}
+
+    //protected bool isPlayerTarget()
+    //{
+    //    if (HP < HPOrig)
+    //        return true;
+    //    return false;
+    //}
+
+    //public void UpdateEnemyUI()
+    //{
+    //    enemyHPBar.SetActive(true);
+    //    enemyHPBarFill.fillAmount = HP / HPOrig;
+    //    //EnemyManager.instance.enemyHPBar.transform.position = headTopPos.position + HPBarPos;
+    //    enemyHPBar.transform.parent.rotation = Camera.main.transform.rotation;
+    //}
 
 
-    private void ReturnToPost()
-    {
-        onDuty = true;
+    //////////////////////////////////////////
+    /////          ENEMY BEHAVIOR         ///
+    /////////////////////////////////////////
 
-        if (enemy_Type == enemyType.Elite)
-            agent.SetDestination(defaultPost.transform.position);
-        else if (enemyBehavior == behaviorType.guard)
-        {
-            agent.SetDestination(defaultPost.transform.position);
-        }
+
+    //public void StartOrUpdateFindIntruder(Vector3 location)
+    //{
+    //    if (FindIntruderCoroutine != null)
+    //        StopCoroutine(FindIntruder(location));
+
+    //    FindIntruderCoroutine = StartCoroutine(FindIntruder(location));
+    //}
+
+    //public IEnumerator FindIntruder(Vector3 intruderLocation)
+    //{
+    //    isRespondingToAlert = true;
+    //    AlertEnemy();
+    //    lastKnownPlayerLocation = intruderLocation;
+
+    //    agent.SetDestination(lastKnownPlayerLocation);
+
+    //    while (true)
+    //    { 
+
+    //        yield return new WaitForSeconds(0.05f);
+
+    //        if(playerInView)
+    //        {
+    //            isRespondingToAlert = false;
+    //            break;
+    //        }
+
+    //       if (agent.remainingDistance <= 0.5f)
+    //        {
+    //            isRespondingToAlert = false;
+    //            StartCoroutine(SearchArea());
+    //            break;
+    //        }
+    //    }
+    //}
+
+    //    public IEnumerator SearchArea()
+    //{
+     
+    //    int maxSearchAttempts = LevelManager.instance.GetSearchAttempts();
+    //    float searchRadius = LevelManager.instance.GetSearchRadius();
+    //    float searchTimer = LevelManager.instance.GetSearchTimer();
+    //    bool playerFound = false;
+
+
+
+    //    for (int attempts = 0; attempts < maxSearchAttempts; attempts++)
+    //    {
+    //        Vector3 randomDist = Random.insideUnitSphere * searchRadius;
+    //        randomDist += LevelManager.instance.GetIntruderLocation();
+
+    //        NavMeshHit hit;
+    //        NavMesh.SamplePosition(randomDist, out hit, searchRadius, 1);
+    //        agent.SetDestination(hit.position);
+
+    //        yield return new WaitForSeconds(searchTimer);
+
+    //        if (playerInView)
+    //        {
+    //            playerFound = true;
+
+    //            yield break;
+    //        }
+    //    }
+
+    //    if (!playerFound)
+    //    {
+    //        Debug.Log("Must have been the wind.");
+    //        CalmEnemy();
+    //    }
+    //}
+
+    //////////////////////////////////////////
+    /////          GETTERS/SETTERS         ///
+    /////////////////////////////////////////
+
+
+    //public void SetIsRespondingToAlert(bool status) { isRespondingToAlert = status; }
+
+   
 
         else if (enemyBehavior == behaviorType.patrol)
         {

@@ -11,7 +11,6 @@ public class DreadnaughtTrample : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             GameManager.instance.player.GetComponent<IDamage>().takeDamage(GetComponentInParent<bossAI>().GetTrampleDamage());
-
         }
     }
 }
