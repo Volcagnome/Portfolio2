@@ -6,6 +6,7 @@ public class playerControl : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreMask;
+    [SerializeField] List<pickupStats> weapons;
 
     [SerializeField] float stamina;
     [SerializeField] float staminaWait;
@@ -25,7 +26,7 @@ public class playerControl : MonoBehaviour, IDamage
 
     [SerializeField] int shootDamage;
     [SerializeField] float shootRate;
-    [SerializeField] int shootDist;
+    [SerializeField] float shootDist;
     [SerializeField] float interactDist;
     [SerializeField] int dmgMultiplier;
 
@@ -39,6 +40,9 @@ public class playerControl : MonoBehaviour, IDamage
     int speedOG;
     float heightOG;
     float staminaOG;
+
+    int bulletUpgradeTotal;
+    float maxAmmoMultiplier;
 
     bool hasStamina;
     bool isSprinting;
@@ -227,12 +231,12 @@ public class playerControl : MonoBehaviour, IDamage
             {
                 if (hit.collider.CompareTag("WeakSpot"))
                 {
-                    dmg.criticalHit(shootDamage * dmgMultiplier);
+                    dmg.criticalHit((shootDamage + bulletUpgradeTotal) * dmgMultiplier);
                 }
 
                 else
                 {
-                    dmg.takeDamage(shootDamage);
+                    dmg.takeDamage(shootDamage + bulletUpgradeTotal);
                 }
             }
         }
@@ -310,6 +314,19 @@ public class playerControl : MonoBehaviour, IDamage
         
     }
 
+    public void setWeapon(pickupStats weapon)
+    {
+        shootRate = weapon.shootRate;
+        shootDamage = weapon.shootDamage;
+        shootDist = weapon.shootDist;
+        dmgMultiplier = weapon.dmgMultiplier;
+    }
+
+    public void addWeapon(pickupStats weapon)
+    {
+        weapons.Add(weapon);
+        setWeapon(weapon);
+    }
 
     // *** HUD METHODS *** //
     // VVV
@@ -324,4 +341,26 @@ public class playerControl : MonoBehaviour, IDamage
         yield return new WaitForSeconds(.1F);
         GameManager.instance.redFlash.SetActive(false);
     }
+
+    //Getters and setters
+    public float getHP() { return HP; }
+    public void setHP(float value) { HP = value; }
+
+    public float getMaxHP() { return hpOG; }
+    public void setMaxHP(float value) { hpOG = value; }
+
+    public float getStamina() { return stamina; }
+    public void setStamina(float value) { stamina = value; }
+
+    public float getMaxStamina() { return staminaOG; }
+    public void setMaxStamina(float value) { staminaOG = value; }
+
+    public int getBulletUpgrades() { return bulletUpgradeTotal; }
+    public void setBulletUpgrades(int value) { bulletUpgradeTotal = value; }
+
+    public float getAmmoMultiplier() { return maxAmmoMultiplier; }
+    public void setAmmoMultiplier(float value) { maxAmmoMultiplier = value; }
+
+    public int getPlayerSpeed() { return speed; }
+    public void setPlayerSpeed(int value) { speed = value; }
 }

@@ -480,4 +480,9 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         return enemy_Type;
     }
+
+    public float GetHP() {  return HP;  }
+    public void SetHP(float value) {  HP = value; }
+    public float GetShootRate() { return shootRate; }
+    public void SetShootRate(float value) { shootRate = value; }
 }
