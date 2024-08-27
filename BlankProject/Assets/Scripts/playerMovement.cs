@@ -35,6 +35,7 @@ public class playerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isCaught = false;
         staminaOG = stamina;
         speedOG = speed;
     }

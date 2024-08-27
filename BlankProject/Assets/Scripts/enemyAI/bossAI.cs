@@ -21,12 +21,10 @@ public class bossAI : SharedEnemyAI, IDamage
     [SerializeField] GameObject bigCannon_L2;
     [SerializeField] GameObject bigCannon_R2;
 
-
-
-
     //Basic Stats
     [SerializeField] float speed;
 
+    bool isFighting;
 
     //Combat
     [SerializeField] Transform bigCannonShootPos_L;
@@ -225,6 +223,9 @@ public class bossAI : SharedEnemyAI, IDamage
     }
 
     public int GetTrampleDamage() { return trampleDamage; }
+
+
+    public bool GetIsFighting() { return isFighting; }  
 
 }
 

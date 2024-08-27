@@ -30,6 +30,8 @@ public class EnemyManager : MonoBehaviour
     private int maxAllowedRobots;
     private bool readyToCallFabricator;
 
+    bossAI boss;
+
     //max guards + max robots for each patrol = max robots
 
     void Awake()
@@ -264,5 +266,6 @@ public class EnemyManager : MonoBehaviour
     public void AddTitanToRoster(GameObject titan) { titanRoster.Add(titan); }
 
     public float GetEnemySpawnInterval() { return fabricatorSpawnInterval; }
+    public bossAI GetBoss() { return boss; }
 
 }
