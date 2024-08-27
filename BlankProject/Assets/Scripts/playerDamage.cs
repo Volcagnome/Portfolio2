@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class playerDamage : MonoBehaviour, IDamage
 {
+    [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreMask;
 
     [SerializeField] float HP;
@@ -31,6 +32,7 @@ public class playerDamage : MonoBehaviour, IDamage
         // Sets original starting stats:
         hpOG = HP;
         adjustHPBar();
+        spawnPlayer();
     }
 
     // Update is called once per frame
@@ -185,5 +187,14 @@ public class playerDamage : MonoBehaviour, IDamage
         GameManager.instance.redFlash.SetActive(true);
         yield return new WaitForSeconds(.1F);
         GameManager.instance.redFlash.SetActive(false);
+    }
+
+    public void spawnPlayer()
+    {
+        HP = hpOG;
+        adjustHPBar();
+        controller.enabled = false;
+        transform.position = GameManager.instance.playerSpawn.transform.position;
+        controller.enabled = true;
     }
 }
