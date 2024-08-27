@@ -72,16 +72,25 @@ public class LaserShooter : MonoBehaviour, IDamage
         return false;
     }
 
+    public void takeDamage(int amount)
+    {
+        HP -= amount;
+        StartCoroutine(flashRed());
+
+        if (HP <= 0)
+        {
+        
+            Destroy(gameObject);
+        }
+    }
+
+
     void facePlayer()
     {
         Quaternion rot = Quaternion.LookRotation(playerDir);
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * facePlayerSpeed);
     }
-    public void takeDamage(int amount)
-    {
-        HP -= amount;
-        StartCoroutine(flashRed());
-    }
+    
 
     IEnumerator flashRed()
     {
