@@ -6,10 +6,15 @@ public class playerDamage : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreMask;
-
+   
     [SerializeField] float HP;
     [SerializeField] float HPRegenRate;
     [SerializeField] float HPRegenWaitTime;
+
+    // Particle effects for dealing damage
+    public ParticleSystem botDmgFX;
+    public ParticleSystem botCritFX;
+    public ParticleSystem bulletHoleFX;
 
     [SerializeField] int shootDamage;
     [SerializeField] float shootRate;
@@ -91,12 +96,22 @@ public class playerDamage : MonoBehaviour, IDamage
                 if (hit.collider.CompareTag("WeakSpot"))
                 {
                     dmg.criticalHit(shootDamage * dmgMultiplier);
+                    Instantiate(botCritFX, hit.point, Quaternion.identity);
                 }
 
                 else
                 {
                     dmg.takeDamage(shootDamage);
+                    Instantiate(botDmgFX, hit.point, Quaternion.identity);
                 }
+            }
+
+            // This prevents our particles from instantiating on enemies, but putting the
+            // function outside the else statement will cause it to happen always.
+            else
+            {
+                // Instantiates a bullet hole effect when impacting a surface.
+                Instantiate(bulletHoleFX, hit.point, Quaternion.identity);
             }
         }
 
