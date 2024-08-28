@@ -16,6 +16,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject crouchWindow;
     [SerializeField] public GameObject proneWindow;
 
+    [SerializeField] float totalTime = 600;
+    [SerializeField] TMP_Text timer;
+    [SerializeField] GameObject selfDestructTimer;
+    float minutes;
+    float seconds;
+    string timeLeft;
+
     [SerializeField] TMP_Text leverCountText;
     public Image staminaBar;
     public Image healthbar;
@@ -27,8 +34,13 @@ public class GameManager : MonoBehaviour
     public playerCrouch crouchScript;
     private int activeLevers;
     public bool youWin;
+    private bool playerEscaped;
+    private bool selfDestructActivated;
 
     public bool isPaused;
+
+    int commandCodesCollected;
+    int commandCodesEntered;
 
     // Start is called before the first frame update
     void Awake()
@@ -56,6 +68,12 @@ public class GameManager : MonoBehaviour
                 stateUnpaused();
             }
         }
+
+        if(selfDestructActivated)
+        {
+            BeginCountdown();
+        }
+     
     }
 
     public void statePause()
@@ -77,11 +95,8 @@ public class GameManager : MonoBehaviour
     }
 
     public void UpdateWinCondition(int lever)
-    {
-        activeLevers += lever;
-        leverCountText.text = activeLevers.ToString("F0");
-
-        if (activeLevers == 0)
+    { 
+        if (playerEscaped)
         {
             statePause();
             menuActive = menuWin;
@@ -95,4 +110,49 @@ public class GameManager : MonoBehaviour
         menuActive = menuLose;
         menuActive.SetActive(true);
     }
+
+    public void PickedUpCommandCode()
+    {
+        commandCodesCollected++;
+    }
+
+    public void PlugInCode()
+    {
+        if (commandCodesCollected > 0)
+        {
+            commandCodesEntered++;
+            commandCodesCollected--;
+        }
+        
+    }
+    private void BeginCountdown()
+    {
+        if (totalTime > 0)
+        {
+            totalTime -= Time.deltaTime;
+
+            minutes = Mathf.FloorToInt(totalTime / 60);
+
+            seconds = Mathf.FloorToInt(totalTime % 60);
+
+            selfDestructTimer.SetActive(true);
+
+            timeLeft = string.Format("{0:00}:{1:00}", minutes, seconds);
+            timer.text = timeLeft;  
+        }
+        else
+        {
+
+        }
+    }
+
+    public int GetCommandCodesEntered() { return commandCodesEntered; }
+
+    public int GetCommandCodesCollected() { return commandCodesCollected; }
+
+    public void ActivateSelfDestruct() { selfDestructActivated = true; }
+
+    public bool GetSelfDestructActivated() { return selfDestructActivated; }
+
+    public string GetTimeLeft() { return timeLeft; }
 }

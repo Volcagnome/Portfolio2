@@ -52,6 +52,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: f1538c84ede1ffb4b939e32a79c55c41, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: -5754084199372789682, guid: f1538c84ede1ffb4b939e32a79c55c41, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -8803937527578110353, guid: f1538c84ede1ffb4b939e32a79c55c41, type: 3}
     - target: {fileID: 919132149155446097, guid: f1538c84ede1ffb4b939e32a79c55c41, type: 3}
       propertyPath: m_Name
       value: torus
@@ -61,11 +69,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1538c84ede1ffb4b939e32a79c55c41, type: 3}
---- !u!1 &1299019189323481915 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f1538c84ede1ffb4b939e32a79c55c41, type: 3}
-  m_PrefabInstance: {fileID: 2217568443770076778}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1823073555629906305 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f1538c84ede1ffb4b939e32a79c55c41, type: 3}
@@ -127,6 +130,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 195435b5e53e4484c969394226b6c21d, type: 2}
+    - target: {fileID: -5754084199372789682, guid: f1538c84ede1ffb4b939e32a79c55c41, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -8803937527578110353, guid: f1538c84ede1ffb4b939e32a79c55c41, type: 3}
     - target: {fileID: 919132149155446097, guid: f1538c84ede1ffb4b939e32a79c55c41, type: 3}
       propertyPath: m_Name
       value: Pickup Platform
@@ -162,10 +169,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81720927d7525b24b918bc58ad840bb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: a22e558c330f7634bb1b34223e7bb724, type: 2}
-  displayedItem: {fileID: 1299019189323481915}
+  item: {fileID: 11400000, guid: bb283de971a757544b125cba042e5ba6, type: 2}
+  displayedItem: {fileID: 919132149155446097, guid: f1538c84ede1ffb4b939e32a79c55c41, type: 3}
   rotationSpeed: 20
-  grabbableByEnemy: 1
+  grabbableByEnemy: 0
   grabbableByPlayer: 1
 --- !u!136 &5792023343166192772
 CapsuleCollider:

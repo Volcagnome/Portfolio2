@@ -102,6 +102,11 @@ public class itemPickup : MonoBehaviour, IPickup
                 displayedItem.SetActive(false);
                 break;
             }
+                case (pickupStats.pickupType.commandCode):
+                    displayedItem.SetActive(false);
+                    GameManager.instance.PickedUpCommandCode();
+                    break;
+
                 default:
             {
                 break;

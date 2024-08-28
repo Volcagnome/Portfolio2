@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class pickupStats : ScriptableObject
 {
-    public enum pickupType { health, stamina, damage, ammo, ammoUpgrade, speed, weapon }
+    public enum pickupType { health, stamina, damage, ammo, ammoUpgrade, speed, weapon, commandCode}
     public pickupType type;
     public GameObject itemModel;
     public float nonWeaponStat;

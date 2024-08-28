@@ -61,7 +61,7 @@ public class LevelManager : MonoBehaviour
     bool intruderAlert;
     bool isRaisingAlarm;
     bool intruderFound;
-    bool isBossFight = true;
+    bool isBossFight;
 
     Vector3 intruderLocation;
     GameObject whistleBlower;

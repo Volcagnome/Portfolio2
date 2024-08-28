@@ -66,8 +66,10 @@ public class SharedEnemyAI : MonoBehaviour
 
     //[SerializeField] Transform headTopPos;
     [SerializeField] protected GameObject ammoType;
-    [SerializeField] Texture emissionAlerted;
-    [SerializeField] Texture emissionIdle;
+    [SerializeField] GameObject EmissionObject;
+    [SerializeField] Material emissionCombat;
+    [SerializeField] Material emissionAlerted;
+    [SerializeField] Material emissionIdle;
 
     //CurrentStatus
     protected bool isRespondingToAlert;

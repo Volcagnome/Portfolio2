@@ -51,7 +51,8 @@ public class bossAI : SharedEnemyAI, IDamage
     // Start is called before the first frame update
     void Start()
     {
-
+        HPOrig = HP;
+        colorOrig = gameObject.GetComponentInChildren<Renderer>().sharedMaterial.color;
     }
 
     // Update is called once per frame
@@ -88,6 +89,16 @@ public class bossAI : SharedEnemyAI, IDamage
 
             }
         }
+
+        if (isPlayerTarget())
+        {
+            UpdateEnemyUI();
+
+            //if (!isTakingDamage)
+            //    RegenerateHealth();
+        }
+        //else
+        //    enemyHPBar.SetActive(false);    
     }
 
     protected override void FoundPlayer()

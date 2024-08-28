@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,7 +12,11 @@ public class BossFight : MonoBehaviour
     [SerializeField] GameObject bossFightGuard;
     [SerializeField] GameObject bossFightTitan;
     [SerializeField] GameObject MainFrameDoor;
-
+    [SerializeField] GameObject LeverCover;
+    [SerializeField] GameObject LeverCoverOpen;
+    [SerializeField] GameObject SelfDestructLever;
+    [SerializeField] GameObject SelfDestructTimer;
+    [SerializeField] TMP_Text timeLeft;
 
     [SerializeField] int fightStage_2_threshhold;
     [SerializeField] int fightStage_3_threshhold;
@@ -19,6 +24,7 @@ public class BossFight : MonoBehaviour
     [SerializeField] int fightStage_3_guards;
     [SerializeField] int fightStage_3_titans;
     
+
 
     int fightStage;
 
@@ -64,7 +70,22 @@ public class BossFight : MonoBehaviour
 
             MainFrameDoor.transform.GetChild(1).gameObject.SetActive(false);
             MainFrameDoor.transform.GetChild(2).gameObject.SetActive(true);
+
+            if (GameManager.instance.GetCommandCodesEntered() == 4)
+            {
+                LeverCover.SetActive(false);
+                LeverCoverOpen.SetActive(true);
+            }
+
+            if (SelfDestructLever.GetComponent<togglingItem>().getState())
+            {
+                GameManager.instance.ActivateSelfDestruct();
+                SelfDestructTimer.SetActive(true);
+                timeLeft.text = GameManager.instance.GetTimeLeft();
+            }
         }
+
+        
 
     }
 
@@ -75,6 +96,7 @@ public class BossFight : MonoBehaviour
             bossFightBegin = true;
             BossApproach();
             fightStage = 1;
+
 
             MainFrameDoor.transform.GetChild(1).gameObject.SetActive(true);
             mainframeDoorClosed = true;
@@ -133,4 +155,6 @@ public class BossFight : MonoBehaviour
             titan.GetComponent<SharedEnemyAI>().SetDefaultPost(reinforcementSpawner);
         }
     }
+
+
 }
