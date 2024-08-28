@@ -25,4 +25,9 @@ public class buttonFunctions : MonoBehaviour
         Application.Quit();
     #endif
     }
+
+    public void respawn()
+    {
+        GameManager.instance.damageScript.spawnPlayer();
+    }
 }

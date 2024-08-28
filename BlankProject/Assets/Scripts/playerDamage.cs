@@ -214,6 +214,8 @@ public class playerDamage : MonoBehaviour, IDamage
         shootDamage = weapon.shootDamage;
         shootDist = weapon.shootDist;
         dmgMultiplier = weapon.dmgMultiplier;
+        gunModel.GetComponent<MeshFilter>().sharedMesh = weapon.itemModel.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial= weapon.itemModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
     public void addWeapon(pickupStats weapon)
