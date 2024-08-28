@@ -114,7 +114,7 @@ public class playerDamage : MonoBehaviour, IDamage
             else
             {
                 // Instantiates a bullet hole effect when impacting a surface.
-                Instantiate(bulletHoleFX, hit.point, Quaternion.identity);
+                //Instantiate(bulletHoleFX, hit.point, Quaternion.identity);
             }
         }
 
