@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class playerDamage : MonoBehaviour, IDamage
 {
+    [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreMask;
     [SerializeField] List<pickupStats> weapons;
 
     [SerializeField] float HP;
     [SerializeField] float HPRegenRate;
     [SerializeField] float HPRegenWaitTime;
+
+    // Particle effects for dealing damage
+    public ParticleSystem botDmgFX;
+    public ParticleSystem botCritFX;
+    public ParticleSystem bulletHoleFX;
 
     [SerializeField] int shootDamage;
     [SerializeField] float shootRate;
@@ -35,6 +41,7 @@ public class playerDamage : MonoBehaviour, IDamage
         // Sets original starting stats:
         hpOG = HP;
         adjustHPBar();
+        spawnPlayer();
     }
 
     // Update is called once per frame
@@ -97,8 +104,17 @@ public class playerDamage : MonoBehaviour, IDamage
 
                 else
                 {
-                    dmg.takeDamage(shootDamage + bulletUpgradeTotal);
+                    dmg.takeDamage(shootDamage);
+                    Instantiate(botDmgFX, hit.point, Quaternion.identity);
                 }
+            }
+
+            // This prevents our particles from instantiating on enemies, but putting the
+            // function outside the else statement will cause it to happen always.
+            else
+            {
+                // Instantiates a bullet hole effect when impacting a surface.
+                Instantiate(bulletHoleFX, hit.point, Quaternion.identity);
             }
         }
 
@@ -219,4 +235,12 @@ public class playerDamage : MonoBehaviour, IDamage
     public void setAmmoMultiplier(float value) { maxAmmoMultiplier = value; }
 
     
+    public void spawnPlayer()
+    {
+        HP = hpOG;
+        adjustHPBar();
+        controller.enabled = false;
+        transform.position = GameManager.instance.playerSpawn.transform.position;
+        controller.enabled = true;
+    }
 }

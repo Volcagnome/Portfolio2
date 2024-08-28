@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,11 +31,16 @@ public class playerMovement : MonoBehaviour
     bool isSprinting;
     bool isCaught;
 
-
+    public float playerHeight
+    {
+        get => controller.height;
+        set => controller.height = value;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
+        isCaught = false;
         staminaOG = stamina;
         speedOG = speed;
     }

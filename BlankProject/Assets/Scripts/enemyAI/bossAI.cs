@@ -21,12 +21,10 @@ public class bossAI : SharedEnemyAI, IDamage
     [SerializeField] GameObject bigCannon_L2;
     [SerializeField] GameObject bigCannon_R2;
 
-
-
-
     //Basic Stats
     [SerializeField] float speed;
 
+    bool isFighting;
 
     //Combat
     [SerializeField] Transform bigCannonShootPos_L;
@@ -53,7 +51,9 @@ public class bossAI : SharedEnemyAI, IDamage
     // Update is called once per frame
     void Update()
     {
-        
+
+        anim.SetFloat("Speed", agent.velocity.magnitude);
+
         if (playerInView)
         {
             AlertEnemy();
@@ -213,18 +213,25 @@ public class bossAI : SharedEnemyAI, IDamage
         }
     }
 
+    protected override void Death()
+    {
+        DeathShared();
+
+        StartCoroutine(DespawnDeadRobot(gameObject));
+
+        GetComponent<bossAI>().enabled = false;
+    }
+
     public void criticalHit(int amount)
     {
         takeDamage(amount);
         StartCoroutine(flashRed());
     }
 
-    private void Death()
-    {
-        Destroy(gameObject);
-    }
-
     public int GetTrampleDamage() { return trampleDamage; }
+
+
+    public bool GetIsFighting() { return isFighting; }  
 
 }
 

@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     public Image healthbar;
     public GameObject redFlash;
 
-
+    public GameObject playerSpawn;
     public GameObject player;
     public playerMovement playerScript;
     public playerCrouch crouchScript;
@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<playerMovement>();
         crouchScript = player.GetComponent<playerCrouch>();
+        playerSpawn = GameObject.FindWithTag("Player Spawn");
     }
 
     //Update is called once per frame

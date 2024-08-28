@@ -88,6 +88,8 @@ public class SharedEnemyAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.instance.player.GetComponent<Camera>().transform.position = GameManager.instance.player.GetComponent<Camera>().transform.position - new Vector3(0f, 1f, 0f);
+
         colorOrig = gameObject.GetComponentInChildren<Renderer>().sharedMaterial.color;
         isAlerted = false;
     }
