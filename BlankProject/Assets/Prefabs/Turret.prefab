@@ -138,9 +138,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model: {fileID: 5689013217710220852}
   shootPos: {fileID: 5941552451394377650}
-  HP: 3
+  headPos: {fileID: 0}
+  HP: 10
+  viewAngle: 0
+  facePlayerSpeed: 0
   bullet: {fileID: 4005459997384909482, guid: f3df2a379677235429bf837d6aa0e3c7, type: 3}
   shootRate: 2
+  shootAngle: 0
 --- !u!135 &4005370912615258742
 SphereCollider:
   m_ObjectHideFlags: 0
