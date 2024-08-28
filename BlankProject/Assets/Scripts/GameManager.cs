@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    public playerDamage damageScript;
+
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
@@ -38,6 +40,7 @@ public class GameManager : MonoBehaviour
         playerScript = player.GetComponent<playerMovement>();
         crouchScript = player.GetComponent<playerCrouch>();
         playerSpawn = GameObject.FindWithTag("Player Spawn");
+        damageScript = GameManager.instance.GetComponent<playerDamage>();
     }
 
     //Update is called once per frame
