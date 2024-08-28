@@ -5,8 +5,8 @@ using UnityEngine.AI;
 using UnityEngine.Animations;
 using static enemyAI;
 using static UnityEngine.GraphicsBuffer;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.Search;
+//using UnityEditor.Experimental.GraphView;
+//using UnityEditor.Search;
 using UnityEngine.UI;
 
 public class SharedEnemyAI : MonoBehaviour
@@ -521,4 +521,9 @@ public GameObject GetDefaultPost() { return defaultPost; }
     public GameObject GetCurrentDestination() { return currentDestination; }
 
     public void SetLastKnownPlayerLocation(Vector3 location) { lastKnownPlayerLocation = location; }
+
+    public float GetHP() { return HP; }
+    public void SetHP(float value) { HP = value; }
+    public float GetShootRate() { return shootRate; }
+    public void SetShootRate(float value) { shootRate = value; }
 }

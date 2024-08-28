@@ -212,18 +212,11 @@ public class playerDamage : MonoBehaviour, IDamage
     public float getMaxHP() { return hpOG; }
     public void setMaxHP(float value) { hpOG = value; }
 
-    public float getStamina() { return stamina; }
-    public void setStamina(float value) { stamina = value; }
-
-    public float getMaxStamina() { return staminaOG; }
-    public void setMaxStamina(float value) { staminaOG = value; }
-
     public int getBulletUpgrades() { return bulletUpgradeTotal; }
     public void setBulletUpgrades(int value) { bulletUpgradeTotal = value; }
 
     public float getAmmoMultiplier() { return maxAmmoMultiplier; }
     public void setAmmoMultiplier(float value) { maxAmmoMultiplier = value; }
 
-    public int getPlayerSpeed() { return speed; }
-    public void setPlayerSpeed(int value) { speed = value; }
+    
 }

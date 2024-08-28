@@ -169,4 +169,14 @@ public class playerMovement : MonoBehaviour
     public void SetSpeed(float newSpeed) { speed = newSpeed; }
 
     public float GetSpeedOG() { return speedOG; }
+
+
+    //Getters and Setters
+    public float getStamina() { return stamina; }
+    public void setStamina(float value) { stamina = value; }
+
+    public float getMaxStamina() { return staminaOG; }
+    public void setMaxStamina(float value) { staminaOG = value; }
+    public float getPlayerSpeed() { return speed; }
+    public void setPlayerSpeed(float value) { speed = value; }
 }
