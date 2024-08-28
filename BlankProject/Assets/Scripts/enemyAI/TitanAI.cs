@@ -42,7 +42,7 @@ public class TitanAI : enemyAI, IDamage
         agent.SetDestination(GameManager.instance.player.transform.position);
         agent.stoppingDistance = combatStoppingDistance;
 
-        weapon.transform.LookAt(GameManager.instance.player.transform.position + new Vector3(0, -90f, 0)) ;
+        weapon_R.transform.LookAt(GameManager.instance.player.transform.position + new Vector3(0, -90f, 0)) ;
 
         if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) > 5f &&!isShooting)
         {

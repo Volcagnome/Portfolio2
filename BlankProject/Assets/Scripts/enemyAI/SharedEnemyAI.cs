@@ -62,7 +62,7 @@ public class SharedEnemyAI : MonoBehaviour
 
     //Basic Components
     [SerializeField] protected Transform shootPos;
-    [SerializeField] protected GameObject weapon;
+    [SerializeField] protected GameObject weapon_R;
 
     //[SerializeField] Transform headTopPos;
     [SerializeField] protected GameObject ammoType;
@@ -81,8 +81,8 @@ public class SharedEnemyAI : MonoBehaviour
     [SerializeField] Vector3 HPBarPos;
 
     Coroutine FindIntruderCoroutine;
+    Coroutine PursuePlayerCoroutine;
 
-    public float minDistance = 15f;
 
 
     // Start is called before the first frame update
@@ -101,6 +101,15 @@ public class SharedEnemyAI : MonoBehaviour
 
         if (!isDead)
         {
+
+            if (LevelManager.instance.GetIsBossFight())
+            {
+                isAlerted = true;
+                agent.speed = combatSpeed;
+                agent.stoppingDistance = combatStoppingDistance;
+                agent.SetDestination(GameManager.instance.player.transform.position);
+            }
+
             if (playerInView)
             {
                 AlertEnemy();
@@ -116,8 +125,11 @@ public class SharedEnemyAI : MonoBehaviour
 
             if (isAlerted)
             {
-                if (!playerInView && !playerInRange && !isRespondingToAlert)
-                    StartCoroutine(PursuePlayer());
+                if (!playerInView && !playerInRange && !isRespondingToAlert && !LevelManager.instance.GetIsBossFight())
+                {
+                    if (PursuePlayerCoroutine == null)
+                        PursuePlayerCoroutine = StartCoroutine(PursuePlayer());
+                }
 
                 else if (playerInRange)
                 {
@@ -130,7 +142,7 @@ public class SharedEnemyAI : MonoBehaviour
                 else if (playerInRange && !playerInView)
                     agent.SetDestination(GameManager.instance.player.transform.position);
             }
-            else if (!onDuty)
+            else if (!onDuty && !LevelManager.instance.GetIsBossFight())
                 ReturnToPost();
 
 
@@ -217,6 +229,7 @@ public class SharedEnemyAI : MonoBehaviour
         {
             yield return new WaitForSeconds(1.5f);
             CalmEnemy();
+            PursuePlayerCoroutine = null;
         }
     }
 
@@ -298,7 +311,7 @@ public class SharedEnemyAI : MonoBehaviour
 
         anim.SetBool("Aiming", true);
 
-        weapon.transform.LookAt(GameManager.instance.player.transform.position + new Vector3(0f, 1f, 0f));
+        weapon_R.transform.LookAt(GameManager.instance.player.transform.position + new Vector3(0f, 1f, 0f));
 
 
         if (!isShooting && !isDead)
@@ -310,7 +323,6 @@ public class SharedEnemyAI : MonoBehaviour
 
     protected virtual IEnumerator shoot()
     {
-        Debug.Log("Shooting");
 
         anim.SetTrigger("Shoot");
 
@@ -327,7 +339,7 @@ public class SharedEnemyAI : MonoBehaviour
 
     //When enemy is damaged will lose health, become alerted, alert allies within its configured ally radius,and flash red
     //If HP falls to or below zero enemy calls Death function
-    public void takeDamage(int amount)
+    public void takeDamage(float amount)
     {
         HP -= amount;
         isTakingDamage = true;
@@ -350,7 +362,7 @@ public class SharedEnemyAI : MonoBehaviour
         regenCoroutine = StartCoroutine(EnableHealthRegen());
     }
 
-    public void criticalHit(int amount)
+    public void criticalHit(float amount)
     {
         takeDamage(amount);
         StartCoroutine(flashRed());
@@ -523,4 +535,6 @@ public GameObject GetDefaultPost() { return defaultPost; }
     public GameObject GetCurrentDestination() { return currentDestination; }
 
     public void SetLastKnownPlayerLocation(Vector3 location) { lastKnownPlayerLocation = location; }
+
+    public float GetHealth() { return HP; }
 }

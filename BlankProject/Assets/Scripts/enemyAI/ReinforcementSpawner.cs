@@ -6,7 +6,7 @@ public class ReinforcementSpawner : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (!LevelManager.instance.GetIntruderAlert())
+        if (!LevelManager.instance.GetIntruderAlert() && !LevelManager.instance.GetIsBossFight())
             Destroy(other.gameObject);
     }
 

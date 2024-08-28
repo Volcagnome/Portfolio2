@@ -6,12 +6,12 @@ public class damage : MonoBehaviour
 {
     [SerializeField] enum damageType {bullet, web, stationary, shield}
     [SerializeField] damageType type;
-    [SerializeField] Rigidbody rb;
+    [SerializeField] protected Rigidbody rb;
 
 
-    [SerializeField] int damageAmount;
-    [SerializeField] int speed;
-    [SerializeField] int destroyTime;
+    [SerializeField] protected float damageAmount;
+    [SerializeField] protected int speed;
+    [SerializeField] protected int destroyTime;
     private GameObject source;
 
 

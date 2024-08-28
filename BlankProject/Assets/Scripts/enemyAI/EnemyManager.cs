@@ -14,6 +14,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] float fabricatorSpawnInterval;
     [SerializeField] float minimumTimeBetweenSpawnAttempts;
 
+
     private int NumCurrentGuardRobots;
     private int NumCurrentPatrolRobots;
     private int NumCurrentTitanRobots;

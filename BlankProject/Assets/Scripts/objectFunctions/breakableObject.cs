@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class breakableObject : MonoBehaviour, IDamage
 {
-    [SerializeField] int HP;
-    [SerializeField] int MaxHP;
+    [SerializeField] float HP;
+    [SerializeField] float MaxHP;
 
     // Start is called before the first frame update
     void Start()
@@ -19,14 +19,14 @@ public class breakableObject : MonoBehaviour, IDamage
         
     }
 
-    public void takeDamage(int dmg)
+    public void takeDamage(float dmg)
     {
         HP -= dmg;
 
         if (HP <= 0) Destroy(gameObject);
     }
 
-    public void criticalHit(int amount)
+    public void criticalHit(float amount)
     {
 
     }

@@ -399,7 +399,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -425,11 +425,11 @@ ModelImporter:
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
+      keepOriginalPositionY: 0
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      bodyMask: 01000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000
       curves: []
       events: []
       transformMask:
@@ -444,33 +444,33 @@ ModelImporter:
       - path: Mech/Root/Pelvis
         weight: 1
       - path: Mech/Root/Pelvis/Body
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/BigCanon01_L
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/BigCanon01_R
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/BigCanon01Stretcher_L
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/BigCanon01Stretcher_R
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/BigCanon02_L
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/BigCanon02_R
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/BigCanon02Stretcher_L
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/BigCanon02Stretcher_R
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/Mortar
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/SmallCanon01_L
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/SmallCanon01_R
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/SmallCanon02_L
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/SmallCanon02_R
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Hip01_L
         weight: 1
       - path: Mech/Root/Pelvis/Hip01_L/Hip02_L
@@ -541,8 +541,8 @@ ModelImporter:
         weight: 1
       - path: Mech/Root/Pelvis/UpperLeg_R/PistonBaseUpper_R/PistonUpper_R/PistonMedian_R
         weight: 1
-      maskType: 3
-      maskSource: {instanceID: 0}
+      maskType: 1
+      maskSource: {fileID: 31900000, guid: a01f66b5071dcf34988188eacbec3c1f, type: 2}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Hit
@@ -2008,7 +2008,28 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.49712643
+        functionName: FootStep
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: EndOfWalk
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.013157895
+        functionName: FootStep
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
@@ -2139,11 +2160,11 @@ ModelImporter:
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
+      keepOriginalPositionY: 0
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      bodyMask: 01000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000
       curves: []
       events: []
       transformMask:
@@ -2158,33 +2179,33 @@ ModelImporter:
       - path: Mech/Root/Pelvis
         weight: 1
       - path: Mech/Root/Pelvis/Body
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/BigCanon01_L
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/BigCanon01_R
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/BigCanon01Stretcher_L
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/BigCanon01Stretcher_R
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/BigCanon02_L
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/BigCanon02_R
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/BigCanon02Stretcher_L
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/BigCanon02Stretcher_R
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/Mortar
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/SmallCanon01_L
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/SmallCanon01_R
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/SmallCanon02_L
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/SmallCanon02_R
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Hip01_L
         weight: 1
       - path: Mech/Root/Pelvis/Hip01_L/Hip02_L
@@ -2255,15 +2276,15 @@ ModelImporter:
         weight: 1
       - path: Mech/Root/Pelvis/UpperLeg_R/PistonBaseUpper_R/PistonUpper_R/PistonMedian_R
         weight: 1
-      maskType: 3
-      maskSource: {instanceID: 0}
+      maskType: 1
+      maskSource: {fileID: 31900000, guid: a01f66b5071dcf34988188eacbec3c1f, type: 2}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: DefaultToWalk (1)
       takeName: DefaultToWalk
       internalID: -2431144282561182835
       firstFrame: -1
-      lastFrame: -0.8
+      lastFrame: 1.5
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -2276,11 +2297,11 @@ ModelImporter:
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
+      keepOriginalPositionY: 0
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      bodyMask: 01000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000
       curves: []
       events: []
       transformMask:
@@ -2295,33 +2316,33 @@ ModelImporter:
       - path: Mech/Root/Pelvis
         weight: 1
       - path: Mech/Root/Pelvis/Body
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/BigCanon01_L
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/BigCanon01_R
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/BigCanon01Stretcher_L
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/BigCanon01Stretcher_R
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/BigCanon02_L
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/BigCanon02_R
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/BigCanon02Stretcher_L
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/BigCanon02Stretcher_R
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/Mortar
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/SmallCanon01_L
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/SmallCanon01_R
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/SmallCanon02_L
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Body/SmallCanon02_R
-        weight: 1
+        weight: 0
       - path: Mech/Root/Pelvis/Hip01_L
         weight: 1
       - path: Mech/Root/Pelvis/Hip01_L/Hip02_L
@@ -2392,8 +2413,8 @@ ModelImporter:
         weight: 1
       - path: Mech/Root/Pelvis/UpperLeg_R/PistonBaseUpper_R/PistonUpper_R/PistonMedian_R
         weight: 1
-      maskType: 3
-      maskSource: {instanceID: 0}
+      maskType: 1
+      maskSource: {fileID: 31900000, guid: a01f66b5071dcf34988188eacbec3c1f, type: 2}
       additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
@@ -2445,7 +2466,277 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: mech(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mech
+      parentName: mech(Clone)
+      position: {x: -0, y: 0, z: -7.4505804e-11}
+      rotation: {x: 0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mech
+      parentName: mech(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Root
+      parentName: Mech
+      position: {x: -0, y: 0, z: -7.4505804e-11}
+      rotation: {x: 0.7071068, y: 0.7071067, z: 0.00000010991034, w: -0.00000029822425}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Pelvis
+      parentName: Root
+      position: {x: -0.000023741033, y: -0.000000015032128, z: -0.03836729}
+      rotation: {x: 0.00000011098621, y: 0.7071065, z: -0.00000011098612, w: 0.70710707}
+      scale: {x: 0.99999994, y: 1, z: 0.99999994}
+    - name: Body
+      parentName: Pelvis
+      position: {x: 0.000000002826099, y: 2.1e-16, z: -5.6885885e-10}
+      rotation: {x: 0.000000075497844, y: 1, z: -0.0000000754979, w: -5.7611607e-15}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mortar
+      parentName: Body
+      position: {x: -0.025533859, y: -0.0109255435, z: -0.0035117813}
+      rotation: {x: 0.7071068, y: -0.00000009415696, z: -0.7071067, w: -0.00000009415697}
+      scale: {x: 0.99999976, y: 1, z: 1}
+    - name: BigCanon01_L
+      parentName: Body
+      position: {x: -0.014902066, y: -0.00969297, z: 0.0068563437}
+      rotation: {x: 0.70710707, y: -0.000000094156924, z: -0.7071065, w: -0.000000094157}
+      scale: {x: 0.99999976, y: 1, z: 1}
+    - name: BigCanon02_L
+      parentName: Body
+      position: {x: -0.01228147, y: -0.013232344, z: 0.006856343}
+      rotation: {x: 0.7071068, y: -0.00000009415696, z: -0.7071067, w: -0.00000009415697}
+      scale: {x: 0.9999999, y: 0.9999999, z: 0.99999976}
+    - name: BigCanon01_R
+      parentName: Body
+      position: {x: -0.014902065, y: 0.009692971, z: 0.0068563456}
+      rotation: {x: 0.70710707, y: -0.000000094156924, z: -0.7071065, w: -0.000000094157}
+      scale: {x: 0.9999999, y: 0.9999999, z: 0.9999999}
+    - name: BigCanon02_R
+      parentName: Body
+      position: {x: -0.012281467, y: 0.013232344, z: 0.006856344}
+      rotation: {x: 0.7071068, y: -0.00000009415696, z: -0.7071067, w: -0.00000009415697}
+      scale: {x: 0.99999976, y: 1, z: 1}
+    - name: BigCanon01Stretcher_L
+      parentName: Body
+      position: {x: -0.014902065, y: -0.009692971, z: 0.013879908}
+      rotation: {x: 0.00000004371138, y: -6.850417e-15, z: 2.103122e-15, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: BigCanon02Stretcher_L
+      parentName: Body
+      position: {x: -0.012281463, y: -0.013232346, z: 0.013879909}
+      rotation: {x: 0.00000004371138, y: -6.850417e-15, z: 2.103122e-15, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: BigCanon01Stretcher_R
+      parentName: Body
+      position: {x: -0.014902064, y: 0.009692971, z: 0.013879912}
+      rotation: {x: 0.00000004371138, y: -6.850417e-15, z: 2.103122e-15, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: BigCanon02Stretcher_R
+      parentName: Body
+      position: {x: -0.012281462, y: 0.013232346, z: 0.013879912}
+      rotation: {x: 0.00000004371138, y: -6.850417e-15, z: 2.103122e-15, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SmallCanon02_L
+      parentName: Body
+      position: {x: -0.014495029, y: -0.015445906, z: 0.0068563404}
+      rotation: {x: 0.7071068, y: -0.00000009415696, z: -0.7071067, w: -0.00000009415697}
+      scale: {x: 0.9999999, y: 1, z: 1.0000001}
+    - name: SmallCanon01_L
+      parentName: Body
+      position: {x: -0.015742106, y: -0.014094904, z: 0.006856342}
+      rotation: {x: 0.7071068, y: -0.00000009415696, z: -0.7071067, w: -0.00000009415697}
+      scale: {x: 0.9999999, y: 1, z: 0.9999999}
+    - name: SmallCanon02_R
+      parentName: Body
+      position: {x: -0.014495026, y: 0.015445906, z: 0.006856344}
+      rotation: {x: 0.7071068, y: -0.00000009415696, z: -0.7071067, w: -0.00000009415697}
+      scale: {x: 0.99999976, y: 1, z: 0.9999999}
+    - name: SmallCanon01_R
+      parentName: Body
+      position: {x: -0.015742105, y: 0.014094904, z: 0.006856344}
+      rotation: {x: 0.7071068, y: -0.00000009415696, z: -0.7071067, w: -0.00000009415697}
+      scale: {x: 0.99999976, y: 1, z: 1}
+    - name: Hip01_L
+      parentName: Pelvis
+      position: {x: -0.0061383676, y: -0.0026007693, z: -0.00020759668}
+      rotation: {x: 0.7193377, y: 0.6935331, z: -0.006615292, w: 0.03900399}
+      scale: {x: 0.9999997, y: 1, z: 1}
+    - name: Hip02_L
+      parentName: Hip01_L
+      position: {x: -0.0025121444, y: -0.0000000028684735, z: 1.862645e-10}
+      rotation: {x: 0.018261196, y: 0.025577102, z: -0.017847368, w: 0.99934673}
+      scale: {x: 0.99999994, y: 1, z: 1}
+    - name: UpperLeg_L
+      parentName: Pelvis
+      position: {x: -0.0062336735, y: -0.01015315, z: 0.000023765333}
+      rotation: {x: 0.011727528, y: 0.108516455, z: 0.018660558, w: 0.99385035}
+      scale: {x: 1, y: 0.9999998, z: 1}
+    - name: LowerLeg_L
+      parentName: UpperLeg_L
+      position: {x: -0.013505056, y: 0.0000000019621802, z: 0.0000000013643875}
+      rotation: {x: 0.0028420018, y: -0.17404115, z: 0.0051835896, w: 0.98472065}
+      scale: {x: 0.99999994, y: 1.0000002, z: 1}
+    - name: Foot01_L
+      parentName: LowerLeg_L
+      position: {x: -0.013653532, y: 0.0000000011303928, z: 2.3283064e-10}
+      rotation: {x: -0.013516411, y: 0.19707054, z: -0.021881418, w: 0.98005193}
+      scale: {x: 1.0000001, y: 0.99999994, z: 0.99999994}
+    - name: Heel_L
+      parentName: Foot01_L
+      position: {x: -0.00475533, y: 4.377216e-10, z: 2.328306e-11}
+      rotation: {x: -0.0009795632, y: 0.3823497, z: -0.002975587, w: 0.92401236}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Foot02_L
+      parentName: Foot01_L
+      position: {x: -0.00475533, y: 4.377216e-10, z: 2.328306e-11}
+      rotation: {x: 0.60760254, y: -0.000000020241762, z: 0.79423666, w: 0.002693729}
+      scale: {x: 1.0000002, y: 1, z: 1}
+    - name: Toe2_L
+      parentName: Foot02_L
+      position: {x: -0.007667576, y: -0.0018733067, z: 0.000089096466}
+      rotation: {x: 0.015201568, y: -0.16386999, z: 0.30842727, w: 0.9369035}
+      scale: {x: 1.0000004, y: 1.0000001, z: 1.0000001}
+    - name: Toe4_L
+      parentName: Toe2_L
+      position: {x: -0.002479248, y: 0.0000000015879049, z: -3.72529e-10}
+      rotation: {x: 0.050352387, y: 0.1129004, z: 0.012294034, w: 0.9922535}
+      scale: {x: 1, y: 1, z: 1.0000001}
+    - name: Toe1_L
+      parentName: Foot02_L
+      position: {x: -0.0076233004, y: 0.0019888077, z: 0.00008909628}
+      rotation: {x: -0.07675311, y: -0.16997072, z: -0.35597405, w: 0.9156972}
+      scale: {x: 1.0000001, y: 1.0000001, z: 0.9999999}
+    - name: Toe3_L
+      parentName: Toe1_L
+      position: {x: -0.0024792464, y: -5.0873494e-10, z: -2.9802322e-10}
+      rotation: {x: -0.022393908, y: 0.11029748, z: 0.018595582, w: 0.9934723}
+      scale: {x: 1, y: 1, z: 0.9999998}
+    - name: PistonBaseLower_L
+      parentName: Foot02_L
+      position: {x: -0.0063131824, y: 0.000000001097651, z: 1.1757949e-10}
+      rotation: {x: -0.54527193, y: 0.0002749586, z: 0.8382579, w: -0.0014871503}
+      scale: {x: 0.9999999, y: 1, z: 0.9999998}
+    - name: PistonLower_L
+      parentName: PistonBaseLower_L
+      position: {x: -0.0041920687, y: -6.1467287e-10, z: 2.598972e-10}
+      rotation: {x: 0.0006426126, y: 0.024231035, z: 0.00036358653, w: 0.99970615}
+      scale: {x: 1, y: 1, z: 0.9999999}
+    - name: ShinShield_L
+      parentName: Foot02_L
+      position: {x: -0.005715939, y: 0.000012395556, z: 0.004307535}
+      rotation: {x: -0.5654241, y: 0.0009757799, z: 0.8247985, w: -0.0014478118}
+      scale: {x: 0.9999999, y: 1, z: 0.9999998}
+    - name: PistonBaseUpper_L
+      parentName: UpperLeg_L
+      position: {x: -0.013505056, y: 0.0000000019621802, z: 0.0000000013643875}
+      rotation: {x: -0.1807495, y: 0.7000202, z: -0.6653328, w: -0.18610118}
+      scale: {x: 1, y: 1, z: 0.99999976}
+    - name: PistonUpper_L
+      parentName: PistonBaseUpper_L
+      position: {x: -0.005021253, y: -0.000000002440065, z: -5.0873494e-10}
+      rotation: {x: 0.56759393, y: -0.4336452, z: -0.45315033, w: 0.5333327}
+      scale: {x: 1, y: 0.9999998, z: 1}
+    - name: PistonMedian_L
+      parentName: PistonUpper_L
+      position: {x: -0.0066410587, y: 0.00000021143117, z: 0.00000014664604}
+      rotation: {x: -0.0018679495, y: -0.00864916, z: 0.000328725, w: 0.99996084}
+      scale: {x: 1.0000001, y: 1.0000004, z: 1.0000002}
+    - name: Hip01_R
+      parentName: Pelvis
+      position: {x: -0.006138367, y: 0.00260077, z: -0.00020759969}
+      rotation: {x: 0.3625207, y: -0.3101547, z: -0.6203516, w: 0.6225325}
+      scale: {x: 1, y: 1.0000001, z: 1.0000001}
+    - name: Hip02_R
+      parentName: Hip01_R
+      position: {x: -0.0025121442, y: -0.000000001527369, z: 8.5681673e-10}
+      rotation: {x: -0.49590975, y: -0.030782057, z: -0.0050179367, w: 0.8678139}
+      scale: {x: 0.9999999, y: 1, z: 1}
+    - name: UpperLeg_R
+      parentName: Pelvis
+      position: {x: -0.0062336694, y: 0.01015315, z: 0.000023758705}
+      rotation: {x: -0.01178423, y: 0.10846449, z: -0.01868731, w: 0.99385476}
+      scale: {x: 1.0000001, y: 0.9999999, z: 1.0000001}
+    - name: PistonBaseUpper_R
+      parentName: UpperLeg_R
+      position: {x: -0.013505058, y: 1.2456439e-10, z: 8.707866e-10}
+      rotation: {x: -0.17668568, y: 0.70001054, z: -0.6653429, w: -0.1899637}
+      scale: {x: 1.0000001, y: 1.0000002, z: 1.0000004}
+    - name: PistonUpper_R
+      parentName: PistonBaseUpper_R
+      position: {x: -0.0050212527, y: 0.0000000015646219, z: 0.0000000022739186}
+      rotation: {x: 0.5607389, y: -0.4313929, z: -0.45710528, w: 0.53900546}
+      scale: {x: 0.9999998, y: 0.9999998, z: 0.9999999}
+    - name: PistonMedian_R
+      parentName: PistonUpper_R
+      position: {x: -0.006641755, y: -0.00000027386704, z: 0.00000017439946}
+      rotation: {x: 0.0018679069, y: -0.008649166, z: -0.00032880736, w: 0.99996084}
+      scale: {x: 1.0000005, y: 1.0000004, z: 1}
+    - name: LowerLeg_R
+      parentName: UpperLeg_R
+      position: {x: -0.013505058, y: 1.2456439e-10, z: 8.707866e-10}
+      rotation: {x: -0.002863784, y: -0.17408238, z: -0.0051598353, w: 0.9847135}
+      scale: {x: 1, y: 1.0000002, z: 1.0000001}
+    - name: Foot01_R
+      parentName: LowerLeg_R
+      position: {x: -0.0136535335, y: 0.0000000013248064, z: 8.288771e-10}
+      rotation: {x: 0.01632788, y: 0.19722183, z: 0.021295242, w: 0.9799916}
+      scale: {x: 1.0000001, y: 0.99999994, z: 1.0000001}
+    - name: Heel_R
+      parentName: Foot01_R
+      position: {x: -0.004755328, y: 2.532033e-11, z: 1.9324943e-10}
+      rotation: {x: -0.0021050123, y: 0.30190074, z: 0.0020039529, w: 0.9533349}
+      scale: {x: 1.0000001, y: 1, z: 1}
+    - name: Foot02_R
+      parentName: Foot01_R
+      position: {x: -0.004755328, y: 2.532033e-11, z: 1.9324943e-10}
+      rotation: {x: 0.60760814, y: 0.0025998491, z: 0.79423237, w: -0.00070475234}
+      scale: {x: 1, y: 0.99999994, z: 0.9999999}
+    - name: Toe2_R
+      parentName: Foot02_R
+      position: {x: -0.007667576, y: 0.0018733098, z: 0.00008909641}
+      rotation: {x: -0.0022254304, y: -0.124295466, z: -0.3083374, w: 0.94311917}
+      scale: {x: 0.9999999, y: 0.9999998, z: 1.0000001}
+    - name: Toe4_R
+      parentName: Toe2_R
+      position: {x: -0.002479245, y: 3.352761e-10, z: 1.862645e-10}
+      rotation: {x: -0.050742663, y: 0.07897009, z: -0.010568483, w: 0.99552864}
+      scale: {x: 0.9999997, y: 0.99999994, z: 0.9999998}
+    - name: Toe1_R
+      parentName: Foot02_R
+      position: {x: -0.007623301, y: -0.0019888058, z: 0.000089095854}
+      rotation: {x: 0.07662739, y: -0.16958281, z: 0.3564483, w: 0.9155952}
+      scale: {x: 1, y: 1.0000001, z: 1}
+    - name: Toe3_R
+      parentName: Toe1_R
+      position: {x: -0.0024792466, y: -1.862645e-10, z: -4.4703483e-10}
+      rotation: {x: 0.02240164, y: 0.11071081, z: -0.018586196, w: 0.9934263}
+      scale: {x: 0.99999994, y: 0.9999996, z: 0.9999999}
+    - name: PistonBaseLower_R
+      parentName: Foot02_R
+      position: {x: -0.0063131824, y: -3.8329745e-10, z: -8.13452e-11}
+      rotation: {x: -0.54527324, y: -0.0012481101, z: 0.8382571, w: 0.0008541319}
+      scale: {x: 0.9999998, y: 1, z: 0.9999999}
+    - name: PistonLower_R
+      parentName: PistonBaseLower_R
+      position: {x: -0.0041920687, y: -2.4287147e-10, z: 1.9441358e-10}
+      rotation: {x: 0.0005177426, y: 0.027022984, z: -0.00013712715, w: 0.9996347}
+      scale: {x: 0.9999999, y: 0.9999999, z: 0.99999994}
+    - name: PistonLower_R_001
+      parentName: PistonBaseLower_R
+      position: {x: -0.0041920687, y: -2.4287147e-10, z: 1.9441358e-10}
+      rotation: {x: 0.0005177426, y: 0.027022984, z: -0.00013712715, w: 0.9996347}
+      scale: {x: 0.9999999, y: 0.9999999, z: 0.99999994}
+    - name: ShinShield_R
+      parentName: Foot02_R
+      position: {x: -0.005715939, y: -0.000012395035, z: 0.0043075345}
+      rotation: {x: -0.5677255, y: -0.00086292176, z: 0.82321656, w: 0.0012864629}
+      scale: {x: 0.99999964, y: 0.99999994, z: 0.9999998}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -2454,9 +2745,9 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     globalScale: 1
-    rootMotionBoneName: 
+    rootMotionBoneName: Root
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1

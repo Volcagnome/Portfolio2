@@ -11,7 +11,7 @@ public class LaserShooter : MonoBehaviour, IDamage
     [SerializeField] Transform headPos;
     
 
-    [SerializeField] int HP;
+    [SerializeField] float HP;
     [SerializeField] int viewAngle;
     [SerializeField] int facePlayerSpeed;
 
@@ -72,7 +72,7 @@ public class LaserShooter : MonoBehaviour, IDamage
         return false;
     }
 
-    public void takeDamage(int amount)
+    public void takeDamage(float amount)
     {
         HP -= amount;
         StartCoroutine(flashRed());
@@ -130,7 +130,7 @@ public class LaserShooter : MonoBehaviour, IDamage
         }
     }
 
-    public void criticalHit(int amount)
+    public void criticalHit(float amount)
     {
         throw new System.NotImplementedException();
     }

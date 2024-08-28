@@ -7,7 +7,7 @@ public class playerControl : MonoBehaviour, IDamage
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreMask;
 
-    [SerializeField] int HP;
+    [SerializeField] float HP;
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpMax;
@@ -24,7 +24,7 @@ public class playerControl : MonoBehaviour, IDamage
     Vector3 playerVel;
 
     int jumpCount;
-    int hpOG;
+    float hpOG;
 
     bool isSprinting;
     bool isShooting;
@@ -145,7 +145,7 @@ public class playerControl : MonoBehaviour, IDamage
 
     }
 
-    public void takeDamage(int amount)
+    public void takeDamage(float amount)
     {
         HP -= amount;
         adjustHPBar();
@@ -171,7 +171,7 @@ public class playerControl : MonoBehaviour, IDamage
         GameManager.instance.redFlash.SetActive(false);
     }
 
-    public void criticalHit(int amount)
+    public void criticalHit(float amount)
     {
         throw new System.NotImplementedException();
     }

@@ -61,6 +61,7 @@ public class LevelManager : MonoBehaviour
     bool intruderAlert;
     bool isRaisingAlarm;
     bool intruderFound;
+    bool isBossFight = true;
 
     Vector3 intruderLocation;
     GameObject whistleBlower;
@@ -407,4 +408,6 @@ public class LevelManager : MonoBehaviour
     public int GetMinTimeBetweenSpiderSpawn() { return secondsBetweenSpiderSpawns; }
 
     public float GetWebSpeedDebuff() { return webSpeedDebuff; }
+
+    public bool GetIsBossFight() { return isBossFight; }
 }
