@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-public class patrolAI : enemyAI,IDamage
+public class patrolAI : SharedEnemyAI,IDamage
 {
-    [SerializeField] bool hasPost;
 
     bool isWhistleBlower;
 
@@ -13,14 +12,8 @@ public class patrolAI : enemyAI,IDamage
     void Start()
     {
         HPOrig = HP;
-
-        if (defaultPost == null)
+        
             EnemyManager.instance.AssignPatrolPost(gameObject);
-        else
-        {
-            defaultPost.GetComponent<PatrolWaypoint>().AddRobotToRoute(gameObject);
-            EnemyManager.instance.AddRobotToPatrolCount();
-        }
 
         colorOrig = model.sharedMaterial.color;
     }
@@ -67,21 +60,22 @@ public class patrolAI : enemyAI,IDamage
                 else if (!onDuty)
                     ReturnToPost();
 
-            }
-            else if (LevelManager.instance.GetIntruderAlert())
-            {
-                isWhistleBlower = false;
-            }
 
-            if (isPlayerTarget())
-            {
-                UpdateEnemyUI();
+                else if (LevelManager.instance.GetIntruderAlert())
+                {
+                    isWhistleBlower = false;
+                }
 
-                if (!isTakingDamage)
-                    RegenerateHealth();
+                if (isPlayerTarget())
+                {
+                    UpdateEnemyUI();
+
+                    if (!isTakingDamage)
+                        RegenerateHealth();
+                }
+                else
+                    enemyHPBar.SetActive(false);
             }
-            else
-                enemyHPBar.SetActive(false);
         }
     }
 
@@ -91,15 +85,13 @@ public class patrolAI : enemyAI,IDamage
 
         EnemyManager.instance.RemoveDeadPatrol(gameObject);
         defaultPost.GetComponent<PatrolWaypoint>().RemoveRobotFromRoute(gameObject);
-        
+
         if (isWhistleBlower)
         {
             LevelManager.instance.WhistleBlowerKilled();
         }
 
         StartCoroutine(DespawnDeadRobot(gameObject));
-
-        GetComponent<patrolAI>().enabled = false;
     }
 
     public void OnPatrol()
@@ -120,6 +112,6 @@ public class patrolAI : enemyAI,IDamage
 
     public bool GetIsWhistleBlower() { return isWhistleBlower; }
 
-    //public void SetIsWhistleBlower(bool status) { isWhistleBlower = false; }
+    public void SetIsWhistleBlower(bool status) { isWhistleBlower = false; }
 
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Animations;
-using static enemyAI;
 using static UnityEngine.GraphicsBuffer;
 //using UnityEditor.Experimental.GraphView;
 //using UnityEditor.Search;
@@ -21,6 +20,7 @@ public class SharedEnemyAI : MonoBehaviour
     [SerializeField] protected Animator anim;
     [SerializeField] protected ParticleSystem DeathVFX;
     [SerializeField] protected Transform DeathFXPos;
+    [SerializeField] GameObject weakspot;
 
 
     //PlayerDetection
@@ -43,7 +43,7 @@ public class SharedEnemyAI : MonoBehaviour
     //Stats
 
     [SerializeField] public enum behaviorType { none, guard, patrol, guardReinforcement };
-    [SerializeField] public enum enemyType { none, Guard, Patrol, Titan, Turret, Boss };
+    [SerializeField] public enum enemyType { none, Guard, Patrol, Titan, Turret, Boss, Arachnoid };
     [SerializeField] protected behaviorType enemyBehavior;
     [SerializeField] protected enemyType enemy_Type;
     [SerializeField] protected float HP;
@@ -66,7 +66,7 @@ public class SharedEnemyAI : MonoBehaviour
 
     //[SerializeField] Transform headTopPos;
     [SerializeField] protected GameObject ammoType;
-    [SerializeField] GameObject EmissionObject;
+    [SerializeField] protected GameObject EmissionObject;
     [SerializeField] Material emissionCombat;
     [SerializeField] Material emissionAlerted;
     [SerializeField] Material emissionIdle;
@@ -127,25 +127,27 @@ public class SharedEnemyAI : MonoBehaviour
 
             if (isAlerted)
             {
+                                                                             
                 if (!playerInView && !playerInRange && !isRespondingToAlert && !LevelManager.instance.GetIsBossFight())
                 {
-                    if (PursuePlayerCoroutine == null)
-                        PursuePlayerCoroutine = StartCoroutine(PursuePlayer());
+                    PursuePlayerCoroutine = StartCoroutine(PursuePlayer());
+                    ChangeEmissionMaterial(emissionAlerted);
                 }
 
                 else if (playerInRange)
                 {
                     RotateToPlayer();
 
-                    //Vector3 playerDirection = GameManager.instance.player.transform.position - transform.position;
-                    //playerDirection.y = 0;
-                    //transform.rotation = Quaternion.LookRotation(playerDirection);
                 }
                 else if (playerInRange && !playerInView)
                     agent.SetDestination(GameManager.instance.player.transform.position);
             }
+                                
             else if (!onDuty && !LevelManager.instance.GetIsBossFight())
+            {
                 ReturnToPost();
+                ChangeEmissionMaterial(emissionIdle);
+            }
 
 
             if (isPlayerTarget())
@@ -243,7 +245,11 @@ public class SharedEnemyAI : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, rotationToPlayer, Time.deltaTime * rotationSpeed);  
     }
 
-    
+    protected virtual void ChangeEmissionMaterial(Material material)
+    {
+        EmissionObject.GetComponent<MeshRenderer>().sharedMaterial = material;
+    }
+
     protected IEnumerator flashRed()
     {
         model.material.color = Color.red;
@@ -308,6 +314,8 @@ public class SharedEnemyAI : MonoBehaviour
     {
         lastKnownPlayerLocation = GameManager.instance.player.transform.position;
 
+        ChangeEmissionMaterial(emissionCombat);
+
         agent.SetDestination(GameManager.instance.player.transform.position);
         agent.stoppingDistance = combatStoppingDistance;
 
@@ -350,10 +358,10 @@ public class SharedEnemyAI : MonoBehaviour
         AlertAllies();
         StartCoroutine(flashYellow());
 
-        if (HP <= 0)
+        if (HP <= 0 && !isDead)
         {
             isDead = true;
-
+            
             Death();
         }
 
@@ -375,6 +383,7 @@ public class SharedEnemyAI : MonoBehaviour
     {
         agent.isStopped = true;
 
+        Debug.Log("he dead");
         anim.SetBool("isDead", true);
         playerInRange = false;
         playerInView = false;
@@ -466,7 +475,7 @@ public class SharedEnemyAI : MonoBehaviour
                 break;
             }
 
-            if (agent.remainingDistance <= 0.5f)    
+            if (agent.remainingDistance <= 0.5f)
             {
                 isRespondingToAlert = false;
                 StartCoroutine(SearchArea());
@@ -520,7 +529,7 @@ public class SharedEnemyAI : MonoBehaviour
 
 
 
-
+public GameObject GetEnemyHealthBar() { return enemyHPBar; }
 
 public GameObject GetDefaultPost() { return defaultPost; }
 

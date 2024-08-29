@@ -112,12 +112,17 @@ public class itemPickup : MonoBehaviour, IPickup
                 case (pickupStats.pickupType.commandCode):
                     displayedItem.SetActive(false);
                     GameManager.instance.PickedUpCommandCode();
-                    pickupMessage = GameManager.instance.GetCommandCodesCollected() + "/2 Command Codes collected";
+                    pickupMessage = "Command Codes collected";
                     break;
 
                 case (pickupStats.pickupType.securityPassword):
                     displayedItem.SetActive(false);
-                    GameManager.instance.SetSecurtyPasswordLevel1(item.passwordCombo);
+
+                    if (GameManager.instance.GetCurrentLevel() == 0)
+                        GameManager.instance.SetSecurtyPasswordLevel1(item.passwordCombo);
+                    else if (GameManager.instance.GetCurrentLevel() == 1)
+                        GameManager.instance.SetSecurtyPasswordLevel2(item.passwordCombo);
+
                     GameManager.instance.DisplayPasswords();
                     pickupMessage = "Security Password Collected";
                     break;

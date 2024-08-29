@@ -226,7 +226,7 @@ public class playerDamage : MonoBehaviour, IDamage
 
 
    // *** HUD METHODS *** //
-    void adjustHPBar()
+    public void adjustHPBar()
     {
         GameManager.instance.healthbar.fillAmount = HP / hpOG;
     }

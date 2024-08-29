@@ -23,10 +23,12 @@ public class bossAI : SharedEnemyAI, IDamage
     [SerializeField] GameObject TurretCycler_R;
     [SerializeField] GameObject weapon_L;
     [SerializeField] GameObject ShieldIndicator;
+   
 
     [SerializeField] GameObject FlamethrowerAmmo;
     [SerializeField] GameObject MainTurretAmmo;
     [SerializeField] GameObject RocketAmmo;
+  
 
     [SerializeField] ParticleSystem deathExplosion;
     [SerializeField] Transform deathSparks2;
@@ -74,7 +76,7 @@ public class bossAI : SharedEnemyAI, IDamage
             if (distanceToPlayer > 25f)
             {
                 agent.stoppingDistance = idleStoppingDistance;
-               StartCoroutine(PursuePlayer());
+                StartCoroutine(PursuePlayer());
             }
             else if (distanceToPlayer < 25f)
             {
@@ -91,15 +93,11 @@ public class bossAI : SharedEnemyAI, IDamage
         }
 
         if (isPlayerTarget())
-        {
             UpdateEnemyUI();
 
-            //if (!isTakingDamage)
-            //    RegenerateHealth();
-        }
-        //else
-        //    enemyHPBar.SetActive(false);    
+
     }
+      
 
     protected override void FoundPlayer()
     {
@@ -207,7 +205,7 @@ public class bossAI : SharedEnemyAI, IDamage
 
     protected override void Death()
     {
-        //DeathShared();
+        DeathShared();
 
         agent.isStopped = true;
 
@@ -216,7 +214,9 @@ public class bossAI : SharedEnemyAI, IDamage
         playerInView = false;
         isAlerted = false;
 
-        //enemyHPBar.SetActive(false);
+        GetComponent<bossAI>().enabled = false; 
+
+        enemyHPBar.SetActive(false);
 
         Instantiate(DeathVFX, DeathFXPos.position, Quaternion.identity);
 
@@ -243,97 +243,9 @@ public class bossAI : SharedEnemyAI, IDamage
         anim.SetBool("Dead",true);
     }
 
+
     public bool GetIsDead() { return isDead; }
-    //public void LookAtPlayer()
-    //{
-    //    Debug.Log("looking");
-    //    if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) >= 5f)
-    //    {
-    //        Vector3 playerLookDirection = GameManager.instance.player.transform.position - body.transform.position;
-
-    //        bodyTiltToPlayer = Quaternion.LookRotation(playerLookDirection, body.transform.up);
-
-    //        Vector3 eulerRotation = bodyTiltToPlayer.eulerAngles;
-    //        float pitch = eulerRotation.x;
-    //        float clampedPitch = Mathf.Clamp(pitch, -maxTiltAngle, maxTiltAngle);
-    //        Quaternion clampedRotation = Quaternion.Euler(clampedPitch, eulerRotation.y, eulerRotation.z);
-
-    //        body.transform.rotation = Quaternion.Lerp(body.transform.rotation, clampedRotation, Time.deltaTime * rotationSpeed);
-    //    }
-    //}
-
-    //private void AimCannons(GameObject cannon)
-    //{
-    //    Vector3 lookDirectionCannon = GameManager.instance.player.transform.position - cannon.transform.position;
-    //    Quaternion bigCannonRotation = Quaternion.LookRotation(lookDirectionCannon, cannon.transform.up);
-
-    //    Vector3 eulerRotation = bigCannonRotation.eulerAngles;
-    //    float pitch = eulerRotation.x;
-    //    float clampedPitch = Mathf.Clamp(pitch, -maxTiltAngle, maxTiltAngle);
-    //    Quaternion clampedRotation = Quaternion.Euler(clampedPitch, eulerRotation.y, eulerRotation.z);
-
-    //    cannon.transform.rotation = Quaternion.Lerp(cannon.transform.rotation, bigCannonRotation, Time.deltaTime * rotationSpeed);
-
-    //}
-
-
-
-
-    //IEnumerator FireMainCannons1()
-    //{
-    //    Debug.Log("shoot");
-
-    //    isShooting = true;
-    //    Instantiate(mainCannonAmmo, bigCannonShootPos_L.position, bigCannon_L.transform.rotation);
-    //    Instantiate(mainCannonAmmo, bigCannonShootPos_R.position, bigCannon_R.transform.rotation);
-
-    //    yield return new WaitForSeconds(shootRate);
-    //    isShooting = false;
-    //}
-
-    //private void Charge()
-    //{
-    //    isCharging = true;
-    //    readyToCharge = false;
-
-    //    float stoppingDistOrig = agent.stoppingDistance;
-
-    //    agent.speed = 20;
-    //    agent.stoppingDistance = 0.2f;
-
-    //    trampleDestination = GameManager.instance.player.transform.position - transform.forward;
-
-    //    agent.SetDestination(trampleDestination * 50);
-
-    //}
-
-    //private void FinishCharging()
-    //{
-    //    Debug.Log(Vector3.Distance(transform.position, trampleDestination));
-
-    //    if (Vector3.Distance(transform.position, trampleDestination) <= 1f)
-    //    {
-    //        RotateToPlayer();
-
-    //        agent.stoppingDistance = combatStoppingDistance;
-    //        agent.speed = speed;
-    //        isCharging = false;
-    //        Debug.Log("finished charging");
-
-    //        StartCoroutine(ChargeTimer());
-    //    }
-    //}
-
-    //IEnumerator ChargeTimer()
-    //{
-    //    yield return new WaitForSeconds(minTimeBetweenTrampleAttempts);
-    //    readyToCharge = true;
-    //}
-
-
-
-    //public int GetTrampleDamage() { return trampleDamage; }
-
+   
 }
 
 

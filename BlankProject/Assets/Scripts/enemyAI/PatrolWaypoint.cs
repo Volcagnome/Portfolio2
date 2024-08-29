@@ -50,15 +50,13 @@ void Update()
 
 
     private void OnTriggerEnter(Collider patrolRobot)
-    {
-
-        if (patrolRobot.CompareTag("Enemy")
-            && patrolRobot.GetComponent<SharedEnemyAI>().GetCurrentDestination() == gameObject
-            && patrolRobot.GetComponent<enemyAI>().CheckIfOnDuty() == true)
+    { 
+        if (patrolRobot.gameObject.GetComponent<SharedEnemyAI>().GetCurrentDestination() == gameObject
+            && patrolRobot.gameObject.GetComponent<SharedEnemyAI>().CheckIfOnDuty() == true)
         {
 
-            patrolRobot.GetComponent<enemyAI>().SetCurrentDestination(nextWaypoint);
-            patrolRobot.GetComponent<NavMeshAgent>().SetDestination(nextWaypoint.transform.position);
+            patrolRobot.gameObject.GetComponent<SharedEnemyAI>().SetCurrentDestination(nextWaypoint);
+            patrolRobot.gameObject.GetComponent<NavMeshAgent>().SetDestination(nextWaypoint.transform.position);
         }
     }
 

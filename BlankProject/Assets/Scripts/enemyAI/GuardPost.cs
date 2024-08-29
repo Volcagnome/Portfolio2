@@ -41,8 +41,8 @@ public class GuardPost : MonoBehaviour
     {
 
         if (guardRobot.CompareTag("Enemy")
-            && guardRobot.GetComponent<enemyAI>().GetDefaultPost() == gameObject.GetComponent<GuardPost>().gameObject
-            && guardRobot.GetComponent<enemyAI>().CheckIfOnDuty() == true)
+            && guardRobot.GetComponent<SharedEnemyAI>().GetDefaultPost() == gameObject.GetComponent<GuardPost>().gameObject
+            && guardRobot.GetComponent<SharedEnemyAI>().CheckIfOnDuty() == true)
         {   
             guardRobot.gameObject.transform.rotation = gameObject.transform.rotation;
         }

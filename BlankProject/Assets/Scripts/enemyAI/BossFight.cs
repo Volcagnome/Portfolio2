@@ -23,8 +23,9 @@ public class BossFight : MonoBehaviour
     [SerializeField] int fightStage_2_guards;
     [SerializeField] int fightStage_3_guards;
     [SerializeField] int fightStage_3_titans;
-    
 
+    [SerializeField] GameObject CommandcodeBoss;
+    [SerializeField] GameObject CommandcodeBossPlatform;
 
     int fightStage;
 
@@ -68,10 +69,13 @@ public class BossFight : MonoBehaviour
         {
             bossDead = true;
 
+            CommandcodeBoss.SetActive(true);
+            CommandcodeBossPlatform.SetActive(true);
+
             MainFrameDoor.transform.GetChild(1).gameObject.SetActive(false);
             MainFrameDoor.transform.GetChild(2).gameObject.SetActive(true);
 
-            if (GameManager.instance.GetCommandCodesEntered() == 4)
+            if (GameManager.instance.GetCommandCodesEntered() == 3)
             {
                 LeverCover.SetActive(false);
                 LeverCoverOpen.SetActive(true);
@@ -96,7 +100,7 @@ public class BossFight : MonoBehaviour
             bossFightBegin = true;
             BossApproach();
             fightStage = 1;
-
+            boss.GetEnemyHealthBar().SetActive(true);
 
             MainFrameDoor.transform.GetChild(1).gameObject.SetActive(true);
             mainframeDoorClosed = true;

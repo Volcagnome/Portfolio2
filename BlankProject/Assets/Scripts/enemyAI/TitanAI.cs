@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TitanAI : enemyAI, IDamage
+public class TitanAI : SharedEnemyAI, IDamage
 {
     [SerializeField] Collider shieldBashCollider;
     [SerializeField] int minTimeBetweenBashes;
@@ -37,7 +37,6 @@ public class TitanAI : enemyAI, IDamage
 
     protected override void FoundPlayer()
     {
-        Debug.Log("Found Player");
 
         agent.SetDestination(GameManager.instance.player.transform.position);
         agent.stoppingDistance = combatStoppingDistance;
@@ -89,12 +88,18 @@ public class TitanAI : enemyAI, IDamage
         {
             EnemyManager.instance.RemoveDeadTitan(gameObject);
             defaultPost.GetComponent<TitanPost>().SetIsOccupied(false);
+            EnemyManager.instance.RemoveTitanFromRoster(gameObject);
         }
 
         if (LevelManager.instance.responseTeam.Contains(gameObject))
             LevelManager.instance.responseTeam.Remove(gameObject);
 
         StartCoroutine(DespawnDeadRobot(gameObject));
+    }
+
+    protected override void ChangeEmissionMaterial(Material material)
+    {
+        EmissionObject.transform.GetChild(0).GetComponent<MeshRenderer>().sharedMaterial = material;
     }
 
     public float GetShieldDamageReduction() { return shieldDamageReduction; }

@@ -156,7 +156,7 @@ public class LevelManager : MonoBehaviour
             guard = FindClosestObject(EnemyManager.instance.guardRoster, intruderLocation);
 
             responseTeam.Add(guard);
-            guard.GetComponent<enemyAI>().StartOrUpdateFindIntruder(intruderLocation);
+            guard.GetComponent<SharedEnemyAI>().StartOrUpdateFindIntruder(intruderLocation);
             EnemyManager.instance.RemoveGuardFromRoster(guard);
           
         }
@@ -219,49 +219,14 @@ public class LevelManager : MonoBehaviour
             NavMesh.SamplePosition(randomDist, out hit, 3f, 1);
 
             GameObject reinforcement = Instantiate(entityToSpawn, hit.position, reinforcementSpawner.transform.rotation);
-            reinforcement.GetComponent<enemyAI>().SetDefaultPost(reinforcementSpawner);
+            reinforcement.GetComponent<SharedEnemyAI>().SetDefaultPost(reinforcementSpawner);
             responseTeam.Add(reinforcement);
 
-            reinforcement.GetComponent<enemyAI>().StartOrUpdateFindIntruder(intruderLocation);
+            reinforcement.GetComponent<SharedEnemyAI>().StartOrUpdateFindIntruder(intruderLocation);
 
             yield return new WaitForSeconds(0.75f);
         }
     }
-
-        //--------------If spotted by a patrol bot:
-        //--------------any guards within his immediate ally radius are alerted of the player's position and will move to engage
-        //--------------patrol bot runs for nearest intruder alert button
-        //(button and patrol bot will be highlighted by silouhette)
-        //--------------if running patrol bot is killed, the task may pass to any other alerted patrol bot after a cooldown
-        //--------------if spotted by guard will alert patrol bots within his ally radius
-
-        //if intruder alert successfully activated:
-        //sirens, lights, all deactivated security forcefields re-activated, cooldown for repair on disabled fabricators is reduced depending on breach level
-        //arachnoid bot(s) are deployed to subdue player until guards arrive
-        //variable number of guards are dispatched to player's last known location depending on breach level
-        //if not found at that location, guards will split up into "search parties" and travel to any search nodes within a configurable radius of player's LKL
-        //(one node placed in each room with box collider sized to room)
-        //will perform a configurable number of "search attempts" (random roams) witihin that room before giving up and returning to idle behavior
-        //if player found will alert other search parties
-        //guards will return to their posts, extra guards will exit the door they came in from
-        //intruder alert cancelled once number of alerted bots = 0 (killed or stop searching)
-        //each time red alert triggered, increases security breach level up to maximum. For each level, more guard bots are deployed. 
-        /////   level 1: nearest 2 guards are dispatched
-        /////   level 2: nearest 4 guards are dispatched
-        /////   level 3: nearest 6 guards are dispatched
-        /////   level 4: nearest 6 guards and 1 titan dispatched
-        /////   level 5: nearest 6 guards and 2 titans dispatched
-        // if less than prescribed number of troops currently on map, will be called in from unopenable door. Once they return to idle, will be assigned
-        //to available posts or if none exist will exit through unopenable door and despaw
-        //breach level gradually decreases over time
-        //max breach level can be limited for earlier levels
-
-
-    public void SetIntruderLocation(Vector3 location) { intruderLocation = location; }
-
-    public void SetIntruderFound(bool status) { intruderFound = status; }
-
-    public bool GetIntruderFound() { return intruderFound; }
 
     public GameObject FindClosestObject(List<GameObject> listOfObjects, Vector3 startingPoint)
     {
@@ -285,6 +250,12 @@ public class LevelManager : MonoBehaviour
 
         return closestObject;
     }
+
+    public void SetIntruderLocation(Vector3 location) { intruderLocation = location; }
+
+    public void SetIntruderFound(bool status) { intruderFound = status; }
+
+    public bool GetIntruderFound() { return intruderFound; }
 
     public void SetIntruderAlert(bool status) { intruderAlert = status; }
 
@@ -346,7 +317,7 @@ public class LevelManager : MonoBehaviour
             GameObject defaultPost = responder.GetComponent<SharedEnemyAI>().GetDefaultPost();
             SharedEnemyAI.enemyType type = responder.GetComponent<SharedEnemyAI>().GetEnemyType();
 
-            responder.GetComponent<enemyAI>().SetIsRespondingToAlert(false);
+            responder.GetComponent<SharedEnemyAI>().SetIsRespondingToAlert(false);
 
             if (defaultPost.GetComponent<GuardPost>())
             {
@@ -395,7 +366,7 @@ public class LevelManager : MonoBehaviour
 
         responseTeam.ForEach(responder =>
         {
-            responder.GetComponent<enemyAI>().StartOrUpdateFindIntruder(intruderLocation);
+            responder.GetComponent<SharedEnemyAI>().StartOrUpdateFindIntruder(intruderLocation);
         });
     }
 

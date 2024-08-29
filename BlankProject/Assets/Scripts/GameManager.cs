@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
     public GameObject redFlash;
 
     public GameObject playerSpawn;
+    int currentLevel;
+
     public GameObject player;
     public playerMovement playerScript;
     public playerCrouch crouchScript;
@@ -53,6 +55,7 @@ public class GameManager : MonoBehaviour
     int commandCodesEntered;
 
     int securityPasswordLevel_1;
+    int securityPasswordLevel_2;
 
     // Start is called before the first frame update
     void Awake()
@@ -64,6 +67,9 @@ public class GameManager : MonoBehaviour
         playerSpawn = GameObject.FindWithTag("Player Spawn");
         damageScript = GameManager.instance.GetComponent<playerDamage>();
         securityPasswordLevel_1 = 0;
+        currentLevel = 0;
+
+        DontDestroyOnLoad(gameObject);
     }
 
     //Update is called once per frame
@@ -158,6 +164,7 @@ public class GameManager : MonoBehaviour
 
         }
     }
+   
 
     public void DisplayPasswords()
     {
@@ -178,10 +185,22 @@ public class GameManager : MonoBehaviour
 
     public string GetTimeLeft() { return timeLeft; }
 
-
     public int GetPasswordLevel1() { return securityPasswordLevel_1; }
 
+    public int GetPasswordLevel2() { return securityPasswordLevel_2; }
+
     public void SetSecurtyPasswordLevel1(int password) { securityPasswordLevel_1 = password; }
+
+    public void SetSecurtyPasswordLevel2(int password) { securityPasswordLevel_2 = password; }
+
+    public int GetCurrentLevel() { return currentLevel; }
+
+    public void SetCurrentLevel(int level) { currentLevel = level; }
+
+    public void SetPlayerSpawn(GameObject spawner)
+    {
+        playerSpawn = spawner;
+    }
 
     public IEnumerator DisplayPickupMessage(string message)
     {

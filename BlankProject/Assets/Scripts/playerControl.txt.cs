@@ -35,7 +35,7 @@ public class playerControl : MonoBehaviour, IDamage
     {
         hpOG = HP;
         adjustHPBar();
-        spawnPlayer();
+        //spawnPlayer();
     }
 
     // Update is called once per frame
@@ -176,12 +176,12 @@ public class playerControl : MonoBehaviour, IDamage
         throw new System.NotImplementedException();
     }
 
-    public void spawnPlayer()
-    {
-        HP = hpOG;
-        adjustHPBar();
-        controller.enabled = false;
-        transform.position = GameManager.instance.playerSpawn.transform.position;
-        controller.enabled = true;
-    }
+    //public void spawnPlayer()
+    //{
+    //    HP = hpOG;
+    //    adjustHPBar();
+    //    controller.enabled = false;
+    //    transform.position = GameManager.instance.playerSpawn.transform.position;
+    //    controller.enabled = true;
+    //}
 }

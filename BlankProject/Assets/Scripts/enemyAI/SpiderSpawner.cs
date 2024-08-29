@@ -15,7 +15,7 @@ public class SpiderSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LevelManager.instance.AddSpiderSpawnerToList(gameObject);
+        //LevelManager.instance.AddSpiderSpawnerToList(gameObject);
         readyToSpawn = true;
     }
 
@@ -27,7 +27,7 @@ public class SpiderSpawner : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!LevelManager.instance.GetIntruderAlert() && other.gameObject.GetComponent<SharedEnemyAI>().GetDefaultPost()==gameObject )
+        if (!LevelManager.instance.GetIntruderAlert() && other.gameObject.GetComponent<SharedEnemyAI>().GetDefaultPost() == gameObject)
         {
             Destroy(other.gameObject);
         }
@@ -43,10 +43,10 @@ public class SpiderSpawner : MonoBehaviour
         currentSpider.GetComponent<NavMeshAgent>().SetDestination(GameManager.instance.player.transform.position);
 
         yield return new WaitForSeconds(LevelManager.instance.GetMinTimeBetweenSpiderSpawn());
-        
+
         readyToSpawn = true;
     }
-   
+
 
     public void ToggleActive(bool status)
     {

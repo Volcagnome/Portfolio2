@@ -100,24 +100,6 @@ public class RobotFabricator : MonoBehaviour
         isReadyToSpawn = true;
     }
 
-    //IEnumerator SpawnRobot()
-    //{
-    //    while (spawningRobot)
-    //    {
-    //        if (EnemyManager.instance.GetCurrentNumberRobots() < EnemyManager.instance.GetMaxAllowedRobots())
-    //        {
-    //            spawningRobot = true;
-
-    //            if (doorOpen)
-    //            {
-    //                SpawnEnemy();
-    //            }
-    //        }
-
-    //        yield return new WaitForSeconds(EnemyManager.instance.EnemySpawnInterval);
-    //    }
-    //}
-
     private void OnTriggerExit(Collider newRobot)
     {
 

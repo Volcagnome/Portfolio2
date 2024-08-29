@@ -4,7 +4,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class guardAI : enemyAI, IDamage
+public class guardAI : SharedEnemyAI, IDamage
 {
 
     // Start is called before the first frame update
@@ -42,8 +42,9 @@ public class guardAI : enemyAI, IDamage
         {
             EnemyManager.instance.RemoveDeadGuard(gameObject);
             defaultPost.GetComponent<GuardPost>().SetIsOccupied(false);
+            EnemyManager.instance.RemoveGuardFromRoster(gameObject);
         }
-    
+
         if (LevelManager.instance.responseTeam.Contains(gameObject))
             LevelManager.instance.responseTeam.Remove(gameObject);
 
