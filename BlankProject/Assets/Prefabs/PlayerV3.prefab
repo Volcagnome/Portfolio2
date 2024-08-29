@@ -491,20 +491,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   weapons: []
-  gunModel: {fileID: 8609670482365957631}
-  flashlight: {fileID: 1834860496784949962}
-  muzzleFlash: {fileID: 1161149025592466324}
   HP: 75
   HPRegenRate: 7.5
   HPRegenWaitTime: 5
   botDmgFX: {fileID: 198966096496560358, guid: 46889c7ec78c0eb42ab487ecb6367592, type: 3}
   botCritFX: {fileID: 198966096496560358, guid: 368f309b52ba5b84bac9d33c4f7bf841, type: 3}
   bulletHoleFX: {fileID: 198966096496560358, guid: e29b6bf97446db54994952048fdb9a96, type: 3}
-  shootDamage: 0
-  shootRate: 0
-  shootDist: 0
-  dmgMultiplier: 0
+  flashlight: {fileID: 1834860496784949962}
+  shootDamage: 1
+  shootRate: 0.25
+  shootDist: 100
   interactDist: 2
+  dmgMultiplier: 2
 --- !u!114 &7874694064362075633
 MonoBehaviour:
   m_ObjectHideFlags: 0
