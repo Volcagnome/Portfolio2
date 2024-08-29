@@ -31,7 +31,6 @@ public class RobotFabricator : MonoBehaviour
         fabricatorDoorLight.GetComponent<Light>().enabled = false;
         doorClosedPosition = fabricatorDoor.transform.localPosition;
         doorOpenPosition = new Vector3(doorClosedPosition.x, doorClosedPosition.y + 3.8f, doorClosedPosition.z);
-        EnemyManager.instance.robotFabricators_List.Add(gameObject);
     }
 
     // Update is called once per frame

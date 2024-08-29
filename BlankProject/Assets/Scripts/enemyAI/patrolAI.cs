@@ -12,7 +12,8 @@ public class patrolAI : SharedEnemyAI,IDamage
     void Start()
     {
         HPOrig = HP;
-        
+
+        if (defaultPost == null)
             EnemyManager.instance.AssignPatrolPost(gameObject);
 
         colorOrig = model.sharedMaterial.color;
@@ -32,7 +33,8 @@ public class patrolAI : SharedEnemyAI,IDamage
                     AlertEnemy();
                     AlertAllies();
 
-                    if (!LevelManager.instance.GetIntruderAlert() && !LevelManager.instance.GetIsRaisingAlarm())
+                    if (!LevelManager.instance.GetIntruderAlert() && !LevelManager.instance.GetIsRaisingAlarm() 
+                        && LevelManager.instance.intruderAlertButtons.Count != 0)
                         RaiseAlarm();
 
                     else
@@ -57,7 +59,7 @@ public class patrolAI : SharedEnemyAI,IDamage
                             agent.SetDestination(GameManager.instance.player.transform.position);
                     }
                 }
-                else if (!onDuty)
+                else if (!onDuty && defaultPost != null)
                     ReturnToPost();
 
 
@@ -70,8 +72,7 @@ public class patrolAI : SharedEnemyAI,IDamage
                 {
                     UpdateEnemyUI();
 
-                    if (!isTakingDamage)
-                        RegenerateHealth();
+                  
                 }
                 else
                     enemyHPBar.SetActive(false);
@@ -103,10 +104,10 @@ public class patrolAI : SharedEnemyAI,IDamage
     {
         isWhistleBlower = true;
 
-        GameObject nearestButton = LevelManager.instance.SetIsRaisingAlarm(gameObject);
+            GameObject nearestButton = LevelManager.instance.SetIsRaisingAlarm(gameObject);
 
-        agent.stoppingDistance = 2f;
-        agent.SetDestination(nearestButton.transform.position);
+            agent.stoppingDistance = 2f;
+            agent.SetDestination(nearestButton.transform.position);
 
     }
 

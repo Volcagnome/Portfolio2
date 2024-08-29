@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
         securityPasswordLevel_1 = 0;
         currentLevel = 0;
 
-        DontDestroyOnLoad(gameObject);
+
     }
 
     //Update is called once per frame

@@ -140,18 +140,12 @@ public class EnemyManager : MonoBehaviour
     public void AssignPatrolPost(GameObject newRobot)
     { 
 
-            AddRobotToPatrolCount();
-
-        if( patrolRoutes_List.Count>0)
-        {
             for (int index = 0; index < patrolRoutes_List.Count; index++)
             {
                 GameObject currentRoute = patrolRoutes_List[index];
 
-
                 int currentRobotsAssigned = currentRoute.GetComponent<PatrolWaypoint>().GetNumberRobotsOnThisRoute();
 
-        
                 int maxAllowedRobotsAssigned = currentRoute.GetComponent<PatrolWaypoint>().GetMaxRobotsOnThisRoute();
 
                 if (currentRobotsAssigned < maxAllowedRobotsAssigned)
@@ -160,11 +154,11 @@ public class EnemyManager : MonoBehaviour
                     currentRoute.GetComponent<PatrolWaypoint>().AddRobotToRoute(newRobot);
                     newRobot.GetComponent<SharedEnemyAI>().SetDefaultPost(currentRoute);
                     newRobot.GetComponent<patrolAI>().SetCurrentDestination(currentRoute);
-
+                    newRobot.GetComponent<NavMeshAgent>().destination = currentRoute.transform.position;
                     break;
                 }
             }
-        }
+        
     }
 
     public void RemoveDeadGuard(GameObject deadGuard)
@@ -197,10 +191,13 @@ public class EnemyManager : MonoBehaviour
     {
         int tempCount = 0;
 
-        patrolRoutes_List.ForEach(route =>
-        {
-            tempCount = tempCount + route.GetComponent<PatrolWaypoint>().GetMaxRobotsOnThisRoute();
-        });
+
+        if (patrolRoutes_List.Count != 0){
+           for(int index = 0; index < patrolRoutes_List.Count; index++) 
+
+                tempCount = tempCount + patrolRoutes_List[index].GetComponent<PatrolWaypoint>().GetMaxRobotsOnThisRoute();
+            
+        }
 
         return tempCount;
     }

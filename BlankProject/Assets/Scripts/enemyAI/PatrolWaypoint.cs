@@ -12,12 +12,7 @@ public class PatrolWaypoint : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (gameObject.tag == "Patrol Route Start")
-        {
-                robotsAssignedToRoute.Remove(robotsAssignedToRoute[0]) ;
- 
-            EnemyManager.instance.patrolRoutes_List.Add(gameObject);
-        }
+
     }
 
 // Update is called once per frame

@@ -54,8 +54,6 @@ public class ArachnoidAI : SharedEnemyAI,IDamage
         {
             UpdateEnemyUI();
 
-            if (!isTakingDamage)
-                RegenerateHealth();
         }
         else
             enemyHPBar.SetActive(false);

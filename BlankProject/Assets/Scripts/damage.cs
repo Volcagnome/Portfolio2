@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class damage : MonoBehaviour
@@ -29,15 +30,16 @@ public class damage : MonoBehaviour
     {
         IDamage dmg = other.GetComponent<IDamage>();
 
-        if (other.isTrigger || other.gameObject.tag == "Enemy")
-        {
+        if (other.isTrigger || other.gameObject == gameObject.transform.root.gameObject
+            || other.gameObject.CompareTag("Enemy"))
             return;
-        } 
-        else if (dmg != null && other.gameObject.tag == "Player")
+
+        else if(dmg != null && other.gameObject.tag == "Player")
         {
             dmg.takeDamage(damageAmount);
-            Destroy(gameObject);
-        }else
-            Destroy(gameObject);
+
+            if(type == damageType.bullet)
+                Destroy(gameObject);
+        }
     }
 }

@@ -12,7 +12,6 @@ public class GuardPost : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EnemyManager.instance.guardPosts_List.Add(gameObject);
         
     }
 

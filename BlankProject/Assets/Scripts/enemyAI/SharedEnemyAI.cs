@@ -25,7 +25,6 @@ public class SharedEnemyAI : MonoBehaviour
 
     //PlayerDetection
     [SerializeField] protected float FOV_Angle;
-    [SerializeField] protected LayerMask targetMask;
     [SerializeField] protected float rotationSpeed;
     protected Vector3 playerDirection;
     protected Vector3 lastKnownPlayerLocation;
@@ -39,16 +38,13 @@ public class SharedEnemyAI : MonoBehaviour
     protected bool isShooting;
     protected bool isDead;
     protected Color colorOrig;
+    protected bool hasPost;
 
     //Stats
 
-    [SerializeField] public enum behaviorType { none, guard, patrol, guardReinforcement };
     [SerializeField] public enum enemyType { none, Guard, Patrol, Titan, Turret, Boss, Arachnoid };
-    [SerializeField] protected behaviorType enemyBehavior;
     [SerializeField] protected enemyType enemy_Type;
     [SerializeField] protected float HP;
-    [SerializeField] protected float HPRegenRate;
-    [SerializeField] protected float HPRegenWaitTime;
     [SerializeField] protected float shootRate;
     [SerializeField] protected float combatSpeed;
     [SerializeField] protected float combatStoppingDistance;
@@ -104,13 +100,13 @@ public class SharedEnemyAI : MonoBehaviour
         if (!isDead)
         {
 
-            if (LevelManager.instance.GetIsBossFight())
-            {
-                isAlerted = true;
-                agent.speed = combatSpeed;
-                agent.stoppingDistance = combatStoppingDistance;
-                agent.SetDestination(GameManager.instance.player.transform.position);
-            }
+            //if (LevelManager.instance.GetIsBossFight())
+            //{
+            //    isAlerted = true;
+            //    agent.speed = combatSpeed;
+            //    agent.stoppingDistance = combatStoppingDistance;
+            //    agent.SetDestination(GameManager.instance.player.transform.position);
+            //}
 
             if (playerInView)
             {
@@ -128,7 +124,7 @@ public class SharedEnemyAI : MonoBehaviour
             if (isAlerted)
             {
                                                                              
-                if (!playerInView && !playerInRange && !isRespondingToAlert && !LevelManager.instance.GetIsBossFight())
+                if (!playerInView && !playerInRange && !isRespondingToAlert) //&& !LevelManager.instance.GetIsBossFight())
                 {
                     PursuePlayerCoroutine = StartCoroutine(PursuePlayer());
                     ChangeEmissionMaterial(emissionAlerted);
@@ -143,7 +139,7 @@ public class SharedEnemyAI : MonoBehaviour
                     agent.SetDestination(GameManager.instance.player.transform.position);
             }
                                 
-            else if (!onDuty && !LevelManager.instance.GetIsBossFight())
+            else if (!onDuty && defaultPost !=null)// && !LevelManager.instance.GetIsBossFight())
             {
                 ReturnToPost();
                 ChangeEmissionMaterial(emissionIdle);
@@ -151,12 +147,8 @@ public class SharedEnemyAI : MonoBehaviour
 
 
             if (isPlayerTarget())
-            {
                 UpdateEnemyUI();
 
-                if (!isTakingDamage)
-                    RegenerateHealth();
-            }
             else
                 enemyHPBar.SetActive(false);
         }
@@ -233,7 +225,6 @@ public class SharedEnemyAI : MonoBehaviour
         {
             yield return new WaitForSeconds(1.5f);
             CalmEnemy();
-            PursuePlayerCoroutine = null;
         }
     }
 
@@ -268,7 +259,9 @@ public class SharedEnemyAI : MonoBehaviour
     protected virtual void ReturnToPost()
     {
         onDuty = true;
-        agent.SetDestination(defaultPost.transform.position);   
+
+        if(defaultPost != null)
+            agent.SetDestination(defaultPost.transform.position);   
     }
 
     public virtual void AlertEnemy()
@@ -365,11 +358,6 @@ public class SharedEnemyAI : MonoBehaviour
             Death();
         }
 
-        if (regenCoroutine != null)
-        {
-            StopCoroutine(regenCoroutine);
-        }
-        regenCoroutine = StartCoroutine(EnableHealthRegen());
     }
 
     public void criticalHit(float amount)
@@ -404,23 +392,6 @@ public class SharedEnemyAI : MonoBehaviour
     ///////////////////////////////////////
 
 
-    protected void RegenerateHealth()
-    {
-        //Debug.Log("Regenerating enemy health: " + HPRegenRate * Time.deltaTime);
-        HP += HPRegenRate * Time.deltaTime;
-
-        if (HP > HPOrig)
-        {
-            HP = HPOrig;
-        }
-    }
-
-    protected IEnumerator EnableHealthRegen()
-    {
-        yield return new WaitForSeconds(HPRegenWaitTime);
-        isTakingDamage = false;
-        regenCoroutine = null;
-    }
 
     protected bool isPlayerTarget()
     {

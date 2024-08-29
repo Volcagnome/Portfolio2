@@ -10,7 +10,7 @@ public class TitanPost : MonoBehaviour
 
     private void Start()
     {
-        EnemyManager.instance.titanPosts_List.Add(gameObject);
+       
     }
 
 
@@ -20,8 +20,6 @@ public class TitanPost : MonoBehaviour
         if (eliteRobot.gameObject.GetComponentInParent<SharedEnemyAI>().GetEnemyType() == SharedEnemyAI.enemyType.Titan
             && eliteRobot.GetComponent<SharedEnemyAI>().GetDefaultPost() == this)
         {
-            Debug.Log("Test");
-
             eliteRobot.gameObject.transform.rotation = gameObject.transform.rotation;
         }
     }

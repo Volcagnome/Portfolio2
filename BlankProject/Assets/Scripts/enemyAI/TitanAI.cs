@@ -16,9 +16,9 @@ public class TitanAI : SharedEnemyAI, IDamage
     {
         if (defaultPost == null)
         {
-            if (Vector3.Distance(transform.position, LevelManager.instance.GetReinforcementSpawner().transform.position) < 0.5f)
-                defaultPost = LevelManager.instance.GetReinforcementSpawner();
-            else
+            //if (Vector3.Distance(transform.position, LevelManager.instance.GetReinforcementSpawner().transform.position) < 0.5f)
+            //    defaultPost = LevelManager.instance.GetReinforcementSpawner();
+            //else
                 EnemyManager.instance.AssignTitanPost(gameObject);
         }
         else if (defaultPost.GetComponent<TitanPost>())

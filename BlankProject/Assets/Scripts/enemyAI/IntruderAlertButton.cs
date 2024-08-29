@@ -5,7 +5,7 @@ using UnityEngine;
 public class IntruderAlertButton : MonoBehaviour
 {
 
-
+    GameObject button;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +22,8 @@ public class IntruderAlertButton : MonoBehaviour
         {
 
             LevelManager.instance.IntruderAlert(other.GetComponent<SharedEnemyAI>().GetLastKnownPlayerLocation());
+            button.transform.GetChild(0).gameObject.SetActive(false);
+            button.transform.GetChild(1).gameObject.SetActive(true) ;
         }
         else
             return;
