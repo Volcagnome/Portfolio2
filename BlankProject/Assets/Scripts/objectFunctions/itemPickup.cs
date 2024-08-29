@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class itemPickup : MonoBehaviour, IPickup
@@ -12,8 +13,8 @@ public class itemPickup : MonoBehaviour, IPickup
 
     void Start()
     {
-        displayedItem.GetComponent<MeshRenderer>().sharedMaterial = item.itemModel.GetComponent<MeshRenderer>().sharedMaterial;
-        displayedItem.GetComponent<MeshFilter>().sharedMesh = item.itemModel.GetComponent<MeshFilter>().sharedMesh;
+        //displayedItem.GetComponent<MeshRenderer>().sharedMaterial = item.itemModel.GetComponent<MeshRenderer>().sharedMaterial;
+        //displayedItem.GetComponent<MeshFilter>().sharedMesh = item.itemModel.GetComponent<MeshFilter>().sharedMesh;
     }
 
     // Update is called once per frame
@@ -33,6 +34,8 @@ public class itemPickup : MonoBehaviour, IPickup
 
     public void pickup(Collider other)
     {
+        string pickupMessage = "";
+
         if (grabbableByEnemy && other.gameObject.CompareTag("Enemy"))
         {
             switch (item.type)
@@ -54,7 +57,6 @@ public class itemPickup : MonoBehaviour, IPickup
                 break;
             }
             }
-
             
         }
         else if (grabbableByPlayer && other.gameObject.CompareTag("Player"))
@@ -65,12 +67,14 @@ public class itemPickup : MonoBehaviour, IPickup
             {
                 GameManager.instance.player.GetComponent<playerDamage>().addWeapon(item);
                 displayedItem.SetActive(false);
+                pickupMessage = "Dam: " + item.shootDamage.ToString() + " Rate: " + item.shootRate;
                 break;
             }
                 case (pickupStats.pickupType.health):
             {
                 GameManager.instance.player.GetComponent<playerDamage>().setMaxHP(GameManager.instance.player.GetComponent<playerDamage>().getMaxHP() + item.nonWeaponStat);
                 displayedItem.SetActive(false);
+                        pickupMessage = "Health +" + item.nonWeaponStat;
                 break;
             }
                 case (pickupStats.pickupType.stamina):
@@ -78,6 +82,7 @@ public class itemPickup : MonoBehaviour, IPickup
                 GameManager.instance.player.GetComponent<playerMovement>().setMaxStamina(item.nonWeaponStat + GameManager.instance.player.GetComponent<playerMovement>().getMaxStamina());
                 GameManager.instance.player.GetComponent<playerMovement>().setStamina(GameManager.instance.player.GetComponent<playerMovement>().getMaxStamina());
                 displayedItem.SetActive(false);
+                pickupMessage = "Stamina +" + item.nonWeaponStat;
                 break;
             }
                 case (pickupStats.pickupType.damage):
@@ -90,6 +95,7 @@ public class itemPickup : MonoBehaviour, IPickup
             {
                 GameManager.instance.player.GetComponent<playerMovement>().setPlayerSpeed(GameManager.instance.player.GetComponent<playerMovement>().getPlayerSpeed() + item.nonWeaponStat);
                 displayedItem.SetActive(false);
+                pickupMessage = "Speed +" + item.nonWeaponStat;
                 break;
             }
                 case (pickupStats.pickupType.ammo): //For later when ammo is fully implemented
@@ -100,11 +106,20 @@ public class itemPickup : MonoBehaviour, IPickup
             {
                 GameManager.instance.player.GetComponent<playerDamage>().setAmmoMultiplier(GameManager.instance.player.GetComponent<playerDamage>().getAmmoMultiplier() + item.nonWeaponStat);
                 displayedItem.SetActive(false);
+
                 break;
             }
                 case (pickupStats.pickupType.commandCode):
                     displayedItem.SetActive(false);
                     GameManager.instance.PickedUpCommandCode();
+                    pickupMessage = GameManager.instance.GetCommandCodesCollected() + "/2 Command Codes collected";
+                    break;
+
+                case (pickupStats.pickupType.securityPassword):
+                    displayedItem.SetActive(false);
+                    GameManager.instance.SetSecurtyPasswordLevel1(item.passwordCombo);
+                    GameManager.instance.DisplayPasswords();
+                    pickupMessage = "Security Password Collected";
                     break;
 
                 default:
@@ -113,6 +128,9 @@ public class itemPickup : MonoBehaviour, IPickup
             }
             }
         }
-        
+
+        StartCoroutine(GameManager.instance.DisplayPickupMessage(pickupMessage));
     }
+
+    
 }

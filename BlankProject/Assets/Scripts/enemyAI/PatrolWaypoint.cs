@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PatrolWaypoint : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class PatrolWaypoint : MonoBehaviour
     {
         if (gameObject.tag == "Patrol Route Start")
         {
+                robotsAssignedToRoute.Remove(robotsAssignedToRoute[0]) ;
+ 
             EnemyManager.instance.patrolRoutes_List.Add(gameObject);
         }
     }
@@ -55,12 +58,9 @@ void Update()
         {
 
             patrolRobot.GetComponent<enemyAI>().SetCurrentDestination(nextWaypoint);
-            SendToNextWaypoint(patrolRobot.gameObject);
+            patrolRobot.GetComponent<NavMeshAgent>().SetDestination(nextWaypoint.transform.position);
         }
     }
 
-    private void SendToNextWaypoint(GameObject patrolRobot)
-    {
-        patrolRobot.GetComponent<patrolAI>().OnPatrol();
-    }
+  
 }

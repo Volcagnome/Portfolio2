@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +28,11 @@ public class GameManager : MonoBehaviour
     float seconds;
     string timeLeft;
 
+    [SerializeField] TMP_Text level_1_passwordDisplay;
+    [SerializeField] TMP_Text level_2_passwordDisplay;
+    [SerializeField] GameObject PickupMessageWindow;
+    [SerializeField] TMP_Text PickupMessage;
+
     [SerializeField] TMP_Text leverCountText;
     public Image staminaBar;
     public Image healthbar;
@@ -44,6 +52,8 @@ public class GameManager : MonoBehaviour
     int commandCodesCollected;
     int commandCodesEntered;
 
+    int securityPasswordLevel_1;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -53,6 +63,7 @@ public class GameManager : MonoBehaviour
         crouchScript = player.GetComponent<playerCrouch>();
         playerSpawn = GameObject.FindWithTag("Player Spawn");
         damageScript = GameManager.instance.GetComponent<playerDamage>();
+        securityPasswordLevel_1 = 0;
     }
 
     //Update is called once per frame
@@ -76,7 +87,6 @@ public class GameManager : MonoBehaviour
         {
             BeginCountdown();
         }
-     
     }
 
     public void statePause()
@@ -149,6 +159,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void DisplayPasswords()
+    {
+        if (securityPasswordLevel_1 != 0)
+        {
+            level_1_passwordDisplay.text = securityPasswordLevel_1.ToString();
+        }
+
+    }
+
     public int GetCommandCodesEntered() { return commandCodesEntered; }
 
     public int GetCommandCodesCollected() { return commandCodesCollected; }
@@ -158,4 +177,22 @@ public class GameManager : MonoBehaviour
     public bool GetSelfDestructActivated() { return selfDestructActivated; }
 
     public string GetTimeLeft() { return timeLeft; }
+
+
+    public int GetPasswordLevel1() { return securityPasswordLevel_1; }
+
+    public void SetSecurtyPasswordLevel1(int password) { securityPasswordLevel_1 = password; }
+
+    public IEnumerator DisplayPickupMessage(string message)
+    {
+        PickupMessage.text = message;
+
+        PickupMessageWindow.SetActive(true);
+
+        yield return new WaitForSeconds(3);
+
+        PickupMessageWindow.SetActive(false);
+
+        PickupMessage.text = "";
+    }
 }

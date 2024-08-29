@@ -163,25 +163,33 @@ public class EnemyManager : MonoBehaviour
 
     public void AssignPatrolPost(GameObject newRobot)
     {
-        AddRobotToPatrolCount();
+        Debug.Log(patrolRoutes_List.Count);
 
-        for (int index = 0; index < patrolRoutes_List.Count; index++)
+            AddRobotToPatrolCount();
+
+        if( patrolRoutes_List.Count>0)
         {
-            GameObject currentRoute = patrolRoutes_List[index];
-
-            int currentRobotsAssigned = currentRoute.GetComponent<PatrolWaypoint>().GetNumberRobotsOnThisRoute();
-
-            int maxAllowedRobotsAssigned = currentRoute.GetComponent<PatrolWaypoint>().GetMaxRobotsOnThisRoute();
+            for (int index = 0; index < patrolRoutes_List.Count; index++)
+            {
+                GameObject currentRoute = patrolRoutes_List[index];
 
 
-            if (currentRobotsAssigned < maxAllowedRobotsAssigned)
-            { 
+                int currentRobotsAssigned = currentRoute.GetComponent<PatrolWaypoint>().GetNumberRobotsOnThisRoute();
 
-                currentRoute.GetComponent<PatrolWaypoint>().AddRobotToRoute(newRobot);
-                newRobot.GetComponent<SharedEnemyAI>().SetDefaultPost(currentRoute);
-                newRobot.GetComponent<patrolAI>().SetCurrentDestination(currentRoute);
-                
-                break;
+        
+                int maxAllowedRobotsAssigned = currentRoute.GetComponent<PatrolWaypoint>().GetMaxRobotsOnThisRoute();
+
+
+
+                if (currentRobotsAssigned < maxAllowedRobotsAssigned)
+                {
+
+                    currentRoute.GetComponent<PatrolWaypoint>().AddRobotToRoute(newRobot);
+                    newRobot.GetComponent<SharedEnemyAI>().SetDefaultPost(currentRoute);
+                    newRobot.GetComponent<patrolAI>().SetCurrentDestination(currentRoute);
+
+                    break;
+                }
             }
         }
     }

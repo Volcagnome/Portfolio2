@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class patrolAI : enemyAI,IDamage
 {
-
+    [SerializeField] bool hasPost;
 
     bool isWhistleBlower;
 
@@ -14,14 +14,10 @@ public class patrolAI : enemyAI,IDamage
     {
         HPOrig = HP;
 
-
-
         if (defaultPost == null)
-        {
             EnemyManager.instance.AssignPatrolPost(gameObject);
-        }
         else
-        {   
+        {
             defaultPost.GetComponent<PatrolWaypoint>().AddRobotToRoute(gameObject);
             EnemyManager.instance.AddRobotToPatrolCount();
         }

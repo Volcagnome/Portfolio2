@@ -31,12 +31,6 @@ public class LevelManager : MonoBehaviour
     [SerializeField] int breachLevel_4_numTitans;
     [SerializeField] int breachLevel_5_numTitans;
 
-    [SerializeField] int breachLevel_1_numSpiders;
-    [SerializeField] int breachLevel_2_numSpiders;
-    [SerializeField] int breachLevel_3_numSpiders;
-    [SerializeField] int breachLevel_4_numSpiders;
-    [SerializeField] int breachLevel_5_numSpiders;
-
     int numGuardResponders;
     int numTitanResponders;
 
@@ -55,7 +49,7 @@ public class LevelManager : MonoBehaviour
 
 
     public List<GameObject> intruderAlertButtons;
-    public List<GameObject> responseTeam;
+    public List<GameObject> responseTeam ;
     public List<GameObject> spiderSpawners;
 
     bool intruderAlert;

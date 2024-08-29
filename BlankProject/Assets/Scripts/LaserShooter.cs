@@ -51,7 +51,6 @@ public class LaserShooter : MonoBehaviour, IDamage
         playerDir = GameManager.instance.player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
 
-        Debug.Log(angleToPlayer);
         Debug.DrawRay(headPos.position, playerDir);
 
         RaycastHit hit;
