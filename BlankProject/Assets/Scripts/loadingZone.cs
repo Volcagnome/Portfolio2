@@ -12,7 +12,7 @@ public class loadingZone : MonoBehaviour
 
     private void Start()
     {
-         if (currentSceneAddress != -1)currentSceneAddress = SceneManager.GetActiveScene().buildIndex;
+         if (currentSceneAddress == -1)currentSceneAddress = SceneManager.GetActiveScene().buildIndex;
     }
 
 
@@ -30,6 +30,8 @@ public class loadingZone : MonoBehaviour
     IEnumerator loadScene()
     {
         //Following along with an example from https://stackoverflow.com/questions/45798666/move-transfer-gameobject-to-another-scene
+        //Found another at https://stackoverflow.com/questions/44727881/how-to-use-scenemanager-unloadsceneasync
+
         //Some information was missing, notably about how to unload a scene
         AsyncOperation nextScene = SceneManager.LoadSceneAsync(nextSceneAddress, LoadSceneMode.Additive);
         nextScene.allowSceneActivation = false;
@@ -38,16 +40,17 @@ public class loadingZone : MonoBehaviour
 
         nextScene.allowSceneActivation = true;
 
+        while (!nextScene.isDone) yield return null;
         
+
         SceneManager.MoveGameObjectToScene(GameManager.instance.player, SceneManager.GetSceneByBuildIndex(nextSceneAddress));
         SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(nextSceneAddress));
 
-        //AsyncOperation lastScene = SceneManager.UnloadSceneAsync(currentSceneAddress, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
-        //lastScene.allowSceneActivation = false;
-        //while (lastScene.progress < .9F) yield return null;
-        //lastScene.allowSceneActivation = true;
+        AsyncOperation lastScene = SceneManager.UnloadSceneAsync(currentSceneAddress);
+        while (lastScene.progress < .9F) yield return null;
 
-        //SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(nextSceneAddress));
+
+        
         GameManager.instance.player.GetComponent<playerDamage>().spawnPlayer();
     }
 }
