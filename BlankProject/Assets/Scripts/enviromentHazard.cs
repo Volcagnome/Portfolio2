@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class enviromentHazard : MonoBehaviour
 {
-    [SerializeField] enum damageType { stationary, trap }
+    [SerializeField] enum damageType { stationary, trapSet3, trapSet2}
     [SerializeField] damageType type;
     [SerializeField] Rigidbody rb;
-    [SerializeField] GameObject itemOnState;
-    [SerializeField] GameObject itemOffState;
+    [SerializeField] GameObject itemOn1State;
+    [SerializeField] GameObject itemOn2State;
+    [SerializeField] GameObject itemOn3State;
+    [SerializeField] GameObject itemOff1State;
+    [SerializeField] GameObject itemOff2State;
+    [SerializeField] GameObject itemOff3State;
 
     [SerializeField] int damageAmount;
 
@@ -27,12 +31,17 @@ public class enviromentHazard : MonoBehaviour
             dmg.takeDamage(damageAmount);
 
         }
-        else if (dmg != null && other.gameObject.tag != "Enemy" && type == damageType.trap)
+        else if (dmg != null && other.gameObject.tag != "Enemy" && type == damageType.trapSet3)
         {
-            itemOnState.SetActive(true);
-            itemOffState.SetActive(false);
+            itemOn1State.SetActive(true);
+            itemOn2State.SetActive(true);
+            itemOn3State.SetActive(true);
+            itemOff1State.SetActive(false);
+            itemOff2State.SetActive(false);
+            itemOff3State.SetActive(false);
             dmg.takeDamage(damageAmount);
         }
+       
 
     }
 
