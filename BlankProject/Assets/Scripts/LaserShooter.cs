@@ -62,7 +62,7 @@ public class LaserShooter : MonoBehaviour, IDamage
 
                 if (!isShooting && angleToPlayer <= shootAngle)
                 {
-                    facePlayer();
+                    
                     StartCoroutine(shoot());
                 }
                 return true;
@@ -85,11 +85,7 @@ public class LaserShooter : MonoBehaviour, IDamage
     }
 
 
-    void facePlayer()
-    {
-        Quaternion rot = Quaternion.LookRotation(playerDir);
-        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * facePlayerSpeed);
-    }
+    
     
 
     IEnumerator flashRed()
