@@ -73,7 +73,7 @@ public class playerDamage : MonoBehaviour, IDamage
     {
         // Listen for shooting, interacting or flashlight:
 
-        if (Input.GetButton("Shoot") && !isShooting)
+        if (Input.GetButton("Shoot") && weapons.Count > 0 && !isShooting)
             StartCoroutine(shoot());
 
         if (Input.GetButtonDown("Interact"))
