@@ -201,17 +201,4 @@ public class GameManager : MonoBehaviour
     {
         playerSpawn = spawner;
     }
-
-    public IEnumerator DisplayPickupMessage(string message)
-    {
-        PickupMessage.text = message;
-
-        PickupMessageWindow.SetActive(true);
-
-        yield return new WaitForSeconds(3);
-
-        PickupMessageWindow.SetActive(false);
-
-        PickupMessage.text = "";
-    }
 }

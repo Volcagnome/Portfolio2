@@ -97,10 +97,5 @@ public class TitanAI : SharedEnemyAI, IDamage
         StartCoroutine(DespawnDeadRobot(gameObject));
     }
 
-    protected override void ChangeEmissionMaterial(Material material)
-    {
-        EmissionObject.transform.GetChild(0).GetComponent<MeshRenderer>().sharedMaterial = material;
-    }
-
     public float GetShieldDamageReduction() { return shieldDamageReduction; }
 }

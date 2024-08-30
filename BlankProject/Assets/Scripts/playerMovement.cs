@@ -74,7 +74,7 @@ public class playerMovement : MonoBehaviour
             // If not grounded, fall velocity increases
             playerVel.y -= gravity * Time.deltaTime;
         }
-
+        controller.enabled = true;
         move = Input.GetAxis("Vertical") * transform.forward +
                Input.GetAxis("Horizontal") * transform.right;
         controller.Move(move * speed * Time.deltaTime);

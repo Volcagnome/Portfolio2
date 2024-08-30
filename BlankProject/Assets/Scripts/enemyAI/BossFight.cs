@@ -32,8 +32,7 @@ public class BossFight : MonoBehaviour
     bool bossFightBegin = false;
     bool spawnedStage2Reinforcements;
     bool spawnedStage3Reinforcements;
-    bool bossDead;
-    bool mainframeDoorClosed;
+ 
 
 
     // Start is called before the first frame update
@@ -45,7 +44,7 @@ public class BossFight : MonoBehaviour
 
         MainFrameDoor.transform.GetChild(1).gameObject.SetActive(false);
         MainFrameDoor.transform.GetChild(2).gameObject.SetActive(true);
-        mainframeDoorClosed = false;
+   
 
     }
 
@@ -67,7 +66,6 @@ public class BossFight : MonoBehaviour
         }
         else if (boss.GetComponent<bossAI>().GetIsDead())
         {
-            bossDead = true;
 
             CommandcodeBoss.SetActive(true);
             CommandcodeBossPlatform.SetActive(true);
@@ -103,7 +101,7 @@ public class BossFight : MonoBehaviour
             boss.GetEnemyHealthBar().SetActive(true);
 
             MainFrameDoor.transform.GetChild(1).gameObject.SetActive(true);
-            mainframeDoorClosed = true;
+ 
         }
     }
 

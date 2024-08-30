@@ -62,10 +62,7 @@ public class SharedEnemyAI : MonoBehaviour
 
     //[SerializeField] Transform headTopPos;
     [SerializeField] protected GameObject ammoType;
-    [SerializeField] protected GameObject EmissionObject;
-    [SerializeField] Material emissionCombat;
-    [SerializeField] Material emissionAlerted;
-    [SerializeField] Material emissionIdle;
+   
 
     //CurrentStatus
     protected bool isRespondingToAlert;
@@ -100,13 +97,13 @@ public class SharedEnemyAI : MonoBehaviour
         if (!isDead)
         {
 
-            //if (LevelManager.instance.GetIsBossFight())
-            //{
-            //    isAlerted = true;
-            //    agent.speed = combatSpeed;
-            //    agent.stoppingDistance = combatStoppingDistance;
-            //    agent.SetDestination(GameManager.instance.player.transform.position);
-            //}
+            if (LevelManager.instance.GetIsBossFight())
+            {
+                isAlerted = true;
+                agent.speed = combatSpeed;
+                agent.stoppingDistance = combatStoppingDistance;
+                agent.SetDestination(GameManager.instance.player.transform.position);
+            }
 
             if (playerInView)
             {
@@ -124,10 +121,10 @@ public class SharedEnemyAI : MonoBehaviour
             if (isAlerted)
             {
                                                                              
-                if (!playerInView && !playerInRange && !isRespondingToAlert) //&& !LevelManager.instance.GetIsBossFight())
+                if (!playerInView && !playerInRange && !isRespondingToAlert && !LevelManager.instance.GetIsBossFight())
                 {
                     PursuePlayerCoroutine = StartCoroutine(PursuePlayer());
-                    ChangeEmissionMaterial(emissionAlerted);
+        
                 }
 
                 else if (playerInRange)
@@ -139,10 +136,10 @@ public class SharedEnemyAI : MonoBehaviour
                     agent.SetDestination(GameManager.instance.player.transform.position);
             }
                                 
-            else if (!onDuty && defaultPost !=null)// && !LevelManager.instance.GetIsBossFight())
+            else if (!onDuty && defaultPost !=null && !LevelManager.instance.GetIsBossFight())
             {
                 ReturnToPost();
-                ChangeEmissionMaterial(emissionIdle);
+
             }
 
 
@@ -236,10 +233,6 @@ public class SharedEnemyAI : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, rotationToPlayer, Time.deltaTime * rotationSpeed);  
     }
 
-    protected virtual void ChangeEmissionMaterial(Material material)
-    {
-        EmissionObject.GetComponent<MeshRenderer>().sharedMaterial = material;
-    }
 
     protected IEnumerator flashRed()
     {
@@ -307,7 +300,6 @@ public class SharedEnemyAI : MonoBehaviour
     {
         lastKnownPlayerLocation = GameManager.instance.player.transform.position;
 
-        ChangeEmissionMaterial(emissionCombat);
 
         agent.SetDestination(GameManager.instance.player.transform.position);
         agent.stoppingDistance = combatStoppingDistance;

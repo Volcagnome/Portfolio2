@@ -132,12 +132,6 @@ public class ArachnoidAI : SharedEnemyAI,IDamage
             return;
     }
 
-    protected override void ChangeEmissionMaterial(Material material)
-    {
-        EmissionObject.transform.GetChild(0).GetComponent<MeshRenderer>().sharedMaterial = material;
-        EmissionObject.transform.GetChild(1).GetComponent<MeshRenderer>().sharedMaterial = material;
-        EmissionObject.transform.GetChild(2).GetComponent<MeshRenderer>().sharedMaterial = material;
-        EmissionObject.transform.GetChild(3).GetComponent<MeshRenderer>().sharedMaterial = material;
-    }
+
 
 }

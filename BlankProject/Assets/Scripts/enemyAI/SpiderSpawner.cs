@@ -15,7 +15,7 @@ public class SpiderSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //LevelManager.instance.AddSpiderSpawnerToList(gameObject);
+   
         readyToSpawn = true;
     }
 
