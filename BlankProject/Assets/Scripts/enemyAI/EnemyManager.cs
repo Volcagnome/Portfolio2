@@ -4,8 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Lumin;
-using static enemyAI;
-
 
 public class EnemyManager : MonoBehaviour
 {
@@ -14,9 +12,11 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] float fabricatorSpawnInterval;
     [SerializeField] float minimumTimeBetweenSpawnAttempts;
 
+
     private int NumCurrentGuardRobots;
     private int NumCurrentPatrolRobots;
     private int NumCurrentTitanRobots;
+
     private int NumCurrentTotalRobots;
 
     public List<GameObject> robotFabricators_List;
@@ -97,27 +97,6 @@ public class EnemyManager : MonoBehaviour
 
     }
 
-    //public void AssignRole(GameObject newRobot)
-    //{
-    //    if (newRobot.GetComponent<enemyAI>().GetBehavior() == SharedEnemyAI.behaviorType.guard)
-    //    {
-    //        AddRobotToGuardCount();
-    //        guardRoster.Add(newRobot);
-    //    }
-    //    else if (newRobot.GetComponent<enemyAI>().GetBehavior() == SharedEnemyAI.behaviorType.patrol)
-    //        AddRobotToPatrolCount();
-
-    //    else if (guardPosts_List.Count - NumCurrentGuardRobots < CalculateMaxAllowedPatrolRobots() - NumCurrentPatrolRobots)
-    //    {
-    //        AssignPatrolPost(newRobot);
-    //    }
-
-    //    else
-    //        AssignGuardPost(newRobot);
-
-    //    newRobot.GetComponent<enemyAI>().SetEnemyStats();
-    //}
-
     public void AssignGuardPost(GameObject newRobot)
     {
         AddRobotToGuardCount();
@@ -130,12 +109,11 @@ public class EnemyManager : MonoBehaviour
 
             if (!currentGuardPost.GetComponent<GuardPost>().CheckIfOccupied())
             { 
-                newRobot.GetComponent<enemyAI>().SetDefaultPost(currentGuardPost);
+                newRobot.GetComponent<SharedEnemyAI>().SetDefaultPost(currentGuardPost);
                 currentGuardPost.GetComponent<GuardPost>().AssignGuard(newRobot);
                 currentGuardPost.GetComponent<GuardPost>().SetIsOccupied(true);
                 break;
             }
-            
         }
     }
 
@@ -151,56 +129,54 @@ public class EnemyManager : MonoBehaviour
 
             if (!currentTitanPost.GetComponent<TitanPost>().CheckIfOccupied())
             {
-                newRobot.GetComponent<enemyAI>().SetDefaultPost(currentTitanPost);
+                newRobot.GetComponent<SharedEnemyAI>().SetDefaultPost(currentTitanPost);
                 currentTitanPost.GetComponent<TitanPost>().AssignTitan(newRobot);
                 currentTitanPost.GetComponent<TitanPost>().SetIsOccupied(true);
                 break;
             }
-
         }
     }
 
     public void AssignPatrolPost(GameObject newRobot)
-    {
-        AddRobotToPatrolCount();
+    { 
 
-        for (int index = 0; index < patrolRoutes_List.Count; index++)
-        {
-            GameObject currentRoute = patrolRoutes_List[index];
+            for (int index = 0; index < patrolRoutes_List.Count; index++)
+            {
+                GameObject currentRoute = patrolRoutes_List[index];
 
-            int currentRobotsAssigned = currentRoute.GetComponent<PatrolWaypoint>().GetNumberRobotsOnThisRoute();
+                int currentRobotsAssigned = currentRoute.GetComponent<PatrolWaypoint>().GetNumberRobotsOnThisRoute();
 
-            int maxAllowedRobotsAssigned = currentRoute.GetComponent<PatrolWaypoint>().GetMaxRobotsOnThisRoute();
+                int maxAllowedRobotsAssigned = currentRoute.GetComponent<PatrolWaypoint>().GetMaxRobotsOnThisRoute();
 
+                if (currentRobotsAssigned < maxAllowedRobotsAssigned)
+                {
 
-            if (currentRobotsAssigned < maxAllowedRobotsAssigned)
-            { 
-
-                currentRoute.GetComponent<PatrolWaypoint>().AddRobotToRoute(newRobot);
-                newRobot.GetComponent<SharedEnemyAI>().SetDefaultPost(currentRoute);
-                newRobot.GetComponent<patrolAI>().SetCurrentDestination(currentRoute);
-                
-                break;
+                    currentRoute.GetComponent<PatrolWaypoint>().AddRobotToRoute(newRobot);
+                    newRobot.GetComponent<SharedEnemyAI>().SetDefaultPost(currentRoute);
+                    newRobot.GetComponent<patrolAI>().SetCurrentDestination(currentRoute);
+                    newRobot.GetComponent<NavMeshAgent>().destination = currentRoute.transform.position;
+                    break;
+                }
             }
-        }
+        
     }
 
     public void RemoveDeadGuard(GameObject deadGuard)
     {
-        NumCurrentTotalRobots--;
         NumCurrentGuardRobots--;
+        NumCurrentTotalRobots = GetCurrentNumberRobots();
     }
 
     public void RemoveDeadPatrol(GameObject deadPatrol)
     {
         NumCurrentPatrolRobots--;
-        NumCurrentTotalRobots--;
+        NumCurrentTotalRobots = GetCurrentNumberRobots();
     }
 
     public void RemoveDeadTitan(GameObject deadTitan)
     {
         NumCurrentTitanRobots--;
-        NumCurrentTotalRobots--;
+        NumCurrentTotalRobots = GetCurrentNumberRobots();
     }
 
     IEnumerator CalculateMaxAllowedRobots()
@@ -215,16 +191,20 @@ public class EnemyManager : MonoBehaviour
     {
         int tempCount = 0;
 
-        patrolRoutes_List.ForEach(route =>
-        {
-            tempCount = tempCount + route.GetComponent<PatrolWaypoint>().GetMaxRobotsOnThisRoute();
-        });
+
+        if (patrolRoutes_List.Count != 0){
+           for(int index = 0; index < patrolRoutes_List.Count; index++) 
+
+                tempCount = tempCount + patrolRoutes_List[index].GetComponent<PatrolWaypoint>().GetMaxRobotsOnThisRoute();
+            
+        }
 
         return tempCount;
     }
 
     public int GetCurrentNumberRobots()
     {
+        NumCurrentTotalRobots = NumCurrentGuardRobots + NumCurrentPatrolRobots + NumCurrentTitanRobots;
         return NumCurrentTotalRobots;
     }
 
@@ -236,19 +216,20 @@ public class EnemyManager : MonoBehaviour
     public void AddRobotToGuardCount()
     {
         NumCurrentGuardRobots++;
-        NumCurrentTotalRobots++;
+        NumCurrentTotalRobots = GetCurrentNumberRobots();
+
     }
 
     public void AddRobotToPatrolCount()
     {
         NumCurrentPatrolRobots++;
-        NumCurrentTotalRobots++;
+        NumCurrentTotalRobots = GetCurrentNumberRobots();
     }
 
     public void AddRobotToTitanCount()
     {
         NumCurrentTitanRobots++;
-        NumCurrentTotalRobots++;
+        NumCurrentTotalRobots = GetCurrentNumberRobots();
     }
 
     public void AddNewPatrolRoute(GameObject routeStart) { patrolRoutes_List.Add(routeStart); }

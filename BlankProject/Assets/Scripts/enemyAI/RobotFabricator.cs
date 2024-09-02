@@ -31,7 +31,6 @@ public class RobotFabricator : MonoBehaviour
         fabricatorDoorLight.GetComponent<Light>().enabled = false;
         doorClosedPosition = fabricatorDoor.transform.localPosition;
         doorOpenPosition = new Vector3(doorClosedPosition.x, doorClosedPosition.y + 3.8f, doorClosedPosition.z);
-        EnemyManager.instance.robotFabricators_List.Add(gameObject);
     }
 
     // Update is called once per frame
@@ -99,24 +98,6 @@ public class RobotFabricator : MonoBehaviour
 
         isReadyToSpawn = true;
     }
-
-    //IEnumerator SpawnRobot()
-    //{
-    //    while (spawningRobot)
-    //    {
-    //        if (EnemyManager.instance.GetCurrentNumberRobots() < EnemyManager.instance.GetMaxAllowedRobots())
-    //        {
-    //            spawningRobot = true;
-
-    //            if (doorOpen)
-    //            {
-    //                SpawnEnemy();
-    //            }
-    //        }
-
-    //        yield return new WaitForSeconds(EnemyManager.instance.EnemySpawnInterval);
-    //    }
-    //}
 
     private void OnTriggerExit(Collider newRobot)
     {

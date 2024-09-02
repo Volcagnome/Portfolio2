@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TitanAI : enemyAI, IDamage
+public class TitanAI : SharedEnemyAI, IDamage
 {
     [SerializeField] Collider shieldBashCollider;
     [SerializeField] int minTimeBetweenBashes;
@@ -16,9 +16,9 @@ public class TitanAI : enemyAI, IDamage
     {
         if (defaultPost == null)
         {
-            if (Vector3.Distance(transform.position, LevelManager.instance.GetReinforcementSpawner().transform.position) < 0.5f)
-                defaultPost = LevelManager.instance.GetReinforcementSpawner();
-            else
+            //if (Vector3.Distance(transform.position, LevelManager.instance.GetReinforcementSpawner().transform.position) < 0.5f)
+            //    defaultPost = LevelManager.instance.GetReinforcementSpawner();
+            //else
                 EnemyManager.instance.AssignTitanPost(gameObject);
         }
         else if (defaultPost.GetComponent<TitanPost>())
@@ -37,12 +37,11 @@ public class TitanAI : enemyAI, IDamage
 
     protected override void FoundPlayer()
     {
-        Debug.Log("Found Player");
 
         agent.SetDestination(GameManager.instance.player.transform.position);
         agent.stoppingDistance = combatStoppingDistance;
 
-        weapon.transform.LookAt(GameManager.instance.player.transform.position + new Vector3(0, -90f, 0)) ;
+        weapon_R.transform.LookAt(GameManager.instance.player.transform.position + new Vector3(0, -90f, 0)) ;
 
         if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) > 5f &&!isShooting)
         {
@@ -89,6 +88,7 @@ public class TitanAI : enemyAI, IDamage
         {
             EnemyManager.instance.RemoveDeadTitan(gameObject);
             defaultPost.GetComponent<TitanPost>().SetIsOccupied(false);
+            EnemyManager.instance.RemoveTitanFromRoster(gameObject);
         }
 
         if (LevelManager.instance.responseTeam.Contains(gameObject))

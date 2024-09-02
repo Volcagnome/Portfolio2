@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PatrolWaypoint : MonoBehaviour
 {
@@ -11,10 +12,7 @@ public class PatrolWaypoint : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (gameObject.tag == "Patrol Route Start")
-        {
-            EnemyManager.instance.patrolRoutes_List.Add(gameObject);
-        }
+
     }
 
 // Update is called once per frame
@@ -47,20 +45,15 @@ void Update()
 
 
     private void OnTriggerEnter(Collider patrolRobot)
-    {
-
-        if (patrolRobot.CompareTag("Enemy")
-            && patrolRobot.GetComponent<SharedEnemyAI>().GetCurrentDestination() == gameObject
-            && patrolRobot.GetComponent<enemyAI>().CheckIfOnDuty() == true)
+    { 
+        if (patrolRobot.gameObject.GetComponent<SharedEnemyAI>().GetCurrentDestination() == gameObject
+            && patrolRobot.gameObject.GetComponent<SharedEnemyAI>().CheckIfOnDuty() == true)
         {
 
-            patrolRobot.GetComponent<enemyAI>().SetCurrentDestination(nextWaypoint);
-            SendToNextWaypoint(patrolRobot.gameObject);
+            patrolRobot.gameObject.GetComponent<SharedEnemyAI>().SetCurrentDestination(nextWaypoint);
+            patrolRobot.gameObject.GetComponent<NavMeshAgent>().SetDestination(nextWaypoint.transform.position);
         }
     }
 
-    private void SendToNextWaypoint(GameObject patrolRobot)
-    {
-        patrolRobot.GetComponent<patrolAI>().OnPatrol();
-    }
+  
 }

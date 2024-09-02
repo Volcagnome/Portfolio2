@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class damage : MonoBehaviour
 {
     [SerializeField] enum damageType {bullet, web, stationary, shield}
     [SerializeField] damageType type;
-    [SerializeField] Rigidbody rb;
+    [SerializeField] protected Rigidbody rb;
 
 
-    [SerializeField] int damageAmount;
-    [SerializeField] int speed;
-    [SerializeField] int destroyTime;
+    [SerializeField] protected float damageAmount;
+    [SerializeField] protected int speed;
+    [SerializeField] protected int destroyTime;
     private GameObject source;
 
 
@@ -29,15 +30,16 @@ public class damage : MonoBehaviour
     {
         IDamage dmg = other.GetComponent<IDamage>();
 
-        if (other.isTrigger || other.gameObject.tag == "Enemy")
-        {
+        if (other.isTrigger || other.gameObject == gameObject.transform.root.gameObject
+            || other.gameObject.CompareTag("Enemy"))
             return;
-        } 
-        else if (dmg != null && other.gameObject.tag == "Player")
+
+        else if(dmg != null && other.gameObject.tag == "Player")
         {
             dmg.takeDamage(damageAmount);
-            Destroy(gameObject);
-        }else
-            Destroy(gameObject);
+
+            if(type == damageType.bullet)
+                Destroy(gameObject);
+        }
     }
 }

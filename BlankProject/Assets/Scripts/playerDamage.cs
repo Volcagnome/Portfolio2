@@ -164,7 +164,7 @@ public class playerDamage : MonoBehaviour, IDamage
         return false;
     }
 
-    public void takeDamage(int amount)
+    public void takeDamage(float amount)
     {
         HP -= amount;
         isTakingDamage = true;
@@ -203,7 +203,7 @@ public class playerDamage : MonoBehaviour, IDamage
         regenCoroutine = null;
     }
 
-    public void criticalHit(int amount)
+    public void criticalHit(float amount)
     {
 
     }
@@ -226,7 +226,7 @@ public class playerDamage : MonoBehaviour, IDamage
 
 
    // *** HUD METHODS *** //
-    void adjustHPBar()
+    public void adjustHPBar()
     {
         GameManager.instance.healthbar.fillAmount = HP / hpOG;
     }

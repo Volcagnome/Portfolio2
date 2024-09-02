@@ -45,12 +45,12 @@ public class securityCamera : MonoBehaviour, IDamage, IToggle
         isActive = state;
     }
 
-    public void takeDamage(int dmg)
+    public void takeDamage(float dmg)
     {
         if (cameraHead != null) Destroy(cameraHead);
         playerInView = false;
     }
-    public void criticalHit(int dmg)
+    public void criticalHit(float dmg)
     {
         takeDamage(dmg);
     }

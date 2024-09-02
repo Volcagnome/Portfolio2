@@ -6,7 +6,6 @@ using UnityEditor.DeviceSimulation;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
-using static enemyAI;
 
 
 
@@ -14,28 +13,38 @@ public class bossAI : SharedEnemyAI, IDamage
 {
 
     //Body Objects
-    [SerializeField] GameObject body;
-    [SerializeField] GameObject lowerBody;
-    [SerializeField] GameObject bigCannon_L;
-    [SerializeField] GameObject bigCannon_R;
-    [SerializeField] GameObject bigCannon_L2;
-    [SerializeField] GameObject bigCannon_R2;
+    [SerializeField] GameObject FlameThrower_L;
+    [SerializeField] GameObject FlameThrower_R;
+    [SerializeField] GameObject MainTurret_L;
+    [SerializeField] GameObject MainTurret_R;
+    [SerializeField] GameObject RocketTurret_L;
+    [SerializeField] GameObject RocketTurret_R;
+    [SerializeField] GameObject TurretCycler_L;
+    [SerializeField] GameObject TurretCycler_R;
+    [SerializeField] GameObject weapon_L;
+    [SerializeField] GameObject ShieldIndicator;
+   
+
+    [SerializeField] GameObject FlamethrowerAmmo;
+    [SerializeField] GameObject MainTurretAmmo;
+    [SerializeField] GameObject RocketAmmo;
+  
+
+    [SerializeField] ParticleSystem deathExplosion;
+    [SerializeField] Transform deathSparks2;
+    [SerializeField] Transform deathSparks3;
+
 
     //Basic Stats
     [SerializeField] float speed;
 
-    bool isFighting;
-
     //Combat
-    [SerializeField] Transform bigCannonShootPos_L;
-    [SerializeField] Transform bigCannonShootPos_R;
-    [SerializeField] GameObject mainCannonAmmo;
-    [SerializeField] int trampleDamage;
-    [SerializeField] int minTimeBetweenTrampleAttempts;
-    Vector3 trampleDestination;
+    Quaternion[] turretRotations = {Quaternion.Euler(364.432f, 0.519f, 89.696f), Quaternion.Euler(433.059f, 178.225f, 267.958f), Quaternion.Euler(310.793f, 179.208f, 270.255f) };
+    int currentRotationIndex;
+
+
     float distanceToPlayer;
-    bool isCharging;
-    bool readyToCharge;
+
 
     //Player detection
     [SerializeField] float maxTiltAngle;
@@ -44,13 +53,15 @@ public class bossAI : SharedEnemyAI, IDamage
     // Start is called before the first frame update
     void Start()
     {
-        isCharging = false;
-        readyToCharge = true;
+        HPOrig = HP;
+        colorOrig = gameObject.GetComponentInChildren<Renderer>().sharedMaterial.color;
     }
 
     // Update is called once per frame
     void Update()
     {
+        distanceToPlayer = Vector3.Distance(transform.position, GameManager.instance.player.transform.position);
+
 
         anim.SetFloat("Speed", agent.velocity.magnitude);
 
@@ -62,177 +73,179 @@ public class bossAI : SharedEnemyAI, IDamage
 
         if (isAlerted)
         {
-            if (!playerInView && !playerInRange)
+            if (distanceToPlayer > 25f)
             {
                 agent.stoppingDistance = idleStoppingDistance;
                 StartCoroutine(PursuePlayer());
             }
-            else if (playerInRange)
+            else if (distanceToPlayer < 25f)
             {
+                agent.stoppingDistance = combatStoppingDistance;
+
                 playerDirection = GameManager.instance.player.transform.position - transform.position;
 
-
                 RotateToPlayer();
-                LookAtPlayer();
-
 
                 if (!playerInView)
                     agent.SetDestination(GameManager.instance.player.transform.position);
 
             }
-
-            if (isCharging)
-                FinishCharging();
-
         }
-        else if (!onDuty)
-            ReturnToPost();
+
+        if (isPlayerTarget())
+            UpdateEnemyUI();
+
 
     }
-
-
-    private void Attack()
-    {
-        distanceToPlayer = Vector3.Distance(transform.position, GameManager.instance.player.transform.position);
-
-        if (playerInView && distanceToPlayer >= 10f)
-        {
-            agent.stoppingDistance = combatStoppingDistance;
-            AimCannons(bigCannon_L);
-            AimCannons(bigCannon_R);
-            AimCannons(bigCannon_L2);
-            AimCannons(bigCannon_R2);
-
-            if (!isShooting)
-                StartCoroutine(FireMainCannons1());
-        }
-        //else if (distanceToPlayer < 10f && !isCharging)
-        //    Charge();
-    }
+      
 
     protected override void FoundPlayer()
     {
-        Attack();
-    }
-
-    public void LookAtPlayer()
-    {
-
-        if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) >= 5f)
+        if (distanceToPlayer < 20f)
         {
-            Vector3 playerLookDirection = GameManager.instance.player.transform.position - body.transform.position;
+            SelectWeapon(FlameThrower_L, FlameThrower_R, 0);
+            CycleTurrets();
+            shootRate = 0.05f;
+        }
+        else if (distanceToPlayer > 20f && distanceToPlayer < 30f)
+        {
+            SelectWeapon(MainTurret_L, MainTurret_R, 1);
+            CycleTurrets();
+            shootRate = 0.75f;
+        }
 
-            bodyTiltToPlayer = Quaternion.LookRotation(playerLookDirection, body.transform.up);
+        else if (distanceToPlayer > 40f)
+        {
+            SelectWeapon(RocketTurret_L, RocketTurret_R, 2);
+            CycleTurrets();
+            shootRate = 5f;
+        }
 
-            Vector3 eulerRotation = bodyTiltToPlayer.eulerAngles;
-            float pitch = eulerRotation.x;
-            float clampedPitch = Mathf.Clamp(pitch, -maxTiltAngle, maxTiltAngle);
-            Quaternion clampedRotation = Quaternion.Euler(clampedPitch, eulerRotation.y, eulerRotation.z);
+      
+        if (Quaternion.Angle(TurretCycler_L.transform.localRotation,turretRotations[currentRotationIndex]) <5f)
+        {
+            weapon_L.transform.LookAt(GameManager.instance.player.transform.position, transform.up);
+            weapon_R.transform.LookAt(GameManager.instance.player.transform.position, transform.up);
 
-            body.transform.rotation = Quaternion.Lerp(body.transform.rotation, clampedRotation, Time.deltaTime * rotationSpeed);
+            Attack();
         }
     }
 
-    private void AimCannons(GameObject cannon)
+
+    private void SelectWeapon(GameObject weaponL, GameObject weaponR, int index)
     {
-        Vector3 lookDirectionCannon = GameManager.instance.player.transform.position - cannon.transform.position;
-        Quaternion bigCannonRotation = Quaternion.LookRotation(lookDirectionCannon, cannon.transform.up);
+  
+        weapon_L = weaponL;
+        weapon_R = weaponR;
+        currentRotationIndex = index;
+    }
 
-        Vector3 eulerRotation = bigCannonRotation.eulerAngles;
-        float pitch = eulerRotation.x;
-        float clampedPitch = Mathf.Clamp(pitch, -maxTiltAngle, maxTiltAngle);
-        Quaternion clampedRotation = Quaternion.Euler(clampedPitch, eulerRotation.y, eulerRotation.z);
+    private void CycleTurrets()
+    {
+            TurretCycler_L.transform.localRotation = Quaternion.Lerp(TurretCycler_L.transform.localRotation, turretRotations[currentRotationIndex], Time.deltaTime * 2f);
+            TurretCycler_R.transform.localRotation = Quaternion.Lerp(TurretCycler_R.transform.localRotation, turretRotations[currentRotationIndex], Time.deltaTime * 2f);
+    }
 
-        cannon.transform.rotation = Quaternion.Lerp(cannon.transform.rotation, bigCannonRotation, Time.deltaTime * rotationSpeed);
+   
+
+    private void Attack()
+    {
+
+        if (weapon_L == FlameThrower_L && !isShooting)
+            StartCoroutine(FireFlamethrowers());
+        else if (weapon_L == MainTurret_L && !isShooting)
+            StartCoroutine(FireMainTurrets());
+        else if(weapon_L == RocketTurret_L && !isShooting)
+            StartCoroutine(FireRocketTurrets());
 
     }
 
-    IEnumerator FireMainCannons1()
+    IEnumerator FireFlamethrowers()
     {
-        Debug.Log("shoot");
-
         isShooting = true;
-        Instantiate(mainCannonAmmo, bigCannonShootPos_L.position, bigCannon_L.transform.rotation);
-        Instantiate(mainCannonAmmo, bigCannonShootPos_R.position, bigCannon_R.transform.rotation);
+
+        Instantiate(FlamethrowerAmmo, FlameThrower_L.transform.GetChild(0).transform.position, FlameThrower_L.transform.localRotation);
+        Instantiate(FlamethrowerAmmo, FlameThrower_R.transform.GetChild(0).transform.position, FlameThrower_R.transform.localRotation);
 
         yield return new WaitForSeconds(shootRate);
+
         isShooting = false;
     }
 
-    private void Charge()
+    IEnumerator FireMainTurrets()
     {
-        isCharging = true;
-        readyToCharge = false;
+        isShooting = true;
 
-        float stoppingDistOrig = agent.stoppingDistance;
+        Instantiate(MainTurretAmmo, MainTurret_L.transform.GetChild(0).transform.position, MainTurret_L.transform.localRotation);
+        Instantiate(MainTurretAmmo, MainTurret_L.transform.GetChild(1).transform.position, MainTurret_L.transform.localRotation);
 
-        agent.speed = 20;
-        agent.stoppingDistance = 0.2f;
+        Instantiate(MainTurretAmmo, MainTurret_R.transform.GetChild(0).transform.position, MainTurret_R.transform.localRotation);
+        Instantiate(MainTurretAmmo, MainTurret_R.transform.GetChild(1).transform.position, MainTurret_R.transform.localRotation);
 
-        trampleDestination = GameManager.instance.player.transform.position - transform.forward;
+        yield return new WaitForSeconds(shootRate);
 
-        agent.SetDestination(trampleDestination * 50);
-
+        isShooting = false;
     }
 
-    private void FinishCharging()
+    IEnumerator FireRocketTurrets()
     {
-        Debug.Log(Vector3.Distance(transform.position, trampleDestination));
+        isShooting = true;
 
-        if (Vector3.Distance(transform.position, trampleDestination) <= 1f)
-        {
-            RotateToPlayer();
+        Instantiate(RocketAmmo, RocketTurret_L.transform.GetChild(0).transform.position, RocketTurret_L.transform.localRotation );
+        Instantiate(RocketAmmo, RocketTurret_L.transform.GetChild(1).transform.position, RocketTurret_L.transform.localRotation);
 
-            agent.stoppingDistance = combatStoppingDistance;
-            agent.speed = speed;
-            isCharging = false;
-            Debug.Log("finished charging");
+        Instantiate(RocketAmmo, RocketTurret_R.transform.GetChild(0).transform.position, RocketTurret_R.transform.localRotation);
+        Instantiate(RocketAmmo, RocketTurret_R.transform.GetChild(1).transform.position, RocketTurret_R.transform.localRotation);
 
-            StartCoroutine(ChargeTimer());
-        }
+        yield return new WaitForSeconds(shootRate);
+
+        isShooting = false;
     }
 
-    IEnumerator ChargeTimer()
-    {
-        yield return new WaitForSeconds(minTimeBetweenTrampleAttempts);
-        readyToCharge = true;
-    }
-
-    public void takeDamage(int amount)
-    {
-        lastKnownPlayerLocation = GameManager.instance.player.transform.position;
-
-        HP -= amount;
-
-        AlertEnemy();
-        StartCoroutine(flashYellow());
-
-        if (HP <= 0)
-        {
-            Death();
-        }
-    }
 
     protected override void Death()
     {
         DeathShared();
 
+        agent.isStopped = true;
+
+        anim.SetBool("isDead", true);
+        playerInRange = false;
+        playerInView = false;
+        isAlerted = false;
+
+        GetComponent<bossAI>().enabled = false; 
+
+        enemyHPBar.SetActive(false);
+
+        Instantiate(DeathVFX, DeathFXPos.position, Quaternion.identity);
+
+        StartCoroutine(DeathSparks());
+
         StartCoroutine(DespawnDeadRobot(gameObject));
 
-        GetComponent<bossAI>().enabled = false;
     }
 
-    public void criticalHit(int amount)
+    IEnumerator DeathSparks()
     {
-        takeDamage(amount);
-        StartCoroutine(flashRed());
+
+        Instantiate(DeathVFX, deathSparks2.position, Quaternion.identity);
+        
+        yield return new WaitForSeconds(0.3f);
+        
+        Instantiate(DeathVFX, deathSparks3.position, Quaternion.identity);
+
+
+        yield return new WaitForSeconds(2.25f);
+
+        Instantiate(deathExplosion, DeathFXPos.position, Quaternion.identity);
+
+        anim.SetBool("Dead",true);
     }
 
-    public int GetTrampleDamage() { return trampleDamage; }
 
-
-    public bool GetIsFighting() { return isFighting; }  
-
+    public bool GetIsDead() { return isDead; }
+   
 }
 
 

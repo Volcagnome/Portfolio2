@@ -12,7 +12,6 @@ public class GuardPost : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EnemyManager.instance.guardPosts_List.Add(gameObject);
         
     }
 
@@ -41,8 +40,8 @@ public class GuardPost : MonoBehaviour
     {
 
         if (guardRobot.CompareTag("Enemy")
-            && guardRobot.GetComponent<enemyAI>().GetDefaultPost() == gameObject.GetComponent<GuardPost>().gameObject
-            && guardRobot.GetComponent<enemyAI>().CheckIfOnDuty() == true)
+            && guardRobot.GetComponent<SharedEnemyAI>().GetDefaultPost() == gameObject.GetComponent<GuardPost>().gameObject
+            && guardRobot.GetComponent<SharedEnemyAI>().CheckIfOnDuty() == true)
         {   
             guardRobot.gameObject.transform.rotation = gameObject.transform.rotation;
         }

@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 
 
-public class ArachnoidAI : enemyAI,IDamage
+public class ArachnoidAI : SharedEnemyAI,IDamage
 {
 
     [SerializeField] LineRenderer web;
@@ -54,8 +54,6 @@ public class ArachnoidAI : enemyAI,IDamage
         {
             UpdateEnemyUI();
 
-            if (!isTakingDamage)
-                RegenerateHealth();
         }
         else
             enemyHPBar.SetActive(false);
@@ -133,5 +131,7 @@ public class ArachnoidAI : enemyAI,IDamage
         else
             return;
     }
-   
+
+
+
 }

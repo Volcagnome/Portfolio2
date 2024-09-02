@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-public class patrolAI : enemyAI,IDamage
-{
 
+public class patrolAI : SharedEnemyAI,IDamage
+{
 
     bool isWhistleBlower;
 
@@ -14,17 +14,8 @@ public class patrolAI : enemyAI,IDamage
     {
         HPOrig = HP;
 
-
-
         if (defaultPost == null)
-        {
             EnemyManager.instance.AssignPatrolPost(gameObject);
-        }
-        else
-        {   
-            defaultPost.GetComponent<PatrolWaypoint>().AddRobotToRoute(gameObject);
-            EnemyManager.instance.AddRobotToPatrolCount();
-        }
 
         colorOrig = model.sharedMaterial.color;
     }
@@ -43,7 +34,8 @@ public class patrolAI : enemyAI,IDamage
                     AlertEnemy();
                     AlertAllies();
 
-                    if (!LevelManager.instance.GetIntruderAlert() && !LevelManager.instance.GetIsRaisingAlarm())
+                    if (!LevelManager.instance.GetIntruderAlert() && !LevelManager.instance.GetIsRaisingAlarm() 
+                        && LevelManager.instance.intruderAlertButtons.Count != 0)
                         RaiseAlarm();
 
                     else
@@ -68,24 +60,24 @@ public class patrolAI : enemyAI,IDamage
                             agent.SetDestination(GameManager.instance.player.transform.position);
                     }
                 }
-                else if (!onDuty)
+                else if (!onDuty && defaultPost != null)
                     ReturnToPost();
 
-            }
-            else if (LevelManager.instance.GetIntruderAlert())
-            {
-                isWhistleBlower = false;
-            }
 
-            if (isPlayerTarget())
-            {
-                UpdateEnemyUI();
+                else if (LevelManager.instance.GetIntruderAlert())
+                {
+                    isWhistleBlower = false;
+                }
 
-                if (!isTakingDamage)
-                    RegenerateHealth();
+                if (isPlayerTarget())
+                {
+                    UpdateEnemyUI();
+
+                  
+                }
+                else
+                    enemyHPBar.SetActive(false);
             }
-            else
-                enemyHPBar.SetActive(false);
         }
     }
 
@@ -95,15 +87,13 @@ public class patrolAI : enemyAI,IDamage
 
         EnemyManager.instance.RemoveDeadPatrol(gameObject);
         defaultPost.GetComponent<PatrolWaypoint>().RemoveRobotFromRoute(gameObject);
-        
+
         if (isWhistleBlower)
         {
             LevelManager.instance.WhistleBlowerKilled();
         }
 
         StartCoroutine(DespawnDeadRobot(gameObject));
-
-        GetComponent<patrolAI>().enabled = false;
     }
 
     public void OnPatrol()
@@ -115,15 +105,15 @@ public class patrolAI : enemyAI,IDamage
     {
         isWhistleBlower = true;
 
-        GameObject nearestButton = LevelManager.instance.SetIsRaisingAlarm(gameObject);
+            GameObject nearestButton = LevelManager.instance.SetIsRaisingAlarm(gameObject);
 
-        agent.stoppingDistance = 2f;
-        agent.SetDestination(nearestButton.transform.position);
+            agent.stoppingDistance = 2f;
+            agent.SetDestination(nearestButton.transform.position);
 
     }
 
     public bool GetIsWhistleBlower() { return isWhistleBlower; }
 
-    //public void SetIsWhistleBlower(bool status) { isWhistleBlower = false; }
+    public void SetIsWhistleBlower(bool status) { isWhistleBlower = false; }
 
 }
