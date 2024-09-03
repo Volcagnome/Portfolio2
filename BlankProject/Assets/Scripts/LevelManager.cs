@@ -7,7 +7,6 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEditor.FilePathAttribute;
 
 public class LevelManager : MonoBehaviour
 {
@@ -68,6 +67,7 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        isRaisingAlarm = false;
         instance = this;
         securityBreachLevel = 0;
         readyToIncrease = true;
@@ -132,6 +132,8 @@ public class LevelManager : MonoBehaviour
 
         AddToResponseTeam(numGuardResponders, EnemyManager.instance.GetCurrentNumberGuards());
         StartCoroutine(CallReinforcements(numTitanResponders, titanReinforcement));
+
+        whistleBlower.GetComponent<patrolAI>().SetIsWhistleBlower(false);
 
     }
 
@@ -279,6 +281,7 @@ public class LevelManager : MonoBehaviour
     public void WhistleBlowerKilled()
     {
         whistleBlower = null;
+        isRaisingAlarm = false;
         StartCoroutine(AlarmCooldown());
     }
 
@@ -294,9 +297,7 @@ public class LevelManager : MonoBehaviour
     public void CancelIntruderAlert()
     {
         intruderAlert = false;
-        Debug.Log("Response Team Size: " + responseTeam.Count);
-
-
+ 
         if (responseTeam.Count > 0)
             ReturnToRoster();
 

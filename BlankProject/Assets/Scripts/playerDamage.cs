@@ -100,7 +100,7 @@ public class playerDamage : MonoBehaviour, IDamage
         if (Physics.Raycast(Camera.main.transform.position,
             Camera.main.transform.forward, out hit, shootDist, ~ignoreMask))
         {
-            Debug.Log(hit.collider.name);
+        
             IDamage dmg = hit.collider.gameObject.GetComponentInParent<IDamage>();
 
             if (dmg != null)

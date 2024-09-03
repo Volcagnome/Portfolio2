@@ -106,7 +106,7 @@ public class playerControl : MonoBehaviour, IDamage
         if (Physics.Raycast(Camera.main.transform.position,
             Camera.main.transform.forward, out hit, shootDist, ~ignoreMask))
         {
-            Debug.Log(hit.collider.name);
+       
             IDamage dmg = hit.collider.gameObject.GetComponentInParent<IDamage>();
 
             if (dmg != null)
@@ -134,7 +134,7 @@ public class playerControl : MonoBehaviour, IDamage
         if (Physics.Raycast(Camera.main.transform.position,
             Camera.main.transform.forward, out hit, interactDist, ~ignoreMask))
         {
-            Debug.Log(hit.collider.name);
+         
             IInteract interactWith = hit.collider.GetComponent<IInteract>();
 
             if (interactWith != null)

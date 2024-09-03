@@ -18,7 +18,6 @@ public class EnemyDoorOpener : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("test");
 
         if (other.gameObject.GetComponent<SharedEnemyAI>() != null)
         {

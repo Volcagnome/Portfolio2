@@ -283,8 +283,11 @@ public class SharedEnemyAI : MonoBehaviour
         {
             foreach (Collider ally in alliesInRange)
             {
+                if (ally.GetComponent<SharedEnemyAI>().GetIsDead() == false)
+                {
                     ally.gameObject.GetComponent<SharedEnemyAI>().lastKnownPlayerLocation = lastKnownPlayerLocation;
                     ally.gameObject.GetComponent<SharedEnemyAI>().AlertEnemy();
+                }
             }
         }
     }
@@ -361,13 +364,14 @@ public class SharedEnemyAI : MonoBehaviour
 
     protected void DeathShared()
     {
+        isDead = true;
         agent.isStopped = true;
 
-        Debug.Log("he dead");
         anim.SetBool("isDead", true);
         playerInRange = false;
         playerInView = false;
         isAlerted = false;
+        transform.GetChild(0).tag = "Idle";
 
         enemyHPBar.SetActive(false);
 
@@ -478,7 +482,6 @@ public class SharedEnemyAI : MonoBehaviour
 
         if (!playerFound)
         {
-            Debug.Log("Must have been the wind.");
             CalmEnemy();
         }
     }
@@ -497,6 +500,8 @@ public GameObject GetEnemyHealthBar() { return enemyHPBar; }
 public GameObject GetDefaultPost() { return defaultPost; }
 
     public enemyType GetEnemyType() { return enemy_Type; }
+
+    public bool GetIsDead() { return isDead; }
 
     public void SetDefaultPost(GameObject post) { defaultPost = post; }
 

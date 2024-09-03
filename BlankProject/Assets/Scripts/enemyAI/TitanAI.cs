@@ -66,8 +66,7 @@ public class TitanAI : SharedEnemyAI, IDamage
     }
 
     IEnumerator ShieldBash()
-    {
-        Debug.Log("Bashing");
+    { 
 
         isBashing = true;
 

@@ -92,7 +92,7 @@ public class ArachnoidAI : SharedEnemyAI,IDamage
         agent.SetDestination(GameManager.instance.player.transform.position);
         agent.stoppingDistance = combatStoppingDistance;
 
-        if (!isShooting && !caughtPlayer)
+        if (playerInView && !isShooting && !caughtPlayer)
             StartCoroutine(shoot());
 
         if (LevelManager.instance.GetIntruderAlert())

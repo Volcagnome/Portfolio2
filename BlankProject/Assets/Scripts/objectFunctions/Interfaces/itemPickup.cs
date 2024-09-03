@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class itemPickup : MonoBehaviour, IPickup
@@ -42,13 +41,13 @@ public class itemPickup : MonoBehaviour, IPickup
             {
                 case (pickupStats.pickupType.health):
             {
-                other.gameObject.GetComponent<enemyAI>().SetHP(item.nonWeaponStat + other.gameObject.GetComponent<enemyAI>().GetHP());
+                other.gameObject.GetComponent<SharedEnemyAI>().SetHP(item.nonWeaponStat + other.gameObject.GetComponent<SharedEnemyAI>().GetHP());
                 displayedItem.SetActive(false);
                 break;
             }
                 case (pickupStats.pickupType.weapon):
             {
-                other.gameObject.GetComponent<enemyAI>().SetShootRate(item.shootRate + other.gameObject.GetComponent<enemyAI>().GetShootRate());
+                other.gameObject.GetComponent<SharedEnemyAI>().SetShootRate(item.shootRate + other.gameObject.GetComponent<SharedEnemyAI>().GetShootRate());
                 displayedItem.SetActive(false);
                 break;
             }
