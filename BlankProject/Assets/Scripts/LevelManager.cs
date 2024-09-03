@@ -105,6 +105,7 @@ public class LevelManager : MonoBehaviour
 
     private void CheckIfAlerted()
     {
+
         int alertedRobots = 0;
 
         if(GameObject.FindWithTag("Alerted"))
@@ -112,6 +113,7 @@ public class LevelManager : MonoBehaviour
 
         if (alertedRobots == 0)
             CancelIntruderAlert();
+
     }
     public void IntruderAlert(Vector3 location)
     {
@@ -376,4 +378,5 @@ public class LevelManager : MonoBehaviour
     public float GetWebSpeedDebuff() { return webSpeedDebuff; }
 
     public bool GetIsBossFight() { return isBossFight; }
+
 }

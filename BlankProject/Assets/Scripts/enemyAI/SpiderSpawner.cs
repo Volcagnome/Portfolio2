@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class SpiderSpawner : MonoBehaviour
 {
     [SerializeField] GameObject Arachnoid;
-
+ 
 
     GameObject currentSpider;
     bool isActive;
@@ -15,7 +15,6 @@ public class SpiderSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-   
         readyToSpawn = true;
     }
 
@@ -23,13 +22,19 @@ public class SpiderSpawner : MonoBehaviour
     {
         if (isActive && currentSpider == null && readyToSpawn == true)
             StartCoroutine(SpawnSpider());
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!LevelManager.instance.GetIntruderAlert() && other.gameObject.GetComponent<SharedEnemyAI>().GetDefaultPost() == gameObject)
+        else if(!isActive)
         {
-            Destroy(other.gameObject);
+            if (currentSpider != null)
+            {
+                currentSpider.GetComponent<NavMeshAgent>().SetDestination(gameObject.transform.position);
+
+                if (Vector3.Distance(gameObject.transform.position, currentSpider.transform.position) < 0.5f)
+                    Destroy(currentSpider);
+
+            }
+
+            
+
         }
     }
 
@@ -50,16 +55,7 @@ public class SpiderSpawner : MonoBehaviour
 
     public void ToggleActive(bool status)
     {
-        if (status == true)
-        {
-            isActive = true;
-            GetComponent<SphereCollider>().enabled = false;
-        }
-        else
-        {
-            isActive = false;
-            GetComponent<SphereCollider>().enabled = true;
-        }
+        isActive = status;
     }
 
 

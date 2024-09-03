@@ -138,8 +138,7 @@ public class EnemyManager : MonoBehaviour
     }
 
     public void AssignPatrolPost(GameObject newRobot)
-    { 
-
+    {
             for (int index = 0; index < patrolRoutes_List.Count; index++)
             {
                 GameObject currentRoute = patrolRoutes_List[index];
@@ -155,6 +154,7 @@ public class EnemyManager : MonoBehaviour
                     newRobot.GetComponent<SharedEnemyAI>().SetDefaultPost(currentRoute);
                     newRobot.GetComponent<patrolAI>().SetCurrentDestination(currentRoute);
                     newRobot.GetComponent<NavMeshAgent>().destination = currentRoute.transform.position;
+                    AddRobotToPatrolCount();
                     break;
                 }
             }

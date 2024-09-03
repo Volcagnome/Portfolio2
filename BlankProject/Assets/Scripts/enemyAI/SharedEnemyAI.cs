@@ -260,19 +260,22 @@ public class SharedEnemyAI : MonoBehaviour
     public virtual void AlertEnemy()
     {
         isAlerted = true;
+        transform.GetChild(0).tag = "Alerted";
         lastKnownPlayerLocation = GameManager.instance.player.transform.position;
         agent.speed = combatSpeed;
         onDuty = false;
-        transform.GetChild(0).tag = "Alerted";
+        
+
     }
 
     public virtual void CalmEnemy()
     {
         isAlerted = false;
+        transform.GetChild(0).tag = "Idle";
         ReturnToPost();
         agent.speed = idleSpeed;
         onDuty = true;
-        transform.GetChild(0).tag = "Idle";
+
     }
 
     protected virtual void AlertAllies()
@@ -371,7 +374,7 @@ public class SharedEnemyAI : MonoBehaviour
         playerInRange = false;
         playerInView = false;
         isAlerted = false;
-        transform.GetChild(0).tag = "Idle";
+        transform.GetChild(0).gameObject.SetActive(false);
 
         enemyHPBar.SetActive(false);
 

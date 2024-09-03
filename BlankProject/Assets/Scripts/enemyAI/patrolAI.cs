@@ -15,6 +15,11 @@ public class patrolAI : SharedEnemyAI,IDamage
 
         if (defaultPost == null)
             EnemyManager.instance.AssignPatrolPost(gameObject);
+        else
+        {
+            defaultPost.GetComponent<PatrolWaypoint>().AddRobotToRoute(gameObject);
+            EnemyManager.instance.AddRobotToPatrolCount();
+        }
 
         colorOrig = model.sharedMaterial.color;
     }
