@@ -442,11 +442,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 636184700414558106, guid: e09b2cd8fd54f3341acad83b75be1a31, type: 3}
   m_PrefabInstance: {fileID: 3096055989749298890}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &3993660920470171132 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2133355981290199862, guid: e09b2cd8fd54f3341acad83b75be1a31, type: 3}
-  m_PrefabInstance: {fileID: 3096055989749298890}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4744974096311178396
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -470,6 +465,10 @@ PrefabInstance:
     - target: {fileID: 100004, guid: d06cdfe4ae390d446bd68ce9cf8b25ab, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: d06cdfe4ae390d446bd68ce9cf8b25ab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: d06cdfe4ae390d446bd68ce9cf8b25ab, type: 3}
       propertyPath: m_TagString
@@ -837,15 +836,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: d06cdfe4ae390d446bd68ce9cf8b25ab, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -41.04
+      value: -0.19750118
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: d06cdfe4ae390d446bd68ce9cf8b25ab, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.01
+      value: -0.099992394
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: d06cdfe4ae390d446bd68ce9cf8b25ab, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -19.25
+      value: 42.032524
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: d06cdfe4ae390d446bd68ce9cf8b25ab, type: 3}
       propertyPath: m_LocalRotation.w
@@ -968,15 +967,9 @@ MonoBehaviour:
   DeathFXPos: {fileID: 6865169551853031881}
   weakspot: {fileID: 7700505768945022687}
   FOV_Angle: 100
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 8
   rotationSpeed: 8
-  enemyBehavior: 0
   enemy_Type: 2
-  HP: 5
-  HPRegenRate: 0
-  HPRegenWaitTime: 0
+  HP: 15
   shootRate: 0.5
   combatSpeed: 7
   combatStoppingDistance: 12
@@ -989,14 +982,9 @@ MonoBehaviour:
   shootPos: {fileID: 1459278233647416252}
   weapon_R: {fileID: 3989913575741451918}
   ammoType: {fileID: 4005459997384909482, guid: f3df2a379677235429bf837d6aa0e3c7, type: 3}
-  EmissionObject: {fileID: 3993660920470171132}
-  emissionCombat: {fileID: 2100000, guid: e0e24b9d4b04293478918b806fb2eb14, type: 2}
-  emissionAlerted: {fileID: 2100000, guid: cb4822e6c01187f46a7aa305fe22a908, type: 2}
-  emissionIdle: {fileID: 2100000, guid: 7310e651bfbf81046885abb3c82a4a31, type: 2}
   enemyHPBar: {fileID: 7749613176066611616}
   enemyHPBarFill: {fileID: 3971910031883940777}
   HPBarPos: {x: 0, y: 0, z: 0}
-  hasPost: 0
 --- !u!195 &4011634809921055029
 NavMeshAgent:
   m_ObjectHideFlags: 0

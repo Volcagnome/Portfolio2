@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 4936115511319884}
   - component: {fileID: 33787450202644756}
   - component: {fileID: 23248781289579298}
-  - component: {fileID: 114749781051163106}
+  - component: {fileID: -8227144867895322555}
   m_Layer: 0
   m_Name: '[Weapon] Rifle - 1'
   m_TagString: Untagged
@@ -117,7 +117,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &114749781051163106
+--- !u!114 &-8227144867895322555
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,13 +126,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1268454116773244}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 014a09f024503aa48882c50b92ff64b0, type: 3}
+  m_Script: {fileID: 11500000, guid: 81720927d7525b24b918bc58ad840bb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Debug: 1
-  _AimPivot: {fileID: 4911447897931050}
-  _Bullet: {fileID: 1876826158643836, guid: d26163460e47e254382272737986b67d, type: 3}
-  _IK_LeftHand: {fileID: 4306728548552408}
+  item: {fileID: 0}
+  displayedItem: {fileID: 0}
+  rotationSpeed: 0
+  grabbableByEnemy: 0
+  grabbableByPlayer: 0
 --- !u!1 &1991545131704188
 GameObject:
   m_ObjectHideFlags: 0

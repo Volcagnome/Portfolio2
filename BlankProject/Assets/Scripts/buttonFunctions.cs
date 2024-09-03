@@ -28,10 +28,8 @@ public class buttonFunctions : MonoBehaviour
 
     public void respawn()
     {
-        GameManager.instance.player.GetComponent<playerDamage>().spawnPlayer();
         GameManager.instance.stateUnpaused();
-
-
+        GameManager.instance.player.GetComponent<playerDamage>().spawnPlayer();
         GameManager.instance.player.GetComponent<playerDamage>().setHP( GameManager.instance.player.GetComponent<playerDamage>().getMaxHP());
         GameManager.instance.player.GetComponent<playerDamage>().adjustHPBar();
         GameManager.instance.player.GetComponent<playerMovement>().enabled = false;
