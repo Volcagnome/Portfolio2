@@ -4,27 +4,28 @@ using UnityEngine;
 
 public class itemPickup : MonoBehaviour, IPickup
 {
+    [SerializeField] Vector3 rotationSpeed;
     [SerializeField] pickupStats item;
-    [SerializeField] GameObject displayedItem;
-    [SerializeField] int rotationSpeed;
     [SerializeField] bool grabbableByEnemy;
     [SerializeField] bool grabbableByPlayer;
 
+    GameObject displayedItem = null;
+
     void Start()
     {
-        //displayedItem.GetComponent<MeshRenderer>().sharedMaterial = item.itemModel.GetComponent<MeshRenderer>().sharedMaterial;
-        //displayedItem.GetComponent<MeshFilter>().sharedMesh = item.itemModel.GetComponent<MeshFilter>().sharedMesh;
+        Vector3 startingPosition = transform.position; startingPosition.y += 1.5F;
+        displayedItem = Instantiate(item.itemModel, startingPosition, Quaternion.identity);
     }
 
     // Update is called once per frame
     void Update()
     {
-        displayedItem.transform.Rotate(Vector3.right * rotationSpeed * Time.deltaTime);
+        if (displayedItem != null) displayedItem.transform.Rotate(rotationSpeed * Time.deltaTime);
     }
 
     public void OnTriggerEnter(Collider other)
     {
-        if (displayedItem.active)
+        if (displayedItem != null && other != displayedItem.GetComponent<Collider>())
         {
             pickup(other);
         }
@@ -42,13 +43,15 @@ public class itemPickup : MonoBehaviour, IPickup
                 case (pickupStats.pickupType.health):
             {
                 other.gameObject.GetComponent<SharedEnemyAI>().SetHP(item.nonWeaponStat + other.gameObject.GetComponent<SharedEnemyAI>().GetHP());
-                displayedItem.SetActive(false);
+                Destroy(displayedItem);
+                displayedItem=null;
                 break;
             }
                 case (pickupStats.pickupType.weapon):
             {
                 other.gameObject.GetComponent<SharedEnemyAI>().SetShootRate(item.shootRate + other.gameObject.GetComponent<SharedEnemyAI>().GetShootRate());
-                displayedItem.SetActive(false);
+                Destroy(displayedItem);
+                displayedItem=null;
                 break;
             }
                 default:
@@ -65,36 +68,37 @@ public class itemPickup : MonoBehaviour, IPickup
                 case (pickupStats.pickupType.weapon):
             {
                 GameManager.instance.player.GetComponent<playerDamage>().addWeapon(item);
-                displayedItem.SetActive(false);
-
+                Destroy(displayedItem);
+                displayedItem = null;
                 break;
             }
                 case (pickupStats.pickupType.health):
             {
                 GameManager.instance.player.GetComponent<playerDamage>().setMaxHP(GameManager.instance.player.GetComponent<playerDamage>().getMaxHP() + item.nonWeaponStat);
-                displayedItem.SetActive(false);
-               
+                Destroy(displayedItem);
+                displayedItem = null;
                 break;
             }
                 case (pickupStats.pickupType.stamina):
             {
                 GameManager.instance.player.GetComponent<playerMovement>().setMaxStamina(item.nonWeaponStat + GameManager.instance.player.GetComponent<playerMovement>().getMaxStamina());
                 GameManager.instance.player.GetComponent<playerMovement>().setStamina(GameManager.instance.player.GetComponent<playerMovement>().getMaxStamina());
-                displayedItem.SetActive(false);
-        
+                Destroy(displayedItem);
+                displayedItem = null;
                 break;
             }
                 case (pickupStats.pickupType.damage):
             {
                 GameManager.instance.player.GetComponent<playerDamage>().setBulletUpgrades(GameManager.instance.player.GetComponent<playerDamage>().getBulletUpgrades() + (int)item.nonWeaponStat);
-                displayedItem.SetActive(false);
+                Destroy(displayedItem);
+                displayedItem = null;
                 break;
             }
                 case (pickupStats.pickupType.speed):
             {
                 GameManager.instance.player.GetComponent<playerMovement>().setPlayerSpeed(GameManager.instance.player.GetComponent<playerMovement>().getPlayerSpeed() + item.nonWeaponStat);
-                displayedItem.SetActive(false);
-
+                Destroy(displayedItem);
+                displayedItem = null;
                 break;
             }
                 case (pickupStats.pickupType.ammo): //For later when ammo is fully implemented
@@ -104,18 +108,20 @@ public class itemPickup : MonoBehaviour, IPickup
                 case (pickupStats.pickupType.ammoUpgrade):
             {
                 GameManager.instance.player.GetComponent<playerDamage>().setAmmoMultiplier(GameManager.instance.player.GetComponent<playerDamage>().getAmmoMultiplier() + item.nonWeaponStat);
-                displayedItem.SetActive(false);
-
+                Destroy(displayedItem);
+                displayedItem = null;
                 break;
             }
                 case (pickupStats.pickupType.commandCode):
-                    displayedItem.SetActive(false);
+                    Destroy(displayedItem);
+                    displayedItem = null;
                     GameManager.instance.PickedUpCommandCode();
                 
                     break;
 
                 case (pickupStats.pickupType.securityPassword):
-                    displayedItem.SetActive(false);
+                    Destroy(displayedItem);
+                    displayedItem= null;
 
                     if (GameManager.instance.GetCurrentLevel() == 0)
                         GameManager.instance.SetSecurtyPasswordLevel1(item.passwordCombo);
