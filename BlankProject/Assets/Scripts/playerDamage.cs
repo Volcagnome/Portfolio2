@@ -73,7 +73,7 @@ public class playerDamage : MonoBehaviour, IDamage
     {
         // Listen for shooting, interacting or flashlight:
 
-        if (Input.GetButton("Shoot") && !isShooting)
+        if (Input.GetButton("Shoot") && weapons.Count > 0 && !isShooting)
             StartCoroutine(shoot());
 
         if (Input.GetButtonDown("Interact"))
@@ -82,7 +82,6 @@ public class playerDamage : MonoBehaviour, IDamage
         }
 
         useFlashlight();
-
     }
 
     ////////////////////////////////////////////////////
@@ -154,7 +153,6 @@ public class playerDamage : MonoBehaviour, IDamage
                 interactWith.interact();
             }
         }
-
     }
 
     bool isEnemyTarget()
@@ -172,7 +170,7 @@ public class playerDamage : MonoBehaviour, IDamage
         adjustHPBar();
         StartCoroutine(flashRed());
 
-        //Im dead
+        // lose condition, player HP 0:
         if (HP <= 0)
         {
             GameManager.instance.youLose();

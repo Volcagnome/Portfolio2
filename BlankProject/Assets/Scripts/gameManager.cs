@@ -10,14 +10,12 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-
-    public playerDamage damageScript;
-
+    // UI menus:
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
-
+    // Crouch windows:
     [SerializeField] public GameObject crouchWindow;
     [SerializeField] public GameObject proneWindow;
 
@@ -34,6 +32,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text PickupMessage;
 
     [SerializeField] TMP_Text leverCountText;
+    // UI elements:
     public Image staminaBar;
     public Image healthbar;
     public GameObject redFlash;
@@ -41,9 +40,12 @@ public class GameManager : MonoBehaviour
     public GameObject playerSpawn;
     int currentLevel;
 
+    // Player Scripts:
     public GameObject player;
     public playerMovement playerScript;
     public playerCrouch crouchScript;
+    public playerDamage damageScript;
+
     private int activeLevers;
     public bool youWin;
     private bool playerEscaped;
@@ -62,14 +64,14 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         player = GameObject.FindWithTag("Player");
+        playerSpawn = GameObject.FindWithTag("Player Spawn");
+
         playerScript = player.GetComponent<playerMovement>();
         crouchScript = player.GetComponent<playerCrouch>();
-        playerSpawn = GameObject.FindWithTag("Player Spawn");
-        damageScript = GameManager.instance.GetComponent<playerDamage>();
+        damageScript = player.GetComponent<playerDamage>();
+        
         securityPasswordLevel_1 = 0;
         currentLevel = 0;
-
-
     }
 
     //Update is called once per frame
@@ -174,7 +176,7 @@ public class GameManager : MonoBehaviour
         }
 
     }
-
+    // Getters / setters:
     public int GetCommandCodesEntered() { return commandCodesEntered; }
 
     public int GetCommandCodesCollected() { return commandCodesCollected; }
