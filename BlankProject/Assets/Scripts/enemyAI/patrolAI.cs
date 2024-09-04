@@ -111,7 +111,7 @@ public class patrolAI : SharedEnemyAI,IDamage
 
             GameObject nearestButton = LevelManager.instance.SetIsRaisingAlarm(gameObject);
 
-            agent.stoppingDistance = 2f;
+            agent.stoppingDistance = 1f;
             agent.SetDestination(nearestButton.transform.position);
 
     }

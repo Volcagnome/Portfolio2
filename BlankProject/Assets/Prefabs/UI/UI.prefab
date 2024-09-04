@@ -859,8 +859,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 512666bd716991749a4bb65af2286222, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fabricatorSpawnInterval: 120
-  minimumTimeBetweenSpawnAttempts: 60
+  fabricatorSpawnInterval: 30
   robotFabricators_List: []
   guardPosts_List: []
   titanPosts_List: []
@@ -1321,7 +1320,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dea27888a56e9f441867cb44671ad932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageScript: {fileID: 0}
   menuActive: {fileID: 0}
   menuPause: {fileID: 4655950608838427742}
   menuWin: {fileID: 3142177487760655812}
@@ -1340,12 +1338,10 @@ MonoBehaviour:
   healthbar: {fileID: 1190527939681285664}
   redFlash: {fileID: 303293355324700256}
   playerSpawn: {fileID: 0}
-  playerSpawn_Level_0: {fileID: 0}
-  playerSpawn_Level_1: {fileID: 0}
-  playerSpawn_Level_2: {fileID: 0}
   player: {fileID: 0}
   playerScript: {fileID: 0}
   crouchScript: {fileID: 0}
+  damageScript: {fileID: 0}
   youWin: 0
   isPaused: 0
 --- !u!114 &1396844780421991658

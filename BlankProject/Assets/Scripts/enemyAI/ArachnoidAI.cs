@@ -64,6 +64,16 @@ public class ArachnoidAI : SharedEnemyAI,IDamage
 
             web.SetPosition(0, transform.InverseTransformPoint(shootPos.position));
             web.SetPosition(1, transform.InverseTransformPoint(GameManager.instance.player.transform.position));
+            GameManager.instance.webbedOverlay.SetActive(true);
+
+            if (GameManager.instance.player.GetComponent<playerDamage>().getHP()<= 0)
+            {
+                GameManager.instance.webbedOverlay.SetActive(false);
+                caughtPlayer = false;
+                web.enabled = false;
+                GameManager.instance.playerScript.SetIsCaught(false);
+                GameManager.instance.playerScript.SetSpeed(GameManager.instance.playerScript.GetSpeedOG());
+            }
         }
 
     }
@@ -109,6 +119,7 @@ public class ArachnoidAI : SharedEnemyAI,IDamage
         {
            GameManager.instance.playerScript.SetIsCaught(false);
             GameManager.instance.playerScript.SetSpeed(GameManager.instance.playerScript.GetSpeedOG());
+            GameManager.instance.webbedOverlay.SetActive(false);
         }
 
         Destroy(gameObject);

@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     public Image staminaBar;
     public Image healthbar;
     public GameObject redFlash;
+    public GameObject webbedOverlay;
 
     public GameObject playerSpawn;
     int currentLevel;
