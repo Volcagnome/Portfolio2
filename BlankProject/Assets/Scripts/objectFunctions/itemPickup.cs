@@ -8,6 +8,7 @@ public class itemPickup : MonoBehaviour, IPickup
     [SerializeField] pickupStats item;
     [SerializeField] bool grabbableByEnemy;
     [SerializeField] bool grabbableByPlayer;
+    
     GameObject displayedItem = null;
 
     void Start()
@@ -115,6 +116,7 @@ public class itemPickup : MonoBehaviour, IPickup
                     Destroy(displayedItem);
                     displayedItem = null;
                     GameManager.instance.PickedUpCommandCode();
+                    
                 
                     break;
 
