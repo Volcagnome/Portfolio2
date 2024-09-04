@@ -842,6 +842,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100092, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3151778533451312120}
+    - targetCorrespondingSourceObject: {fileID: 100092, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8646082943678895422}
     - targetCorrespondingSourceObject: {fileID: 100104, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2403094056358163815}
@@ -897,7 +900,7 @@ MonoBehaviour:
     m_Bits: 128
   shootPos: {fileID: 4308819190186378879}
   weapon_R: {fileID: 8424071460399303199}
-  ammoType: {fileID: 6804835773319123192, guid: 691bd9694255b394ba715e419013b5c0, type: 3}
+  ammoType: {fileID: 6804835773319123192, guid: f3238337713f29e4bad8388c8f8db6d6, type: 3}
   enemyHPBar: {fileID: 8123350518048088239}
   enemyHPBarFill: {fileID: 3182030077841787558}
   HPBarPos: {x: 0, y: 0, z: 0}
@@ -970,6 +973,33 @@ CapsuleCollider:
   m_Height: 1.4805559
   m_Direction: 1
   m_Center: {x: 0.013371944, y: 0.9077453, z: 0.009490888}
+--- !u!54 &8646082943678895422
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8797669582339917010}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8797669582339917094 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100104, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}

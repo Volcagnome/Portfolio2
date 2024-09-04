@@ -77,6 +77,7 @@ public class RobotFabricator : MonoBehaviour
     public IEnumerator SpawnRobot(SharedEnemyAI.enemyType entityToSpawn)
     {
         spawningRobot = true;
+        isReadyToSpawn = false;
 
         yield return new WaitForSeconds(2f);
 
@@ -86,9 +87,6 @@ public class RobotFabricator : MonoBehaviour
         else if (entityToSpawn == SharedEnemyAI.enemyType.Patrol)
             Instantiate(patrol, spawnPosition.transform.position, spawnPosition.transform.localRotation);
 
-
-        
-        isReadyToSpawn = false;
         StartCoroutine(SpawnCooldown());
     }
 

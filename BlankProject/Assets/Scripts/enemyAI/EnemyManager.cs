@@ -10,7 +10,7 @@ public class EnemyManager : MonoBehaviour
     public static EnemyManager instance;
 
     [SerializeField] float fabricatorSpawnInterval;
-    [SerializeField] float minimumTimeBetweenSpawnAttempts;
+    //[SerializeField] float minimumTimeBetweenSpawnAttempts;
 
 
     private int NumCurrentGuardRobots;
@@ -37,7 +37,7 @@ public class EnemyManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-        readyToCallFabricator = true;
+        //readyToCallFabricator = true;
         StartCoroutine(CalculateMaxAllowedRobots());
     }
 
@@ -63,8 +63,8 @@ public class EnemyManager : MonoBehaviour
                 && currentFabricator.GetComponent<RobotFabricator>().GetIsReadyToSpawn())
             {
                 StartCoroutine(currentFabricator.GetComponent<RobotFabricator>().SpawnRobot(entityToSpawn));
-                readyToCallFabricator = false;
-                StartCoroutine(MinimumSpawnTimer());
+                //readyToCallFabricator = false;
+                //StartCoroutine(MinimumSpawnTimer());
                 break;
             }
            
@@ -74,7 +74,7 @@ public class EnemyManager : MonoBehaviour
 
     IEnumerator MinimumSpawnTimer()
     {
-        yield return new WaitForSeconds(minimumTimeBetweenSpawnAttempts);
+        yield return new WaitForSeconds(fabricatorSpawnInterval);
 
         readyToCallFabricator = true;
     }

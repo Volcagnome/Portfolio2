@@ -47,7 +47,6 @@ public class bossAI : SharedEnemyAI, IDamage
 
     //Player detection
     [SerializeField] float maxTiltAngle;
-    private Quaternion bodyTiltToPlayer;
 
     // Start is called before the first frame update
     void Start()
@@ -242,9 +241,6 @@ public class bossAI : SharedEnemyAI, IDamage
         anim.SetBool("Dead",true);
     }
 
-
-    public bool GetIsDead() { return isDead; }
-   
 }
 
 

@@ -297,7 +297,7 @@ public class SharedEnemyAI : MonoBehaviour
 
     protected IEnumerator DespawnDeadRobot(GameObject robot)
     {
-        yield return new WaitForSeconds(60f);
+        yield return new WaitForSeconds(20f);
 
         Destroy(robot);
     }
@@ -434,7 +434,7 @@ public class SharedEnemyAI : MonoBehaviour
 
         agent.SetDestination(lastKnownPlayerLocation);
 
-        while (true)
+        while (true && !isDead)
         {
 
             yield return new WaitForSeconds(0.05f);

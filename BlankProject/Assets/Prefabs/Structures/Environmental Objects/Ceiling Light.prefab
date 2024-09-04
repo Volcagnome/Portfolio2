@@ -103,6 +103,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6044750211905199557}
+  - component: {fileID: 1613308829681483167}
   m_Layer: 0
   m_Name: Ceiling Light
   m_TagString: Untagged
@@ -123,11 +124,27 @@ Transform:
   m_LocalScale: {x: 0.2913, y: 1, z: 6.5836}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6751087211510332874}
   - {fileID: 4844775466754230995}
   - {fileID: 7085941216811625211}
+  - {fileID: 6751087211510332874}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1613308829681483167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7372558469645691338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a69bf6dfd3f89a649ae0895092915fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idleMaterial: {fileID: 2100000, guid: 5beaa3f36c224204c88f34dd1b799183, type: 2}
+  alertMaterial: {fileID: 2100000, guid: 37db58f3173a33e43bba91a171e0b8ef, type: 2}
+  lightComponent: {fileID: 4579515534257899845}
+  type: 0
 --- !u!1 &8257094231277464021
 GameObject:
   m_ObjectHideFlags: 0
