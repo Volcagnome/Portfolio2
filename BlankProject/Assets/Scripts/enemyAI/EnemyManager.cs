@@ -37,7 +37,7 @@ public class EnemyManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-        //readyToCallFabricator = true;
+        readyToCallFabricator = true;
         StartCoroutine(CalculateMaxAllowedRobots());
     }
 
@@ -51,8 +51,7 @@ public class EnemyManager : MonoBehaviour
     }
 
     private void FillEmptyPost()
-    { 
-
+    {
         SharedEnemyAI.enemyType entityToSpawn = WhichEnemyTypeToSpawn();
 
         for (int index = 0; index < robotFabricators_List.Count; index++)
@@ -63,8 +62,8 @@ public class EnemyManager : MonoBehaviour
                 && currentFabricator.GetComponent<RobotFabricator>().GetIsReadyToSpawn())
             {
                 StartCoroutine(currentFabricator.GetComponent<RobotFabricator>().SpawnRobot(entityToSpawn));
-                //readyToCallFabricator = false;
-                //StartCoroutine(MinimumSpawnTimer());
+                readyToCallFabricator = false;
+                StartCoroutine(MinimumSpawnTimer());
                 break;
             }
            
@@ -204,7 +203,7 @@ public class EnemyManager : MonoBehaviour
 
     public int GetCurrentNumberRobots()
     {
-        NumCurrentTotalRobots = NumCurrentGuardRobots + NumCurrentPatrolRobots + NumCurrentTitanRobots;
+        NumCurrentTotalRobots = NumCurrentGuardRobots + NumCurrentPatrolRobots;
         return NumCurrentTotalRobots;
     }
 

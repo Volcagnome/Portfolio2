@@ -79,13 +79,23 @@ public class RobotFabricator : MonoBehaviour
         spawningRobot = true;
         isReadyToSpawn = false;
 
+        GameObject newRobot = null;
+
         yield return new WaitForSeconds(2f);
 
         if (entityToSpawn == SharedEnemyAI.enemyType.Guard)
-            Instantiate(guard, spawnPosition.transform.position, spawnPosition.transform.localRotation);
+        {
+            Debug.Log("spawning guard");
+           newRobot = Instantiate(guard, spawnPosition.transform.position, spawnPosition.transform.localRotation);
+        }
 
         else if (entityToSpawn == SharedEnemyAI.enemyType.Patrol)
-            Instantiate(patrol, spawnPosition.transform.position, spawnPosition.transform.localRotation);
+        {
+            Debug.Log("spawning patrol");
+           newRobot =  Instantiate(patrol, spawnPosition.transform.position, spawnPosition.transform.localRotation);
+        }
+
+        newRobot.SetActive(true);
 
         StartCoroutine(SpawnCooldown());
     }
