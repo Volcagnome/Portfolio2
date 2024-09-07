@@ -1170,16 +1170,10 @@ MonoBehaviour:
   DeathVFX: {fileID: 4033287822461114141, guid: 0d15ea6cf109629468faf482ad0008b4, type: 3}
   DeathFXPos: {fileID: 8764920710771292052}
   weakspot: {fileID: 5263652692604291173}
-  FOV_Angle: 100
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 8
+  FOV_Angle: 70
   rotationSpeed: 5
-  enemyBehavior: 0
   enemy_Type: 5
   HP: 300
-  HPRegenRate: 0
-  HPRegenWaitTime: 0
   shootRate: 0.5
   combatSpeed: 4.5
   combatStoppingDistance: 25
@@ -1192,10 +1186,6 @@ MonoBehaviour:
   shootPos: {fileID: 0}
   weapon_R: {fileID: 1128961364905282028}
   ammoType: {fileID: 565178124543744718, guid: 15fe3d622f015cd42a8c7487098e8668, type: 3}
-  EmissionObject: {fileID: 6284341639915209759}
-  emissionCombat: {fileID: 2100000, guid: e0e24b9d4b04293478918b806fb2eb14, type: 2}
-  emissionAlerted: {fileID: 2100000, guid: cb4822e6c01187f46a7aa305fe22a908, type: 2}
-  emissionIdle: {fileID: 2100000, guid: 7310e651bfbf81046885abb3c82a4a31, type: 2}
   enemyHPBar: {fileID: 0}
   enemyHPBarFill: {fileID: 0}
   HPBarPos: {x: 0, y: 0, z: 0}
@@ -1212,7 +1202,6 @@ MonoBehaviour:
   FlamethrowerAmmo: {fileID: 5473851779500026500, guid: 925dacf10638511468bf5e0b32181a18, type: 3}
   MainTurretAmmo: {fileID: 565178124543744718, guid: 15fe3d622f015cd42a8c7487098e8668, type: 3}
   RocketAmmo: {fileID: 7461513354095742005, guid: dc4642593a10a274bbc26f8b0d56ec6a, type: 3}
-  CommandcodeBoss: {fileID: 6557865293294953291, guid: ae27b1c80325e584ca4466dc04b50c56, type: 3}
   deathExplosion: {fileID: 4596544553357837919, guid: ab1023da2f4dc9441b8c819ec1e3ea1b, type: 3}
   deathSparks2: {fileID: 7845794464878887175}
   deathSparks3: {fileID: 1055107186667841343}

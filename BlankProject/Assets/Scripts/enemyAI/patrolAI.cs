@@ -8,6 +8,7 @@ public class patrolAI : SharedEnemyAI,IDamage
 
     bool isWhistleBlower;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,23 +23,38 @@ public class patrolAI : SharedEnemyAI,IDamage
         }
 
         colorOrig = model.sharedMaterial.color;
+
+        isWhistleBlower = false;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+
         CallMovementAnimation();
 
         if (!isDead)
         {
+
             if (!isWhistleBlower)
             {
+                if (onDuty)
+                {
+                    if (Vector3.Distance(transform.position, currentDestination.transform.position) < 0.5f)
+                    {
+                        currentDestination = currentDestination.GetComponent<PatrolWaypoint>().GetNextWaypoint();
+                        agent.SetDestination(currentDestination.transform.position);
+                    }
+                    
+                }
+
                 if (playerInView)
                 {
                     AlertEnemy();
                     AlertAllies();
 
-                    if (!LevelManager.instance.GetIntruderAlert() && !LevelManager.instance.GetIsRaisingAlarm() 
+                    if (!LevelManager.instance.GetIntruderAlert() && !LevelManager.instance.GetIsRaisingAlarm()
                         && LevelManager.instance.intruderAlertButtons.Count != 0)
                         RaiseAlarm();
 
@@ -53,15 +69,15 @@ public class patrolAI : SharedEnemyAI,IDamage
 
                 if (isAlerted)
                 {
-                    if (!playerInView && !playerInRange)
+                    if (!playerInView)
                         StartCoroutine(PursuePlayer());
 
                     else if (playerInRange)
                     {
                         RotateToPlayer();
 
-                        if (!playerInView)
-                            agent.SetDestination(GameManager.instance.player.transform.position);
+                        //if (!playerInView)
+                        //    agent.SetDestination(GameManager.instance.player.transform.position);
                     }
                 }
                 else if (!onDuty && defaultPost != null)
@@ -76,8 +92,6 @@ public class patrolAI : SharedEnemyAI,IDamage
                 if (isPlayerTarget())
                 {
                     UpdateEnemyUI();
-
-                  
                 }
                 else
                     enemyHPBar.SetActive(false);
@@ -104,6 +118,15 @@ public class patrolAI : SharedEnemyAI,IDamage
     {
         agent.SetDestination(currentDestination.transform.position);
     }
+
+    protected override void ReturnToPost()
+    {
+        onDuty = true;
+
+        if (currentDestination != null)
+            agent.SetDestination(currentDestination.transform.position);
+    }
+
 
     public void RaiseAlarm()
     {

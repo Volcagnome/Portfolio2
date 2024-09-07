@@ -78,8 +78,6 @@ public class SharedEnemyAI : MonoBehaviour
     Coroutine FindIntruderCoroutine;
     Coroutine PursuePlayerCoroutine;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -96,7 +94,6 @@ public class SharedEnemyAI : MonoBehaviour
 
         if (!isDead)
         {
-
             if (LevelManager.instance.GetIsBossFight())
             {
                 isAlerted = true;
@@ -107,6 +104,7 @@ public class SharedEnemyAI : MonoBehaviour
 
             if (playerInView)
             {
+                lastKnownPlayerLocation = GameManager.instance.player.transform.position;
                 AlertEnemy();
                 AlertAllies();
                 FoundPlayer();
@@ -124,7 +122,6 @@ public class SharedEnemyAI : MonoBehaviour
                 if (!playerInView && !playerInRange && !isRespondingToAlert && !LevelManager.instance.GetIsBossFight())
                 {
                     PursuePlayerCoroutine = StartCoroutine(PursuePlayer());
-        
                 }
 
                 else if (playerInRange)
@@ -132,8 +129,9 @@ public class SharedEnemyAI : MonoBehaviour
                     RotateToPlayer();
 
                 }
-                else if (playerInRange && !playerInView)
-                    agent.SetDestination(GameManager.instance.player.transform.position);
+                //else if (playerInRange && !playerInView)
+                //    agent.SetDestination(lastKnownPlayerLocation);
+                //agent.SetDestination(GameManager.instance.player.transform.position);
             }
                                 
             else if (!onDuty && defaultPost !=null && !LevelManager.instance.GetIsBossFight())
@@ -170,8 +168,11 @@ public class SharedEnemyAI : MonoBehaviour
             playerInRange = false;
             playerInView = false;
 
-            if (isAlerted)
+
+            if (isAlerted && !GameManager.instance.GetIsRespawning())
                 lastKnownPlayerLocation = GameManager.instance.player.transform.position;
+            else if (GameManager.instance.GetIsRespawning())
+                CalmEnemy();
         }
         else
             return;
@@ -218,6 +219,8 @@ public class SharedEnemyAI : MonoBehaviour
     {
         agent.SetDestination(lastKnownPlayerLocation);
 
+        Debug.Log(agent.remainingDistance);
+
         if (agent.remainingDistance <= 0.3f || !agent.hasPath)
         {
             yield return new WaitForSeconds(1.5f);
@@ -261,11 +264,9 @@ public class SharedEnemyAI : MonoBehaviour
     {
         isAlerted = true;
         transform.GetChild(0).tag = "Alerted";
-        lastKnownPlayerLocation = GameManager.instance.player.transform.position;
+        //lastKnownPlayerLocation = GameManager.instance.player.transform.position;
         agent.speed = combatSpeed;
         onDuty = false;
-        
-
     }
 
     public virtual void CalmEnemy()
@@ -304,16 +305,14 @@ public class SharedEnemyAI : MonoBehaviour
 
     protected virtual void FoundPlayer()
     {
-        lastKnownPlayerLocation = GameManager.instance.player.transform.position;
+        //lastKnownPlayerLocation = GameManager.instance.player.transform.position;
 
-
-        agent.SetDestination(GameManager.instance.player.transform.position);
+        agent.SetDestination(lastKnownPlayerLocation);
         agent.stoppingDistance = combatStoppingDistance;
 
         anim.SetBool("Aiming", true);
 
         weapon_R.transform.LookAt(GameManager.instance.player.transform.position + new Vector3(0f, 1f, 0f));
-
 
         if (!isShooting && !isDead)
             StartCoroutine(shoot());
@@ -345,6 +344,7 @@ public class SharedEnemyAI : MonoBehaviour
         HP -= amount;
         isTakingDamage = true;
 
+        lastKnownPlayerLocation = GameManager.instance.player.transform.position;
         AlertEnemy();
         AlertAllies();
         StartCoroutine(flashYellow());

@@ -18,6 +18,7 @@ public class PatrolWaypoint : MonoBehaviour
 // Update is called once per frame
 void Update()
     {
+        
 
     }
 
@@ -41,19 +42,21 @@ void Update()
         robotsAssignedToRoute.Remove(deadPatrolBot);
     }
 
+    public GameObject GetNextWaypoint() { return nextWaypoint; }
 
 
 
-    private void OnTriggerEnter(Collider patrolRobot)
-    { 
-        if (patrolRobot.gameObject.GetComponent<SharedEnemyAI>().GetCurrentDestination() == gameObject
-            && patrolRobot.gameObject.GetComponent<SharedEnemyAI>().CheckIfOnDuty() == true)
-        {
 
-            patrolRobot.gameObject.GetComponent<SharedEnemyAI>().SetCurrentDestination(nextWaypoint);
-            patrolRobot.gameObject.GetComponent<NavMeshAgent>().SetDestination(nextWaypoint.transform.position);
-        }
-    }
+    //private void OnTriggerEnter(Collider patrolRobot)
+    //{ 
+    //    if (patrolRobot.gameObject.GetComponent<SharedEnemyAI>().GetCurrentDestination() == gameObject
+    //        && patrolRobot.gameObject.GetComponent<SharedEnemyAI>().CheckIfOnDuty() == true)
+    //    {
+
+    //        patrolRobot.gameObject.GetComponent<SharedEnemyAI>().SetCurrentDestination(nextWaypoint);
+    //        patrolRobot.gameObject.GetComponent<NavMeshAgent>().SetDestination(nextWaypoint.transform.position);
+    //    }
+    //}
 
   
 }

@@ -468,7 +468,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: d06cdfe4ae390d446bd68ce9cf8b25ab, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: d06cdfe4ae390d446bd68ce9cf8b25ab, type: 3}
       propertyPath: m_TagString
@@ -969,14 +969,14 @@ MonoBehaviour:
   DeathVFX: {fileID: 6469354921825657977, guid: e71d1b07c6d70974893ad9412cbf9036, type: 3}
   DeathFXPos: {fileID: 6865169551853031881}
   weakspot: {fileID: 7700505768945022687}
-  FOV_Angle: 100
+  FOV_Angle: 60
   rotationSpeed: 8
   enemy_Type: 2
   HP: 15
   shootRate: 0.5
   combatSpeed: 7
   combatStoppingDistance: 12
-  idleStoppingDistance: 1
+  idleStoppingDistance: 0.4
   idleSpeed: 4
   allyRadius: 12
   allyLayer:
@@ -1029,10 +1029,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.23947501
-  m_Height: 1.9488058
+  m_Radius: 0.5708838
+  m_Height: 2.0318074
   m_Direction: 1
-  m_Center: {x: 0.013371944, y: 1.1418703, z: -0.06370473}
+  m_Center: {x: 0.016248405, y: 1.0979788, z: -0.06370473}
 --- !u!135 &6172194384994177183
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1052,7 +1052,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 18
+  m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1822346372569148870
 Rigidbody:

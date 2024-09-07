@@ -84,8 +84,7 @@ public class RobotFabricator : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         if (entityToSpawn == SharedEnemyAI.enemyType.Guard)
-        {
-            Debug.Log("spawning guard");
+        { 
            newRobot = Instantiate(guard, spawnPosition.transform.position, spawnPosition.transform.localRotation);
         }
 

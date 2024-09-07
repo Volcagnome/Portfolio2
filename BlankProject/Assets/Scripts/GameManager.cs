@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
     public playerMovement playerScript;
     public playerCrouch crouchScript;
     public playerDamage damageScript;
+    bool isRespawning;
 
     private int activeLevers;
     public bool youWin;
@@ -211,9 +212,17 @@ public class GameManager : MonoBehaviour
     public int GetCurrentLevel() { return currentLevel; }
 
     public void SetCurrentLevel(int level) { currentLevel = level; }
+    public void SetPlayerSpawn(GameObject spawner) { playerSpawn = spawner;}
 
-    public void SetPlayerSpawn(GameObject spawner)
+    public bool GetIsRespawning() { return isRespawning; }  
+    
+
+    public IEnumerator RespawnBuffer()
     {
-        playerSpawn = spawner;
+        isRespawning = true;
+
+        yield return new WaitForSeconds(1f);
+
+        isRespawning = false;
     }
 }

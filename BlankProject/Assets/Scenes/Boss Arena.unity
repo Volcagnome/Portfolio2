@@ -10683,15 +10683,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8284814684954952058, guid: df82bb239edc1eb4caf894f4cfe52b42, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.03
+      value: -42.8
       objectReference: {fileID: 0}
     - target: {fileID: 8284814684954952058, guid: df82bb239edc1eb4caf894f4cfe52b42, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.08
+      value: 29.5
       objectReference: {fileID: 0}
     - target: {fileID: 8284814684954952058, guid: df82bb239edc1eb4caf894f4cfe52b42, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7.09
+      value: 74.7
       objectReference: {fileID: 0}
     - target: {fileID: 8284814684954952058, guid: df82bb239edc1eb4caf894f4cfe52b42, type: 3}
       propertyPath: m_LocalRotation.w
@@ -11998,7 +11998,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dea27888a56e9f441867cb44671ad932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageScript: {fileID: 0}
   menuActive: {fileID: 0}
   menuPause: {fileID: 4655950610353047872}
   menuWin: {fileID: 3142177486054050010}
@@ -12008,18 +12007,22 @@ MonoBehaviour:
   totalTime: 600
   timer: {fileID: 743920471}
   selfDestructTimer: {fileID: 515155486}
+  commandCodesInLevel: 0
   level_1_passwordDisplay: {fileID: 5162030687848143487}
   level_2_passwordDisplay: {fileID: 1543373899214115451}
+  commandCodesText: {fileID: 0}
   PickupMessageWindow: {fileID: 8449660316469455336}
   PickupMessage: {fileID: 7473238581519753464}
   leverCountText: {fileID: 0}
   staminaBar: {fileID: 8697403103299750363}
   healthbar: {fileID: 1190527937698216766}
   redFlash: {fileID: 303293356292848510}
+  webbedOverlay: {fileID: 0}
   playerSpawn: {fileID: 74200731}
   player: {fileID: 599124457}
   playerScript: {fileID: 599124461}
   crouchScript: {fileID: 599124458}
+  damageScript: {fileID: 0}
   youWin: 0
   isPaused: 0
 --- !u!1 &321084155924616834
@@ -14366,7 +14369,7 @@ PrefabInstance:
     - target: {fileID: 1013626813853109116, guid: 3d0322972e6672847b12d02f34ce8574, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 34a98319a2195a84fa824b5088d05134, type: 2}
+      objectReference: {fileID: 2100000, guid: 10d0f5b76d2cdb64883bc5bd19cbea04, type: 2}
     - target: {fileID: 1663224602514573181, guid: 3d0322972e6672847b12d02f34ce8574, type: 3}
       propertyPath: m_Name
       value: ComputerMainframeCell
@@ -14374,7 +14377,7 @@ PrefabInstance:
     - target: {fileID: 3045607682949004540, guid: 3d0322972e6672847b12d02f34ce8574, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 34a98319a2195a84fa824b5088d05134, type: 2}
+      objectReference: {fileID: 2100000, guid: 10d0f5b76d2cdb64883bc5bd19cbea04, type: 2}
     - target: {fileID: 3221460422262011026, guid: 3d0322972e6672847b12d02f34ce8574, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -14382,7 +14385,7 @@ PrefabInstance:
     - target: {fileID: 3777185643255284407, guid: 3d0322972e6672847b12d02f34ce8574, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 34a98319a2195a84fa824b5088d05134, type: 2}
+      objectReference: {fileID: 2100000, guid: 10d0f5b76d2cdb64883bc5bd19cbea04, type: 2}
     - target: {fileID: 4208588619658975886, guid: 3d0322972e6672847b12d02f34ce8574, type: 3}
       propertyPath: controller
       value: 
@@ -14458,15 +14461,15 @@ PrefabInstance:
     - target: {fileID: 7215335587105446686, guid: 3d0322972e6672847b12d02f34ce8574, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 34a98319a2195a84fa824b5088d05134, type: 2}
+      objectReference: {fileID: 2100000, guid: 10d0f5b76d2cdb64883bc5bd19cbea04, type: 2}
     - target: {fileID: 7973003921167609739, guid: 3d0322972e6672847b12d02f34ce8574, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 34a98319a2195a84fa824b5088d05134, type: 2}
+      objectReference: {fileID: 2100000, guid: 10d0f5b76d2cdb64883bc5bd19cbea04, type: 2}
     - target: {fileID: 8382977346839011018, guid: 3d0322972e6672847b12d02f34ce8574, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 34a98319a2195a84fa824b5088d05134, type: 2}
+      objectReference: {fileID: 2100000, guid: 10d0f5b76d2cdb64883bc5bd19cbea04, type: 2}
     m_RemovedComponents:
     - {fileID: 970989386836917077, guid: 3d0322972e6672847b12d02f34ce8574, type: 3}
     - {fileID: 4208588619658975886, guid: 3d0322972e6672847b12d02f34ce8574, type: 3}
@@ -23422,7 +23425,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a33163421794a2b44aaad54fa7c944fe, type: 2}
+  - {fileID: 2100000, guid: 2079db1c20dd3c24fb6afda5e97cba3c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

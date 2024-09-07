@@ -20,6 +20,7 @@ public class SpiderSpawner : MonoBehaviour
 
     private void Update()
     {
+
         if (isActive && currentSpider == null && readyToSpawn == true)
             StartCoroutine(SpawnSpider());
         else if(!isActive)
@@ -27,14 +28,11 @@ public class SpiderSpawner : MonoBehaviour
             if (currentSpider != null)
             {
                 currentSpider.GetComponent<NavMeshAgent>().SetDestination(gameObject.transform.position);
-
+                currentSpider.GetComponent<SharedEnemyAI>().CalmEnemy();
                 if (Vector3.Distance(gameObject.transform.position, currentSpider.transform.position) < 0.5f)
                     Destroy(currentSpider);
 
             }
-
-            
-
         }
     }
 
