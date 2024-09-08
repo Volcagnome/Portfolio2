@@ -143,4 +143,7 @@ public class patrolAI : SharedEnemyAI,IDamage
 
     public void SetIsWhistleBlower(bool status) { isWhistleBlower = false; }
 
+    
+
+
 }

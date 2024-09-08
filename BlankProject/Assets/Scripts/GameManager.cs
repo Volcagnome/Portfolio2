@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
         GameManager.instance.DisplayCommandCodes();
         
         securityPasswordLevel_1 = 0;
+        securityPasswordLevel_2 = 0;
         currentLevel = 0;
     }
 

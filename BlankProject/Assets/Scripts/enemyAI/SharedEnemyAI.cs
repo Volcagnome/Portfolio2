@@ -78,6 +78,8 @@ public class SharedEnemyAI : MonoBehaviour
     Coroutine FindIntruderCoroutine;
     Coroutine PursuePlayerCoroutine;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -168,10 +170,11 @@ public class SharedEnemyAI : MonoBehaviour
             playerInRange = false;
             playerInView = false;
 
+            Debug.Log(GameManager.instance.GetIsRespawning());  
 
             if (isAlerted && !GameManager.instance.GetIsRespawning())
                 lastKnownPlayerLocation = GameManager.instance.player.transform.position;
-            else if (GameManager.instance.GetIsRespawning())
+            else if (isAlerted && GameManager.instance.GetIsRespawning())
                 CalmEnemy();
         }
         else
@@ -218,8 +221,6 @@ public class SharedEnemyAI : MonoBehaviour
     protected IEnumerator PursuePlayer()
     {
         agent.SetDestination(lastKnownPlayerLocation);
-
-        Debug.Log(agent.remainingDistance);
 
         if (agent.remainingDistance <= 0.3f || !agent.hasPath)
         {
