@@ -58,7 +58,9 @@ public class ArachnoidAI : SharedEnemyAI,IDamage
         else
             enemyHPBar.SetActive(false);
 
-        if(caughtPlayer)
+       
+
+        if (caughtPlayer)
         {
             web.enabled = true;
 

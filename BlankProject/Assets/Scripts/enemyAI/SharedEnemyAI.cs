@@ -7,10 +7,11 @@ using static UnityEngine.GraphicsBuffer;
 //using UnityEditor.Experimental.GraphView;
 //using UnityEditor.Search;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class SharedEnemyAI : MonoBehaviour
 {
-    
+
     //Components
     [SerializeField] protected Transform headPos;
     [SerializeField] protected Renderer model;
@@ -27,9 +28,19 @@ public class SharedEnemyAI : MonoBehaviour
     [SerializeField] protected float FOV_Angle;
     [SerializeField] protected float rotationSpeed;
     protected Vector3 playerDirection;
+    protected float angleToPlayer;
+    protected float distanceToPlayer;
     protected Vector3 lastKnownPlayerLocation;
     protected bool playerInRange;
+    protected bool playerInOuterRange;
     protected bool playerInView;
+    protected bool playerDetected;
+    float enemyDetectionLevel;
+    float enemyDetectionLevelOG = 100f;
+    [SerializeField] protected GameObject playerDetectionCircle;
+    [SerializeField] protected Image playerDetectionCircleFill;
+    [SerializeField] protected GameObject playerInViewIndicator;
+    
 
 
     //Current State
@@ -73,7 +84,7 @@ public class SharedEnemyAI : MonoBehaviour
     protected float HPOrig;
     public GameObject enemyHPBar;
     public Image enemyHPBarFill;
-    [SerializeField] Vector3 HPBarPos;
+   [SerializeField] Vector3 HPBarPos;
 
     Coroutine FindIntruderCoroutine;
     Coroutine PursuePlayerCoroutine;
@@ -87,13 +98,16 @@ public class SharedEnemyAI : MonoBehaviour
 
         colorOrig = gameObject.GetComponentInChildren<Renderer>().sharedMaterial.color;
         isAlerted = false;
+
+        enemyDetectionLevel = 0;
+
     }
 
     // Update is called once per frame
     void Update()
     {
         CallMovementAnimation();
-
+       
         if (!isDead)
         {
             if (LevelManager.instance.GetIsBossFight())
@@ -103,6 +117,7 @@ public class SharedEnemyAI : MonoBehaviour
                 agent.stoppingDistance = combatStoppingDistance;
                 agent.SetDestination(GameManager.instance.player.transform.position);
             }
+        
 
             if (playerInView)
             {
@@ -111,26 +126,25 @@ public class SharedEnemyAI : MonoBehaviour
                 AlertAllies();
                 FoundPlayer();
                 agent.stoppingDistance = combatStoppingDistance;
+                playerInViewIndicator.SetActive(true);
             }
             else
             {
                 agent.stoppingDistance = idleStoppingDistance;
                 anim.SetBool("Aiming", false);
+                playerInViewIndicator.SetActive(false);
             }
 
-            if (isAlerted)
+            if (isAlerted)  
             {
-                                                                             
-                if (!playerInView && !playerInRange && !isRespondingToAlert && !LevelManager.instance.GetIsBossFight())
-                {
-                    PursuePlayerCoroutine = StartCoroutine(PursuePlayer());
-                }
 
-                else if (playerInRange)
-                {
+
+                if (!playerInView && !playerInRange && !isRespondingToAlert && !LevelManager.instance.GetIsBossFight())
+                PursuePlayerCoroutine = StartCoroutine(PursuePlayer());
+
+                if (playerInRange)
                     RotateToPlayer();
 
-                }
                 //else if (playerInRange && !playerInView)
                 //    agent.SetDestination(lastKnownPlayerLocation);
                 //agent.SetDestination(GameManager.instance.player.transform.position);
@@ -142,12 +156,17 @@ public class SharedEnemyAI : MonoBehaviour
 
             }
 
-
             if (isPlayerTarget())
                 UpdateEnemyUI();
-
             else
                 enemyHPBar.SetActive(false);
+
+            if (isAlerted || playerInOuterRange)
+                UpdateDetectionUI();
+            else
+            {
+                playerDetectionCircle.SetActive(false);
+            }
         }
     }
 
@@ -167,10 +186,13 @@ public class SharedEnemyAI : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+
+            playerDetectionCircle.SetActive(false);
+
+
             playerInRange = false;
             playerInView = false;
-
-            Debug.Log(GameManager.instance.GetIsRespawning());  
+            enemyDetectionLevel = 0;
 
             if (isAlerted && !GameManager.instance.GetIsRespawning())
                 lastKnownPlayerLocation = GameManager.instance.player.transform.position;
@@ -196,14 +218,17 @@ public class SharedEnemyAI : MonoBehaviour
         bool result;
 
         playerDirection = GameManager.instance.player.transform.position - headPos.position;
-        float angleToPlayer = Vector3.Angle(playerDirection, transform.forward);
+        angleToPlayer = Vector3.Angle(playerDirection, transform.forward);
+
         if (playerInRange)
         {
             RaycastHit hit;
             if (Physics.Raycast(headPos.position, playerDirection, out hit))
             {
                 if (hit.collider.gameObject.CompareTag("Player") && angleToPlayer <= FOV_Angle)
+                {
                     result = true;
+                }
 
                 else result = false;
 
@@ -224,6 +249,7 @@ public class SharedEnemyAI : MonoBehaviour
 
         if (agent.remainingDistance <= 0.3f || !agent.hasPath)
         {
+
             yield return new WaitForSeconds(1.5f);
             CalmEnemy();
         }
@@ -264,6 +290,7 @@ public class SharedEnemyAI : MonoBehaviour
     public virtual void AlertEnemy()
     {
         isAlerted = true;
+        enemyDetectionLevel = enemyDetectionLevelOG;
         transform.GetChild(0).tag = "Alerted";
         //lastKnownPlayerLocation = GameManager.instance.player.transform.position;
         agent.speed = combatSpeed;
@@ -272,6 +299,7 @@ public class SharedEnemyAI : MonoBehaviour
 
     public virtual void CalmEnemy()
     {
+        enemyDetectionLevel = 0;
         isAlerted = false;
         transform.GetChild(0).tag = "Idle";
         ReturnToPost();
@@ -288,7 +316,8 @@ public class SharedEnemyAI : MonoBehaviour
         {
             foreach (Collider ally in alliesInRange)
             {
-                if (ally.GetComponent<SharedEnemyAI>().GetIsDead() == false)
+
+                if (ally.GetComponent<SharedEnemyAI>().GetIsDead() == false && ally.gameObject != gameObject)
                 {
                     ally.gameObject.GetComponent<SharedEnemyAI>().lastKnownPlayerLocation = lastKnownPlayerLocation;
                     ally.gameObject.GetComponent<SharedEnemyAI>().AlertEnemy();
@@ -346,12 +375,18 @@ public class SharedEnemyAI : MonoBehaviour
         isTakingDamage = true;
 
         lastKnownPlayerLocation = GameManager.instance.player.transform.position;
+
+        
+
         AlertEnemy();
         AlertAllies();
         StartCoroutine(flashYellow());
 
+        
+
         if (HP <= 0 && !isDead)
         {
+
             isDead = true;
             
             Death();
@@ -368,6 +403,8 @@ public class SharedEnemyAI : MonoBehaviour
 
     protected void DeathShared()
     {
+   
+
         isDead = true;
         agent.isStopped = true;
 
@@ -378,6 +415,9 @@ public class SharedEnemyAI : MonoBehaviour
         transform.GetChild(0).gameObject.SetActive(false);
 
         enemyHPBar.SetActive(false);
+        playerDetectionCircle.SetActive(false);
+        playerInViewIndicator.SetActive(false);
+   
 
         Instantiate(DeathVFX, DeathFXPos.position, Quaternion.identity);
     }
@@ -406,6 +446,59 @@ public class SharedEnemyAI : MonoBehaviour
         enemyHPBarFill.fillAmount = HP / HPOrig;
         //EnemyManager.instance.enemyHPBar.transform.position = headTopPos.position + HPBarPos;
         enemyHPBar.transform.parent.rotation = Camera.main.transform.rotation;
+    }
+
+
+    public void UpdateDetectionUI()
+    {
+        playerDetectionCircle.SetActive(true);
+
+        float innerDetectionRadius = (gameObject.GetComponent<SphereCollider>().radius) * gameObject.transform.localScale.x;
+        float outerDetectionRadius = (gameObject.transform.GetChild(1).GetComponent<SphereCollider>().radius) * gameObject.transform.localScale.x;
+
+        playerDirection = GameManager.instance.player.transform.position - headPos.position;
+        angleToPlayer = Vector3.Angle(playerDirection, transform.forward);
+        distanceToPlayer = Vector3.Distance(GameManager.instance.player.transform.position, transform.position);
+
+        if (playerInRange)
+        {
+            if (angleToPlayer > 90f)
+                enemyDetectionLevel = 0f;
+            else if (angleToPlayer <= 90f && angleToPlayer >= 60f)
+                enemyDetectionLevel = ((90f - angleToPlayer) / 30f) * 100f;
+        }
+        else if (playerInOuterRange && angleToPlayer < 60f)
+        {
+
+            if (distanceToPlayer >= innerDetectionRadius && distanceToPlayer < outerDetectionRadius)
+                enemyDetectionLevel = (100f - (((distanceToPlayer - innerDetectionRadius) / (outerDetectionRadius - innerDetectionRadius)) * 100f));
+        }
+        else if(playerInOuterRange && angleToPlayer >60f)
+            enemyDetectionLevel= 0f;
+
+
+
+        playerDetectionCircleFill.fillAmount = enemyDetectionLevel / enemyDetectionLevelOG;
+        playerDetectionCircle.transform.parent.rotation = Camera.main.transform.rotation;
+
+        if (enemyDetectionLevel > enemyDetectionLevelOG)
+            enemyDetectionLevel = enemyDetectionLevelOG;
+
+        if (enemyDetectionLevel <= 33f)
+        {
+            playerDetectionCircleFill.color = Color.cyan;
+
+        }
+        else if (enemyDetectionLevel > 33f && enemyDetectionLevel <= 66f)
+        {
+            playerDetectionCircleFill.color = Color.yellow;
+
+        }   
+        else if (enemyDetectionLevel > 66f)
+        {
+            playerDetectionCircleFill.color = Color.red;
+
+        }
     }
 
 
@@ -490,6 +583,8 @@ public class SharedEnemyAI : MonoBehaviour
         }
     }
 
+
+
     ////////////////////////////////////////
     ///          GETTERS/SETTERS         ///
     ///////////////////////////////////////
@@ -524,4 +619,6 @@ public GameObject GetDefaultPost() { return defaultPost; }
     public void SetHP(float value) { HP = value; }
     public float GetShootRate() { return shootRate; }
     public void SetShootRate(float value) { shootRate = value; }
+
+    public void SetInOuterRange(bool status) { playerInOuterRange = status; }
 }

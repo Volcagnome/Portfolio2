@@ -53,7 +53,7 @@ public class patrolAI : SharedEnemyAI,IDamage
                 {
                     AlertEnemy();
                     AlertAllies();
-
+                    playerInViewIndicator.SetActive(true);
                     if (!LevelManager.instance.GetIntruderAlert() && !LevelManager.instance.GetIsRaisingAlarm()
                         && LevelManager.instance.intruderAlertButtons.Count != 0)
                         RaiseAlarm();
@@ -72,13 +72,12 @@ public class patrolAI : SharedEnemyAI,IDamage
                     if (!playerInView)
                         StartCoroutine(PursuePlayer());
 
-                    else if (playerInRange)
-                    {
+               
                         RotateToPlayer();
 
                         //if (!playerInView)
                         //    agent.SetDestination(GameManager.instance.player.transform.position);
-                    }
+                   
                 }
                 else if (!onDuty && defaultPost != null)
                     ReturnToPost();
@@ -88,15 +87,23 @@ public class patrolAI : SharedEnemyAI,IDamage
                 {
                     isWhistleBlower = false;
                 }
+            }
 
-                if (isPlayerTarget())
-                {
-                    UpdateEnemyUI();
-                }
-                else
-                    enemyHPBar.SetActive(false);
+            if (isPlayerTarget())
+            {
+                UpdateEnemyUI();
+            }
+            else
+                enemyHPBar.SetActive(false);
+
+            if (playerInOuterRange || isAlerted)
+                UpdateDetectionUI();
+            else
+            {
+                playerDetectionCircle.SetActive(false);
             }
         }
+
     }
 
     protected override void Death()

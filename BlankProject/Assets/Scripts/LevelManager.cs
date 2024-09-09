@@ -117,8 +117,6 @@ public class LevelManager : MonoBehaviour
     }
     public void IntruderAlert(Vector3 location)
     {
-        
-
         intruderAlert = true;
         isRaisingAlarm = false;
 

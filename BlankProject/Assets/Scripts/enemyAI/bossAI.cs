@@ -42,9 +42,6 @@ public class bossAI : SharedEnemyAI, IDamage
     int currentRotationIndex;
 
 
-    float distanceToPlayer;
-
-
     //Player detection
     [SerializeField] float maxTiltAngle;
 
@@ -65,6 +62,7 @@ public class bossAI : SharedEnemyAI, IDamage
 
         if (playerInView)
         {
+            lastKnownPlayerLocation = GameManager.instance.player.transform.position;
             AlertEnemy();
             FoundPlayer();
         }
@@ -93,6 +91,12 @@ public class bossAI : SharedEnemyAI, IDamage
         if (isPlayerTarget())
             UpdateEnemyUI();
 
+        if (isAlerted || playerInOuterRange)
+            UpdateDetectionUI();
+        else
+        {
+            playerDetectionCircle.SetActive(false);
+        }
 
     }
       

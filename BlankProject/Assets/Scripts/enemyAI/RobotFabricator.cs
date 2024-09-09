@@ -90,7 +90,6 @@ public class RobotFabricator : MonoBehaviour
 
         else if (entityToSpawn == SharedEnemyAI.enemyType.Patrol)
         {
-            Debug.Log("spawning patrol");
            newRobot =  Instantiate(patrol, spawnPosition.transform.position, spawnPosition.transform.localRotation);
         }
 
