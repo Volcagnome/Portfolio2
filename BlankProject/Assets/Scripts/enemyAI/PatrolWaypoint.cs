@@ -3,57 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+//All Patrol Waypoints hold a reference to the next waypoint on the route.
+//MaxRobotsOnThisRoute and robotAssgnedToRoute will only be accessed if the object is a PatrolWaypointStart. 
+
+
 public class PatrolWaypoint : MonoBehaviour
 {
+    //Next waypoint on the route
     [SerializeField] GameObject nextWaypoint;
+
+    //Max number of robots allowed on this route  (only need to set if waypoint is a WaypointStart
     [SerializeField] int MaxRobotsOnThisRoute;
+
+    //Roster of robots assigned to route (will auto-populate with any robots who have this PatrolWaypointStart assigned as 
+    //their default post)
     [SerializeField] List<GameObject> robotsAssignedToRoute;
 
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
+    public int GetNumberRobotsOnThisRoute(){ return robotsAssignedToRoute.Count;}
 
-// Update is called once per frame
-void Update()
-    {
+    public int GetMaxRobotsOnThisRoute() { return MaxRobotsOnThisRoute; }
 
-    }
+    public void AddRobotToRoute(GameObject newPatrolBot) { robotsAssignedToRoute.Add(newPatrolBot);}
 
-    public int GetNumberRobotsOnThisRoute()
-    {
-        return robotsAssignedToRoute.Count;
-    }
+    public void RemoveRobotFromRoute(GameObject deadPatrolBot) { robotsAssignedToRoute.Remove(deadPatrolBot); }
 
-    public int GetMaxRobotsOnThisRoute()
-    {
-        return MaxRobotsOnThisRoute;
-    }
+    public GameObject GetNextWaypoint() { return nextWaypoint; }
 
-    public void AddRobotToRoute(GameObject newPatrolBot)
-    {
-        robotsAssignedToRoute.Add(newPatrolBot);
-    }
-
-    public void RemoveRobotFromRoute(GameObject deadPatrolBot)
-    {
-        robotsAssignedToRoute.Remove(deadPatrolBot);
-    }
-
-
-
-
-    private void OnTriggerEnter(Collider patrolRobot)
-    { 
-        if (patrolRobot.gameObject.GetComponent<SharedEnemyAI>().GetCurrentDestination() == gameObject
-            && patrolRobot.gameObject.GetComponent<SharedEnemyAI>().CheckIfOnDuty() == true)
-        {
-
-            patrolRobot.gameObject.GetComponent<SharedEnemyAI>().SetCurrentDestination(nextWaypoint);
-            patrolRobot.gameObject.GetComponent<NavMeshAgent>().SetDestination(nextWaypoint.transform.position);
-        }
-    }
-
-  
 }

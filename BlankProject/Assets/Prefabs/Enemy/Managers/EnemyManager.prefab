@@ -44,11 +44,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 512666bd716991749a4bb65af2286222, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fabricatorSpawnInterval: 120
-  minimumTimeBetweenSpawnAttempts: 60
+  fabricatorSpawnInterval: 30
   robotFabricators_List: []
   guardPosts_List: []
   titanPosts_List: []
   patrolRoutes_List: []
   guardRoster: []
   titanRoster: []
+  robotHitSounds:
+  - {fileID: 8300000, guid: d58d1be3e959c884c8873e70b855f01e, type: 3}
+  - {fileID: 8300000, guid: 7989f468b486fd2409cc50ee18f6a4fd, type: 3}
+  - {fileID: 8300000, guid: f4733ebd8d9db3f42af05529d182e668, type: 3}
+  robotCriticalHitSounds:
+  - {fileID: 8300000, guid: d6090f5c52b199a4d8ea01d67b1a1c4d, type: 3}
+  - {fileID: 8300000, guid: 8fffdf5337d314443bbe04ac6b8a3dd0, type: 3}

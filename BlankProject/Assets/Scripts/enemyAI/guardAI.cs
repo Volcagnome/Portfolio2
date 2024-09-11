@@ -5,21 +5,25 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
+//Handles all behavior unique to guard robots, everything else handled by SharedEnemyAI.
+
 public class guardAI : SharedEnemyAI, IDamage
 {
 
     // Start is called before the first frame update
+    //If robot was placed in scene and already has a manually assigned post, adds them to the guard count and roster, and
+    //sets its assigned guard post as occupied. If they are within 0.5f of the reinforcement spawner, they are reinforcements
+    //called to respond to an Intruder Alert and sets their default post as the reinforcement spawner. Otherwise, passes them
+    //to the EnemyManager to assign them a guard post.
     void Start()
     {
         HPOrig = HP;
-
-
 
         if (defaultPost != null)
         {
             if (defaultPost.GetComponent<GuardPost>())
             {
-                EnemyManager.instance.AddRobotToGuardCount();
+                EnemyManager.instance.AddRobotToCount(gameObject);
                 EnemyManager.instance.AddGuardToRoster(gameObject);
                 defaultPost.GetComponent<GuardPost>().SetIsOccupied(true);
                 defaultPost.GetComponent<GuardPost>().AssignGuard(gameObject);
@@ -33,15 +37,23 @@ public class guardAI : SharedEnemyAI, IDamage
         HPOrig = HP;
         colorOrig = model.sharedMaterial.color;
 
+        readyToSpeak = true;
+        currentIdleSoundCooldown = 5f;
+
     }
 
+
+    //On death calls the DeathShared functions to execute all the common death operations. If they were assigned to a guard post,
+    //passes them to the EnemyManager to remove them from the guard count, removes them from the guard roster, and sets their
+    //guard post as unoccupied. If they were on the response team for an Intruder Alert, removes them from the list. Disables
+    //their guardAI and starts the timer to despawn their corpse.
     protected override void Death()
     {
         DeathShared();
         
         if (defaultPost.GetComponent<GuardPost>())
         {
-            EnemyManager.instance.RemoveDeadGuard(gameObject);
+            EnemyManager.instance.RemoveDeadRobot(gameObject);
             defaultPost.GetComponent<GuardPost>().SetIsOccupied(false);
             EnemyManager.instance.RemoveGuardFromRoster(gameObject);
         }
@@ -49,9 +61,20 @@ public class guardAI : SharedEnemyAI, IDamage
         if (LevelManager.instance.responseTeam.Contains(gameObject))
             LevelManager.instance.responseTeam.Remove(gameObject);
 
-        StartCoroutine(DespawnDeadRobot(gameObject));
 
         GetComponent<guardAI>().enabled = false;
+        StartCoroutine(DespawnDeadRobot(gameObject));
     }
-  
+
+
+    protected override void playFootstepSound()
+    {
+        if (!isDead)
+        {
+            int playTrack = Random.Range(0, footsteps.Count);
+
+            audioPlayer.PlayOneShot(footsteps[playTrack], 0.1f);
+        }
+    }
+
 }

@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
+//Spawns spider robots during an Intruder Alert.
+
 public class SpiderSpawner : MonoBehaviour
 {
+    //Spider robot prefab
     [SerializeField] GameObject Arachnoid;
  
-
+    //Current spider spawned from this spider spawner
     GameObject currentSpider;
+
     bool isActive;
     bool readyToSpawn;
 
@@ -17,9 +22,14 @@ public class SpiderSpawner : MonoBehaviour
     {
         readyToSpawn = true;
     }
+    
 
+    //When Intruder Alert is initiated, spider spawners will be activated and a spider will be spawned in each spider spawner. 
+    //When the Intruder Alert ends, they are deactivated. They calm their spider and call it back to the spawner. When they
+    //get back, despawns the spider. 
     private void Update()
     {
+
         if (isActive && currentSpider == null && readyToSpawn == true)
             StartCoroutine(SpawnSpider());
         else if(!isActive)
@@ -27,17 +37,17 @@ public class SpiderSpawner : MonoBehaviour
             if (currentSpider != null)
             {
                 currentSpider.GetComponent<NavMeshAgent>().SetDestination(gameObject.transform.position);
-
+                currentSpider.GetComponent<SharedEnemyAI>().CalmEnemy();
                 if (Vector3.Distance(gameObject.transform.position, currentSpider.transform.position) < 0.5f)
                     Destroy(currentSpider);
 
             }
-
-            
-
         }
     }
 
+
+    //Spawns a new spider and sets their default post to the instantiating spider spawner. It then waits the configured, 
+    //number of seconds before becoming available to spawn another spider if its current one is killed.
     IEnumerator SpawnSpider()
     {
         readyToSpawn = false;
@@ -45,7 +55,6 @@ public class SpiderSpawner : MonoBehaviour
         currentSpider = Instantiate(Arachnoid, transform.position, Quaternion.identity);
 
         currentSpider.GetComponent<SharedEnemyAI>().SetDefaultPost(gameObject);
-        currentSpider.GetComponent<NavMeshAgent>().SetDestination(GameManager.instance.player.transform.position);
 
         yield return new WaitForSeconds(LevelManager.instance.GetMinTimeBetweenSpiderSpawn());
 
@@ -53,10 +62,5 @@ public class SpiderSpawner : MonoBehaviour
     }
 
 
-    public void ToggleActive(bool status)
-    {
-        isActive = status;
-    }
-
-
+    public void SetIsActive(bool status) { isActive = status; }
 }

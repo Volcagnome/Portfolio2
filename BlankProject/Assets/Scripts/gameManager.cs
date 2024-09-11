@@ -22,12 +22,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] float totalTime = 600;
     [SerializeField] TMP_Text timer;
     [SerializeField] GameObject selfDestructTimer;
+    [SerializeField] int commandCodesInLevel;
     float minutes;
     float seconds;
     string timeLeft;
 
     [SerializeField] TMP_Text level_1_passwordDisplay;
     [SerializeField] TMP_Text level_2_passwordDisplay;
+    [SerializeField] TMP_Text commandCodesText;
     [SerializeField] GameObject PickupMessageWindow;
     [SerializeField] TMP_Text PickupMessage;
 
@@ -36,6 +38,7 @@ public class GameManager : MonoBehaviour
     public Image staminaBar;
     public Image healthbar;
     public GameObject redFlash;
+    public GameObject webbedOverlay;
 
     public GameObject playerSpawn;
     int currentLevel;
@@ -45,6 +48,7 @@ public class GameManager : MonoBehaviour
     public playerMovement playerScript;
     public playerCrouch crouchScript;
     public playerDamage damageScript;
+    bool isRespawning;
 
     private int activeLevers;
     public bool youWin;
@@ -69,8 +73,10 @@ public class GameManager : MonoBehaviour
         playerScript = player.GetComponent<playerMovement>();
         crouchScript = player.GetComponent<playerCrouch>();
         damageScript = player.GetComponent<playerDamage>();
+        GameManager.instance.DisplayCommandCodes();
         
         securityPasswordLevel_1 = 0;
+        securityPasswordLevel_2 = 0;
         currentLevel = 0;
     }
 
@@ -95,6 +101,11 @@ public class GameManager : MonoBehaviour
         {
             BeginCountdown();
         }
+
+        if(GameManager.instance.GetCommandCodesCollected() == 2)
+        {
+            GameManager.instance.UpdateWinCondition();
+        }
     }
 
     public void statePause()
@@ -115,14 +126,13 @@ public class GameManager : MonoBehaviour
         menuActive = null;
     }
 
-    public void UpdateWinCondition(int lever)
-    { 
-        if (playerEscaped)
-        {
-            statePause();
-            menuActive = menuWin;
-            menuActive.SetActive(true);
-        }
+    public void UpdateWinCondition()
+    {
+        
+        statePause();
+        menuActive = menuWin;
+        menuActive.SetActive(true);
+
     }
 
     public void youLose()
@@ -135,6 +145,8 @@ public class GameManager : MonoBehaviour
     public void PickedUpCommandCode()
     {
         commandCodesCollected++;
+        commandCodesText.text = commandCodesCollected.ToString("F0");
+        commandCodesInLevel--;
     }
 
     public void PlugInCode()
@@ -166,7 +178,10 @@ public class GameManager : MonoBehaviour
 
         }
     }
-   
+   public void DisplayCommandCodes()
+    {
+        
+    }
 
     public void DisplayPasswords()
     {
@@ -198,9 +213,17 @@ public class GameManager : MonoBehaviour
     public int GetCurrentLevel() { return currentLevel; }
 
     public void SetCurrentLevel(int level) { currentLevel = level; }
+    public void SetPlayerSpawn(GameObject spawner) { playerSpawn = spawner;}
 
-    public void SetPlayerSpawn(GameObject spawner)
+    public bool GetIsRespawning() { return isRespawning; }  
+    
+
+    public IEnumerator RespawnBuffer()
     {
-        playerSpawn = spawner;
+        isRespawning = true;
+
+        yield return new WaitForSeconds(1f);
+
+        isRespawning = false;
     }
 }

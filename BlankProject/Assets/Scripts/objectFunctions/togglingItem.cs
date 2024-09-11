@@ -35,8 +35,8 @@ public class togglingItem : MonoBehaviour, IInteract, ISendState
 
         if (vital)
         {
-            if (state) GameManager.instance.UpdateWinCondition(1);
-            else GameManager.instance.UpdateWinCondition(-1);
+            //if (state) GameManager.instance.UpdateWinCondition(1);
+            //else GameManager.instance.UpdateWinCondition(-1);
         }
     }
 

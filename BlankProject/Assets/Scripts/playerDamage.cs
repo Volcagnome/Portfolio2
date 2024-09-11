@@ -9,11 +9,14 @@ public class playerDamage : MonoBehaviour, IDamage
     [SerializeField] LayerMask ignoreMask;
 
     [Header("----- Weapons -----")]
+    int selectedGun;
     [SerializeField] List<pickupStats> weapons;
     [SerializeField] pickupStats defaultWeapon;
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject flashlight;
     [SerializeField] GameObject muzzleFlash;
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField] Transform shootPos;
 
     [Header("----- Hit Points (HP) -----")]
     [SerializeField] float HP;
@@ -58,14 +61,18 @@ public class playerDamage : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        aiming();
-
-        if (isEnemyTarget())
+        if ( (!GameManager.instance.isPaused))
         {
-            adjustHPBar();
+            aiming();
+            selectGun();
 
-            if (!isTakingDamage)
-                RegenerateHealth();
+            if (isEnemyTarget())
+            {
+                adjustHPBar();
+
+                if (!isTakingDamage)
+                    RegenerateHealth();
+            }
         }
     }
 
@@ -94,13 +101,15 @@ public class playerDamage : MonoBehaviour, IDamage
     {
         isShooting = true;
         StartCoroutine(flashMuzzle());
+        // Spawns a tracer round (playerBullet prefab)
+        Instantiate(bulletPrefab, shootPos.position, shootPos.transform.rotation);
 
         RaycastHit hit;
         // Physics.Raycast (Origin, Direction, hit info, max distance)
         if (Physics.Raycast(Camera.main.transform.position,
             Camera.main.transform.forward, out hit, shootDist, ~ignoreMask))
         {
-        
+
             IDamage dmg = hit.collider.gameObject.GetComponentInParent<IDamage>();
 
             if (dmg != null)
@@ -136,6 +145,42 @@ public class playerDamage : MonoBehaviour, IDamage
         muzzleFlash.SetActive(true);
         yield return new WaitForSeconds(0.1f);
         muzzleFlash.SetActive(false);
+    }
+
+    void selectGun()
+    {
+        // Mouse wheel switching:
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < weapons.Count - 1)
+        {
+            selectedGun++;
+            setWeapon(weapons[selectedGun]);
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
+        {
+            selectedGun--;
+            setWeapon(weapons[selectedGun]);
+        }
+
+        // Number press targeted switching:
+        // If a number is pressed (1-9), switch to the weapon in that slot in player's weapon list:
+        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Alpha3)
+            || Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Alpha5) || Input.GetKeyDown(KeyCode.Alpha6)
+            || Input.GetKeyDown(KeyCode.Alpha7) || Input.GetKeyDown(KeyCode.Alpha8) || Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            // Collect key press string:
+            string pressedNum = Input.inputString;
+            int tempIndex;
+            // Parse to int into selectedGun (index):
+            int.TryParse(pressedNum, out tempIndex);
+            // If temp index is within the number of weapons in list...
+            if (tempIndex <= weapons.Count)
+            {
+                // Update index:
+                selectedGun = tempIndex-1;
+                // Set to that weapon.
+                setWeapon(weapons[selectedGun]);
+            }
+        }
     }
 
     // *** INTERACTING *** //

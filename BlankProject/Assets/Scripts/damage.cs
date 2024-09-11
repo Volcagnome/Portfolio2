@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class damage : MonoBehaviour
 {
-    [SerializeField] enum damageType {bullet, web, stationary, shield}
+    [SerializeField] enum damageType {bullet, web, stationary, shield, playerBullet}
     [SerializeField] damageType type;
     [SerializeField] protected Rigidbody rb;
 
@@ -11,6 +11,7 @@ public class damage : MonoBehaviour
     [SerializeField] protected float damageAmount;
     [SerializeField] protected int speed;
     [SerializeField] protected int destroyTime;
+
     private GameObject source;
 
 
@@ -20,6 +21,12 @@ public class damage : MonoBehaviour
         if (type == damageType.bullet || type == damageType.web)
         {
             rb.velocity = (GameManager.instance.player.transform.position - transform.position).normalized * speed;
+            Destroy(gameObject, destroyTime);
+        }
+
+        if (type == damageType.playerBullet)
+        {
+            rb.velocity = transform.forward * speed;
             Destroy(gameObject, destroyTime);
         }
     }
@@ -36,8 +43,16 @@ public class damage : MonoBehaviour
         {
             dmg.takeDamage(damageAmount);
 
-            if(type == damageType.bullet)
+            if (type == damageType.bullet)
                 Destroy(gameObject);
+
+            else if (type == damageType.shield)
+            {
+                gameObject.GetComponent<AudioSource>().PlayOneShot(GetComponentInParent<TitanAI>().shieldHit);
+            }
+
+            
+            
         }
     }
 }
