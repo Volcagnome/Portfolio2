@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//If titan exits the TitanPost's Return object's sphere collider, Calms the titan so they return to their post.
+
 public class TitanPostReturn : MonoBehaviour
 {
-    private void OnTriggerExit(Collider eliteRobot)
+    private void OnTriggerExit(Collider titanRobot)
     {
 
-        if (eliteRobot.gameObject.GetComponent<SharedEnemyAI>().GetEnemyType() == SharedEnemyAI.enemyType.Titan
-            && eliteRobot.GetComponent<SharedEnemyAI>().GetDefaultPost() == gameObject.GetComponentInParent<TitanPost>().gameObject)
+        if (titanRobot.gameObject == GetComponentInParent<TitanPost>().GetAssignedTitan())
         {
-            eliteRobot.gameObject.GetComponent<SharedEnemyAI>().CalmEnemy();
+            titanRobot.gameObject.GetComponent<SharedEnemyAI>().CalmEnemy();
         }
     }
 }

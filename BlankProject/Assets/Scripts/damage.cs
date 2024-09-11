@@ -11,6 +11,7 @@ public class damage : MonoBehaviour
     [SerializeField] protected float damageAmount;
     [SerializeField] protected int speed;
     [SerializeField] protected int destroyTime;
+
     private GameObject source;
 
 
@@ -42,8 +43,16 @@ public class damage : MonoBehaviour
         {
             dmg.takeDamage(damageAmount);
 
-            if(type == damageType.bullet)
+            if (type == damageType.bullet)
                 Destroy(gameObject);
+
+            else if (type == damageType.shield)
+            {
+                gameObject.GetComponent<AudioSource>().PlayOneShot(GetComponentInParent<TitanAI>().shieldHit);
+            }
+
+            
+            
         }
     }
 }

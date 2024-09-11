@@ -5,34 +5,40 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Lumin;
 
+//Handles all guard post and patrol route assingments and keeps track of how many respawnable robots are currently in the scene.
+
+
 public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager instance;
 
+    //Minimum time between fabricator spawn attempts
     [SerializeField] float fabricatorSpawnInterval;
     //[SerializeField] float minimumTimeBetweenSpawnAttempts;
 
-
+    //Current count of each robot type and current total count
     private int NumCurrentGuardRobots;
     private int NumCurrentPatrolRobots;
     private int NumCurrentTitanRobots;
-
     private int NumCurrentTotalRobots;
 
+    //Lists of fabricators and robot posts.
     public List<GameObject> robotFabricators_List;
     public List<GameObject> guardPosts_List;
     public List<GameObject> titanPosts_List;
     public List<GameObject> patrolRoutes_List;
 
+    //Lists of currently spawned guards and titans
     public List<GameObject> guardRoster;
     public List<GameObject> titanRoster;
 
+    //Max robots allowed in scene determined by number of posts and patrol route slots
     private int maxAllowedRobots;
     private bool readyToCallFabricator;
 
     bossAI boss;
-
-    //max guards + max robots for each patrol = max robots
+    public List<AudioClip> robotHitSounds;
+    public List<AudioClip> robotCriticalHitSounds;
 
     void Awake()
     {
@@ -42,6 +48,8 @@ public class EnemyManager : MonoBehaviour
     }
 
     // Update is called once per frame
+    //If current number of robots dips below the max allowed number and a robot isn't currently being spawned, 
+    //calls the FillEmptyPost function.
     void Update()
     {
         if (NumCurrentTotalRobots < maxAllowedRobots && readyToCallFabricator)
@@ -50,35 +58,48 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    private void FillEmptyPost()
-    {
-        SharedEnemyAI.enemyType entityToSpawn = WhichEnemyTypeToSpawn();
 
-        for (int index = 0; index < robotFabricators_List.Count; index++)
+    ////////////////////////////////////////
+    ///     ROBOT POPULATION CONTROL    ///
+    ///////////////////////////////////////
+
+
+    //Iterates through the list of Patrol Route Starts and adds up their total number of slots on each route to get 
+    //the total number of patrol robots allowed on the map.
+    public int CalculateMaxAllowedPatrolRobots()
+    {
+        int tempCount = 0;
+
+
+        if (patrolRoutes_List.Count != 0)
         {
-            GameObject currentFabricator = robotFabricators_List[index];
+            for (int index = 0; index < patrolRoutes_List.Count; index++)
 
-            if (currentFabricator.GetComponent<RobotFabricator>().GetIsFunctional()
-                && currentFabricator.GetComponent<RobotFabricator>().GetIsReadyToSpawn())
-            {
-                StartCoroutine(currentFabricator.GetComponent<RobotFabricator>().SpawnRobot(entityToSpawn));
-                readyToCallFabricator = false;
-                StartCoroutine(MinimumSpawnTimer());
-                break;
-            }
-           
+                tempCount = tempCount + patrolRoutes_List[index].GetComponent<PatrolWaypoint>().GetMaxRobotsOnThisRoute();
+
         }
-        
+
+        return tempCount;
     }
 
-    IEnumerator MinimumSpawnTimer()
+    //Adds up total number of allowed patrol robots and the number of guard posts to get the total number of respawnable 
+    //robots in the scene.
+    IEnumerator CalculateMaxAllowedRobots()
     {
-        yield return new WaitForSeconds(fabricatorSpawnInterval);
-
-        readyToCallFabricator = true;
+        yield return new WaitForSeconds(2f);
+        maxAllowedRobots = CalculateMaxAllowedPatrolRobots() + guardPosts_List.Count;
     }
 
+    
+    //Adds the current number of guards and patrol robots to get the current number of respawnable robots.
+    public int GetCurrentNumberRobots()
+    {
+        NumCurrentTotalRobots = NumCurrentGuardRobots + NumCurrentPatrolRobots;
+        return NumCurrentTotalRobots;
+    }
 
+    //Checks how many guard vacancies and patrol vacancies there are. If there is a greater need for guards, returns
+    //the guard enemy type, if there is a greater need for patrols, returns the patrol enemy type.
     private SharedEnemyAI.enemyType WhichEnemyTypeToSpawn()
     {
         int guardPostVacancies = guardPosts_List.Count - NumCurrentGuardRobots;
@@ -96,9 +117,49 @@ public class EnemyManager : MonoBehaviour
 
     }
 
+
+    //After checking which enemy type to spawn, iterates through the list of robot fabricators to find one off cooldown
+    //starts its SpawnRobot coroutine and passes it the enemy type to spawn. Then starts the respawn timer. 
+    private void FillEmptyPost()
+    {
+        SharedEnemyAI.enemyType entityToSpawn = WhichEnemyTypeToSpawn();
+
+        for (int index = 0; index < robotFabricators_List.Count; index++)
+        {
+            GameObject currentFabricator = robotFabricators_List[index];
+
+            if (currentFabricator.GetComponent<RobotFabricator>().GetIsReadyToSpawn())
+            {
+                StartCoroutine(currentFabricator.GetComponent<RobotFabricator>().SpawnRobot(entityToSpawn));
+                readyToCallFabricator = false;
+                StartCoroutine(MinimumSpawnTimer());
+                break;
+            }
+           
+        }
+        
+    }
+
+    //Timer between spawn attempts if there are multiple robot vacancies.
+    IEnumerator MinimumSpawnTimer()
+    {
+        yield return new WaitForSeconds(fabricatorSpawnInterval);
+
+        readyToCallFabricator = true;
+    }
+
+
+
+    ////////////////////////////////////////
+    ///      ROBOT ROLE ASSIGNMENT      ///
+    ///////////////////////////////////////
+
+
+    //First adds the new robot to the guard robot count and to the roster of guard robots. Then iterates through the list 
+    //of guard posts until it finds an empty one and assigns the robot to it. 
     public void AssignGuardPost(GameObject newRobot)
     {
-        AddRobotToGuardCount();
+        AddRobotToCount(newRobot);
         AddGuardToRoster(newRobot);
 
         for (int index = 0; index < guardPosts_List.Count; index++)
@@ -116,9 +177,12 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
+
+    //Adds the new robot to the titan robot count and to the titan roster. Then iterates through the list of titan posts
+    //until it finds an empty one and assigns the titan to it.
     public void AssignTitanPost(GameObject newRobot)
     {
-        AddRobotToTitanCount();
+        AddRobotToCount(newRobot);
         AddTitanToRoster(newRobot);
 
         for (int index = 0; index < titanPosts_List.Count; index++)
@@ -136,6 +200,8 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
+    //Iterates through the list of Patrol Waypoint Starts until it finds the one with the vacancy and assigns the new robot
+    //to it. Sends the new patrol to their patrol start and adds them to the patrol robot count.
     public void AssignPatrolPost(GameObject newRobot)
     {
             for (int index = 0; index < patrolRoutes_List.Count; index++)
@@ -153,87 +219,58 @@ public class EnemyManager : MonoBehaviour
                     newRobot.GetComponent<SharedEnemyAI>().SetDefaultPost(currentRoute);
                     newRobot.GetComponent<patrolAI>().SetCurrentDestination(currentRoute);
                     newRobot.GetComponent<NavMeshAgent>().destination = currentRoute.transform.position;
-                    AddRobotToPatrolCount();
+                    AddRobotToCount(newRobot);
                     break;
                 }
             }
-        
     }
 
-    public void RemoveDeadGuard(GameObject deadGuard)
+
+
+    ////////////////////////////////////////
+    ///      ROBOT LIST MANAGEMENT      ///
+    ///////////////////////////////////////
+
+
+    //Decrements the appropriate robot count depending on the robot enemy type and refreshes the current robot count. 
+    public void RemoveDeadRobot(GameObject deadRobot)
     {
-        NumCurrentGuardRobots--;
+
+        SharedEnemyAI.enemyType type = deadRobot.GetComponent<SharedEnemyAI>().GetEnemyType();
+
+        if (type == SharedEnemyAI.enemyType.Guard)
+            NumCurrentGuardRobots--;
+   
+        else if (type == SharedEnemyAI.enemyType.Patrol)
+            NumCurrentPatrolRobots--;
+
+        else if (type == SharedEnemyAI.enemyType.Titan)
+            NumCurrentTitanRobots--;
+
         NumCurrentTotalRobots = GetCurrentNumberRobots();
     }
 
-    public void RemoveDeadPatrol(GameObject deadPatrol)
+    //Increments the appropriate robot count depending on enemy type and refreshes the current robot count.
+    public void AddRobotToCount(GameObject newRobot)
     {
-        NumCurrentPatrolRobots--;
+
+        SharedEnemyAI.enemyType type = newRobot.GetComponent<SharedEnemyAI>().GetEnemyType();
+
+        if (type == SharedEnemyAI.enemyType.Guard)
+            NumCurrentGuardRobots++;
+
+        else if (type == SharedEnemyAI.enemyType.Patrol)
+            NumCurrentPatrolRobots++;
+
+        else if (type == SharedEnemyAI.enemyType.Titan)
+            NumCurrentTitanRobots++;
+
         NumCurrentTotalRobots = GetCurrentNumberRobots();
-    }
-
-    public void RemoveDeadTitan(GameObject deadTitan)
-    {
-        NumCurrentTitanRobots--;
-        NumCurrentTotalRobots = GetCurrentNumberRobots();
-    }
-
-    IEnumerator CalculateMaxAllowedRobots()
-    {
-        yield return new WaitForSeconds(2f);
-
-        
-        maxAllowedRobots = CalculateMaxAllowedPatrolRobots() + guardPosts_List.Count;
-    }
-
-    public int CalculateMaxAllowedPatrolRobots()
-    {
-        int tempCount = 0;
-
-
-        if (patrolRoutes_List.Count != 0){
-           for(int index = 0; index < patrolRoutes_List.Count; index++) 
-
-                tempCount = tempCount + patrolRoutes_List[index].GetComponent<PatrolWaypoint>().GetMaxRobotsOnThisRoute();
-            
-        }
-
-        return tempCount;
-    }
-
-    public int GetCurrentNumberRobots()
-    {
-        NumCurrentTotalRobots = NumCurrentGuardRobots + NumCurrentPatrolRobots;
-        return NumCurrentTotalRobots;
     }
 
     public int GetCurrentNumberGuards() { return NumCurrentGuardRobots; }
 
     public int GetCurrentNumberTitans() { return NumCurrentTitanRobots; }
-
-
-    public void AddRobotToGuardCount()
-    {
-        NumCurrentGuardRobots++;
-        NumCurrentTotalRobots = GetCurrentNumberRobots();
-
-    }
-
-    public void AddRobotToPatrolCount()
-    {
-        NumCurrentPatrolRobots++;
-        NumCurrentTotalRobots = GetCurrentNumberRobots();
-    }
-
-    public void AddRobotToTitanCount()
-    {
-        NumCurrentTitanRobots++;
-        NumCurrentTotalRobots = GetCurrentNumberRobots();
-    }
-
-    public void AddNewPatrolRoute(GameObject routeStart) { patrolRoutes_List.Add(routeStart); }
-
-    public void AddNewGuardPost(GameObject guardPost) {  guardPosts_List.Add(guardPost);}
 
     public int GetMaxAllowedRobots() { return maxAllowedRobots; }
 

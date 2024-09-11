@@ -4,8 +4,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
+
+//Handles all events within the Boss Arena
+
 public class BossFight : MonoBehaviour
 {
+    //Scene objects
     [SerializeField] bossAI boss;
     [SerializeField] GameObject reinforcementSpawner;
     [SerializeField] GameObject bossDefaultPost2;
@@ -17,19 +21,21 @@ public class BossFight : MonoBehaviour
     [SerializeField] GameObject SelfDestructLever;
     [SerializeField] GameObject SelfDestructTimer;
     [SerializeField] TMP_Text timeLeft;
+    [SerializeField] GameObject CommandCodeBoss;
+    [SerializeField] GameObject CommandCodeBossPlatform;
 
+
+    //Boss health threshholds that separate different stages of fight and determines when reinforcements will be called and how many
     [SerializeField] int fightStage_2_threshhold;
     [SerializeField] int fightStage_3_threshhold;
     [SerializeField] int fightStage_2_guards;
     [SerializeField] int fightStage_3_guards;
     [SerializeField] int fightStage_3_titans;
-
-    [SerializeField] GameObject CommandcodeBoss;
-    [SerializeField] GameObject CommandcodeBossPlatform;
-
+    
     int fightStage;
-
     bool bossFightBegin = false;
+
+    //Tracks whether or not reinforcements have been called for respective fight stage
     bool spawnedStage2Reinforcements;
     bool spawnedStage3Reinforcements;
  
@@ -44,21 +50,23 @@ public class BossFight : MonoBehaviour
 
         MainFrameDoor.transform.GetChild(1).gameObject.SetActive(false);
         MainFrameDoor.transform.GetChild(2).gameObject.SetActive(true);
-   
-
     }
 
     // Update is called once per frame
+    //Calls configured reinforcements when boss's health reaches configured threshholds. When boss is dead,
+    //enables final command code pickup, and opens the door to the mainframe. Once the player inserts the command codes,
+    //lifts the cover on the self-destruct lever. When the player pulls it, displays the self destruct timer and starts 
+    //the countdown.
     void Update()
     {
-        if (boss.GetComponent<SharedEnemyAI>().GetHealth() < fightStage_2_threshhold && !spawnedStage2Reinforcements)
+
+        if (boss.GetComponent<SharedEnemyAI>().GetHP() < fightStage_2_threshhold && !spawnedStage2Reinforcements)
         {
             fightStage = 2;
             SpawnReinforcements(fightStage);
             spawnedStage2Reinforcements = true;
         }
-
-        else if (boss.GetComponent<SharedEnemyAI>().GetHealth() < fightStage_3_threshhold && !spawnedStage3Reinforcements)
+        else if (boss.GetComponent<SharedEnemyAI>().GetHP() < fightStage_3_threshhold && !spawnedStage3Reinforcements)
         {
             fightStage = 3;
             SpawnReinforcements(fightStage);
@@ -67,8 +75,8 @@ public class BossFight : MonoBehaviour
         else if (boss.GetComponent<bossAI>().GetIsDead())
         {
 
-            CommandcodeBoss.SetActive(true);
-            CommandcodeBossPlatform.SetActive(true);
+            CommandCodeBoss.SetActive(true);
+            CommandCodeBossPlatform.SetActive(true);
 
             MainFrameDoor.transform.GetChild(1).gameObject.SetActive(false);
             MainFrameDoor.transform.GetChild(2).gameObject.SetActive(true);
@@ -85,12 +93,10 @@ public class BossFight : MonoBehaviour
                 SelfDestructTimer.SetActive(true);
                 timeLeft.text = GameManager.instance.GetTimeLeft();
             }
-        }
-
-        
-
+        } 
     }
 
+    //When player exits arena entry area, the doors to the mainframe will close, the boss will emerge and the fight will begin.
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Player") && bossFightBegin == false)
@@ -101,10 +107,10 @@ public class BossFight : MonoBehaviour
             boss.GetEnemyHealthBar().SetActive(true);
 
             MainFrameDoor.transform.GetChild(1).gameObject.SetActive(true);
- 
         }
     }
 
+    //Makes boss approach the arena entry area.
     private void BossApproach()
     {
         boss.GetComponent<SharedEnemyAI>().SetDefaultPost(bossDefaultPost2);
@@ -112,7 +118,8 @@ public class BossFight : MonoBehaviour
 
     }
 
-
+    //Spawns reinforcements depending on current stage of the fight. Spawns them at random locations in a short radius
+    //around the spawner so they will be slightly dispersed.
     private void SpawnReinforcements(int stage)
     {
         int fightStageGuards = 0;

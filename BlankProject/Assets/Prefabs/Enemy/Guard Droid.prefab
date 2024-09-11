@@ -933,12 +933,15 @@ MonoBehaviour:
   DeathVFX: {fileID: 6469354921825657977, guid: e71d1b07c6d70974893ad9412cbf9036, type: 3}
   DeathFXPos: {fileID: 1873019735147759632}
   weakspot: {fileID: 7552201656115802248}
+  audioPlayer: {fileID: -5651827310847931993}
+  shootPos: {fileID: 4774427128075911827}
+  weapon_R: {fileID: 6726406545161658990}
+  ammoType: {fileID: 6804835773319123192, guid: 691bd9694255b394ba715e419013b5c0, type: 3}
   FOV_Angle: 60
   rotationSpeed: 8
   playerDetectionCircle: {fileID: 1879095918927906700}
   playerDetectionCircleFill: {fileID: 5080276944054267269}
   playerInViewIndicator: {fileID: 5985916596309275394}
-  detectionSpeed: 0
   enemy_Type: 1
   HP: 25
   shootRate: 0.5
@@ -950,12 +953,17 @@ MonoBehaviour:
   allyLayer:
     serializedVersion: 2
     m_Bits: 128
-  shootPos: {fileID: 4774427128075911827}
-  weapon_R: {fileID: 6726406545161658990}
-  ammoType: {fileID: 6804835773319123192, guid: 691bd9694255b394ba715e419013b5c0, type: 3}
   enemyHPBar: {fileID: 5151813184323870704}
   enemyHPBarFill: {fileID: 2012491061337781753}
   HPBarPos: {x: 0, y: 0, z: 0}
+  maxIdleSoundCooldown: 30
+  shootSounds:
+  - {fileID: 8300000, guid: 00b14402ed3556a47a9ee577369466df, type: 3}
+  - {fileID: 8300000, guid: c9c73f73b9a7577429a9c2328507a819, type: 3}
+  - {fileID: 8300000, guid: 0e8bcebf5b10dbd49b3316e97e108c9d, type: 3}
+  footsteps: []
+  idleSounds: []
+  foundPlayer: {fileID: 0}
 --- !u!195 &4830313184887248644
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1478,19 +1486,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4484884709661165677, guid: 600051abf90af2d46a8780aa9ce26216, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.48261696
+      value: -0.0036414915
       objectReference: {fileID: 0}
     - target: {fileID: 4484884709661165677, guid: 600051abf90af2d46a8780aa9ce26216, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.52340657
+      value: 0.12545004
       objectReference: {fileID: 0}
     - target: {fileID: 4484884709661165677, guid: 600051abf90af2d46a8780aa9ce26216, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.5424234
+      value: 0.19952224
       objectReference: {fileID: 0}
     - target: {fileID: 4484884709661165677, guid: 600051abf90af2d46a8780aa9ce26216, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.44598588
+      value: -0.97182304
       objectReference: {fileID: 0}
     - target: {fileID: 4484884709661165677, guid: 600051abf90af2d46a8780aa9ce26216, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

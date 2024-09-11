@@ -2,28 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//Object that WhistleBlower patrol robot will run to to activate the Intruder Alert.
+
 public class IntruderAlertButton : MonoBehaviour
 {
 
-    GameObject button;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-   
-    }
-
+    //If the current WhistleBlower enters the trigger box, activates the intruder alert and passes the location where
+    //the WhistleBlower last saw the player. 
     protected void OnTriggerEnter(Collider other)
     {
-
-        if (other.gameObject.CompareTag("Enemy")
-            && other.GetComponent<SharedEnemyAI>().GetEnemyType() == SharedEnemyAI.enemyType.Patrol
-            && other.GetComponent<patrolAI>().GetIsWhistleBlower())
+        if (other.GetComponent<patrolAI>().GetIsWhistleBlower())
         {
             LevelManager.instance.IntruderAlert(other.GetComponent<SharedEnemyAI>().GetLastKnownPlayerLocation());
         }
         else
             return;
     }
-
 }

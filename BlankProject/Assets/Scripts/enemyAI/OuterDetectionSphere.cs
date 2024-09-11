@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class OuterDetectionSphere : MonoBehaviour
 {
+
+    //Larger trigger sphere to monitor when player is about to get in range to increment stealth meter. 
     private void OnTriggerEnter(Collider other)
     {
  

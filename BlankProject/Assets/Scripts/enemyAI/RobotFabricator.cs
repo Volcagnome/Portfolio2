@@ -4,8 +4,13 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
+
+//Respawns guards and patrols. Titan respawns pending balancing.
+
 public class RobotFabricator : MonoBehaviour
 {
+
+    //Components in scene and prefabs for each enemy type
     [SerializeField] GameObject fabricatorDoor;
     [SerializeField] Light fabricatorDoorLight;
     [SerializeField] GameObject guard;
@@ -13,6 +18,7 @@ public class RobotFabricator : MonoBehaviour
     [SerializeField] GameObject titan;
     [SerializeField] GameObject spawnPosition;
 
+    //Tracks door position
     private Vector3 doorCurrentPosition;
     private Vector3 doorOpenPosition;
     private Vector3 doorClosedPosition;
@@ -20,13 +26,14 @@ public class RobotFabricator : MonoBehaviour
     private bool spawningRobot;
     private bool doorOpen;
     private bool isReadyToSpawn;
-    private bool isFunctional;
+    //private bool isFunctional;
 
     // Start is called before the first frame update
+    //On start will save its closed position and calculates what its position will be when open.
     void Start()
     {
         doorOpen = false;
-        isFunctional = true;
+        //isFunctional = true;
         isReadyToSpawn = true;
         fabricatorDoorLight.GetComponent<Light>().enabled = false;
         doorClosedPosition = fabricatorDoor.transform.localPosition;
@@ -34,6 +41,7 @@ public class RobotFabricator : MonoBehaviour
     }
 
     // Update is called once per frame
+    //Opens door when spawning a robot, once the robot has walked through the door, closes the door.
     void Update()
     {
         if (spawningRobot && !doorOpen)
@@ -43,7 +51,7 @@ public class RobotFabricator : MonoBehaviour
 
     }
 
-
+    //Turns on the light inside the fabricator and moves the door component towards the open position until it is fully open.
     private void OpenDoor()
     {
         doorCurrentPosition = fabricatorDoor.transform.localPosition;
@@ -59,6 +67,8 @@ public class RobotFabricator : MonoBehaviour
 
     }
 
+
+    //Reverses the OpenDoor function.
     private void CloseDoor()
     {
         doorCurrentPosition = fabricatorDoor.transform.localPosition;
@@ -74,6 +84,8 @@ public class RobotFabricator : MonoBehaviour
     }
     
 
+    //Gives the fabricator door time to open, the spawns the passed entity and makes sure it is set to active. Then starts the 
+    //spawn cooldown.
     public IEnumerator SpawnRobot(SharedEnemyAI.enemyType entityToSpawn)
     {
         spawningRobot = true;
@@ -84,13 +96,15 @@ public class RobotFabricator : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         if (entityToSpawn == SharedEnemyAI.enemyType.Guard)
-        { 
+        {
+            Debug.Log("Spawning guard");
            newRobot = Instantiate(guard, spawnPosition.transform.position, spawnPosition.transform.localRotation);
         }
 
         else if (entityToSpawn == SharedEnemyAI.enemyType.Patrol)
         {
-           newRobot =  Instantiate(patrol, spawnPosition.transform.position, spawnPosition.transform.localRotation);
+            Debug.Log("Spawning patrol");
+            newRobot =  Instantiate(patrol, spawnPosition.transform.position, spawnPosition.transform.localRotation);
         }
 
         newRobot.SetActive(true);
@@ -98,6 +112,8 @@ public class RobotFabricator : MonoBehaviour
         StartCoroutine(SpawnCooldown());
     }
 
+
+    //Waits the configured number of seconds from the EnemyManager's minimum spawn interval variable.
     IEnumerator SpawnCooldown()
     {
         yield return new WaitForSeconds(EnemyManager.instance.GetEnemySpawnInterval());
@@ -105,6 +121,7 @@ public class RobotFabricator : MonoBehaviour
         isReadyToSpawn = true;
     }
 
+    //Once the new robot walks through the door, sets spawningRobot to false so the fabricator knows to close the door.
     private void OnTriggerExit(Collider newRobot)
     {
 
@@ -115,7 +132,8 @@ public class RobotFabricator : MonoBehaviour
 
     }
 
+
     public bool GetIsReadyToSpawn() { return isReadyToSpawn; }
 
-    public bool GetIsFunctional() { return isFunctional; }
+    //public bool GetIsFunctional() { return isFunctional; }
 }

@@ -6,12 +6,13 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
 
+//Handles all behavior unique to the boss, everything else handled by SharedEnemyAI.
 
 
 public class bossAI : SharedEnemyAI, IDamage
 {
 
-    //Body Objects
+    //Components
     [SerializeField] GameObject FlameThrower_L;
     [SerializeField] GameObject FlameThrower_R;
     [SerializeField] GameObject MainTurret_L;
@@ -21,14 +22,24 @@ public class bossAI : SharedEnemyAI, IDamage
     [SerializeField] GameObject TurretCycler_L;
     [SerializeField] GameObject TurretCycler_R;
     [SerializeField] GameObject weapon_L;
-    [SerializeField] GameObject ShieldIndicator;
-   
+    //[SerializeField] GameObject ShieldIndicator;
 
+
+   
+    //Ammo for all turrets
     [SerializeField] GameObject FlamethrowerAmmo;
     [SerializeField] GameObject MainTurretAmmo;
     [SerializeField] GameObject RocketAmmo;
-  
 
+
+    //Audio Clip Libraries
+    [SerializeField] List<AudioClip> flameSounds = new List<AudioClip>();
+    [SerializeField] List<AudioClip> mainTurretSounds = new List<AudioClip>();
+    [SerializeField] AudioClip rocketTurretLaunch;
+    [SerializeField] AudioClip death;
+
+
+    //Particle Effects
     [SerializeField] ParticleSystem deathExplosion;
     [SerializeField] Transform deathSparks2;
     [SerializeField] Transform deathSparks3;
@@ -37,36 +48,51 @@ public class bossAI : SharedEnemyAI, IDamage
     //Basic Stats
     [SerializeField] float speed;
 
-    //Combat
+    //Turret rotation when each turret is "selected" (on top and able to fire).
     Quaternion[] turretRotations = {Quaternion.Euler(364.432f, 0.519f, 89.696f), Quaternion.Euler(433.059f, 178.225f, 267.958f), Quaternion.Euler(310.793f, 179.208f, 270.255f) };
-    int currentRotationIndex;
+   
+    //Enum to assign an index number to each turret which corresponds to its index in the turretRotations array.
+    public enum turretIndex { Flamethrower = 0, MainTurret = 1, RocketTurret = 2};
+    turretIndex currentRotationIndex;
 
-
-    //Player detection
-    [SerializeField] float maxTiltAngle;
 
     // Start is called before the first frame update
     void Start()
     {
         HPOrig = HP;
         colorOrig = gameObject.GetComponentInChildren<Renderer>().sharedMaterial.color;
+
+        readyToSpeak = true;
+        playerSpotted = false;
+        currentIdleSoundCooldown = Random.Range(5, maxIdleSoundCooldown);
     }
 
     // Update is called once per frame
     void Update()
     {
         distanceToPlayer = Vector3.Distance(transform.position, GameManager.instance.player.transform.position);
-
-
         anim.SetFloat("Speed", agent.velocity.magnitude);
 
+
+        //When player is in view, travels to their location, changes their alert status and engages with player.
         if (playerInView)
         {
             lastKnownPlayerLocation = GameManager.instance.player.transform.position;
-            AlertEnemy();
+           
+            if(!isAlerted)
+                AlertEnemy();
             FoundPlayer();
+
+            if (!playerSpotted)
+            {
+                audioPlayer.PlayOneShot(foundPlayer, 3f);
+                playerSpotted = true;
+            }
         }
 
+
+        //If player moves outside of 25f, reduces their stopping distance and sets a path to their location. Otherwise
+        //rotates towards the player. If the player is not in view (behind cover) will move to their location.
         if (isAlerted)
         {
             if (distanceToPlayer > 25f)
@@ -88,6 +114,9 @@ public class bossAI : SharedEnemyAI, IDamage
             }
         }
 
+
+        //If the enemy has taken damage, makes their health bar visible and updates it to reflect any health loss. Otherwise,
+        //hides it.
         if (isPlayerTarget())
             UpdateEnemyUI();
 
@@ -98,33 +127,38 @@ public class bossAI : SharedEnemyAI, IDamage
             playerDetectionCircle.SetActive(false);
         }
 
+        if (readyToSpeak)
+            StartCoroutine(playIdleSound());
+
     }
       
-
+    //Cycles turret depending on player proximity, Flamethrower for close, Main turret for mid-range, and rocket turret for 
+    //long range. Once the turret has finished cycling to the correct one (the selected turret is at its rotation saved in the
+    //turret rotation array), turrets will aim (LookAt) player and the Attack function is called.
     protected override void FoundPlayer()
     {
         if (distanceToPlayer < 20f)
         {
-            SelectWeapon(FlameThrower_L, FlameThrower_R, 0);
+            SelectWeapon(FlameThrower_L, FlameThrower_R, turretIndex.Flamethrower);
             CycleTurrets();
             shootRate = 0.05f;
         }
         else if (distanceToPlayer > 20f && distanceToPlayer < 30f)
         {
-            SelectWeapon(MainTurret_L, MainTurret_R, 1);
+            SelectWeapon(MainTurret_L, MainTurret_R, turretIndex.MainTurret);
             CycleTurrets();
-            shootRate = 0.75f;
+            shootRate = 0.2f;
         }
 
         else if (distanceToPlayer > 40f)
         {
-            SelectWeapon(RocketTurret_L, RocketTurret_R, 2);
+            SelectWeapon(RocketTurret_L, RocketTurret_R, turretIndex.RocketTurret);
             CycleTurrets();
             shootRate = 5f;
         }
 
       
-        if (Quaternion.Angle(TurretCycler_L.transform.localRotation,turretRotations[currentRotationIndex]) <5f)
+        if (Quaternion.Angle(TurretCycler_L.transform.localRotation,turretRotations[(int)currentRotationIndex]) <8f)
         {
             weapon_L.transform.LookAt(GameManager.instance.player.transform.position, transform.up);
             weapon_R.transform.LookAt(GameManager.instance.player.transform.position, transform.up);
@@ -133,8 +167,8 @@ public class bossAI : SharedEnemyAI, IDamage
         }
     }
 
-
-    private void SelectWeapon(GameObject weaponL, GameObject weaponR, int index)
+    //Sets the L and R weapon variables to the passed turret types and sets the currentRotationIndex to the passed index.
+    private void SelectWeapon(GameObject weaponL, GameObject weaponR, turretIndex index)
     {
   
         weapon_L = weaponL;
@@ -142,14 +176,17 @@ public class bossAI : SharedEnemyAI, IDamage
         currentRotationIndex = index;
     }
 
+
+    //Rotates the turret cyclers to match the rotation of the currently selected turret in the the turretRotations array.
     private void CycleTurrets()
     {
-            TurretCycler_L.transform.localRotation = Quaternion.Lerp(TurretCycler_L.transform.localRotation, turretRotations[currentRotationIndex], Time.deltaTime * 2f);
-            TurretCycler_R.transform.localRotation = Quaternion.Lerp(TurretCycler_R.transform.localRotation, turretRotations[currentRotationIndex], Time.deltaTime * 2f);
+
+            TurretCycler_L.transform.localRotation = Quaternion.Lerp(TurretCycler_L.transform.localRotation, turretRotations[(int)currentRotationIndex], Time.deltaTime * 2f);
+            TurretCycler_R.transform.localRotation = Quaternion.Lerp(TurretCycler_R.transform.localRotation, turretRotations[(int)currentRotationIndex], Time.deltaTime * 2f);
     }
 
    
-
+    //Calls the appropriate shoot function depending on which turret is currently selected
     private void Attack()
     {
 
@@ -162,41 +199,90 @@ public class bossAI : SharedEnemyAI, IDamage
 
     }
 
+
+    //Plays the beginning of the flame thrower sound effect. While player is in shooting distance and flamethrower is still selected
+    //loops the flamethrower_Mid audio clip and continues to shoot fire at the player. If they leave flamethrower distance or the 
+    //turret is cycled, stops audio loop, and plays the flamethrower_end sound clip. 
     IEnumerator FireFlamethrowers()
     {
         isShooting = true;
 
-        Instantiate(FlamethrowerAmmo, FlameThrower_L.transform.GetChild(0).transform.position, FlameThrower_L.transform.localRotation);
-        Instantiate(FlamethrowerAmmo, FlameThrower_R.transform.GetChild(0).transform.position, FlameThrower_R.transform.localRotation);
+        AudioSource audioPlayer = TurretCycler_L.GetComponent<AudioSource>();
 
-        yield return new WaitForSeconds(shootRate);
+        audioPlayer.PlayOneShot(flameSounds[0]);
+
+        
+        while (distanceToPlayer < 20f && playerInView && weapon_L == FlameThrower_L)
+        {
+            if (!audioPlayer.isPlaying)
+            {
+                audioPlayer.loop = true;
+                audioPlayer.PlayOneShot(flameSounds[1], 2f);
+            }
+
+            Instantiate(FlamethrowerAmmo, FlameThrower_L.transform.GetChild(0).transform.position, FlameThrower_L.transform.localRotation);
+            Instantiate(FlamethrowerAmmo, FlameThrower_R.transform.GetChild(0).transform.position, FlameThrower_R.transform.localRotation);
+            yield return new WaitForSeconds(shootRate);
+        }
+
+        if (audioPlayer.isPlaying)
+        {
+            audioPlayer.Stop();
+            audioPlayer.loop = false;
+            audioPlayer.PlayOneShot(flameSounds[2],2f);
+        }
 
         isShooting = false;
     }
 
+
+
+
+    //Alternates between L and R MainTurrets to fire a projectile and play their shooting audio clip. 
     IEnumerator FireMainTurrets()
     {
         isShooting = true;
 
-        Instantiate(MainTurretAmmo, MainTurret_L.transform.GetChild(0).transform.position, MainTurret_L.transform.localRotation);
-        Instantiate(MainTurretAmmo, MainTurret_L.transform.GetChild(1).transform.position, MainTurret_L.transform.localRotation);
+        AudioSource audioPlayer = TurretCycler_L.GetComponent<AudioSource>();
 
+        Instantiate(MainTurretAmmo, MainTurret_L.transform.GetChild(0).transform.position, MainTurret_L.transform.localRotation);
+        audioPlayer.PlayOneShot(mainTurretSounds[Random.Range(0, 2)]);
         Instantiate(MainTurretAmmo, MainTurret_R.transform.GetChild(0).transform.position, MainTurret_R.transform.localRotation);
+        audioPlayer.PlayOneShot(mainTurretSounds[Random.Range(0, 2)]);
+        yield return new WaitForSeconds(0.2f);
+
+
+        Instantiate(MainTurretAmmo, MainTurret_L.transform.GetChild(1).transform.position, MainTurret_L.transform.localRotation);
+        audioPlayer.PlayOneShot(mainTurretSounds[Random.Range(0, 2)]);
         Instantiate(MainTurretAmmo, MainTurret_R.transform.GetChild(1).transform.position, MainTurret_R.transform.localRotation);
+        audioPlayer.PlayOneShot(mainTurretSounds[Random.Range(0, 2)]);
+        
 
         yield return new WaitForSeconds(shootRate);
 
         isShooting = false;
     }
 
+    //Shoots two rockets from each turret with a slight delay between them and plays their missleLaunch audio clip.
     IEnumerator FireRocketTurrets()
     {
         isShooting = true;
 
-        Instantiate(RocketAmmo, RocketTurret_L.transform.GetChild(0).transform.position, RocketTurret_L.transform.localRotation );
-        Instantiate(RocketAmmo, RocketTurret_L.transform.GetChild(1).transform.position, RocketTurret_L.transform.localRotation);
+        AudioSource audioPlayer = TurretCycler_L.GetComponent<AudioSource>();
 
+        audioPlayer.PlayOneShot(rocketTurretLaunch);
+        Instantiate(RocketAmmo, RocketTurret_L.transform.GetChild(0).transform.position, RocketTurret_L.transform.localRotation );
+        yield return new WaitForSeconds(0.2f);
+
+        audioPlayer.PlayOneShot(rocketTurretLaunch);
+        Instantiate(RocketAmmo, RocketTurret_L.transform.GetChild(1).transform.position, RocketTurret_L.transform.localRotation);
+        yield return new WaitForSeconds(0.25f);
+
+        audioPlayer.PlayOneShot(rocketTurretLaunch);
         Instantiate(RocketAmmo, RocketTurret_R.transform.GetChild(0).transform.position, RocketTurret_R.transform.localRotation);
+        yield return new WaitForSeconds(0.2f);
+
+        audioPlayer.PlayOneShot(rocketTurretLaunch);
         Instantiate(RocketAmmo, RocketTurret_R.transform.GetChild(1).transform.position, RocketTurret_R.transform.localRotation);
 
         yield return new WaitForSeconds(shootRate);
@@ -204,7 +290,9 @@ public class bossAI : SharedEnemyAI, IDamage
         isShooting = false;
     }
 
-
+    //Calls the DeathShared function to perform all the common death operations, plays their disables their AI,
+    //plays their "death twitch" animation and their initial death particle effects before starting the timer
+    //before their corpse is despawned.
     protected override void Death()
     {
         DeathShared();
@@ -228,6 +316,7 @@ public class bossAI : SharedEnemyAI, IDamage
 
     }
 
+    //Instantiates various particle effects on the enemy's body before calling the animation that will make them fall. 
     IEnumerator DeathSparks()
     {
 
@@ -237,6 +326,7 @@ public class bossAI : SharedEnemyAI, IDamage
         
         Instantiate(DeathVFX, deathSparks3.position, Quaternion.identity);
 
+        audioPlayer.PlayOneShot(death,0.4f);
 
         yield return new WaitForSeconds(2.25f);
 
@@ -245,6 +335,13 @@ public class bossAI : SharedEnemyAI, IDamage
         anim.SetBool("Dead",true);
     }
 
+
+    protected virtual void playFootstepSound()
+    {
+        int playTrack = Random.Range(0, footsteps.Count);
+
+        audioPlayer.PlayOneShot(footsteps[playTrack], 10f);
+    }
 }
 
 
