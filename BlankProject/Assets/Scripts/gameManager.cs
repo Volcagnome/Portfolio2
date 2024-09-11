@@ -145,7 +145,7 @@ public class GameManager : MonoBehaviour
     public void PickedUpCommandCode()
     {
         commandCodesCollected++;
-        commandCodesText.text = commandCodesCollected.ToString("F0");
+        //commandCodesText.text = commandCodesCollected.ToString("F0");
         commandCodesInLevel--;
     }
 

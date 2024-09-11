@@ -11,6 +11,7 @@ public class playerDamage : MonoBehaviour, IDamage
     [Header("----- Weapons -----")]
     int selectedGun;
     [SerializeField] List<pickupStats> weapons;
+    [SerializeField] pickupStats defaultWeapon;
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject flashlight;
     [SerializeField] GameObject muzzleFlash;
@@ -47,13 +48,13 @@ public class playerDamage : MonoBehaviour, IDamage
     bool isInteracting;
     bool isTakingDamage;
 
-
     // Start is called before the first frame update
     void Start()
     {
         // Sets original starting stats:
         hpOG = HP;
         adjustHPBar();
+        if (weapons.Count == 0) addWeapon(defaultWeapon);
         spawnPlayer();
     }
 
@@ -253,12 +254,22 @@ public class playerDamage : MonoBehaviour, IDamage
 
     public void setWeapon(pickupStats weapon)
     {
+        weapon.modelRotationAxis.Normalize();
         shootRate = weapon.shootRate;
         shootDamage = weapon.shootDamage;
         shootDist = weapon.shootDist;
         dmgMultiplier = weapon.dmgMultiplier;
+        muzzleFlash.transform.SetParent(GameManager.instance.player.transform, true);
+        flashlight.transform.SetParent(GameManager.instance.player.transform, true);
+
+        //gunModel.transform.rotation = Quaternion.identity;
+        gunModel.transform.localRotation = Quaternion.AngleAxis(weapon.rotationAngle, weapon.modelRotationAxis);
+
+        muzzleFlash.transform.SetParent(gunModel.transform, true);
+        flashlight.transform.SetParent(gunModel.transform, true);
+
         gunModel.GetComponent<MeshFilter>().sharedMesh = weapon.itemModel.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial= weapon.itemModel.GetComponent<MeshRenderer>().sharedMaterial;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = weapon.itemModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
     public void addWeapon(pickupStats weapon)

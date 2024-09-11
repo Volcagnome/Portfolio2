@@ -40,9 +40,9 @@ public class itemPickup : MonoBehaviour, IPickup
         {
             switch (item.type)
             {
-                case (pickupStats.pickupType.health):
+                case (pickupStats.pickupType.upgrade):
             {
-                other.gameObject.GetComponent<SharedEnemyAI>().SetHP(item.nonWeaponStat + other.gameObject.GetComponent<SharedEnemyAI>().GetHP());
+                other.gameObject.GetComponent<SharedEnemyAI>().SetHP(item.health + other.gameObject.GetComponent<SharedEnemyAI>().GetHP());
                 Destroy(displayedItem);
                 displayedItem=null;
                 break;
@@ -72,42 +72,20 @@ public class itemPickup : MonoBehaviour, IPickup
                 displayedItem = null;
                 break;
             }
-                case (pickupStats.pickupType.health):
+                case (pickupStats.pickupType.upgrade):
             {
-                GameManager.instance.player.GetComponent<playerDamage>().setMaxHP(GameManager.instance.player.GetComponent<playerDamage>().getMaxHP() + item.nonWeaponStat);
-                Destroy(displayedItem);
-                displayedItem = null;
-                break;
-            }
-                case (pickupStats.pickupType.stamina):
-            {
-                GameManager.instance.player.GetComponent<playerMovement>().setMaxStamina(item.nonWeaponStat + GameManager.instance.player.GetComponent<playerMovement>().getMaxStamina());
+                GameManager.instance.player.GetComponent<playerDamage>().setMaxHP(GameManager.instance.player.GetComponent<playerDamage>().getMaxHP() + item.health);
+                GameManager.instance.player.GetComponent<playerDamage>().setHP(GameManager.instance.player.GetComponent<playerDamage>().getMaxHP());
+
+                GameManager.instance.player.GetComponent<playerMovement>().setMaxStamina(item.stamina + GameManager.instance.player.GetComponent<playerMovement>().getMaxStamina());
                 GameManager.instance.player.GetComponent<playerMovement>().setStamina(GameManager.instance.player.GetComponent<playerMovement>().getMaxStamina());
-                Destroy(displayedItem);
-                displayedItem = null;
-                break;
-            }
-                case (pickupStats.pickupType.damage):
-            {
-                GameManager.instance.player.GetComponent<playerDamage>().setBulletUpgrades(GameManager.instance.player.GetComponent<playerDamage>().getBulletUpgrades() + (int)item.nonWeaponStat);
-                Destroy(displayedItem);
-                displayedItem = null;
-                break;
-            }
-                case (pickupStats.pickupType.speed):
-            {
-                GameManager.instance.player.GetComponent<playerMovement>().setPlayerSpeed(GameManager.instance.player.GetComponent<playerMovement>().getPlayerSpeed() + item.nonWeaponStat);
-                Destroy(displayedItem);
-                displayedItem = null;
-                break;
-            }
-                case (pickupStats.pickupType.ammo): //For later when ammo is fully implemented
-            {
-                break;
-            }
-                case (pickupStats.pickupType.ammoUpgrade):
-            {
-                GameManager.instance.player.GetComponent<playerDamage>().setAmmoMultiplier(GameManager.instance.player.GetComponent<playerDamage>().getAmmoMultiplier() + item.nonWeaponStat);
+                
+                GameManager.instance.player.GetComponent<playerDamage>().setBulletUpgrades(GameManager.instance.player.GetComponent<playerDamage>().getBulletUpgrades() + item.damageUP);
+
+                GameManager.instance.player.GetComponent<playerMovement>().setPlayerSpeed(GameManager.instance.player.GetComponent<playerMovement>().getPlayerSpeed() + item.speed);
+
+                GameManager.instance.player.GetComponent<playerDamage>().setAmmoMultiplier(GameManager.instance.player.GetComponent<playerDamage>().getAmmoMultiplier() + item.batteryUP);
+
                 Destroy(displayedItem);
                 displayedItem = null;
                 break;

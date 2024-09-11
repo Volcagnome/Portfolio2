@@ -6,11 +6,16 @@ using UnityEngine;
 
 public class pickupStats : ScriptableObject
 {
-    public enum pickupType { health, stamina, damage, ammo, ammoUpgrade, speed, weapon, commandCode,securityPassword}
+    public enum pickupType { upgrade, weapon, commandCode,securityPassword}
     public pickupType type;
     public GameObject itemModel;
-    public float nonWeaponStat;
-
+    public Vector3 modelRotationAxis;
+    [Range(-180,180)]public float rotationAngle;
+    public float health;
+    public float stamina;
+    public int damageUP;
+    public float batteryUP;
+    public float speed;
     public float shootRate;
     public int shootDamage;
     public float shootDist;
