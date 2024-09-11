@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 //Functions similar to guard posts but titan will return to it if they get a certiain distance away.
@@ -13,6 +14,8 @@ public class TitanPost : MonoBehaviour
     private bool isOccupied;
     bool titanAtPost;
 
+
+    //If the titan is at their post and on duty, will rotate them to face the front of the titan post (the smaller cube on the model)
     private void Update()
     {
         if (titan != null)

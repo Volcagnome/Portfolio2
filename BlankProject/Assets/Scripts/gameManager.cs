@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -40,8 +41,12 @@ public class GameManager : MonoBehaviour
     public GameObject redFlash;
     public GameObject webbedOverlay;
 
-    public GameObject playerSpawn;
+    // public GameObject playerSpawn;
+    public GameObject playerSpawnEntry;
+    public GameObject playerSpawnExit;
+    public GameObject currentSpawn;
     int currentLevel;
+    
 
     // Player Scripts:
     public GameObject player;
@@ -68,7 +73,24 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         player = GameObject.FindWithTag("Player");
-        playerSpawn = GameObject.FindWithTag("Player Spawn");
+        //playerSpawn = GameObject.FindWithTag("Player Spawn");
+
+        if (StaticPlayerData.isGameStart == true)
+        {
+            currentSpawn = playerSpawnEntry = GameObject.FindWithTag("Player Spawn Entry");
+            StaticPlayerData.isGameStart = false;
+        }
+
+        playerSpawnEntry = GameObject.FindWithTag("Player Spawn Entry");
+        playerSpawnExit = GameObject.FindWithTag("Player Spawn Exit");
+
+        if (StaticPlayerData.previousLevel == true)
+            currentSpawn = playerSpawnExit;
+        else if (StaticPlayerData.nextLevel == true)
+            currentSpawn = playerSpawnEntry;
+
+        
+
 
         playerScript = player.GetComponent<playerMovement>();
         crouchScript = player.GetComponent<playerCrouch>();
@@ -145,7 +167,6 @@ public class GameManager : MonoBehaviour
     public void PickedUpCommandCode()
     {
         commandCodesCollected++;
-        //commandCodesText.text = commandCodesCollected.ToString("F0");
         commandCodesInLevel--;
     }
 
@@ -213,16 +234,15 @@ public class GameManager : MonoBehaviour
     public int GetCurrentLevel() { return currentLevel; }
 
     public void SetCurrentLevel(int level) { currentLevel = level; }
-    public void SetPlayerSpawn(GameObject spawner) { playerSpawn = spawner;}
+   //public void SetPlayerSpawn(GameObject spawner) { playerSpawn = spawner;}
 
     public bool GetIsRespawning() { return isRespawning; }  
-    
 
     public IEnumerator RespawnBuffer()
     {
         isRespawning = true;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         isRespawning = false;
     }

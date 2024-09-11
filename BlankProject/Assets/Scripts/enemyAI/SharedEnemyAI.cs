@@ -63,6 +63,7 @@ public class SharedEnemyAI : MonoBehaviour
     protected bool playerSpotted;
     protected bool isRespondingToAlert;
 
+
     //Stats
     [SerializeField] public enum enemyType { none, Guard, Patrol, Titan, Turret, Boss, Arachnoid };
     [SerializeField] protected enemyType enemy_Type;
@@ -166,7 +167,7 @@ public class SharedEnemyAI : MonoBehaviour
                     if (PursuePlayerCoroutine != null)
                         StopCoroutine(PursuePlayer());
 
-                    if(!playerInView)
+                    if (!playerInView)
                         PursuePlayerCoroutine = StartCoroutine(PursuePlayer());
                 }
 
@@ -182,8 +183,8 @@ public class SharedEnemyAI : MonoBehaviour
                     ReturnToPost();
             }
 
-            
-            
+
+
 
 
             //If enemy has taken damage, makes its health bar visible and updates it to reflect health loss, otherwise hides it
@@ -238,8 +239,12 @@ public class SharedEnemyAI : MonoBehaviour
             playerInView = false;
             enemyDetectionLevel = 0;
 
+            Debug.Log(GameManager.instance.GetIsRespawning());
+
             if (isAlerted && !GameManager.instance.GetIsRespawning())
+            {
                 lastKnownPlayerLocation = GameManager.instance.player.transform.position;
+            }
             else if (isAlerted && GameManager.instance.GetIsRespawning())
                 CalmEnemy();
         }
@@ -535,12 +540,13 @@ public class SharedEnemyAI : MonoBehaviour
     //calls the death function.
     public void takeDamage(float amount)
     {
+
         HP -= amount;
         isTakingDamage = true;
 
         lastKnownPlayerLocation = GameManager.instance.player.transform.position;
 
-        if(!isAlerted)
+        if (!isAlerted)
             AlertEnemy();
         AlertAllies();
         StartCoroutine(flashYellow());
@@ -558,6 +564,8 @@ public class SharedEnemyAI : MonoBehaviour
             Death();
         }
     }
+
+    
 
 
     //If the enemy is shot in their weakspot, passes the critical damage amount to the regular take damage function

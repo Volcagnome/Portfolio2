@@ -49,10 +49,15 @@ public class playerDamage : MonoBehaviour, IDamage
     bool isTakingDamage;
 
     // Start is called before the first frame update
+    //Sets the player's health and max health stats pulled from the StaticPlayerData script.
     void Start()
     {
-        // Sets original starting stats:
-        hpOG = HP;
+        //Sets original starting stats:
+        //hpOG = HP;
+
+        HP = StaticPlayerData.playerHealth;
+        hpOG = StaticPlayerData.playerMaxHealth;
+
         adjustHPBar();
         if (weapons.Count == 0) addWeapon(defaultWeapon);
         spawnPlayer();
@@ -311,7 +316,8 @@ public class playerDamage : MonoBehaviour, IDamage
         HP = hpOG;
         adjustHPBar();
         controller.enabled = false;
-        transform.position = GameManager.instance.playerSpawn.transform.position;
+        //transform.position = GameManager.instance.playerSpawn.transform.position;
+        transform.position = GameManager.instance.currentSpawn.transform.position;
         controller.enabled = true;
     }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 
 //Post that guard robots will report to when not currently engaging with the player or responding to an Intruder Alert.
@@ -19,13 +20,15 @@ public class GuardPost : MonoBehaviour
     //When guard is at post, will rotate to face the front of the post (the smaller cube on the guard post model)
     private void Update()
     {
-        if (guardAtPost)
+        if (guardAtPost && guard.GetComponent<SharedEnemyAI>().CheckIfOnDuty())
         {
             Vector3 frontDirection = front.transform.position - guard.transform.position;
 
             Quaternion rotationToFront = Quaternion.LookRotation(frontDirection);
             guard.transform.rotation = Quaternion.Lerp(guard.transform.rotation, rotationToFront, Time.deltaTime * guard.GetComponent<SharedEnemyAI>().GetRotationSpeed());
         }
+
+      
     }
 
 

@@ -8,7 +8,7 @@ public class playerMovement : MonoBehaviour
 
     [SerializeField] CharacterController controller;
 
-    [SerializeField] float stamina;
+    [SerializeField]  float stamina;
     [SerializeField] float staminaWait;
     [SerializeField] float staminaDecrease;
     [SerializeField] float staminaIncrease;
@@ -38,11 +38,16 @@ public class playerMovement : MonoBehaviour
     }
 
     // Start is called before the first frame update
+
+    //Sets the player's stamina and speed stats pulled from the StaticPlayerData script.
     void Start()
     {
         isCaught = false;
-        staminaOG = stamina;
-        speedOG = speed;
+        //staminaOG = stamina;
+        //speedOG = speed;
+
+        staminaOG = StaticPlayerData.playerMaxStamina;
+        speedOG = StaticPlayerData.playerSpeedOG; 
     }
 
     // Update is called once per frame
@@ -176,6 +181,7 @@ public class playerMovement : MonoBehaviour
 
     public float GetSpeedOG() { return speedOG; }
 
+    
 
     //Getters and Setters
     public float getStamina() { return stamina; }
@@ -185,4 +191,6 @@ public class playerMovement : MonoBehaviour
     public void setMaxStamina(float value) { staminaOG = value; }
     public float getPlayerSpeed() { return speed; }
     public void setPlayerSpeed(float value) { speed = value; }
+
+    public void SetPlayerSpeedOG(float newSpeed) { speedOG = newSpeed; }
 }
