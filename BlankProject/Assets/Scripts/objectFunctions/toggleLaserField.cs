@@ -11,6 +11,10 @@ public class toggleLaserField : MonoBehaviour
 
     bool isDestroyed;
 
+    [Header("----- Sounds -----")]
+    [SerializeField] AudioClip powerOffSound;
+    [SerializeField] float powerOffVol;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,12 +27,12 @@ public class toggleLaserField : MonoBehaviour
         if (isDestroyed)
         {
             Destroy(destroyedGameObject);
+            GameManager.instance.playAud(powerOffSound, powerOffVol);
         }
     }
 
     public void toggle()
     {
         isDestroyed = true;
-
     }
 }

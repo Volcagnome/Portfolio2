@@ -9,6 +9,10 @@ public class toggleReciever : MonoBehaviour, IToggle
     [SerializeField] GameObject controller;
     private bool currentState;
 
+    [Header("----- Sounds -----")]
+    [SerializeField] public AudioClip toggleSound;
+    [SerializeField] public float toggleVol;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +22,13 @@ public class toggleReciever : MonoBehaviour, IToggle
     // Update is called once per frame
     void Update()
     {
-        if (controller.GetComponent<ISendState>().getState() != currentState) toggle(controller.GetComponent<ISendState>().getState());
+        if (controller.GetComponent<ISendState>().getState() != currentState)
+        {
+            toggle(controller.GetComponent<ISendState>().getState());
+
+            // Play sound when toggled:
+            GameManager.instance.playAud(toggleSound, toggleVol);
+        }
     }
 
     public void toggle(bool state)

@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6932910632860411893}
+  - component: {fileID: 5621409594190861459}
   - component: {fileID: 3957375640357268579}
   - component: {fileID: 5985051477175233216}
   - component: {fileID: 6238456934291880258}
-  - component: {fileID: 4741071379367295839}
   m_Layer: 0
   m_Name: Loading Zone
   m_TagString: Untagged
@@ -35,6 +35,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5621409594190861459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8734898937834001033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d512e941fb4fdc44acd266019091cae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SceneIndexToLoad: 0
+  isEntry: 0
+  isExit: 0
 --- !u!33 &3957375640357268579
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -106,16 +121,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10, y: 1, z: 10}
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &4741071379367295839
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8734898937834001033}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: faa9b46dc42692c4b959dbfef19ca794, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nextSceneAddress: 1

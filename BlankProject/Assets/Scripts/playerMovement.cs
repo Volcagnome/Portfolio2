@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +7,7 @@ public class playerMovement : MonoBehaviour
 
     [SerializeField] CharacterController controller;
 
+    [Header("-- Stamina, Speed, Jumping --")]
     [SerializeField] float stamina;
     [SerializeField] float staminaWait;
     [SerializeField] float staminaDecrease;
@@ -20,6 +20,16 @@ public class playerMovement : MonoBehaviour
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
 
+    [Header("----- Sounds -----")]
+    [SerializeField] AudioClip audioJump;
+    [SerializeField] float audioJumpVol;
+
+    [SerializeField] AudioClip[] audioHurt;
+    [SerializeField] float audioHurtVol;
+
+    [SerializeField] AudioClip[] audioSteps;
+    [SerializeField] float audioStepsVol;
+
     Vector3 move;
     Vector3 playerVel;
 
@@ -29,7 +39,9 @@ public class playerMovement : MonoBehaviour
 
     bool hasStamina;
     bool isSprinting;
+    bool isPlayingSteps;
     bool isCaught;
+    
 
     public float playerHeight
     {
@@ -38,11 +50,16 @@ public class playerMovement : MonoBehaviour
     }
 
     // Start is called before the first frame update
+
+    //Sets the player's stamina and speed stats pulled from the StaticPlayerData script.
     void Start()
     {
         isCaught = false;
-        staminaOG = stamina;
-        speedOG = speed;
+        //staminaOG = stamina;
+        //speedOG = speed;
+
+        staminaOG = StaticPlayerData.playerMaxStamina;
+        speedOG = StaticPlayerData.playerSpeedOG; 
     }
 
     // Update is called once per frame
@@ -74,6 +91,7 @@ public class playerMovement : MonoBehaviour
             // If not grounded, fall velocity increases
             playerVel.y -= gravity * Time.deltaTime;
         }
+
         controller.enabled = true;
         move = Input.GetAxis("Vertical") * transform.forward +
                Input.GetAxis("Horizontal") * transform.right;
@@ -86,11 +104,35 @@ public class playerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
+            GameManager.instance.playAud(audioJump, audioJumpVol);
             jumpCount++;
             playerVel.y = jumpSpeed;
         }
 
         controller.Move(playerVel * Time.deltaTime);
+
+        // Play steps when moving:
+        if (controller.isGrounded && move.magnitude > 0.3f && !isPlayingSteps)
+        {
+            StartCoroutine(playSteps());
+        }
+    }
+
+    ///////////////////////////////
+    // *** SOUND METHODS *** //
+    ///////////////////////////////
+
+    IEnumerator playSteps()
+    {
+        isPlayingSteps = true;
+        GameManager.instance.playAud(audioSteps[Random.Range(0, audioSteps.Length)], audioStepsVol);
+        
+        if (!isSprinting)
+            yield return new WaitForSeconds(0.5f);
+        else
+            yield return new WaitForSeconds(0.3f);
+        
+        isPlayingSteps = false;
     }
 
     ///////////////////////////////
@@ -168,7 +210,6 @@ public class playerMovement : MonoBehaviour
         regenStamina();
     }
 
-
     //Functions to allow the arachnoids to influence player's current speed when they are webbed. 
     public void SetIsCaught(bool status) { isCaught = status; }
 
@@ -176,6 +217,7 @@ public class playerMovement : MonoBehaviour
 
     public float GetSpeedOG() { return speedOG; }
 
+    
 
     //Getters and Setters
     public float getStamina() { return stamina; }
@@ -185,4 +227,6 @@ public class playerMovement : MonoBehaviour
     public void setMaxStamina(float value) { staminaOG = value; }
     public float getPlayerSpeed() { return speed; }
     public void setPlayerSpeed(float value) { speed = value; }
+
+    public void SetPlayerSpeedOG(float newSpeed) { speedOG = newSpeed; }
 }

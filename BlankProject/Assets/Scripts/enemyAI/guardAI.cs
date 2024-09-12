@@ -73,7 +73,7 @@ public class guardAI : SharedEnemyAI, IDamage
         {
             int playTrack = Random.Range(0, footsteps.Count);
 
-            audioPlayer.PlayOneShot(footsteps[playTrack], 0.1f);
+            audioPlayer.PlayOneShot(footsteps[playTrack], 1);
         }
     }
 

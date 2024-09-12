@@ -12,9 +12,10 @@ public class IntruderAlertButton : MonoBehaviour
     //the WhistleBlower last saw the player. 
     protected void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<patrolAI>().GetIsWhistleBlower())
+        if (other.gameObject.GetComponent<patrolAI>() && other.GetComponent<patrolAI>().GetIsWhistleBlower())
         {
             LevelManager.instance.IntruderAlert(other.GetComponent<SharedEnemyAI>().GetLastKnownPlayerLocation());
+            
         }
         else
             return;
