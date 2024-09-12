@@ -124,10 +124,10 @@ public class GameManager : MonoBehaviour
             BeginCountdown();
         }
 
-        if(GameManager.instance.GetCommandCodesCollected() == 2)
-        {
-            GameManager.instance.UpdateWinCondition();
-        }
+        //if(GameManager.instance.GetCommandCodesCollected() == 2)
+        //{
+        //    GameManager.instance.UpdateWinCondition();
+        //}
     }
 
     public void statePause()
