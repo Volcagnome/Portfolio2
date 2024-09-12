@@ -1284,11 +1284,6 @@ Transform:
   - {fileID: 1257037198}
   m_Father: {fileID: 1236896952}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &88616028 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8797669582339917010, guid: 937d5c52b5d56d046a62ddcda23893fc, type: 3}
-  m_PrefabInstance: {fileID: 1265262807}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &90424942 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6044750211905199557, guid: 2e848ecb42c349f489fe063122a9f045, type: 3}
@@ -1646,6 +1641,10 @@ PrefabInstance:
       propertyPath: SceneToLoad
       value: Main Scene Level 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6238456934291880258, guid: e8d23ea2fa9d1114f9d1890a5bee2d25, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 2147484663
+      objectReference: {fileID: 0}
     - target: {fileID: 6932910632860411893, guid: e8d23ea2fa9d1114f9d1890a5bee2d25, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.1435
@@ -1957,6 +1956,10 @@ PrefabInstance:
       propertyPath: m_StepOffset
       value: 0.001
       objectReference: {fileID: 0}
+    - target: {fileID: 7874694064362075633, guid: df82bb239edc1eb4caf894f4cfe52b42, type: 3}
+      propertyPath: audioHurt.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8284814684954952058, guid: df82bb239edc1eb4caf894f4cfe52b42, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.291502
@@ -2002,6 +2005,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1686175664}
     - target: {fileID: 8666099751638355275, guid: df82bb239edc1eb4caf894f4cfe52b42, type: 3}
+      propertyPath: rifleVol
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666099751638355275, guid: df82bb239edc1eb4caf894f4cfe52b42, type: 3}
+      propertyPath: PistolVol
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666099751638355275, guid: df82bb239edc1eb4caf894f4cfe52b42, type: 3}
       propertyPath: shootDist
       value: 0
       objectReference: {fileID: 0}
@@ -2010,9 +2021,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8666099751638355275, guid: df82bb239edc1eb4caf894f4cfe52b42, type: 3}
+      propertyPath: shotgunVol
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666099751638355275, guid: df82bb239edc1eb4caf894f4cfe52b42, type: 3}
       propertyPath: muzzleFlash
       value: 
       objectReference: {fileID: 151408188}
+    - target: {fileID: 8666099751638355275, guid: df82bb239edc1eb4caf894f4cfe52b42, type: 3}
+      propertyPath: overheatVol
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8666099751638355275, guid: df82bb239edc1eb4caf894f4cfe52b42, type: 3}
       propertyPath: shootDamage
       value: 0
@@ -2020,6 +2039,10 @@ PrefabInstance:
     - target: {fileID: 8666099751638355275, guid: df82bb239edc1eb4caf894f4cfe52b42, type: 3}
       propertyPath: interactDist
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666099751638355275, guid: df82bb239edc1eb4caf894f4cfe52b42, type: 3}
+      propertyPath: switchGunVol
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8666099751638355275, guid: df82bb239edc1eb4caf894f4cfe52b42, type: 3}
       propertyPath: dmgMultiplier
@@ -3083,6 +3106,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 311933658342899043, guid: 17dfd505d6ac8f94385c38b826632bed, type: 3}
+      propertyPath: audioPlayer
+      value: 
+      objectReference: {fileID: 444374720}
+    - target: {fileID: 311933658342899043, guid: 17dfd505d6ac8f94385c38b826632bed, type: 3}
       propertyPath: playerSpawn
       value: 
       objectReference: {fileID: 1212304247}
@@ -3212,7 +3239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8283311398342798200, guid: 17dfd505d6ac8f94385c38b826632bed, type: 3}
       propertyPath: fabricatorSpawnInterval
-      value: 5
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 8283311398342798200, guid: 17dfd505d6ac8f94385c38b826632bed, type: 3}
       propertyPath: guardPosts_List.Array.size
@@ -3328,7 +3355,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7533715872173370626, guid: 17dfd505d6ac8f94385c38b826632bed, type: 3}
       insertIndex: -1
       addedObject: {fileID: 210872253}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6681155161047504071, guid: 17dfd505d6ac8f94385c38b826632bed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 444374720}
   m_SourcePrefab: {fileID: 100100000, guid: 17dfd505d6ac8f94385c38b826632bed, type: 3}
 --- !u!4 &226034325 stripped
 Transform:
@@ -4485,9 +4515,17 @@ PrefabInstance:
       value: 126
       objectReference: {fileID: 0}
     - target: {fileID: 1115884995506670238, guid: e99c0647ac1cdc240b28f04e4bf9ef25, type: 3}
+      propertyPath: toggleVol
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1115884995506670238, guid: e99c0647ac1cdc240b28f04e4bf9ef25, type: 3}
       propertyPath: controller
       value: 
       objectReference: {fileID: 485199874}
+    - target: {fileID: 1115884995506670238, guid: e99c0647ac1cdc240b28f04e4bf9ef25, type: 3}
+      propertyPath: toggleSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 71dda0d5993d6394aa0707bd7a773c4d, type: 3}
     - target: {fileID: 1115884995506670238, guid: e99c0647ac1cdc240b28f04e4bf9ef25, type: 3}
       propertyPath: toggleRecipientOn
       value: 
@@ -6207,6 +6245,107 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed2cede656ac1714da3545001a58c017, type: 3}
+--- !u!1 &444374716 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6681155161047504071, guid: 17dfd505d6ac8f94385c38b826632bed, type: 3}
+  m_PrefabInstance: {fileID: 221282335}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &444374720
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 444374716}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &448105107 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3144056689011648288, guid: f379f02442bb1454a9c8564005b0ff92, type: 3}
@@ -8372,9 +8511,17 @@ PrefabInstance:
       value: 126
       objectReference: {fileID: 0}
     - target: {fileID: 1115884995506670238, guid: e99c0647ac1cdc240b28f04e4bf9ef25, type: 3}
+      propertyPath: toggleVol
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1115884995506670238, guid: e99c0647ac1cdc240b28f04e4bf9ef25, type: 3}
       propertyPath: controller
       value: 
       objectReference: {fileID: 507191984}
+    - target: {fileID: 1115884995506670238, guid: e99c0647ac1cdc240b28f04e4bf9ef25, type: 3}
+      propertyPath: toggleSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 71dda0d5993d6394aa0707bd7a773c4d, type: 3}
     - target: {fileID: 1115884995506670238, guid: e99c0647ac1cdc240b28f04e4bf9ef25, type: 3}
       propertyPath: toggleRecipientOn
       value: 
@@ -18772,15 +18919,15 @@ PrefabInstance:
     - target: {fileID: 7510136824012709212, guid: 85b4cd3286077db43a3056faa1b5ac8f, type: 3}
       propertyPath: guard
       value: 
-      objectReference: {fileID: 490994142}
+      objectReference: {fileID: 1043329035144271283, guid: 0d3f2fba35f2b7a419ef3b094b4b0387, type: 3}
     - target: {fileID: 7510136824012709212, guid: 85b4cd3286077db43a3056faa1b5ac8f, type: 3}
       propertyPath: titan
       value: 
-      objectReference: {fileID: 88616028}
+      objectReference: {fileID: 8797669582339917010, guid: 937d5c52b5d56d046a62ddcda23893fc, type: 3}
     - target: {fileID: 7510136824012709212, guid: 85b4cd3286077db43a3056faa1b5ac8f, type: 3}
       propertyPath: patrol
       value: 
-      objectReference: {fileID: 1655494482}
+      objectReference: {fileID: 4744974096311210552, guid: b2c5178c02aded448b84086b73aa7d87, type: 3}
     - target: {fileID: 8355595149906220570, guid: 85b4cd3286077db43a3056faa1b5ac8f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -19607,9 +19754,17 @@ PrefabInstance:
       value: 126
       objectReference: {fileID: 0}
     - target: {fileID: 1115884995506670238, guid: e99c0647ac1cdc240b28f04e4bf9ef25, type: 3}
+      propertyPath: toggleVol
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1115884995506670238, guid: e99c0647ac1cdc240b28f04e4bf9ef25, type: 3}
       propertyPath: controller
       value: 
       objectReference: {fileID: 2123796934}
+    - target: {fileID: 1115884995506670238, guid: e99c0647ac1cdc240b28f04e4bf9ef25, type: 3}
+      propertyPath: toggleSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 71dda0d5993d6394aa0707bd7a773c4d, type: 3}
     - target: {fileID: 1115884995506670238, guid: e99c0647ac1cdc240b28f04e4bf9ef25, type: 3}
       propertyPath: toggleRecipientOn
       value: 
@@ -25089,9 +25244,17 @@ PrefabInstance:
       value: 126
       objectReference: {fileID: 0}
     - target: {fileID: 1115884995506670238, guid: e99c0647ac1cdc240b28f04e4bf9ef25, type: 3}
+      propertyPath: toggleVol
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1115884995506670238, guid: e99c0647ac1cdc240b28f04e4bf9ef25, type: 3}
       propertyPath: controller
       value: 
       objectReference: {fileID: 1566546424}
+    - target: {fileID: 1115884995506670238, guid: e99c0647ac1cdc240b28f04e4bf9ef25, type: 3}
+      propertyPath: toggleSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 71dda0d5993d6394aa0707bd7a773c4d, type: 3}
     - target: {fileID: 1115884995506670238, guid: e99c0647ac1cdc240b28f04e4bf9ef25, type: 3}
       propertyPath: toggleRecipientOn
       value: 
@@ -27395,9 +27558,17 @@ PrefabInstance:
       value: 126
       objectReference: {fileID: 0}
     - target: {fileID: 1115884995506670238, guid: e99c0647ac1cdc240b28f04e4bf9ef25, type: 3}
+      propertyPath: toggleVol
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1115884995506670238, guid: e99c0647ac1cdc240b28f04e4bf9ef25, type: 3}
       propertyPath: controller
       value: 
       objectReference: {fileID: 2071600727}
+    - target: {fileID: 1115884995506670238, guid: e99c0647ac1cdc240b28f04e4bf9ef25, type: 3}
+      propertyPath: toggleSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 71dda0d5993d6394aa0707bd7a773c4d, type: 3}
     - target: {fileID: 1115884995506670238, guid: e99c0647ac1cdc240b28f04e4bf9ef25, type: 3}
       propertyPath: toggleRecipientOn
       value: 
@@ -27780,6 +27951,8 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: bb283de971a757544b125cba042e5ba6, type: 2}
   grabbableByEnemy: 0
   grabbableByPlayer: 1
+  pickupSound: {fileID: 0}
+  pickupVol: 0
 --- !u!1001 &2042455095
 PrefabInstance:
   m_ObjectHideFlags: 0
