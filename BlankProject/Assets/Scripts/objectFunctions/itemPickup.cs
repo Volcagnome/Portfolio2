@@ -11,6 +11,10 @@ public class itemPickup : MonoBehaviour, IPickup
     
     GameObject displayedItem = null;
 
+    [Header("----- Sounds -----")]
+    [SerializeField] AudioClip pickupSound;
+    [SerializeField] float pickupVol;
+
     void Start()
     {
         Vector3 startingPosition = transform.position; startingPosition.y += 1.5F;
@@ -63,6 +67,9 @@ public class itemPickup : MonoBehaviour, IPickup
         }
         else if (grabbableByPlayer && other.gameObject.CompareTag("Player"))
         {
+            // Play item pickup sound:
+            GameManager.instance.playAud(pickupSound, pickupVol);
+
             switch (item.type)
             {
                 case (pickupStats.pickupType.weapon):

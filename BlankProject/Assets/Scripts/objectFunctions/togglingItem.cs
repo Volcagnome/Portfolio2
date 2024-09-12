@@ -9,6 +9,10 @@ public class togglingItem : MonoBehaviour, IInteract, ISendState
     [SerializeField] bool itemState;
     [SerializeField] bool vital;
 
+    [Header("----- Sounds -----")]
+    [SerializeField] AudioClip interactSound;
+    [SerializeField] float interactVol;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +30,12 @@ public class togglingItem : MonoBehaviour, IInteract, ISendState
         itemState = !itemState;
 
         setState(itemState);
+
+        // Play interact sound:
+        GameManager.instance.playAud(interactSound, interactVol);
+
+        // Action the toggled object's sound:
+        GameManager.instance.playAud(itemOnState.GetComponent<toggleReciever>().toggleSound, itemOnState.GetComponent<toggleReciever>().toggleVol);
     }
 
     void setState(bool state)

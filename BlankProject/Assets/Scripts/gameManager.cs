@@ -11,6 +11,9 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
+    // Audio player:
+    [SerializeField] AudioSource audioPlayer;
     // UI menus:
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuPause;
@@ -162,6 +165,13 @@ public class GameManager : MonoBehaviour
         statePause();
         menuActive = menuLose;
         menuActive.SetActive(true);
+    }
+
+    public void playAud(AudioClip sound, float vol)
+    {
+        // One shot is an instantiated piece of audio,
+        // it allows us to play the sound over itself.
+        audioPlayer.PlayOneShot(sound, vol);
     }
 
     public void PickedUpCommandCode()

@@ -26,6 +26,10 @@ public class keypad : MonoBehaviour, ISendState
     int currentComboSize;
     bool correct;
 
+    [Header("----- Sounds -----")]
+    [SerializeField] AudioClip clickSound;
+    [SerializeField] float clickVol;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,7 +42,12 @@ public class keypad : MonoBehaviour, ISendState
     // Update is called once per frame
     void Update()
     {
-        if (!correct && didInteract()) { updateDisplay(); }
+        if (!correct && didInteract()) 
+        {
+            // Play click sound per key:
+            GameManager.instance.playAud(clickSound, clickVol);
+            updateDisplay(); 
+        }
     }
 
     bool didInteract()
@@ -53,6 +62,7 @@ public class keypad : MonoBehaviour, ISendState
 
             currentCombo = holder;
         }
+
         else if (confirmButton.GetComponent<ISendState>().getState())
         {
             if (currentCombo == goalCombo)
@@ -77,6 +87,8 @@ public class keypad : MonoBehaviour, ISendState
             else if (sevenButton.GetComponent<ISendState>().getState()) currentCombo += '7';
             else if (eightButton.GetComponent<ISendState>().getState()) currentCombo += '8';
             else if (nineButton.GetComponent<ISendState>().getState()) currentCombo += '9';
+
+            
         }
 
         if (currentComboSize != currentCombo.Length)

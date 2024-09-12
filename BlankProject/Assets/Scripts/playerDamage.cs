@@ -36,6 +36,26 @@ public class playerDamage : MonoBehaviour, IDamage
     [SerializeField] int dmgMultiplier;
     [SerializeField] float interactDist;
 
+    [Header("----- Weapon Sounds -----")]
+    [SerializeField] AudioClip pistolSound;
+    [SerializeField] float PistolVol;
+
+    [SerializeField] AudioClip rifleSound;
+    [SerializeField] float rifleVol;
+
+    [SerializeField] AudioClip shotgunSound;
+    [SerializeField] float shotgunVol;
+
+    [SerializeField] AudioClip switchGunSound;
+    [SerializeField] float switchGunVol;
+
+    [SerializeField] AudioClip overheatSound;
+    [SerializeField] float overheatVol;
+
+    [Header("----- Health Sounds -----")]
+    [SerializeField] AudioClip audioLowHP;
+    [SerializeField] float lowHPVol;
+
     Coroutine regenCoroutine;
 
     float hpOG;
@@ -47,6 +67,7 @@ public class playerDamage : MonoBehaviour, IDamage
     bool isShooting;
     bool isInteracting;
     bool isTakingDamage;
+    bool isLowHp;
 
     // Start is called before the first frame update
     //Sets the player's health and max health stats pulled from the StaticPlayerData script.
@@ -54,9 +75,9 @@ public class playerDamage : MonoBehaviour, IDamage
     {
         //Sets original starting stats:
         //hpOG = HP;
-
         HP = StaticPlayerData.playerHealth;
         hpOG = StaticPlayerData.playerMaxHealth;
+        isLowHp = false;
 
         adjustHPBar();
         if (weapons.Count == 0) addWeapon(defaultWeapon);
@@ -159,11 +180,15 @@ public class playerDamage : MonoBehaviour, IDamage
         {
             selectedGun++;
             setWeapon(weapons[selectedGun]);
+            // Play weapon switch sound:
+            playSwitchGun();
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
         {
             selectedGun--;
             setWeapon(weapons[selectedGun]);
+            // Play weapon switch sound:
+            playSwitchGun();
         }
 
         // Number press targeted switching:
@@ -180,12 +205,24 @@ public class playerDamage : MonoBehaviour, IDamage
             // If temp index is within the number of weapons in list...
             if (tempIndex <= weapons.Count)
             {
-                // Update index:
-                selectedGun = tempIndex-1;
-                // Set to that weapon.
-                setWeapon(weapons[selectedGun]);
+                // If that index isn't already the selected gun:
+                if (tempIndex-1 != selectedGun)
+                {
+                    // Update index:
+                    selectedGun = tempIndex - 1;
+                    // Set to that weapon.
+                    setWeapon(weapons[selectedGun]);
+                    // Play weapon switch sound:
+                    playSwitchGun();
+                }
             }
         }
+    }
+
+    // Sounds for weapon switching:
+    void playSwitchGun()
+    {
+        GameManager.instance.playAud(switchGunSound, switchGunVol);
     }
 
     // *** INTERACTING *** //
@@ -232,6 +269,13 @@ public class playerDamage : MonoBehaviour, IDamage
             StopCoroutine(regenCoroutine);
         }
         regenCoroutine = StartCoroutine(EnableHealthRegen());
+
+        // Play low HP alert if current HP is equal to:
+        if (HP <= (hpOG / 3) && !isLowHp)
+        {
+            GameManager.instance.playAud(audioLowHP, lowHPVol);
+            isLowHp = true;
+        }
     }
 
     void RegenerateHealth()
@@ -239,9 +283,16 @@ public class playerDamage : MonoBehaviour, IDamage
         //Debug.Log("Regenerating player health: " + HPRegenRate * Time.deltaTime);
         HP += HPRegenRate * Time.deltaTime;
 
+        // If health goes above og hp value, reduce to the og hp value:
         if (HP > hpOG)
         {
             HP = hpOG;
+        }
+
+        // If hp is Higher than a third of the og hp, player is no longer at low health:
+        if (HP > (hpOG/3))
+        {
+            isLowHp = false;
         }
     }
 

@@ -377,13 +377,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5337977480626555222}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.020756185, y: 0.00012871248, z: -0.018180788, w: 0.9996193}
+  m_LocalRotation: {x: 0.021800084, y: 0.043468803, z: -0.02402397, w: 0.99852794}
   m_LocalPosition: {x: -0.0069999364, y: 0.008999957, z: 0.29799998}
   m_LocalScale: {x: 0.3204283, y: 0.5672742, z: 0.40424508}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1105368592955869993}
-  m_LocalEulerAnglesHint: {x: 2.379, y: -0.029, z: -2.085}
+  m_LocalEulerAnglesHint: {x: 2.615, y: 4.925, z: -2.644}
 --- !u!33 &1236595480600097539
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -603,7 +603,7 @@ MonoBehaviour:
   muzzleFlash: {fileID: 1161149025592466324}
   bulletPrefab: {fileID: 772141482392699435, guid: 273d9b48098ab3e47a5f213386b35e1c, type: 3}
   shootPos: {fileID: 4827944566636450223}
-  HP: 75
+  HP: 25
   HPRegenRate: 7.5
   HPRegenWaitTime: 5
   botDmgFX: {fileID: 198966096496560358, guid: 46889c7ec78c0eb42ab487ecb6367592, type: 3}
@@ -614,6 +614,18 @@ MonoBehaviour:
   shootDist: 0
   dmgMultiplier: 0
   interactDist: 2
+  pistolSound: {fileID: 8300000, guid: 65119af627d484c4baab62bcbef1bb47, type: 3}
+  PistolVol: 0
+  rifleSound: {fileID: 8300000, guid: 65119af627d484c4baab62bcbef1bb47, type: 3}
+  rifleVol: 0
+  shotgunSound: {fileID: 8300000, guid: 27e042468df16f845a695673d3ee92dc, type: 3}
+  shotgunVol: 0
+  switchGunSound: {fileID: 8300000, guid: dd751109e45f1cc4bbbf109f961b30a3, type: 3}
+  switchGunVol: 0
+  overheatSound: {fileID: 0}
+  overheatVol: 0
+  audioLowHP: {fileID: 8300000, guid: 39e3eb73754fa6e48bba2ad729eca67a, type: 3}
+  lowHPVol: 0.1
 --- !u!114 &7874694064362075633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -636,6 +648,22 @@ MonoBehaviour:
   jumpMax: 2
   jumpSpeed: 5
   gravity: 10
+  audioJump: {fileID: 8300000, guid: 76fec2784222cc34f8f7aa71bd01c1e4, type: 3}
+  audioJumpVol: 0.7
+  audioHurt: []
+  audioHurtVol: 0.2
+  audioSteps:
+  - {fileID: 8300000, guid: af13c809ae8c4fe4696ccfecb47e325c, type: 3}
+  - {fileID: 8300000, guid: 39def83f567f4454e9d311f0faf72292, type: 3}
+  - {fileID: 8300000, guid: 9bebe46776774844587dee233d83bc81, type: 3}
+  - {fileID: 8300000, guid: 5a3bf9fca373fb240bd1321cbea1fbc1, type: 3}
+  - {fileID: 8300000, guid: cf32932e11be6b646b92614403052c38, type: 3}
+  - {fileID: 8300000, guid: e316691aa00ce8740878c16ebe90d6f3, type: 3}
+  - {fileID: 8300000, guid: e285036041d9f9545b0097fd9a375a10, type: 3}
+  - {fileID: 8300000, guid: 68c49609a12ece24d8a65b4f81d3f970, type: 3}
+  - {fileID: 8300000, guid: 7d72093dfd0e8c64bbfeb6caeb22e1cb, type: 3}
+  - {fileID: 8300000, guid: 3920d9cbbb3f50f439598fe08e921605, type: 3}
+  audioStepsVol: 0.05
 --- !u!114 &5543630735747520779
 MonoBehaviour:
   m_ObjectHideFlags: 0
