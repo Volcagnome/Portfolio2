@@ -81,11 +81,14 @@ public class itemPickup : MonoBehaviour, IPickup
             }
                 case (pickupStats.pickupType.upgrade):
             {
+                float hpHolder = GameManager.instance.player.GetComponent<playerDamage>().getMaxHP();
+                float staminaHolder = GameManager.instance.player.GetComponent<playerMovement>().getMaxStamina();
+
                 GameManager.instance.player.GetComponent<playerDamage>().setMaxHP(GameManager.instance.player.GetComponent<playerDamage>().getMaxHP() + item.health);
-                GameManager.instance.player.GetComponent<playerDamage>().setHP(GameManager.instance.player.GetComponent<playerDamage>().getMaxHP());
+                if (hpHolder != GameManager.instance.player.GetComponent<playerDamage>().getMaxHP()) GameManager.instance.player.GetComponent<playerDamage>().setHP(GameManager.instance.player.GetComponent<playerDamage>().getMaxHP());
 
                 GameManager.instance.player.GetComponent<playerMovement>().setMaxStamina(item.stamina + GameManager.instance.player.GetComponent<playerMovement>().getMaxStamina());
-                GameManager.instance.player.GetComponent<playerMovement>().setStamina(GameManager.instance.player.GetComponent<playerMovement>().getMaxStamina());
+                if (staminaHolder != GameManager.instance.player.GetComponent<playerMovement>().getMaxStamina()) GameManager.instance.player.GetComponent<playerMovement>().setStamina(GameManager.instance.player.GetComponent<playerMovement>().getMaxStamina());
                 
                 GameManager.instance.player.GetComponent<playerDamage>().setBulletUpgrades(GameManager.instance.player.GetComponent<playerDamage>().getBulletUpgrades() + item.damageUP);
 

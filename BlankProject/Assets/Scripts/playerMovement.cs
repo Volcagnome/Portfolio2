@@ -125,7 +125,7 @@ public class playerMovement : MonoBehaviour
     IEnumerator playSteps()
     {
         isPlayingSteps = true;
-        GameManager.instance.playAud(audioSteps[Random.Range(0, audioSteps.Length)], audioStepsVol);
+        GameManager.instance.playAud(audioSteps[Random.Range(0, audioSteps.Length - 1)], audioStepsVol);
         
         if (!isSprinting)
             yield return new WaitForSeconds(0.5f);
