@@ -55,7 +55,7 @@ public class patrolAI : SharedEnemyAI,IDamage
                 //to the next waypoint on the route and starts a path to it.
                 if (onDuty)
                 {
-                    if (Vector3.Distance(transform.position, currentDestination.transform.position) < 0.5f)
+                    if (Vector3.Distance(transform.position, currentDestination.transform.position) < 1)
                     {
                         currentDestination = currentDestination.GetComponent<PatrolWaypoint>().GetNextWaypoint();
                         agent.SetDestination(currentDestination.transform.position);
