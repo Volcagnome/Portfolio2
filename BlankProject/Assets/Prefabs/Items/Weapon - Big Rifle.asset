@@ -12,18 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae0f0175c4cd0084b90b4432945505f0, type: 3}
   m_Name: Weapon - Big Rifle
   m_EditorClassIdentifier: 
+  itemName: Archtronic
   type: 1
   itemModel: {fileID: 1462529103580111890, guid: 3ca04ac53d5efd843ba9309fa8d2c70a, type: 3}
-  modelRotationAxis: {x: 0, y: 0, z: 0}
-  rotationAngle: 0
+  modelScale: 1
   health: 0
   stamina: 0
   damageUP: 0
   batteryUP: 0
   speed: 0
+  shotgun: 0
   shootRate: 0.2
   shootDamage: 2
   shootDist: 200
   dmgMultiplier: 3
-  itemName: Archtronic
+  maxHeat: 0
+  heatPerShot: 0
+  coolRate: 0
+  coolWaitTime: 0
+  modelRotationAxis: {x: 0, y: 0, z: 0}
+  rotationAngle: 0
   passwordCombo: 0

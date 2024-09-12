@@ -450,14 +450,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1668091273521443536, guid: 787bb9e8edf29a340a2d8fe8d195d003, type: 3}
-      propertyPath: pickupVol
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1668091273521443536, guid: 787bb9e8edf29a340a2d8fe8d195d003, type: 3}
-      propertyPath: pickupSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 71dda0d5993d6394aa0707bd7a773c4d, type: 3}
     - target: {fileID: 6207695466118706185, guid: 787bb9e8edf29a340a2d8fe8d195d003, type: 3}
       propertyPath: m_LocalPosition.x
       value: -24.330696
@@ -547,8 +539,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81720927d7525b24b918bc58ad840bb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startingAxes: {x: 0, y: 0, z: 0}
+  startingAngle: 0
   rotationSpeed: {x: 0, y: 30, z: 0}
   item: {fileID: 11400000, guid: 59d66959aab29914d849718baaea766f, type: 2}
+  modelScale: 0
   grabbableByEnemy: 1
   grabbableByPlayer: 1
   pickupSound: {fileID: 0}
@@ -690,14 +685,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pickup Platform - Stamina
       objectReference: {fileID: 0}
-    - target: {fileID: 8122934681702603597, guid: d087dc1e4a1ac194994632a3b64a7c5a, type: 3}
-      propertyPath: pickupVol
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8122934681702603597, guid: d087dc1e4a1ac194994632a3b64a7c5a, type: 3}
-      propertyPath: pickupSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 71dda0d5993d6394aa0707bd7a773c4d, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1008,63 +995,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17dfd505d6ac8f94385c38b826632bed, type: 3}
---- !u!1001 &1258165025
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5665456164785799693, guid: d193e03e3bc2dfc4c9559ce0015052ac, type: 3}
-      propertyPath: m_Name
-      value: Guard Droid
-      objectReference: {fileID: 0}
-    - target: {fileID: 5665456164785970733, guid: d193e03e3bc2dfc4c9559ce0015052ac, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -20.48089
-      objectReference: {fileID: 0}
-    - target: {fileID: 5665456164785970733, guid: d193e03e3bc2dfc4c9559ce0015052ac, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.0000009536743
-      objectReference: {fileID: 0}
-    - target: {fileID: 5665456164785970733, guid: d193e03e3bc2dfc4c9559ce0015052ac, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 15.640326
-      objectReference: {fileID: 0}
-    - target: {fileID: 5665456164785970733, guid: d193e03e3bc2dfc4c9559ce0015052ac, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5665456164785970733, guid: d193e03e3bc2dfc4c9559ce0015052ac, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5665456164785970733, guid: d193e03e3bc2dfc4c9559ce0015052ac, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5665456164785970733, guid: d193e03e3bc2dfc4c9559ce0015052ac, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5665456164785970733, guid: d193e03e3bc2dfc4c9559ce0015052ac, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5665456164785970733, guid: d193e03e3bc2dfc4c9559ce0015052ac, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5665456164785970733, guid: d193e03e3bc2dfc4c9559ce0015052ac, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d193e03e3bc2dfc4c9559ce0015052ac, type: 3}
 --- !u!1 &1271009048 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 856497848990839297, guid: 21765e1389c1574498d9e4bfcb496aae, type: 3}
@@ -1124,7 +1054,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8666099751638355275, guid: df82bb239edc1eb4caf894f4cfe52b42, type: 3}
       propertyPath: overheatVol
-      value: 2
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8666099751638355275, guid: df82bb239edc1eb4caf894f4cfe52b42, type: 3}
       propertyPath: overheatSound
@@ -1278,14 +1208,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6664838454368895469, guid: 5e8686e683f27664589423a8729defbe, type: 3}
-      propertyPath: pickupVol
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6664838454368895469, guid: 5e8686e683f27664589423a8729defbe, type: 3}
-      propertyPath: pickupSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 71dda0d5993d6394aa0707bd7a773c4d, type: 3}
     - target: {fileID: 8313478695013295472, guid: 5e8686e683f27664589423a8729defbe, type: 3}
       propertyPath: m_LocalPosition.x
       value: -11.48918
@@ -1635,14 +1557,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3590253052495582913, guid: 98e22d30e30f02b46909b8508d0566f2, type: 3}
-      propertyPath: pickupVol
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3590253052495582913, guid: 98e22d30e30f02b46909b8508d0566f2, type: 3}
-      propertyPath: pickupSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 71dda0d5993d6394aa0707bd7a773c4d, type: 3}
     - target: {fileID: 3787576445338176837, guid: 98e22d30e30f02b46909b8508d0566f2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.587243
@@ -1961,18 +1875,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 82.208
       objectReference: {fileID: 0}
-    - target: {fileID: 5273934346453731116, guid: bdd6b60ba4e43b441bc588a86ae2fc59, type: 3}
-      propertyPath: item
-      value: 
-      objectReference: {fileID: 11400000, guid: e35bd8b2317cdbf438b692569117cb1c, type: 2}
-    - target: {fileID: 5273934346453731116, guid: bdd6b60ba4e43b441bc588a86ae2fc59, type: 3}
-      propertyPath: pickupVol
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5273934346453731116, guid: bdd6b60ba4e43b441bc588a86ae2fc59, type: 3}
-      propertyPath: pickupSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 71dda0d5993d6394aa0707bd7a773c4d, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2095,14 +1997,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 82.208
       objectReference: {fileID: 0}
-    - target: {fileID: 2535866080569408666, guid: f63b7dfa1f9b8b24fa4d0ba453f80f42, type: 3}
-      propertyPath: pickupVol
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2535866080569408666, guid: f63b7dfa1f9b8b24fa4d0ba453f80f42, type: 3}
-      propertyPath: pickupSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 71dda0d5993d6394aa0707bd7a773c4d, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2119,6 +2013,10 @@ PrefabInstance:
     - target: {fileID: 4143618976888724560, guid: 7ec0751c3afff0f47a6786bbbdb679b1, type: 3}
       propertyPath: m_Name
       value: Pickup Platform - Shotgun
+      objectReference: {fileID: 0}
+    - target: {fileID: 7460044501719977746, guid: 7ec0751c3afff0f47a6786bbbdb679b1, type: 3}
+      propertyPath: modelScale
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7649160136735455170, guid: 7ec0751c3afff0f47a6786bbbdb679b1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2280,4 +2178,3 @@ SceneRoots:
   - {fileID: 5656893101479753767}
   - {fileID: 399883309}
   - {fileID: 6325849249666989124}
-  - {fileID: 1258165025}

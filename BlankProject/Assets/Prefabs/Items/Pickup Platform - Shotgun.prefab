@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4143618976888724560}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.5328154, y: 0.464874, z: 0.46487394, w: 0.53281534}
+  m_LocalRotation: {x: -0.5328174, y: 0.46487162, z: 0.46487162, w: 0.5328174}
   m_LocalPosition: {x: -27.330769, y: 0.062500596, z: 3.647095}
   m_LocalScale: {x: 1, y: 1, z: 0.25}
   m_ConstrainProportionsScale: 0
@@ -97,8 +97,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81720927d7525b24b918bc58ad840bb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: {x: 0, y: 30, z: 0}
+  startingAxes: {x: 1, y: 0, z: 0}
+  startingAngle: -90
+  rotationSpeed: {x: 0, y: 0, z: 30}
   item: {fileID: 11400000, guid: 790eab4e51a7cb648b80ef422446927b, type: 2}
+  modelScale: 2
   grabbableByEnemy: 0
   grabbableByPlayer: 1
   pickupSound: {fileID: 8300000, guid: 71dda0d5993d6394aa0707bd7a773c4d, type: 3}

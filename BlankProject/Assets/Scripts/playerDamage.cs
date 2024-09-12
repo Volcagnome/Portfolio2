@@ -402,6 +402,7 @@ public class playerDamage : MonoBehaviour, IDamage
 
         //gunModel.transform.rotation = Quaternion.identity;
         gunModel.transform.localRotation = Quaternion.AngleAxis(weapon.rotationAngle, weapon.modelRotationAxis);
+        gunModel.transform.localScale = Vector3.one * weapon.modelScale;
 
         muzzleFlash.transform.SetParent(gunModel.transform, true);
         flashlight.transform.SetParent(gunModel.transform, true);
@@ -445,7 +446,7 @@ public class playerDamage : MonoBehaviour, IDamage
     {
         isEmittingSmoke = true;
         ParticleSystem currentSmoke = Instantiate(overheatSmokeFX, gunModel.transform.position + (Vector3.up * .25F), Quaternion.identity);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
         Destroy(currentSmoke);
         isEmittingSmoke = false; 
     }
