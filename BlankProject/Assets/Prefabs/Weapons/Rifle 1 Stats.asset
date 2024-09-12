@@ -12,12 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae0f0175c4cd0084b90b4432945505f0, type: 3}
   m_Name: Rifle 1 Stats
   m_EditorClassIdentifier: 
+  itemName: Rifle
   type: 6
   itemModel: {fileID: 1268454116773244, guid: 3e6b6a33072231846b7dfe7227573b68, type: 3}
-  nonWeaponStat: 0
+  health: 0
+  stamina: 0
+  damageUP: 0
+  batteryUP: 0
+  speed: 0
   shootRate: 0.25
   shootDamage: 4
   shootDist: 20
   dmgMultiplier: 2
-  itemName: Rifle
+  maxHeat: 300
+  heatPerShot: 5
+  coolRate: 5
+  coolWaitTime: 5
+  modelRotationAxis: {x: 0, y: 0, z: 0}
+  rotationAngle: 0
   passwordCombo: 0

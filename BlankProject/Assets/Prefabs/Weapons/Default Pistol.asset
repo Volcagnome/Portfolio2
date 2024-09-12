@@ -12,18 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae0f0175c4cd0084b90b4432945505f0, type: 3}
   m_Name: Default Pistol
   m_EditorClassIdentifier: 
+  itemName: 
   type: 6
   itemModel: {fileID: 100000, guid: 5f9b176058917ba49a8059f6da098866, type: 3}
-  modelRotationAxis: {x: 1, y: 0, z: 0}
-  rotationAngle: -90
   health: 0
   stamina: 0
   damageUP: 0
   batteryUP: 0
   speed: 0
-  shootRate: 1
+  shootRate: 0.25
   shootDamage: 1
   shootDist: 10
-  dmgMultiplier: 5
-  itemName: 
+  dmgMultiplier: 2
+  maxHeat: 30
+  heatPerShot: 0.5
+  coolRate: 1
+  coolWaitTime: 3
+  modelRotationAxis: {x: 1, y: 0, z: 0}
+  rotationAngle: -90
   passwordCombo: 0

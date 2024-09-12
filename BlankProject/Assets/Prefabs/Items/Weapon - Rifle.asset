@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae0f0175c4cd0084b90b4432945505f0, type: 3}
   m_Name: Weapon - Rifle
   m_EditorClassIdentifier: 
+  itemName: 
   type: 1
   itemModel: {fileID: 4478981672208652381, guid: 600051abf90af2d46a8780aa9ce26216, type: 3}
-  modelRotationAxis: {x: 0, y: 0, z: 0}
-  rotationAngle: 0
   health: 0
   stamina: 0
   damageUP: 0
@@ -25,5 +24,10 @@ MonoBehaviour:
   shootDamage: 1
   shootDist: 100
   dmgMultiplier: 2
-  itemName: 
+  maxHeat: 300
+  heatPerShot: 2
+  coolRate: 10
+  coolWaitTime: 5
+  modelRotationAxis: {x: 0, y: 0, z: 0}
+  rotationAngle: 0
   passwordCombo: 0

@@ -28,6 +28,9 @@ public class playerDamage : MonoBehaviour, IDamage
     public ParticleSystem botDmgFX;
     public ParticleSystem botCritFX;
     public ParticleSystem bulletHoleFX;
+    public ParticleSystem overheatSmokeFX;
+     ParticleSystem currentSmoke;
+    [SerializeField] float glowIntesityMultiplier;
 
     [Header("----- Damage / Interacting -----")]
     [SerializeField] int shootDamage;
@@ -35,10 +38,16 @@ public class playerDamage : MonoBehaviour, IDamage
     [SerializeField] float shootDist;
     [SerializeField] int dmgMultiplier;
     [SerializeField] float interactDist;
+    [SerializeField] int maxHeat;
+    [SerializeField] float heatPerShot;
+    [SerializeField] float coolRate;
+    [SerializeField] float coolWaitTime;
 
+    Coroutine cooldownCoroutine;
     Coroutine regenCoroutine;
 
     float hpOG;
+    [SerializeField] float currentHeat;
 
     int bulletUpgradeTotal;
     float maxAmmoMultiplier;
@@ -47,6 +56,10 @@ public class playerDamage : MonoBehaviour, IDamage
     bool isShooting;
     bool isInteracting;
     bool isTakingDamage;
+    bool canCool;
+    bool usedToMax;
+    bool isShotgun;
+    bool isEmittingSmoke;
 
     // Start is called before the first frame update
     void Start()
@@ -73,6 +86,13 @@ public class playerDamage : MonoBehaviour, IDamage
                 if (!isTakingDamage)
                     RegenerateHealth();
             }
+            if (cooldownCoroutine == null) coolWeapon();
+            if (usedToMax && !isEmittingSmoke) StartCoroutine(emitSmoke());
+            if (isEmittingSmoke) 
+            { 
+                currentSmoke.transform.position = gunModel.transform.position + (Vector3.up * .25F); 
+                currentSmoke.transform.rotation = gunModel.transform.rotation;
+            }
         }
     }
 
@@ -81,7 +101,7 @@ public class playerDamage : MonoBehaviour, IDamage
     {
         // Listen for shooting, interacting or flashlight:
 
-        if (Input.GetButton("Shoot") && weapons.Count > 0 && !isShooting)
+        if (Input.GetButton("Shoot") && weapons.Count > 0 && maxHeat >= currentHeat + heatPerShot && !usedToMax && !isShooting)
             StartCoroutine(shoot());
 
         if (Input.GetButtonDown("Interact"))
@@ -100,9 +120,16 @@ public class playerDamage : MonoBehaviour, IDamage
     IEnumerator shoot()
     {
         isShooting = true;
+        if (cooldownCoroutine != null) StopCoroutine(cooldownCoroutine);
         StartCoroutine(flashMuzzle());
+        cooldownCoroutine = StartCoroutine(enableCooling());
         // Spawns a tracer round (playerBullet prefab)
         Instantiate(bulletPrefab, shootPos.position, shootPos.transform.rotation);
+        currentHeat += heatPerShot;
+
+        if (maxHeat < currentHeat + heatPerShot) usedToMax = true;
+
+        adjustGlow();
 
         RaycastHit hit;
         // Physics.Raycast (Origin, Direction, hit info, max distance)
@@ -138,6 +165,7 @@ public class playerDamage : MonoBehaviour, IDamage
 
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
+
     }
 
     IEnumerator flashMuzzle()
@@ -259,6 +287,11 @@ public class playerDamage : MonoBehaviour, IDamage
         shootDamage = weapon.shootDamage;
         shootDist = weapon.shootDist;
         dmgMultiplier = weapon.dmgMultiplier;
+        maxHeat = weapon.maxHeat;
+        heatPerShot = weapon.heatPerShot;
+        coolRate = weapon.coolRate;
+        coolWaitTime = weapon.coolWaitTime;
+        isShotgun = weapon.shotgun;
         muzzleFlash.transform.SetParent(GameManager.instance.player.transform, true);
         flashlight.transform.SetParent(GameManager.instance.player.transform, true);
 
@@ -278,8 +311,42 @@ public class playerDamage : MonoBehaviour, IDamage
         setWeapon(weapon);
     }
 
+    void coolWeapon()
+    {
+        currentHeat -= coolRate * Time.deltaTime;
 
-   // *** HUD METHODS *** //
+        if (currentHeat < 0) { currentHeat = 0; }
+        if (currentHeat == 0 && usedToMax) usedToMax = false;
+
+        adjustGlow();
+    }
+
+    IEnumerator enableCooling()
+    {
+        canCool = false;
+        yield return new WaitForSeconds(coolWaitTime);
+        canCool = true;
+        cooldownCoroutine = null;
+    }
+
+    void adjustGlow()
+    {
+        controller.GetComponentInParent<Light>().intensity = glowIntesityMultiplier * currentHeat / maxHeat;
+
+    }
+
+    IEnumerator emitSmoke()
+    {
+        isEmittingSmoke = true;
+        
+        currentSmoke = Instantiate(overheatSmokeFX, gunModel.transform.position + (Vector3.up * .25F), Quaternion.identity);
+        yield return new WaitForSeconds(maxHeat/coolRate);
+        Destroy(currentSmoke);
+        currentSmoke = null;
+        isEmittingSmoke = false; 
+    }
+
+    // *** HUD METHODS *** //
     public void adjustHPBar()
     {
         GameManager.instance.healthbar.fillAmount = HP / hpOG;
