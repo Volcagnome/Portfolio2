@@ -24,7 +24,7 @@ public class keypad : MonoBehaviour, ISendState
 
     string currentCombo;
     int currentComboSize;
-    bool correct;
+    [SerializeField] bool correct;
 
     [Header("----- Sounds -----")]
     [SerializeField] AudioClip clickSound;

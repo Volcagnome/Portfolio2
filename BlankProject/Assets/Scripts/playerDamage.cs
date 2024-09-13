@@ -414,7 +414,6 @@ public class playerDamage : MonoBehaviour, IDamage
         flashlight.transform.SetParent(GameManager.instance.player.transform, true);
         shootPos.transform.SetParent(GameManager.instance.player.transform, true);
 
-        //gunModel.transform.rotation = Quaternion.identity;
         gunModel.transform.localRotation = Quaternion.AngleAxis(weapon.rotationAngle, weapon.modelRotationAxis);
         gunModel.transform.localScale = Vector3.one * weapon.modelScale;
 
