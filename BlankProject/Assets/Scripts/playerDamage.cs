@@ -30,6 +30,7 @@ public class playerDamage : MonoBehaviour, IDamage
     public ParticleSystem bulletHoleFX;
     public ParticleSystem overheatSmokeFX;
      ParticleSystem currentSmoke;
+    [SerializeField] Light weaponLight;
     [SerializeField] float glowIntesityMultiplier;
 
     [Header("----- Damage / Interacting -----")]
@@ -93,8 +94,8 @@ public class playerDamage : MonoBehaviour, IDamage
         isLowHp = false;
 
         adjustHPBar();
-        adjustOverheatMeter();
         adjustGlow();
+        if (maxHeat <= 0) maxHeat = 1;
         if (weapons.Count == 0) addWeapon(defaultWeapon);
         spawnPlayer();
     }
@@ -124,7 +125,7 @@ public class playerDamage : MonoBehaviour, IDamage
     {
         // Listen for shooting, interacting or flashlight:
 
-        if (Input.GetButton("Shoot") && weapons.Count > 0 && maxHeat >= currentHeat + heatPerShot && !usedToMax && !isShooting)
+        if (Input.GetButton("Shoot") && weapons.Count > 0 && maxHeat > currentHeat && !usedToMax && !isShooting)
             StartCoroutine(shoot());
 
         if (Input.GetButtonDown("Interact"))
@@ -151,13 +152,14 @@ public class playerDamage : MonoBehaviour, IDamage
         currentHeat += heatPerShot;
         
 
-        if (maxHeat < currentHeat + heatPerShot)
+        if (maxHeat <= currentHeat + heatPerShot)
         {
             usedToMax = true;
+            currentHeat = maxHeat;
             GameManager.instance.playAud(overheatSound, overheatVol);
         }
 
-        adjustOverheatMeter();
+        
         adjustGlow();
 
         RaycastHit hit;
@@ -196,10 +198,10 @@ public class playerDamage : MonoBehaviour, IDamage
         {
             for (int currentPellet = 0; currentPellet < 9; ++currentPellet)
             {
-                Vector3 offset = Vector3.zero; offset.x = Random.Range(-.1F, .1F); offset.y = Random.Range(-.1F, .1F); offset.z = Random.Range(-.1F, .1F); 
+                Vector3 offset = Vector3.zero; offset.x = Random.Range(-.1F, .1F); offset.y = Random.Range(-.1F, .1F); offset.z = Random.Range(-.1F, .1F);
+                Quaternion tracerOffset = shootPos.transform.rotation; tracerOffset.x += offset.x; tracerOffset.y += offset.y; tracerOffset.z += offset.z;
+                Instantiate(bulletPrefab, shootPos.position, tracerOffset);
                 RaycastHit pellet;
-
-                Vector3 linePoint = Camera.main.transform.position; linePoint.y += .01F;
                 
 
                 if (Physics.Raycast(Camera.main.transform.position,
@@ -402,6 +404,7 @@ public class playerDamage : MonoBehaviour, IDamage
 
         muzzleFlash.transform.SetParent(GameManager.instance.player.transform, true);
         flashlight.transform.SetParent(GameManager.instance.player.transform, true);
+        shootPos.transform.SetParent(GameManager.instance.player.transform, true);
 
         //gunModel.transform.rotation = Quaternion.identity;
         gunModel.transform.localRotation = Quaternion.AngleAxis(weapon.rotationAngle, weapon.modelRotationAxis);
@@ -409,6 +412,7 @@ public class playerDamage : MonoBehaviour, IDamage
 
         muzzleFlash.transform.SetParent(gunModel.transform, true);
         flashlight.transform.SetParent(gunModel.transform, true);
+        shootPos.transform.SetParent(gunModel.transform, true);
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = weapon.itemModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = weapon.itemModel.GetComponent<MeshRenderer>().sharedMaterial;
@@ -429,7 +433,6 @@ public class playerDamage : MonoBehaviour, IDamage
         if (currentHeat == 0 && usedToMax) usedToMax = false;
 
         adjustGlow();
-        adjustOverheatMeter();
     }
 
     IEnumerator enableCooling()
@@ -442,8 +445,9 @@ public class playerDamage : MonoBehaviour, IDamage
 
     void adjustGlow()
     {
-        controller.GetComponentInParent<Light>().intensity = glowIntesityMultiplier * currentHeat / maxHeat;
-
+        weaponLight.intensity = glowIntesityMultiplier * currentHeat / maxHeat;
+        gunModel.GetComponent<Light>().intensity = glowIntesityMultiplier * currentHeat / maxHeat;
+        adjustOverheatMeter();
     }
 
     IEnumerator emitSmoke()
