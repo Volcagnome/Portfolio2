@@ -423,6 +423,8 @@ public class playerDamage : MonoBehaviour, IDamage
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = weapon.itemModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = weapon.itemModel.GetComponent<MeshRenderer>().sharedMaterial;
+
+        adjustGlow();
     }
 
     public void addWeapon(pickupStats weapon)
