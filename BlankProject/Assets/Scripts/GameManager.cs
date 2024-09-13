@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] TMP_Text leverCountText;
     // UI elements:
+    public GameObject tutorialWindow;
     public Image staminaBar;
     public Image healthbar;
     public Image overheatMeter;
@@ -63,6 +64,7 @@ public class GameManager : MonoBehaviour
     public bool youWin;
     private bool playerEscaped;
     private bool selfDestructActivated;
+    private bool wasDisabled;
 
     public bool isPaused;
 
@@ -140,6 +142,11 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
+        if(tutorialWindow != null)
+        {
+            tutorialWindow.SetActive(false);
+            wasDisabled = true;
+        }
     }
 
     public void stateUnpaused()
@@ -150,6 +157,11 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         menuActive.SetActive(isPaused);
         menuActive = null;
+        if (wasDisabled)
+        {
+            tutorialWindow.SetActive(true);
+            wasDisabled = false;
+        }
     }
 
     public void UpdateWinCondition()
