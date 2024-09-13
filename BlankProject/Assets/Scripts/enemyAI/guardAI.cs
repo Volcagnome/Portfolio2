@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 
 //Handles all behavior unique to guard robots, everything else handled by SharedEnemyAI.
@@ -17,9 +18,10 @@ public class guardAI : SharedEnemyAI, IDamage
     //to the EnemyManager to assign them a guard post.
     void Start()
     {
-        HPOrig = HP;
+        if (loadedFromState == false)
+            HP = HPOrig;
 
-        if (defaultPost != null)
+        if (defaultPost != null && !GameManager.instance.GetSelfDestructActivated())
         {
             if (defaultPost.GetComponent<GuardPost>())
             {
@@ -34,7 +36,7 @@ public class guardAI : SharedEnemyAI, IDamage
         else
             EnemyManager.instance.AssignGuardPost(gameObject);
 
-        HPOrig = HP;
+
         colorOrig = model.sharedMaterial.color;
 
         readyToSpeak = true;
@@ -55,6 +57,7 @@ public class guardAI : SharedEnemyAI, IDamage
         {
             EnemyManager.instance.RemoveDeadRobot(gameObject);
             defaultPost.GetComponent<GuardPost>().SetIsOccupied(false);
+            defaultPost.GetComponent<GuardPost>().AssignGuard(null);
             EnemyManager.instance.RemoveGuardFromRoster(gameObject);
         }
 

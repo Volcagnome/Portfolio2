@@ -1,9 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Lumin;
+using UnityEngine.SceneManagement;
+using static StaticData;
+using static UnityEditor.FilePathAttribute;
 
 //Handles all guard post and patrol route assingments and keeps track of how many respawnable robots are currently in the scene.
 
@@ -11,6 +16,13 @@ using UnityEngine.Lumin;
 public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager instance;
+
+    //Reference to enemy prefabs
+    [SerializeField] GameObject guard;
+    [SerializeField] GameObject patrol;
+    [SerializeField] GameObject titan;
+    [SerializeField] GameObject spider;
+    [SerializeField] GameObject boss;
 
     //Minimum time between fabricator spawn attempts
     [SerializeField] float fabricatorSpawnInterval;
@@ -32,20 +44,50 @@ public class EnemyManager : MonoBehaviour
     public List<GameObject> guardRoster;
     public List<GameObject> titanRoster;
 
+    //List of endgame spawners that will be activated when the player is backtracking through the level
+    public List<GameObject> endGameSpawners_List;
+
     //Max robots allowed in scene determined by number of posts and patrol route slots
     private int maxAllowedRobots;
     private bool readyToCallFabricator;
 
-    bossAI boss;
+    bossAI bossRobot;
     public List<AudioClip> robotHitSounds;
     public List<AudioClip> robotCriticalHitSounds;
+
+
+    List<GameObject> endgameSpawnTriggers;
 
     void Awake()
     {
         instance = this;
-        readyToCallFabricator = true;
-        StartCoroutine(CalculateMaxAllowedRobots());
+
+        if (StaticData.firstTimeInScene[SceneManager.GetActiveScene().name] == false)
+        {
+            DestroyDefaultEnemies();
+
+            int listLength = StaticData.sceneEnemies[SceneManager.GetActiveScene().name].Count;
+
+            if (listLength > 0)
+                LoadEnemyStates(StaticData.sceneEnemies[SceneManager.GetActiveScene().name]);
+        }
+        else
+            StaticData.firstTimeInScene[SceneManager.GetActiveScene().name] = false;
+
+        
+
+        if (GameManager.instance.GetSelfDestructActivated() )
+        {
+            LevelManager.instance.DecreaseSpiderSpawnerCooldown();
+            ClearDefaultEnemyPostLists();
+        }
+        else
+        {
+            readyToCallFabricator = true;
+            StartCoroutine(CalculateMaxAllowedRobots());
+        }   
     }
+
 
     // Update is called once per frame
     //If current number of robots dips below the max allowed number and a robot isn't currently being spawned, 
@@ -53,9 +95,7 @@ public class EnemyManager : MonoBehaviour
     void Update()
     {
         if (NumCurrentTotalRobots < maxAllowedRobots && readyToCallFabricator)
-        {
             FillEmptyPost();
-        }
     }
 
 
@@ -87,6 +127,7 @@ public class EnemyManager : MonoBehaviour
     IEnumerator CalculateMaxAllowedRobots()
     {
         yield return new WaitForSeconds(2f);
+
         maxAllowedRobots = CalculateMaxAllowedPatrolRobots() + guardPosts_List.Count;
     }
 
@@ -122,8 +163,10 @@ public class EnemyManager : MonoBehaviour
     //starts its SpawnRobot coroutine and passes it the enemy type to spawn. Then starts the respawn timer. 
     private void FillEmptyPost()
     {
+
         SharedEnemyAI.enemyType entityToSpawn = WhichEnemyTypeToSpawn();
 
+        
         for (int index = 0; index < robotFabricators_List.Count; index++)
         {
             GameObject currentFabricator = robotFabricators_List[index];
@@ -170,6 +213,7 @@ public class EnemyManager : MonoBehaviour
             if (!currentGuardPost.GetComponent<GuardPost>().CheckIfOccupied())
             { 
                 newRobot.GetComponent<SharedEnemyAI>().SetDefaultPost(currentGuardPost);
+                newRobot.GetComponent<SharedEnemyAI>().SetCurrentDestination(currentGuardPost);
                 currentGuardPost.GetComponent<GuardPost>().AssignGuard(newRobot);
                 currentGuardPost.GetComponent<GuardPost>().SetIsOccupied(true);
                 break;
@@ -268,6 +312,105 @@ public class EnemyManager : MonoBehaviour
         NumCurrentTotalRobots = GetCurrentNumberRobots();
     }
 
+    ////////////////////////////////////////
+    ///            ENDGAME               ///
+    ///////////////////////////////////////
+
+
+    private void DestroyDefaultEnemies()
+    {
+
+        GameObject[] defaultEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in defaultEnemies)
+            Destroy(enemy);
+    }
+
+    private void ClearDefaultEnemyPostLists()
+    {
+        guardRoster.Clear();
+
+        titanRoster.Clear();
+
+        guardPosts_List.Clear();
+
+        patrolRoutes_List.Clear();
+
+        titanPosts_List.Clear();
+    }
+
+    public GameObject GetEnemyPrefab(SharedEnemyAI.enemyType type)
+    {
+        GameObject enemyPrefab = null;
+
+        if (type == SharedEnemyAI.enemyType.Guard)
+            enemyPrefab = guard;
+        else if (type == SharedEnemyAI.enemyType.Patrol)
+            enemyPrefab = patrol;
+        else if (type == SharedEnemyAI.enemyType.Titan)
+            enemyPrefab = titan;
+        else if (type == SharedEnemyAI.enemyType.Arachnoid)
+            enemyPrefab = spider;
+        else if (type == SharedEnemyAI.enemyType.Boss)
+            enemyPrefab = boss;
+
+        return enemyPrefab;
+    }
+
+    private GameObject GetEnemyPostObject(Vector3 location)
+    {
+        GameObject post = null;
+
+        Collider[] enemyPosts = Physics.OverlapSphere(location, 1f);
+
+        if (enemyPosts.Length > 0)
+        {
+
+            foreach (Collider enemyPost in enemyPosts)
+            {
+                if (enemyPost.gameObject.CompareTag("Patrol Route Start") || enemyPost.gameObject.CompareTag("Guard Post")
+                    || enemyPost.gameObject.CompareTag("Titan Post") || enemyPost.gameObject.CompareTag("Patrol Waypoint")
+                    || enemyPost.gameObject.CompareTag("Endgame Spawner") || enemyPost.gameObject.CompareTag("Reinforcement Spawner")
+                    || enemyPost.gameObject.CompareTag("Spider Spawner")) 
+                {
+                    post = enemyPost.gameObject;
+                    break;
+                }
+            }
+        }
+
+        return post;
+
+    }
+
+
+    public void LoadEnemyStates(List<enemyState> sceneEnemyList)
+    {
+        GameObject enemy = null;
+
+        if (sceneEnemyList.Count > 0)
+        {
+            sceneEnemyList.ForEach(state =>
+            {
+
+                enemy = Instantiate(state.enemyType, state.position, state.rotation);
+                enemy.GetComponent<SharedEnemyAI>().UpdateEnemyUI();
+                enemy.GetComponent<SharedEnemyAI>().SetMaxHP(state.maxHealth);
+                enemy.GetComponent<SharedEnemyAI>().SetHP(state.health);
+                if (state.isAlerted)
+                    enemy.GetComponent<SharedEnemyAI>().AlertEnemy();
+                enemy.GetComponent<SharedEnemyAI>().SetDefaultPost(GetEnemyPostObject(state.defaultPost));
+                enemy.GetComponent<SharedEnemyAI>().SetCurrentDestination(GetEnemyPostObject(state.currentDestination));
+                enemy.GetComponent<NavMeshAgent>().SetDestination(state.agentDestination);
+                enemy.GetComponent<SharedEnemyAI>().SetLastKnownPlayerLocation(state.lastKnownPlayerLocation);
+                enemy.GetComponent<SharedEnemyAI>().SetIsRespondingToAlert(state.isRespondingToAlert);
+                enemy.GetComponent<SharedEnemyAI>().SetLoadedFromState(state.loadedFromState);
+                enemy.GetComponent<SharedEnemyAI>().SetIsEndGameEnemy(state.isEndGameEnemy); 
+
+            });
+        }
+    }
+
+
     public int GetCurrentNumberGuards() { return NumCurrentGuardRobots; }
 
     public int GetCurrentNumberTitans() { return NumCurrentTitanRobots; }
@@ -283,6 +426,6 @@ public class EnemyManager : MonoBehaviour
     public void AddTitanToRoster(GameObject titan) { titanRoster.Add(titan); }
 
     public float GetEnemySpawnInterval() { return fabricatorSpawnInterval; }
-    public bossAI GetBoss() { return boss; }
+    public bossAI GetBoss() { return bossRobot; }
 
 }

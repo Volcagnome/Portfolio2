@@ -20,15 +20,14 @@ public class GuardPost : MonoBehaviour
     //When guard is at post, will rotate to face the front of the post (the smaller cube on the guard post model)
     private void Update()
     {
-        if (guardAtPost && guard.GetComponent<SharedEnemyAI>().CheckIfOnDuty())
+        if (guard != null && guardAtPost && guard.GetComponent<SharedEnemyAI>().CheckIfOnDuty())
         {
             Vector3 frontDirection = front.transform.position - guard.transform.position;
-
             Quaternion rotationToFront = Quaternion.LookRotation(frontDirection);
-            guard.transform.rotation = Quaternion.Lerp(guard.transform.rotation, rotationToFront, Time.deltaTime * guard.GetComponent<SharedEnemyAI>().GetRotationSpeed());
-        }
 
-      
+            if (guardAtPost && Quaternion.Angle(guard.transform.rotation, rotationToFront) > 3f)
+                guard.transform.rotation = Quaternion.Lerp(guard.transform.rotation, rotationToFront, Time.deltaTime * guard.GetComponent<SharedEnemyAI>().GetRotationSpeed());
+        }
     }
 
 

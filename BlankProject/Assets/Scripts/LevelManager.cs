@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.FilePathAttribute;
 
 
 //Handles the Intruder Alert event
@@ -55,6 +56,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] int secondsBetweenAlarmAttempts;
     [SerializeField] int secondsBetweenSpiderSpawns;
 
+    //Configurable settings for endgame sequence
+    [SerializeField] int endgameSpiderSpawnCooldown;
+
     //Configurable settings when searching an area for the intruder
     [SerializeField] float searchTimer;
     [SerializeField] float searchRadius;
@@ -67,6 +71,7 @@ public class LevelManager : MonoBehaviour
     bool isRaisingAlarm;
     bool intruderFound;
     bool isBossFight;
+   
 
     Coroutine breachIncreaseTimer;
 
@@ -74,17 +79,19 @@ public class LevelManager : MonoBehaviour
 
     void Awake()
     {
-        isRaisingAlarm = false;
         instance = this;
+        isRaisingAlarm = false;
         securityBreachLevel = 0;
         readyToIncrease = true;
         StartCoroutine(BreachLevelReduceCoolDown());
+
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (intruderAlert)
+        if (intruderAlert && !GameManager.instance.GetSelfDestructActivated())
         {
             CheckIfAlerted();
         }
@@ -133,20 +140,25 @@ public class LevelManager : MonoBehaviour
 
         intruderLocation = location;
 
-        if (securityBreachLevel < maximumSecurityBreachLevel && readyToIncrease)
-            securityBreachLevel++;
+        if (spiderSpawners.Count > 0)
+            ToggleSpiderSpawners(true);
 
-        if (breachIncreaseTimer == null)
-            breachIncreaseTimer = StartCoroutine(BreachLevelIncreaseCoolDown());
+        if (!GameManager.instance.GetSelfDestructActivated())
+        {
 
-        ToggleSpiderSpawners(true);
+            if (securityBreachLevel < maximumSecurityBreachLevel && readyToIncrease)
+                securityBreachLevel++;
 
-        GetNumResponders();
+            if (breachIncreaseTimer == null)
+                breachIncreaseTimer = StartCoroutine(BreachLevelIncreaseCoolDown());
 
-        AddToResponseTeam(numGuardResponders, EnemyManager.instance.GetCurrentNumberGuards());
-        StartCoroutine(CallReinforcements(numTitanResponders, titanReinforcement));
+            GetNumResponders();
 
-        whistleBlower.GetComponent<patrolAI>().SetIsWhistleBlower(false);
+            AddToResponseTeam(numGuardResponders, EnemyManager.instance.GetCurrentNumberGuards());
+            StartCoroutine(CallReinforcements(numTitanResponders, titanReinforcement));
+
+            whistleBlower.GetComponent<patrolAI>().SetIsWhistleBlower(false);
+        }
 
     }
 
@@ -154,10 +166,13 @@ public class LevelManager : MonoBehaviour
     //Activates all spider spawners on the list.
     private void ToggleSpiderSpawners(bool status)
     {
-        spiderSpawners.ForEach(spawner =>
+        if (spiderSpawners.Count > 0)
         {
-            spawner.GetComponent<SpiderSpawner>().SetIsActive(status);
-        });
+            spiderSpawners.ForEach(spawner =>
+            {
+                spawner.GetComponent<SpiderSpawner>().SetIsActive(status);
+            });
+        }
     }
 
 
@@ -280,6 +295,7 @@ public class LevelManager : MonoBehaviour
 
             GameObject reinforcement = Instantiate(entityToSpawn, hit.position, reinforcementSpawner.transform.rotation);
             reinforcement.GetComponent<SharedEnemyAI>().SetDefaultPost(reinforcementSpawner);
+            reinforcement.GetComponent<SharedEnemyAI>().SetCurrentDestination(reinforcementSpawner);
             responseTeam.Add(reinforcement);
 
             reinforcement.GetComponent<SharedEnemyAI>().StartOrUpdateFindIntruder(intruderLocation);
@@ -413,6 +429,24 @@ public class LevelManager : MonoBehaviour
         };
     }
 
+    ////////////////////////////////////////
+    ///             ENDGAME             ///
+    ///////////////////////////////////////
+
+    public void DecreaseSpiderSpawnerCooldown()
+    {
+        secondsBetweenSpiderSpawns = endgameSpiderSpawnCooldown;
+    }
+
+    public void EndgameIntruderAlert()
+    {
+        intruderAlert = true;
+        isRaisingAlarm = false;
+
+        if (spiderSpawners.Count > 0)
+            ToggleSpiderSpawners(true);
+    }
+
 
     ////////////////////////////////////////
     ///          GETTERS/SETTERS         ///
@@ -437,5 +471,9 @@ public class LevelManager : MonoBehaviour
     public bool GetIsRaisingAlarm() { return isRaisingAlarm; }
 
     public Vector3 GetIntruderLocation() { return intruderLocation; }
+
+
+
+
 
 }

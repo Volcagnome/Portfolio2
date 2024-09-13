@@ -7,6 +7,8 @@ using UnityEngine.AI;
 public class ArachnoidAI : SharedEnemyAI,IDamage
 {
 
+   
+
     //Web line renderer
     [SerializeField] LineRenderer web;
   
@@ -14,8 +16,11 @@ public class ArachnoidAI : SharedEnemyAI,IDamage
 
     void Start()
     {
+        if(loadedFromState == false)
+            HP = HPOrig;
+
         caughtPlayer = false;
-        HPOrig = HP;
+
         colorOrig = model.sharedMaterial.color;
         web = GetComponent<LineRenderer>();
 

@@ -19,11 +19,12 @@ public class patrolAI : SharedEnemyAI,IDamage
     //to the patrol robot count.
     void Start()
     {
-        HPOrig = HP;
+        if (loadedFromState == false)
+            HP = HPOrig;
 
         if (defaultPost == null)
             EnemyManager.instance.AssignPatrolPost(gameObject);
-        else
+        else if (defaultPost.GetComponent<PatrolWaypoint>())
         {
             defaultPost.GetComponent<PatrolWaypoint>().AddRobotToRoute(gameObject);
             EnemyManager.instance.AddRobotToCount(gameObject);
@@ -57,7 +58,9 @@ public class patrolAI : SharedEnemyAI,IDamage
                 {
                     if (Vector3.Distance(transform.position, currentDestination.transform.position) < 1)
                     {
-                        currentDestination = currentDestination.GetComponent<PatrolWaypoint>().GetNextWaypoint();
+                        if(currentDestination.GetComponent<PatrolWaypoint>())
+                            currentDestination = currentDestination.GetComponent<PatrolWaypoint>().GetNextWaypoint();
+
                         agent.SetDestination(currentDestination.transform.position);
                     }
                     
@@ -87,7 +90,6 @@ public class patrolAI : SharedEnemyAI,IDamage
                     {
                         audioPlayer.PlayOneShot(foundPlayer, 0.75f);
                         playerSpotted = true;
-
                     }
                 }
                 else

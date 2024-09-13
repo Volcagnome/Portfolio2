@@ -8,9 +8,9 @@ using UnityEngine.AI;
 
 public class SpiderSpawner : MonoBehaviour
 {
-    //Spider robot prefab
-    [SerializeField] GameObject Arachnoid;
- 
+    //Reference to the spider prefab
+    [SerializeField] GameObject spider;
+
     //Current spider spawned from this spider spawner
     GameObject currentSpider;
 
@@ -32,7 +32,7 @@ public class SpiderSpawner : MonoBehaviour
 
         if (isActive && currentSpider == null && readyToSpawn == true)
             StartCoroutine(SpawnSpider());
-        else if(!isActive)
+        else if (!isActive)
         {
             if (currentSpider != null)
             {
@@ -52,9 +52,10 @@ public class SpiderSpawner : MonoBehaviour
     {
         readyToSpawn = false;
 
-        currentSpider = Instantiate(Arachnoid, transform.position, Quaternion.identity);
+        currentSpider = Instantiate(spider, transform.position, Quaternion.identity);
 
         currentSpider.GetComponent<SharedEnemyAI>().SetDefaultPost(gameObject);
+        currentSpider.GetComponent<SharedEnemyAI>().SetCurrentDestination(gameObject);
 
         yield return new WaitForSeconds(LevelManager.instance.GetMinTimeBetweenSpiderSpawn());
 

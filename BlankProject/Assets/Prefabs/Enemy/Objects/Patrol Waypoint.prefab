@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 4338231808366217847}
   - component: {fileID: -8949807464834167771}
   - component: {fileID: 4111699386890640191}
+  - component: {fileID: 6675311609494242186}
   m_Layer: 8
   m_Name: Patrol Waypoint
-  m_TagString: Untagged
+  m_TagString: Patrol Waypoint
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,3 +98,24 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &6675311609494242186
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5753865021642015311}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.45324326, y: 0.5112637, z: 0.4747963}
+  m_Center: {x: 0.019655228, y: -0.24436861, z: -0.047254562}

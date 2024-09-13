@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
+using static StaticData;
 
 public class SceneLoader : MonoBehaviour
 {
@@ -16,10 +18,13 @@ public class SceneLoader : MonoBehaviour
     {
 
         //When the player enters the loading zone will save their current stats to the static variables in the StaticPlayerData script.
-        StaticPlayerData.playerHealth = GameManager.instance.player.GetComponent<playerDamage>().getHP();
-        StaticPlayerData.playerMaxHealth = GameManager.instance.player.GetComponent<playerDamage>().getMaxHP();
-        StaticPlayerData.playerSpeedOG = GameManager.instance.player.GetComponent<playerMovement>().GetSpeedOG();
-        StaticPlayerData.playerMaxStamina = GameManager.instance.player.GetComponent<playerMovement>().getMaxStamina();
+        StaticData.playerHealth = GameManager.instance.player.GetComponent<playerDamage>().getHP();
+        StaticData.playerMaxHealth = GameManager.instance.player.GetComponent<playerDamage>().getMaxHP();
+        StaticData.playerSpeedOG = GameManager.instance.player.GetComponent<playerMovement>().GetSpeedOG();
+        StaticData.playerMaxStamina = GameManager.instance.player.GetComponent<playerMovement>().getMaxStamina();
+        StaticData.playerWeaponsList = GameManager.instance.player.GetComponent<playerDamage>().GetWeaponList();
+        StaticData.playerSelectedGun = GameManager.instance.player.GetComponent<playerDamage>().GetSelectedGun();
+     
 
 
         //Checks if the Loading Zone is an entrance or an exit. If it was an entrance, the player is loading into the previous level and
@@ -27,21 +32,67 @@ public class SceneLoader : MonoBehaviour
         //they are advancing to the next level and the GameManager will know to spawn them at the spawn point near the entrance of the next level. 
         if (isEntry)
         {
-            StaticPlayerData.previousLevel = true;
-            StaticPlayerData.nextLevel = false;
+            StaticData.previousLevel = true;
+            StaticData.nextLevel = false;
         }
         else if (isExit)
         {
-            StaticPlayerData.previousLevel = false;
-            StaticPlayerData.nextLevel = true;
+            StaticData.previousLevel = false;
+            StaticData.nextLevel = true;
         }
 
+        SaveEnemyStates(sceneEnemies[SceneManager.GetActiveScene().name]);
+
+        if (LevelManager.instance.GetIntruderAlert())
+            LevelManager.instance.CancelIntruderAlert();
 
         //Loads the scene entered in the Scene To Load field.
         SceneManager.LoadScene(SceneToLoad);
 
     }
 
+
+
+    public void SaveEnemyStates(List <enemyState> sceneEnemyList)
+    {
+
+        sceneEnemyList.Clear();
+
+        GameObject[] sceneEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in sceneEnemies)
+        {
+
+            if (enemy.GetComponent<SharedEnemyAI>())
+            {
+                if (!enemy.GetComponent<SharedEnemyAI>().GetIsDead())
+                {
+
+                    if (enemy.GetComponent<SharedEnemyAI>().GetIsRespondingToAlert())
+                        enemy.GetComponent<SharedEnemyAI>().SetIsRespondingToAlert(false);
+                    if(enemy.GetComponent<SharedEnemyAI>().GetIsSearching())
+                        enemy.GetComponent<SharedEnemyAI>().SetIsSearching(false);
+
+                    enemyState state = new enemyState
+                    {
+                        enemyType = EnemyManager.instance.GetEnemyPrefab(enemy.GetComponent<SharedEnemyAI>().GetEnemyType()),
+                        position = enemy.transform.position,
+                        rotation = enemy.transform.rotation,
+                        health = enemy.GetComponent<SharedEnemyAI>().GetHP(),
+                        maxHealth = enemy.GetComponent<SharedEnemyAI>().GetMaxHP(),
+                        isAlerted = enemy.GetComponent<SharedEnemyAI>().GetIsAlerted(),
+                        defaultPost = enemy.GetComponent<SharedEnemyAI>().GetDefaultPost().transform.position,
+                        currentDestination = enemy.GetComponent<SharedEnemyAI>().GetCurrentDestination().transform.position,
+                        agentDestination = enemy.GetComponent<NavMeshAgent>().destination,
+                        lastKnownPlayerLocation = enemy.GetComponent<SharedEnemyAI>().GetLastKnownPlayerLocation(),
+                        isEndGameEnemy = enemy.GetComponent<SharedEnemyAI>().GetIsEndGameEnemy(),
+                        loadedFromState = true
+                    };
+
+                    sceneEnemyList.Add(state);
+                }
+            }
+        }
+    }
 
 }
 

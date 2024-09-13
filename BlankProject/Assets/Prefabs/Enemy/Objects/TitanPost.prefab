@@ -118,9 +118,10 @@ GameObject:
   - component: {fileID: 1522572410001734092}
   - component: {fileID: 6639941470250078096}
   - component: {fileID: 2581581762124725768}
+  - component: {fileID: 4545395805100829569}
   m_Layer: 8
   m_Name: TitanPost
-  m_TagString: Untagged
+  m_TagString: Titan Post
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -206,6 +207,27 @@ CapsuleCollider:
   m_Height: 6.8043084
   m_Direction: 1
   m_Center: {x: -0.096269995, y: 1.9899843, z: 0.13836804}
+--- !u!65 &4545395805100829569
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960902262076455981}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4207450154314668871
 GameObject:
   m_ObjectHideFlags: 0

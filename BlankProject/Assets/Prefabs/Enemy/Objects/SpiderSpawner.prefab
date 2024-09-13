@@ -516,9 +516,10 @@ GameObject:
   - component: {fileID: 4105922631543583786}
   - component: {fileID: 1794325553452899009}
   - component: {fileID: 3974280090678969218}
+  - component: {fileID: 1529639726166249432}
   m_Layer: 0
   m_Name: SpiderSpawner
-  m_TagString: Untagged
+  m_TagString: Spider Spawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -566,7 +567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6603829326de1245b260d394762df99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Arachnoid: {fileID: 2393175190188051406, guid: 7544a082c16fc9b4abeeaa135f35b8d6, type: 3}
+  spider: {fileID: 2393175190188051406, guid: 7544a082c16fc9b4abeeaa135f35b8d6, type: 3}
 --- !u!135 &1794325553452899009
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -615,6 +616,27 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!65 &1529639726166249432
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6372648571203233298}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6899797040473217477
 GameObject:
   m_ObjectHideFlags: 0
