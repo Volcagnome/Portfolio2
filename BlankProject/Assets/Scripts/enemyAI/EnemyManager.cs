@@ -370,7 +370,7 @@ public class EnemyManager : MonoBehaviour
                 if (enemyPost.gameObject.CompareTag("Patrol Route Start") || enemyPost.gameObject.CompareTag("Guard Post")
                     || enemyPost.gameObject.CompareTag("Titan Post") || enemyPost.gameObject.CompareTag("Patrol Waypoint")
                     || enemyPost.gameObject.CompareTag("Endgame Spawner") || enemyPost.gameObject.CompareTag("Reinforcement Spawner")
-                    || enemyPost.gameObject.CompareTag("Spider Spawner")) 
+                    || enemyPost.gameObject.CompareTag("Spider Spawner") || enemyPost.gameObject.CompareTag("Boss Post")) 
                 {
                     post = enemyPost.gameObject;
                     break;

@@ -76,4 +76,22 @@ public class StaticData : MonoBehaviour
     { { "Test1", true }, { "Test2",true } };
 
 
+    struct levelData
+    {
+        bool firstTimeInScene;
+        List<enemyState> enemyStates;
+        int sceneCommandCodesCollected;
+        int sceneCommandCodesTotal;
+        int scenePickupsCollected;
+        int scenePickupsTotal;
+        int sceneSecurityPassword;
+        int passwordFound;
+    }
+
+
+    public void SaveLevelData(string sceneName)
+    {
+
+    }
+
 }

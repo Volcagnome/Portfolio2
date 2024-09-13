@@ -117,10 +117,10 @@ public class itemPickup : MonoBehaviour, IPickup
                     Destroy(displayedItem);
                     displayedItem= null;
 
-                    if (GameManager.instance.GetCurrentLevel() == 0)
-                        GameManager.instance.SetSecurtyPasswordLevel1(item.passwordCombo);
-                    else if (GameManager.instance.GetCurrentLevel() == 1)
-                        GameManager.instance.SetSecurtyPasswordLevel2(item.passwordCombo);
+                    //if (GameManager.instance.GetCurrentLevel() == 0)
+                    //    GameManager.instance.SetSecurtyPasswordLevel1(item.passwordCombo);
+                    //else if (GameManager.instance.GetCurrentLevel() == 1)
+                    //    GameManager.instance.SetSecurtyPasswordLevel2(item.passwordCombo);
 
 
 
