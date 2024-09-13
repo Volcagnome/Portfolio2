@@ -1384,6 +1384,7 @@ GameObject:
   - component: {fileID: 458464794079965156}
   - component: {fileID: 311933658342899043}
   - component: {fileID: 1396844780421991658}
+  - component: {fileID: 6031084656394541360}
   m_Layer: 5
   m_Name: GameManager
   m_TagString: Untagged
@@ -1422,7 +1423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dea27888a56e9f441867cb44671ad932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioPlayer: {fileID: 0}
+  audioPlayer: {fileID: 6031084656394541360}
   menuActive: {fileID: 0}
   menuPause: {fileID: 4655950608838427742}
   menuWin: {fileID: 3142177487760655812}
@@ -1439,6 +1440,7 @@ MonoBehaviour:
   PickupMessageWindow: {fileID: 8449660317439304950}
   PickupMessage: {fileID: 7473238582698044902}
   leverCountText: {fileID: 0}
+  tutorialWindow: {fileID: 0}
   staminaBar: {fileID: 8697403104074695877}
   healthbar: {fileID: 1190527939681285664}
   overheatMeter: {fileID: 5335721679373804130}
@@ -1465,6 +1467,102 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e346fc9d9cf2cfa43a5c0e6c3bdebea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &6031084656394541360
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6681155161047504071}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &7562191109670749392
 GameObject:
   m_ObjectHideFlags: 0
@@ -3018,6 +3116,26 @@ PrefabInstance:
       value: EnemyManager
       objectReference: {fileID: 0}
     - target: {fileID: 2788266153474522228, guid: 2f2d2a1450ed1dd4a8cafe0c335e4c0d, type: 3}
+      propertyPath: boss
+      value: 
+      objectReference: {fileID: 5263652692604291551, guid: 27588f91456f8014db83655de54ff72d, type: 3}
+    - target: {fileID: 2788266153474522228, guid: 2f2d2a1450ed1dd4a8cafe0c335e4c0d, type: 3}
+      propertyPath: guard
+      value: 
+      objectReference: {fileID: 1043329035144271283, guid: 0d3f2fba35f2b7a419ef3b094b4b0387, type: 3}
+    - target: {fileID: 2788266153474522228, guid: 2f2d2a1450ed1dd4a8cafe0c335e4c0d, type: 3}
+      propertyPath: titan
+      value: 
+      objectReference: {fileID: 8797669582339917010, guid: 937d5c52b5d56d046a62ddcda23893fc, type: 3}
+    - target: {fileID: 2788266153474522228, guid: 2f2d2a1450ed1dd4a8cafe0c335e4c0d, type: 3}
+      propertyPath: patrol
+      value: 
+      objectReference: {fileID: 4744974096311210552, guid: b2c5178c02aded448b84086b73aa7d87, type: 3}
+    - target: {fileID: 2788266153474522228, guid: 2f2d2a1450ed1dd4a8cafe0c335e4c0d, type: 3}
+      propertyPath: spider
+      value: 
+      objectReference: {fileID: 2393175190188051406, guid: 7544a082c16fc9b4abeeaa135f35b8d6, type: 3}
+    - target: {fileID: 2788266153474522228, guid: 2f2d2a1450ed1dd4a8cafe0c335e4c0d, type: 3}
       propertyPath: robotHitSounds.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -3572,6 +3690,26 @@ PrefabInstance:
       propertyPath: titanReinforcement
       value: 
       objectReference: {fileID: 8797669582339917010, guid: 937d5c52b5d56d046a62ddcda23893fc, type: 3}
+    - target: {fileID: 4986297458742545656, guid: f434efd8d65b63641ab35abad4f3fed8, type: 3}
+      propertyPath: breachLevel_1_numGuards
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4986297458742545656, guid: f434efd8d65b63641ab35abad4f3fed8, type: 3}
+      propertyPath: breachLevel_2_numGuards
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4986297458742545656, guid: f434efd8d65b63641ab35abad4f3fed8, type: 3}
+      propertyPath: breachLevel_3_numGuards
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4986297458742545656, guid: f434efd8d65b63641ab35abad4f3fed8, type: 3}
+      propertyPath: breachLevel_4_numGuards
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4986297458742545656, guid: f434efd8d65b63641ab35abad4f3fed8, type: 3}
+      propertyPath: breachLevel_5_numGuards
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4986297458742545656, guid: f434efd8d65b63641ab35abad4f3fed8, type: 3}
       propertyPath: maximumSecurityBreachLevel
       value: 2

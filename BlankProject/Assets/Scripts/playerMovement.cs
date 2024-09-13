@@ -58,8 +58,8 @@ public class playerMovement : MonoBehaviour
         //staminaOG = stamina;
         //speedOG = speed;
 
-        staminaOG = StaticPlayerData.playerMaxStamina;
-        speedOG = StaticPlayerData.playerSpeedOG; 
+        staminaOG = StaticData.playerMaxStamina;
+        speedOG = StaticData.playerSpeedOG; 
     }
 
     // Update is called once per frame

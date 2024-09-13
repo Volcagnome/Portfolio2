@@ -89,14 +89,22 @@ public class playerDamage : MonoBehaviour, IDamage
     {
         //Sets original starting stats:
         //hpOG = HP;
-        HP = StaticPlayerData.playerHealth;
-        hpOG = StaticPlayerData.playerMaxHealth;
+        HP = StaticData.playerHealth;
+        hpOG = StaticData.playerMaxHealth;
         isLowHp = false;
 
         adjustHPBar();
         adjustGlow();
+
+        weapons = StaticData.playerWeaponsList;
+        
         if (maxHeat <= 0) maxHeat = 1;
+
         if (weapons.Count == 0) addWeapon(defaultWeapon);
+
+        selectedGun = StaticData.playerSelectedGun;
+        setWeapon(weapons[selectedGun]);
+
         spawnPlayer();
     }
 
@@ -400,7 +408,7 @@ public class playerDamage : MonoBehaviour, IDamage
         coolWaitTime = weapon.coolWaitTime;
         isShotgun = weapon.shotgun;
 
-        currentHeat *= maxHeat / heatHolder;
+        //currentHeat *= maxHeat / heatHolder;
 
         muzzleFlash.transform.SetParent(GameManager.instance.player.transform, true);
         flashlight.transform.SetParent(GameManager.instance.player.transform, true);
@@ -423,6 +431,7 @@ public class playerDamage : MonoBehaviour, IDamage
         currentHeat = 0;
         weapons.Add(weapon);
         setWeapon(weapon);
+        selectedGun = weapons.IndexOf(weapon);
     }
 
     void coolWeapon()
@@ -489,6 +498,11 @@ public class playerDamage : MonoBehaviour, IDamage
 
     public float getAmmoMultiplier() { return maxAmmoMultiplier; }
     public void setAmmoMultiplier(float value) { maxAmmoMultiplier = value; }
+
+    public int GetSelectedGun() { return selectedGun; } 
+
+    public List<pickupStats> GetWeaponList() { return weapons; }
+
 
     // *** SPAWN *** //
     public void spawnPlayer()

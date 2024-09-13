@@ -13,10 +13,9 @@ public class RobotFabricator : MonoBehaviour
     //Components in scene and prefabs for each enemy type
     [SerializeField] GameObject fabricatorDoor;
     [SerializeField] Light fabricatorDoorLight;
+    [SerializeField] GameObject spawnPosition;
     [SerializeField] GameObject guard;
     [SerializeField] GameObject patrol;
-    [SerializeField] GameObject titan;
-    [SerializeField] GameObject spawnPosition;
 
     //Tracks door position
     private Vector3 doorCurrentPosition;
@@ -95,17 +94,11 @@ public class RobotFabricator : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        if (entityToSpawn == SharedEnemyAI.enemyType.Guard)
-        {
-            Debug.Log("Spawning guard");
-           newRobot = Instantiate(guard, spawnPosition.transform.position, spawnPosition.transform.localRotation);
-        }
-
-        else if (entityToSpawn == SharedEnemyAI.enemyType.Patrol)
-        {
-            Debug.Log("Spawning patrol");
-            newRobot =  Instantiate(patrol, spawnPosition.transform.position, spawnPosition.transform.localRotation);
-        }
+        
+        if(entityToSpawn == SharedEnemyAI.enemyType.Guard)
+            newRobot = Instantiate(guard, spawnPosition.transform.position, spawnPosition.transform.localRotation);
+        else if(entityToSpawn == SharedEnemyAI.enemyType.Patrol)
+            newRobot = Instantiate(patrol, spawnPosition.transform.position, spawnPosition.transform.localRotation);
 
         newRobot.SetActive(true);
 

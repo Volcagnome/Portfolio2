@@ -62,12 +62,15 @@ public class SharedEnemyAI : MonoBehaviour
     protected bool readyToSpeak;
     protected bool playerSpotted;
     protected bool isRespondingToAlert;
+    protected bool isEndgameEnemy;
+    protected bool isSearching;
+    protected bool loadedFromState;
 
 
     //Stats
     [SerializeField] public enum enemyType { none, Guard, Patrol, Titan, Turret, Boss, Arachnoid };
     [SerializeField] protected enemyType enemy_Type;
-    [SerializeField] protected float HP;
+    [SerializeField] protected float HPOrig;
     [SerializeField] protected float shootRate;
     [SerializeField] protected float combatSpeed;
     [SerializeField] protected float combatStoppingDistance;
@@ -83,7 +86,7 @@ public class SharedEnemyAI : MonoBehaviour
     //Health Bar
     protected bool isTakingDamage;
     protected Coroutine regenCoroutine;
-    protected float HPOrig;
+    protected float HP;
     public GameObject enemyHPBar;
     public Image enemyHPBarFill;
    [SerializeField] Vector3 HPBarPos;
@@ -157,18 +160,13 @@ public class SharedEnemyAI : MonoBehaviour
             }
 
 
-            //When alerted, will pursue the player if they are not in view or range, a boss fight is not currently 
-            //in progress or they are not already en route to the player's location during an Intruder Alert. Otherwise
-            //if a boss fight is not in progress, they will return to their post.
+            //When alerted, will pursue the player if they are not already en route to the player's location during an Intruder Alert.
+            //Otherwise if a boss fight is not in progress, they will return to their post.
             if (isAlerted)
             {
-                if (!isRespondingToAlert && !LevelManager.instance.GetIsBossFight())
-                {
-                    if (PursuePlayerCoroutine != null)
-                        StopCoroutine(PursuePlayer());
-
-                    if (!playerInView)
-                        PursuePlayerCoroutine = StartCoroutine(PursuePlayer());
+                if (!playerInView && !isRespondingToAlert && !isSearching)
+                { 
+                    StartCoroutine(PursuePlayer());
                 }
 
                 if (playerInRange)
@@ -182,10 +180,6 @@ public class SharedEnemyAI : MonoBehaviour
                 if (!onDuty && defaultPost != null && !LevelManager.instance.GetIsBossFight())
                     ReturnToPost();
             }
-
-
-
-
 
             //If enemy has taken damage, makes its health bar visible and updates it to reflect health loss, otherwise hides it
             if (isPlayerTarget())
@@ -239,12 +233,9 @@ public class SharedEnemyAI : MonoBehaviour
             playerInView = false;
             enemyDetectionLevel = 0;
 
-            Debug.Log(GameManager.instance.GetIsRespawning());
-
             if (isAlerted && !GameManager.instance.GetIsRespawning())
-            {
                 lastKnownPlayerLocation = GameManager.instance.player.transform.position;
-            }
+            
             else if (isAlerted && GameManager.instance.GetIsRespawning())
                 CalmEnemy();
         }
@@ -381,19 +372,17 @@ public class SharedEnemyAI : MonoBehaviour
     //if they reach the player's last known location, pauses for a second, then returns to their idle behavior.
     protected IEnumerator PursuePlayer()
     {
+
         agent.SetDestination(lastKnownPlayerLocation);
 
-        if (playerInView)
-        {
-            PursuePlayerCoroutine = null;
-            yield break;
-        }
-
-        else if (agent.remainingDistance <= 0.3f || !agent.hasPath)
+        if (!isEndgameEnemy && agent.remainingDistance <= 0.3f || !agent.hasPath)
         {
             yield return new WaitForSeconds(1.5f);
             CalmEnemy();
         }
+        else if (agent.remainingDistance <= 0.3f && isEndgameEnemy)
+            StartCoroutine(SearchArea(lastKnownPlayerLocation));
+
     }
 
     // If the FindIntruder coroutine is already in progress, stops it and restarts it with a new location to 
@@ -433,11 +422,11 @@ public class SharedEnemyAI : MonoBehaviour
                 break;
             }
 
-            if (agent.remainingDistance <= 0.5f)
+            if (agent.remainingDistance <= 1f)
             {
                 FindIntruderCoroutine = null;
                 isRespondingToAlert = false;
-                StartCoroutine(SearchArea());
+                StartCoroutine(SearchArea(LevelManager.instance.GetIntruderLocation()));
                 break;
             }
         }
@@ -448,8 +437,10 @@ public class SharedEnemyAI : MonoBehaviour
     //selecting a new random search location. If player not found after the configured max number of search attempts
     //will return to their idle behavior.
 
-    public IEnumerator SearchArea()
+    public IEnumerator SearchArea(Vector3 location)
     {
+        isSearching = true;
+
         int maxSearchAttempts = LevelManager.instance.GetSearchAttempts();
         float searchRadius = LevelManager.instance.GetSearchRadius();
         float searchTimer = LevelManager.instance.GetSearchTimer();
@@ -457,8 +448,9 @@ public class SharedEnemyAI : MonoBehaviour
 
         for (int attempts = 0; attempts < maxSearchAttempts; attempts++)
         {
+
             Vector3 randomDist = Random.insideUnitSphere * searchRadius;
-            randomDist += LevelManager.instance.GetIntruderLocation();
+            randomDist += location;
 
             NavMeshHit hit;
             NavMesh.SamplePosition(randomDist, out hit, searchRadius, 1);
@@ -468,13 +460,14 @@ public class SharedEnemyAI : MonoBehaviour
 
             if (playerInView)
             {
+                isSearching = false;
                 playerFound = true;
                 yield break;
             }
         }
 
         if (!playerFound)
-        {
+        {   isSearching = false;
             CalmEnemy();
         }
     }
@@ -551,7 +544,7 @@ public class SharedEnemyAI : MonoBehaviour
         AlertAllies();
         StartCoroutine(flashYellow());
 
-        if (!playerSpotted)
+        if (!playerSpotted && !isAlerted)
         {
             audioPlayer.PlayOneShot(foundPlayer, 0.75f);
             playerSpotted = true;
@@ -585,7 +578,9 @@ public class SharedEnemyAI : MonoBehaviour
         isDead = true;
         agent.isStopped = true;
         anim.SetBool("isDead", true);
-        
+
+        if (isEndgameEnemy)
+            defaultPost.GetComponent<EndgameEnemySpawnPoint>().RemoveFromEnemySpawnedList(gameObject);
 
         playerInRange = false;
         playerInView = false;
@@ -745,7 +740,8 @@ public class SharedEnemyAI : MonoBehaviour
     ///          GETTERS/SETTERS         ///
     ///////////////////////////////////////
 
-public void SetIsRespondingToAlert(bool status) { isRespondingToAlert = status; }
+
+
 
 public GameObject GetEnemyHealthBar() { return enemyHPBar; }
 
@@ -761,11 +757,19 @@ public bool CheckIfOnDuty() { return onDuty; }
 
 public Vector3 GetLastKnownPlayerLocation() { return lastKnownPlayerLocation; }
 
+public void SetLastKnownPlayerLocation(Vector3 location) { lastKnownPlayerLocation = location; }
+
 public void SetCurrentDestination(GameObject destination) { currentDestination = destination; }
 
-public float GetHP() { return HP; }
+public GameObject GetCurrentDestination() { return currentDestination; }
 
+public float GetHP() { return HP; }
 public void SetHP(float value) { HP = value; }
+
+public float GetMaxHP() { return HPOrig; }
+
+public void SetMaxHP(float hp) { HPOrig = hp; }
+
 
 public float GetShootRate() { return shootRate; }
 
@@ -776,4 +780,24 @@ public void SetInOuterRange(bool status) { playerInOuterRange = status; }
 public float GetRotationSpeed() { return rotationSpeed; }
 
 public bool GetIsAlerted() { return isAlerted; }    
+
+public void SetIsEndgameEnemy(bool status) {  isEndgameEnemy = status; }
+
+public bool GetIsRespondingToAlert() { return isRespondingToAlert; }
+
+public void SetIsRespondingToAlert(bool status) { isRespondingToAlert = status; }
+
+public bool GetIsSearching() { return isSearching; }
+
+public void SetIsSearching(bool status) { isSearching = status; }
+
+public bool GetLoadedFromState() { return loadedFromState; }
+
+public void SetLoadedFromState(bool status) {  loadedFromState = status; }
+
+public bool GetIsEndGameEnemy() { return isEndgameEnemy; } 
+
+public void SetIsEndGameEnemy(bool status) { isEndgameEnemy= status; }
+
+
 }

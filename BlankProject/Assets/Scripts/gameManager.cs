@@ -6,7 +6,10 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static StaticData;
 
 public class GameManager : MonoBehaviour
 {
@@ -81,22 +84,19 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         //playerSpawn = GameObject.FindWithTag("Player Spawn");
 
-        if (StaticPlayerData.isGameStart == true)
+        if (StaticData.isGameStart == true)
         {
             currentSpawn = playerSpawnEntry = GameObject.FindWithTag("Player Spawn Entry");
-            StaticPlayerData.isGameStart = false;
+            StaticData.isGameStart = false;
         }
 
         playerSpawnEntry = GameObject.FindWithTag("Player Spawn Entry");
         playerSpawnExit = GameObject.FindWithTag("Player Spawn Exit");
 
-        if (StaticPlayerData.previousLevel == true)
+        if (StaticData.previousLevel == true)
             currentSpawn = playerSpawnExit;
         else //if (StaticPlayerData.nextLevel == true)
             currentSpawn = playerSpawnEntry;
-
-        
-
 
         playerScript = player.GetComponent<playerMovement>();
         crouchScript = player.GetComponent<playerCrouch>();
@@ -106,6 +106,7 @@ public class GameManager : MonoBehaviour
         securityPasswordLevel_1 = 0;
         securityPasswordLevel_2 = 0;
         currentLevel = 0;
+
     }
 
     //Update is called once per frame
@@ -127,6 +128,8 @@ public class GameManager : MonoBehaviour
 
         if(selfDestructActivated)
         {
+            selfDestructTimer.SetActive(true);
+            timer.text = timeLeft;
             BeginCountdown();
         }
 
@@ -235,16 +238,24 @@ public class GameManager : MonoBehaviour
         }
 
     }
+    
+
+
+    public void ActivateSelfDestruct() 
+    { 
+        selfDestructActivated = true;
+
+        foreach (var enemyStateList in sceneEnemies)
+        {
+            enemyStateList.Value.Clear();
+        }
+    }
+
     // Getters / setters:
     public int GetCommandCodesEntered() { return commandCodesEntered; }
 
     public int GetCommandCodesCollected() { return commandCodesCollected; }
 
-    public void ActivateSelfDestruct() { selfDestructActivated = true; }
-
-    public bool GetSelfDestructActivated() { return selfDestructActivated; }
-
-    public string GetTimeLeft() { return timeLeft; }
 
     public int GetPasswordLevel1() { return securityPasswordLevel_1; }
 
@@ -259,7 +270,11 @@ public class GameManager : MonoBehaviour
     public void SetCurrentLevel(int level) { currentLevel = level; }
    //public void SetPlayerSpawn(GameObject spawner) { playerSpawn = spawner;}
 
-    public bool GetIsRespawning() { return isRespawning; }  
+    public bool GetIsRespawning() { return isRespawning; }
+
+
+    public bool GetSelfDestructActivated() { return selfDestructActivated; }
+
 
     public IEnumerator RespawnBuffer()
     {

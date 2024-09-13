@@ -26,6 +26,9 @@ public class TitanAI : SharedEnemyAI, IDamage
     //EnemyManager, and they set their manually assigned default post to occupied.
     void Start()
     {
+        if (loadedFromState == false)
+            HP = HPOrig;
+
         if (defaultPost == null)
         {
             if (Vector3.Distance(transform.position, LevelManager.instance.GetReinforcementSpawner().transform.position) < 0.5f)
@@ -43,7 +46,7 @@ public class TitanAI : SharedEnemyAI, IDamage
 
         isBashing = false;
 
-        HPOrig = HP;
+
         colorOrig = model.sharedMaterial.color;
 
         enemyDetectionLevel = 0;

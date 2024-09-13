@@ -39,8 +39,6 @@ public class BossFight : MonoBehaviour
     bool spawnedStage2Reinforcements;
     bool spawnedStage3Reinforcements;
  
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -60,22 +58,9 @@ public class BossFight : MonoBehaviour
     void Update()
     {
 
-        if (boss.GetComponent<SharedEnemyAI>().GetHP() < fightStage_2_threshhold && !spawnedStage2Reinforcements)
-        {
-            fightStage = 2;
-            SpawnReinforcements(fightStage);
-            spawnedStage2Reinforcements = true;
-        }
-        else if (boss.GetComponent<SharedEnemyAI>().GetHP() < fightStage_3_threshhold && !spawnedStage3Reinforcements)
-        {
-            fightStage = 3;
-            SpawnReinforcements(fightStage);
-            spawnedStage3Reinforcements = true;
-        }
-        else if (boss.GetComponent<bossAI>().GetIsDead())
-        {
 
-            CommandCodeBoss.SetActive(true);
+        if (boss.GetComponent<bossAI>().GetIsDead())
+        {
             CommandCodeBossPlatform.SetActive(true);
 
             MainFrameDoor.transform.GetChild(1).gameObject.SetActive(false);
@@ -90,10 +75,21 @@ public class BossFight : MonoBehaviour
             if (SelfDestructLever.GetComponent<togglingItem>().getState())
             {
                 GameManager.instance.ActivateSelfDestruct();
-                SelfDestructTimer.SetActive(true);
-                timeLeft.text = GameManager.instance.GetTimeLeft();
             }
-        } 
+        }
+        else if (boss.GetComponent<SharedEnemyAI>().GetHP() < fightStage_2_threshhold && !spawnedStage2Reinforcements)
+        {
+            fightStage = 2;
+            SpawnReinforcements(fightStage);
+            spawnedStage2Reinforcements = true;
+        }
+        else if (boss.GetComponent<SharedEnemyAI>().GetHP() < fightStage_3_threshhold && !spawnedStage3Reinforcements)
+        {
+            fightStage = 3;
+            SpawnReinforcements(fightStage);
+            spawnedStage3Reinforcements = true;
+        }
+       
     }
 
     //When player exits arena entry area, the doors to the mainframe will close, the boss will emerge and the fight will begin.
@@ -164,6 +160,5 @@ public class BossFight : MonoBehaviour
             titan.GetComponent<SharedEnemyAI>().SetDefaultPost(reinforcementSpawner);
         }
     }
-
 
 }

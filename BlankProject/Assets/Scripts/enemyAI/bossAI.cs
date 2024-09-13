@@ -59,7 +59,9 @@ public class bossAI : SharedEnemyAI, IDamage
     // Start is called before the first frame update
     void Start()
     {
-        HPOrig = HP;
+        if (loadedFromState == false)
+            HP = HPOrig;
+
         colorOrig = gameObject.GetComponentInChildren<Renderer>().sharedMaterial.color;
 
         readyToSpeak = true;
@@ -336,11 +338,12 @@ public class bossAI : SharedEnemyAI, IDamage
     }
 
 
-    protected virtual void playFootstepSound()
+    protected override void playFootstepSound()
     {
         int playTrack = Random.Range(0, footsteps.Count);
 
-        audioPlayer.PlayOneShot(footsteps[playTrack], 10f);
+        if(!isDead)
+            audioPlayer.PlayOneShot(footsteps[playTrack], 10f);
     }
 }
 
