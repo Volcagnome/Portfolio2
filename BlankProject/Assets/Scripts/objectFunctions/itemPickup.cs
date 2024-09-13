@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class itemPickup : MonoBehaviour, IPickup
 {
+    [SerializeField] Vector3 startingAxes;
+    [Range(-180, 180)][SerializeField] float startingAngle;
     [SerializeField] Vector3 rotationSpeed;
     [SerializeField] pickupStats item;
     [SerializeField] bool grabbableByEnemy;
@@ -17,8 +19,11 @@ public class itemPickup : MonoBehaviour, IPickup
 
     void Start()
     {
+        startingAxes.Normalize();
         Vector3 startingPosition = transform.position; startingPosition.y += 1.5F;
         displayedItem = Instantiate(item.itemModel, startingPosition, Quaternion.identity);
+        displayedItem.transform.rotation = Quaternion.AngleAxis(startingAngle, startingAxes);
+        displayedItem.GetComponent<Transform>().localScale *= item.modelScale;
     }
 
     // Update is called once per frame
@@ -81,11 +86,14 @@ public class itemPickup : MonoBehaviour, IPickup
             }
                 case (pickupStats.pickupType.upgrade):
             {
+                float hpHolder = GameManager.instance.player.GetComponent<playerDamage>().getMaxHP();
+                float staminaHolder = GameManager.instance.player.GetComponent<playerMovement>().getMaxStamina();
+
                 GameManager.instance.player.GetComponent<playerDamage>().setMaxHP(GameManager.instance.player.GetComponent<playerDamage>().getMaxHP() + item.health);
-                GameManager.instance.player.GetComponent<playerDamage>().setHP(GameManager.instance.player.GetComponent<playerDamage>().getMaxHP());
+                if (hpHolder != GameManager.instance.player.GetComponent<playerDamage>().getMaxHP()) GameManager.instance.player.GetComponent<playerDamage>().setHP(GameManager.instance.player.GetComponent<playerDamage>().getMaxHP());
 
                 GameManager.instance.player.GetComponent<playerMovement>().setMaxStamina(item.stamina + GameManager.instance.player.GetComponent<playerMovement>().getMaxStamina());
-                GameManager.instance.player.GetComponent<playerMovement>().setStamina(GameManager.instance.player.GetComponent<playerMovement>().getMaxStamina());
+                if (staminaHolder != GameManager.instance.player.GetComponent<playerMovement>().getMaxStamina()) GameManager.instance.player.GetComponent<playerMovement>().setStamina(GameManager.instance.player.GetComponent<playerMovement>().getMaxStamina());
                 
                 GameManager.instance.player.GetComponent<playerDamage>().setBulletUpgrades(GameManager.instance.player.GetComponent<playerDamage>().getBulletUpgrades() + item.damageUP);
 

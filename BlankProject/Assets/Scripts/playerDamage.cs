@@ -67,7 +67,7 @@ public class playerDamage : MonoBehaviour, IDamage
     Coroutine regenCoroutine;
 
     float hpOG;
-    [SerializeField] float currentHeat;
+    float currentHeat;
 
     int bulletUpgradeTotal;
     float maxAmmoMultiplier;
@@ -114,11 +114,6 @@ public class playerDamage : MonoBehaviour, IDamage
             }
             if (cooldownCoroutine == null) coolWeapon();
             if (usedToMax && !isEmittingSmoke) StartCoroutine(emitSmoke());
-            if (isEmittingSmoke) 
-            { 
-                currentSmoke.transform.position = gunModel.transform.position + (Vector3.up * .25F); 
-                currentSmoke.transform.rotation = gunModel.transform.rotation;
-            }
         }
     }
 
@@ -153,9 +148,14 @@ public class playerDamage : MonoBehaviour, IDamage
         Instantiate(bulletPrefab, shootPos.position, shootPos.transform.rotation);
         currentHeat += heatPerShot;
 
-        if (maxHeat < currentHeat + heatPerShot) usedToMax = true;
+        if (maxHeat < currentHeat + heatPerShot)
+        {
+            usedToMax = true;
+            GameManager.instance.playAud(overheatSound, overheatVol);
+        }
 
-        adjustGlow();
+
+            adjustGlow();
 
         RaycastHit hit;
         // Physics.Raycast (Origin, Direction, hit info, max distance)
@@ -186,6 +186,48 @@ public class playerDamage : MonoBehaviour, IDamage
             {
                 // Instantiates a bullet hole effect when impacting a surface.
                 Instantiate(bulletHoleFX, hit.point, Quaternion.identity);
+            }
+        }
+
+        if (isShotgun)
+        {
+            for (int currentPellet = 0; currentPellet < 9; ++currentPellet)
+            {
+                Vector3 offset = Vector3.zero; offset.x = Random.Range(-.1F, .1F); offset.y = Random.Range(-.1F, .1F); offset.z = Random.Range(-.1F, .1F); 
+                RaycastHit pellet;
+
+                Vector3 linePoint = Camera.main.transform.position; linePoint.y += .01F;
+                
+
+                if (Physics.Raycast(Camera.main.transform.position,
+                    Camera.main.transform.forward + offset, out pellet, shootDist, ~ignoreMask))
+                {
+                   
+                    IDamage dmg = pellet.collider.gameObject.GetComponentInParent<IDamage>();
+
+                    if (dmg != null)
+                    {
+                        if (pellet.collider.CompareTag("WeakSpot"))
+                        {
+                            dmg.criticalHit((shootDamage + bulletUpgradeTotal) * dmgMultiplier);
+                            Instantiate(botCritFX, pellet.point, Quaternion.identity);
+                        }
+
+                        else
+                        {
+                            dmg.takeDamage(shootDamage);
+                            Instantiate(botDmgFX, pellet.point, Quaternion.identity);
+                        }
+                    }
+
+                    // This prevents our particles from instantiating on enemies, but putting the
+                    // function outside the else statement will cause it to happen always.
+                    else
+                    {
+                        // Instantiates a bullet hole effect when impacting a surface.
+                        Instantiate(bulletHoleFX, pellet.point, Quaternion.identity);
+                    }
+                }
             }
         }
 
@@ -269,6 +311,8 @@ public class playerDamage : MonoBehaviour, IDamage
                 interactWith.interact();
             }
         }
+
+
     }
 
     bool isEnemyTarget()
@@ -338,6 +382,8 @@ public class playerDamage : MonoBehaviour, IDamage
 
     public void setWeapon(pickupStats weapon)
     {
+        float heatHolder = maxHeat;
+
         weapon.modelRotationAxis.Normalize();
         shootRate = weapon.shootRate;
         shootDamage = weapon.shootDamage;
@@ -348,11 +394,15 @@ public class playerDamage : MonoBehaviour, IDamage
         coolRate = weapon.coolRate;
         coolWaitTime = weapon.coolWaitTime;
         isShotgun = weapon.shotgun;
+
+        currentHeat *= maxHeat / heatHolder;
+
         muzzleFlash.transform.SetParent(GameManager.instance.player.transform, true);
         flashlight.transform.SetParent(GameManager.instance.player.transform, true);
 
         //gunModel.transform.rotation = Quaternion.identity;
         gunModel.transform.localRotation = Quaternion.AngleAxis(weapon.rotationAngle, weapon.modelRotationAxis);
+        gunModel.transform.localScale = Vector3.one * weapon.modelScale;
 
         muzzleFlash.transform.SetParent(gunModel.transform, true);
         flashlight.transform.SetParent(gunModel.transform, true);
@@ -363,6 +413,7 @@ public class playerDamage : MonoBehaviour, IDamage
 
     public void addWeapon(pickupStats weapon)
     {
+        currentHeat = 0;
         weapons.Add(weapon);
         setWeapon(weapon);
     }
@@ -394,11 +445,9 @@ public class playerDamage : MonoBehaviour, IDamage
     IEnumerator emitSmoke()
     {
         isEmittingSmoke = true;
-        
-        currentSmoke = Instantiate(overheatSmokeFX, gunModel.transform.position + (Vector3.up * .25F), Quaternion.identity);
-        yield return new WaitForSeconds(maxHeat/coolRate);
+        ParticleSystem currentSmoke = Instantiate(overheatSmokeFX, gunModel.transform.position + (Vector3.up * .25F), Quaternion.identity);
+        yield return new WaitForSeconds(3);
         Destroy(currentSmoke);
-        currentSmoke = null;
         isEmittingSmoke = false; 
     }
 

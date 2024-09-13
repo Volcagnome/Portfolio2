@@ -12,18 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae0f0175c4cd0084b90b4432945505f0, type: 3}
   m_Name: Stats - Health Pickup
   m_EditorClassIdentifier: 
+  itemName: Health Pickup
   type: 0
   itemModel: {fileID: 3280615723539953813, guid: 7ca548533f0aca442a5f9d82c3c51247, type: 3}
-  modelRotationAxis: {x: 0, y: 0, z: 0}
-  rotationAngle: 0
+  modelScale: 1
   health: 30
   stamina: 0
   damageUP: 0
   batteryUP: 0
   speed: 0
+  shotgun: 0
   shootRate: 0
   shootDamage: 0
   shootDist: 0
   dmgMultiplier: 0
-  itemName: Health Pickup
+  maxHeat: 0
+  heatPerShot: 0
+  coolRate: 0
+  coolWaitTime: 0
+  modelRotationAxis: {x: 0, y: 0, z: 0}
+  rotationAngle: 0
   passwordCombo: 0

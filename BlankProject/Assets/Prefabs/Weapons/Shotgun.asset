@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae0f0175c4cd0084b90b4432945505f0, type: 3}
-  m_Name: SecurityPassword - Level 1
+  m_Name: Shotgun
   m_EditorClassIdentifier: 
-  itemName: Security Password - Level 1
-  type: 3
-  itemModel: {fileID: 3947132361706537439, guid: 656a41c93a1433d4f9557cc5dca14944, type: 3}
-  modelScale: 1
+  itemName: Shotgun
+  type: 1
+  itemModel: {fileID: 100000, guid: a97da33f506743140bba5d7a279179ed, type: 3}
+  modelScale: 4
   health: 0
   stamina: 0
   damageUP: 0
   batteryUP: 0
   speed: 0
-  shotgun: 0
-  shootRate: 0
-  shootDamage: 0
-  shootDist: 0
-  dmgMultiplier: 0
-  maxHeat: 0
-  heatPerShot: 0
-  coolRate: 0
-  coolWaitTime: 0
-  modelRotationAxis: {x: 0, y: 0, z: 0}
-  rotationAngle: 0
-  passwordCombo: 24596
+  shotgun: 1
+  shootRate: 0.35
+  shootDamage: 1
+  shootDist: 30
+  dmgMultiplier: 2
+  maxHeat: 50
+  heatPerShot: 2
+  coolRate: 5
+  coolWaitTime: 3
+  modelRotationAxis: {x: 1, y: 0, z: 0}
+  rotationAngle: -90
+  passwordCombo: 0

@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
 
         if (StaticPlayerData.previousLevel == true)
             currentSpawn = playerSpawnExit;
-        else if (StaticPlayerData.nextLevel == true)
+        else //if (StaticPlayerData.nextLevel == true)
             currentSpawn = playerSpawnEntry;
 
         

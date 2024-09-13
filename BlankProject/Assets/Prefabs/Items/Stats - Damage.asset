@@ -12,18 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae0f0175c4cd0084b90b4432945505f0, type: 3}
   m_Name: Stats - Damage
   m_EditorClassIdentifier: 
+  itemName: 
   type: 0
   itemModel: {fileID: 8839659844034563508, guid: 88a17349ad5f9e447be06fd119ea5f67, type: 3}
-  modelRotationAxis: {x: 0, y: 0, z: 0}
-  rotationAngle: 0
+  modelScale: 1
   health: 0
   stamina: 0
   damageUP: 5
   batteryUP: 0
   speed: 0
+  shotgun: 0
   shootRate: 0
   shootDamage: 3
   shootDist: 200
   dmgMultiplier: 2
-  itemName: 
+  maxHeat: 0
+  heatPerShot: 0
+  coolRate: 0
+  coolWaitTime: 0
+  modelRotationAxis: {x: 0, y: 0, z: 0}
+  rotationAngle: 0
   passwordCombo: 0

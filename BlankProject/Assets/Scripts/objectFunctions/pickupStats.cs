@@ -15,6 +15,7 @@ public class pickupStats : ScriptableObject
     [Header("----Base Information----")]
     public pickupType type;
     public GameObject itemModel;
+    public float modelScale;
 
     [Header("----Upgrade Stats----")]
     public float health;
