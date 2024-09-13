@@ -93,6 +93,8 @@ public class playerDamage : MonoBehaviour, IDamage
         isLowHp = false;
 
         adjustHPBar();
+        adjustOverheatMeter();
+        adjustGlow();
         if (weapons.Count == 0) addWeapon(defaultWeapon);
         spawnPlayer();
     }
@@ -147,6 +149,7 @@ public class playerDamage : MonoBehaviour, IDamage
         // Spawns a tracer round (playerBullet prefab)
         Instantiate(bulletPrefab, shootPos.position, shootPos.transform.rotation);
         currentHeat += heatPerShot;
+        
 
         if (maxHeat < currentHeat + heatPerShot)
         {
@@ -154,8 +157,8 @@ public class playerDamage : MonoBehaviour, IDamage
             GameManager.instance.playAud(overheatSound, overheatVol);
         }
 
-
-            adjustGlow();
+        adjustOverheatMeter();
+        adjustGlow();
 
         RaycastHit hit;
         // Physics.Raycast (Origin, Direction, hit info, max distance)
@@ -426,6 +429,7 @@ public class playerDamage : MonoBehaviour, IDamage
         if (currentHeat == 0 && usedToMax) usedToMax = false;
 
         adjustGlow();
+        adjustOverheatMeter();
     }
 
     IEnumerator enableCooling()
@@ -462,6 +466,11 @@ public class playerDamage : MonoBehaviour, IDamage
         GameManager.instance.redFlash.SetActive(true);
         yield return new WaitForSeconds(.1F);
         GameManager.instance.redFlash.SetActive(false);
+    }
+
+    void adjustOverheatMeter()
+    {
+        GameManager.instance.overheatMeter.fillAmount = currentHeat / maxHeat;
     }
 
     //Getters and setters

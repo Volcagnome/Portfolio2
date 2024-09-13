@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     // UI elements:
     public Image staminaBar;
     public Image healthbar;
+    public Image overheatMeter;
     public GameObject redFlash;
     public GameObject webbedOverlay;
 
