@@ -408,7 +408,7 @@ public class playerDamage : MonoBehaviour, IDamage
         coolWaitTime = weapon.coolWaitTime;
         isShotgun = weapon.shotgun;
 
-        //currentHeat *= maxHeat / heatHolder;
+        currentHeat *= maxHeat / heatHolder; 
 
         muzzleFlash.transform.SetParent(GameManager.instance.player.transform, true);
         flashlight.transform.SetParent(GameManager.instance.player.transform, true);
