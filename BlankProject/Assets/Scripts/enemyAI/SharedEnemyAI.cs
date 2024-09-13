@@ -138,23 +138,23 @@ public class SharedEnemyAI : MonoBehaviour
             if (playerInView)
             {
                 lastKnownPlayerLocation = GameManager.instance.player.transform.position;
-                
-                if(!isAlerted)
+
+                if (!isAlerted)
+                {
+                    audioPlayer.PlayOneShot(foundPlayer, 0.75f);
                     AlertEnemy();
+                }
+
                 AlertAllies();
                 FoundPlayer();
                 agent.stoppingDistance = combatStoppingDistance;
                 playerInViewIndicator.SetActive(true);
 
-                if(!playerSpotted)
-                {
-                    audioPlayer.PlayOneShot(foundPlayer, 0.75f);
-                    playerSpotted = true;
-                }
             }
             else
             {
-                agent.stoppingDistance = idleStoppingDistance;
+                if(isAlerted)
+                    agent.stoppingDistance = idleStoppingDistance;
                 anim.SetBool("Aiming", false);
                 playerInViewIndicator.SetActive(false);
             }
@@ -475,6 +475,10 @@ public class SharedEnemyAI : MonoBehaviour
     ////////////////////////////////////////
     ///             COMBAT               ///
     ///////////////////////////////////////
+
+    //If player was recently in view but has taken cover (no longer in view) will continue firing in their direction, but will wait a configured
+    //number of seconds before attempting to 
+
 
     //Flashes the enemy model red when weakspot is hit
     protected IEnumerator flashRed()

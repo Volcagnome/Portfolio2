@@ -37,6 +37,9 @@ public class bossAI : SharedEnemyAI, IDamage
     [SerializeField] List<AudioClip> mainTurretSounds = new List<AudioClip>();
     [SerializeField] AudioClip rocketTurretLaunch;
     [SerializeField] AudioClip death;
+    [SerializeField] AudioClip turretCyclingSound;
+    Coroutine playCyclingTurrets;
+    bool cycledTurrets;
 
 
     //Particle Effects
@@ -90,6 +93,7 @@ public class bossAI : SharedEnemyAI, IDamage
                 audioPlayer.PlayOneShot(foundPlayer, 3f);
                 playerSpotted = true;
             }
+
         }
 
 
@@ -121,6 +125,10 @@ public class bossAI : SharedEnemyAI, IDamage
         //hides it.
         if (isPlayerTarget())
             UpdateEnemyUI();
+        else
+            enemyHPBar.SetActive(false);
+
+
 
         if (isAlerted || playerInOuterRange)
             UpdateDetectionUI();
@@ -139,6 +147,7 @@ public class bossAI : SharedEnemyAI, IDamage
     //turret rotation array), turrets will aim (LookAt) player and the Attack function is called.
     protected override void FoundPlayer()
     {
+
         if (distanceToPlayer < 20f)
         {
             SelectWeapon(FlameThrower_L, FlameThrower_R, turretIndex.Flamethrower);
@@ -147,6 +156,8 @@ public class bossAI : SharedEnemyAI, IDamage
         }
         else if (distanceToPlayer > 20f && distanceToPlayer < 30f)
         {
+
+
             SelectWeapon(MainTurret_L, MainTurret_R, turretIndex.MainTurret);
             CycleTurrets();
             shootRate = 0.2f;
@@ -167,6 +178,12 @@ public class bossAI : SharedEnemyAI, IDamage
 
             Attack();
         }
+    }
+
+    IEnumerator playCycleTurretsSound()
+    { 
+        TurretCycler_L.transform.GetComponentInChildren<AudioSource>().PlayOneShot(turretCyclingSound);
+        yield return new WaitForSeconds(2f);
     }
 
     //Sets the L and R weapon variables to the passed turret types and sets the currentRotationIndex to the passed index.
@@ -211,7 +228,7 @@ public class bossAI : SharedEnemyAI, IDamage
 
         AudioSource audioPlayer = TurretCycler_L.GetComponent<AudioSource>();
 
-        audioPlayer.PlayOneShot(flameSounds[0]);
+        audioPlayer.PlayOneShot(flameSounds[0],2f);
 
         
         while (distanceToPlayer < 20f && playerInView && weapon_L == FlameThrower_L)
@@ -343,7 +360,7 @@ public class bossAI : SharedEnemyAI, IDamage
         int playTrack = Random.Range(0, footsteps.Count);
 
         if(!isDead)
-            audioPlayer.PlayOneShot(footsteps[playTrack], 10f);
+            audioPlayer.PlayOneShot(footsteps[playTrack], 1f);
     }
 }
 

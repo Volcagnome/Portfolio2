@@ -26,21 +26,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject crouchWindow;
     [SerializeField] public GameObject proneWindow;
 
+    //Self Destruct Timer
     [SerializeField] float totalTime = 600;
     [SerializeField] TMP_Text timer;
     [SerializeField] GameObject selfDestructTimer;
-    [SerializeField] int commandCodesInLevel;
     float minutes;
     float seconds;
     string timeLeft;
 
-    [SerializeField] TMP_Text level_1_passwordDisplay;
-    [SerializeField] TMP_Text level_2_passwordDisplay;
-    [SerializeField] TMP_Text commandCodesText;
-    [SerializeField] GameObject PickupMessageWindow;
     [SerializeField] TMP_Text PickupMessage;
 
-    [SerializeField] TMP_Text leverCountText;
     // UI elements:
     public GameObject tutorialWindow;
     public Image staminaBar;
@@ -53,7 +48,6 @@ public class GameManager : MonoBehaviour
     public GameObject playerSpawnEntry;
     public GameObject playerSpawnExit;
     public GameObject currentSpawn;
-    int currentLevel;
     
 
     // Player Scripts:
@@ -68,14 +62,22 @@ public class GameManager : MonoBehaviour
     private bool playerEscaped;
     private bool selfDestructActivated;
     private bool wasDisabled;
+    
 
     public bool isPaused;
 
     int commandCodesCollected;
     int commandCodesEntered;
+    int commandCodesInLevel;
 
-    int securityPasswordLevel_1;
-    int securityPasswordLevel_2;
+    bool firstTimeInScene;
+    List<enemyState> enemyStates;
+    int sceneCommandCodesCollected;
+    int sceneCommandCodesTotal;
+    int scenePickupsCollected;
+    int scenePickupsTotal;
+    int sceneSecurityPassword;
+    int passwordFound;
 
     // Start is called before the first frame update
     void Awake()
@@ -102,10 +104,7 @@ public class GameManager : MonoBehaviour
         crouchScript = player.GetComponent<playerCrouch>();
         damageScript = player.GetComponent<playerDamage>();
         GameManager.instance.DisplayCommandCodes();
-        
-        securityPasswordLevel_1 = 0;
-        securityPasswordLevel_2 = 0;
-        currentLevel = 0;
+       
 
     }
 
@@ -232,10 +231,10 @@ public class GameManager : MonoBehaviour
 
     public void DisplayPasswords()
     {
-        if (securityPasswordLevel_1 != 0)
-        {
-            level_1_passwordDisplay.text = securityPasswordLevel_1.ToString();
-        }
+        //if (securityPasswordLevel_1 != 0)
+        //{
+        //    level_1_passwordDisplay.text = securityPasswordLevel_1.ToString();
+        //}
 
     }
     
@@ -257,18 +256,13 @@ public class GameManager : MonoBehaviour
     public int GetCommandCodesCollected() { return commandCodesCollected; }
 
 
-    public int GetPasswordLevel1() { return securityPasswordLevel_1; }
+    //public int GetPasswordLevel1() { return securityPasswordLevel_1; }
 
-    public int GetPasswordLevel2() { return securityPasswordLevel_2; }
+    //public int GetPasswordLevel2() { return securityPasswordLevel_2; }
 
-    public void SetSecurtyPasswordLevel1(int password) { securityPasswordLevel_1 = password; }
+    //public void SetSecurtyPasswordLevel1(int password) { securityPasswordLevel_1 = password; }
 
-    public void SetSecurtyPasswordLevel2(int password) { securityPasswordLevel_2 = password; }
-
-    public int GetCurrentLevel() { return currentLevel; }
-
-    public void SetCurrentLevel(int level) { currentLevel = level; }
-   //public void SetPlayerSpawn(GameObject spawner) { playerSpawn = spawner;}
+    //public void SetSecurtyPasswordLevel2(int password) { securityPasswordLevel_2 = password; }
 
     public bool GetIsRespawning() { return isRespawning; }
 

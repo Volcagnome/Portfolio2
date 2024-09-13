@@ -21,7 +21,6 @@ public class BossFight : MonoBehaviour
     [SerializeField] GameObject SelfDestructLever;
     [SerializeField] GameObject SelfDestructTimer;
     [SerializeField] TMP_Text timeLeft;
-    [SerializeField] GameObject CommandCodeBoss;
     [SerializeField] GameObject CommandCodeBossPlatform;
 
 
