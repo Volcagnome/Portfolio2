@@ -31,6 +31,7 @@ public class pickupStats : ScriptableObject
     public int shootDamage;
     public float shootDist;
     public int dmgMultiplier;
+    public float currentHeat;
     public int maxHeat;
     public float heatPerShot;
     public float coolRate;

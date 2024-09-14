@@ -58,13 +58,14 @@ public class playerCrouch : MonoBehaviour
             // Count towards prone time requirement.
             holdCrouch += Time.deltaTime;
 
-            if (GameManager.instance.player.GetComponent<playerDamage>().getIsBurning()) GameManager.instance.player.GetComponent<playerDamage>().setIsBurning(false);
+            
 
             // If met, enter prone mode:
             if (holdCrouch >= proneTime)
             {
                 isProne = true;
                 isCrouched = false;
+                if (GameManager.instance.player.GetComponent<playerDamage>().getIsBurning()) GameManager.instance.player.GetComponent<playerDamage>().setIsBurning(false);
             }
         }
     }

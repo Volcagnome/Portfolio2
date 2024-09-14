@@ -6,6 +6,7 @@ public interface IStatusEffect
 {
     public void bleed();
     public void shock();
+    public void unshock();
     public void burn();
     public void stun();
 }

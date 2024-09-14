@@ -36,6 +36,8 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
     bool isBleeding;
     Coroutine bleedCoroutine = null;
 
+    bool isShocked;
+
     [SerializeField] float stunTime;
     bool isStunned;
     Coroutine stunCoroutine = null;
@@ -142,6 +144,9 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
             }
             if (cooldownCoroutine == null) coolWeapon();
             if (usedToMax && !isEmittingSmoke) StartCoroutine(emitSmoke());
+
+            if (isBurning) HP -= burnDamage * burnRate * Time.deltaTime;
+            if (isBleeding) HP -= bleedDamage * bleedRate * Time.deltaTime;
         }
     }
 
@@ -149,16 +154,18 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
     void aiming()
     {
         // Listen for shooting, interacting or flashlight:
-
-        if (Input.GetButton("Shoot") && weapons.Count > 0 && maxHeat > currentHeat && !usedToMax && !isShooting)
-            StartCoroutine(shoot());
-
-        if (Input.GetButtonDown("Interact"))
+        if (!isStunned && !isShocked)
         {
-            interact();
-        }
+            if (Input.GetButton("Shoot") && weapons.Count > 0 && maxHeat > currentHeat && !usedToMax && !isShooting)
+                StartCoroutine(shoot());
 
-        useFlashlight();
+            if (Input.GetButtonDown("Interact"))
+            {
+                interact();
+            }
+
+            useFlashlight();
+        }
     }
 
     ////////////////////////////////////////////////////
@@ -278,6 +285,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         // Mouse wheel switching:
         if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < weapons.Count - 1)
         {
+            weapons[selectedGun].currentHeat = currentHeat;
             selectedGun++;
             setWeapon(weapons[selectedGun]);
             // Play weapon switch sound:
@@ -285,6 +293,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
         {
+            weapons[selectedGun].currentHeat = currentHeat;
             selectedGun--;
             setWeapon(weapons[selectedGun]);
             // Play weapon switch sound:
@@ -309,6 +318,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
                 if (tempIndex-1 != selectedGun)
                 {
                     // Update index:
+                    weapons[selectedGun].currentHeat = currentHeat;
                     selectedGun = tempIndex - 1;
                     // Set to that weapon.
                     setWeapon(weapons[selectedGun]);
@@ -412,8 +422,6 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
 
     public void setWeapon(pickupStats weapon)
     {
-        float heatHolder = maxHeat;
-
         weapon.modelRotationAxis.Normalize();
         shootRate = weapon.shootRate;
         shootDamage = weapon.shootDamage;
@@ -424,8 +432,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         coolRate = weapon.coolRate;
         coolWaitTime = weapon.coolWaitTime;
         isShotgun = weapon.shotgun;
-
-        currentHeat *= maxHeat / heatHolder; 
+        currentHeat = weapon.currentHeat;
 
         muzzleFlash.transform.SetParent(GameManager.instance.player.transform, true);
         flashlight.transform.SetParent(GameManager.instance.player.transform, true);
@@ -446,7 +453,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
 
     public void addWeapon(pickupStats weapon)
     {
-        currentHeat = 0;
+        if (weapons.Count > 0) weapons[selectedGun].currentHeat = currentHeat;
         weapons.Add(weapon);
         setWeapon(weapon);
         selectedGun = weapons.IndexOf(weapon);
@@ -502,7 +509,12 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
 
     public void shock()
     {
+        isShocked = true;
+    }
 
+    public void unshock()
+    {
+        isShocked = false;
     }
 
     public void burn()
@@ -527,7 +539,12 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
     IEnumerator stunRoutine()
     {
         isStunned = true;
+        float speedStorage = controller.gameObject.GetComponent<playerMovement>().getPlayerSpeedOG();
+        controller.gameObject.GetComponent<playerMovement>().setPlayerSpeed(0);
+        controller.gameObject.GetComponent<playerMovement>().SetPlayerSpeedOG(0);
         yield return new WaitForSeconds(stunTime);
+        controller.gameObject.GetComponent<playerMovement>().SetPlayerSpeedOG(speedStorage);
+        controller.gameObject.GetComponent<playerMovement>().setPlayerSpeed(speedStorage);
         isStunned = false;
     }
 
