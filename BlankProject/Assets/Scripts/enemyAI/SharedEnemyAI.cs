@@ -663,7 +663,7 @@ public class SharedEnemyAI : MonoBehaviour
         {
             foreach (Collider ally in alliesInRange)
             {
-
+                if (ally.gameObject.GetComponent<SharedEnemyAI>() != null)
                 if (ally.GetComponent<SharedEnemyAI>().GetIsDead() == false && ally.gameObject != gameObject)
                 {
                     ally.gameObject.GetComponent<SharedEnemyAI>().lastKnownPlayerLocation = lastKnownPlayerLocation;
