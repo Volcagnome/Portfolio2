@@ -98,6 +98,7 @@ public class itemPickup : MonoBehaviour, IPickup
                 GameManager.instance.player.GetComponent<playerDamage>().setBulletUpgrades(GameManager.instance.player.GetComponent<playerDamage>().getBulletUpgrades() + item.damageUP);
 
                 GameManager.instance.player.GetComponent<playerMovement>().setPlayerSpeed(GameManager.instance.player.GetComponent<playerMovement>().getPlayerSpeed() + item.speed);
+                GameManager.instance.player.GetComponent<playerMovement>().SetPlayerSpeedOG(GameManager.instance.player.GetComponent<playerMovement>().getPlayerSpeedOG() + item.speed);
 
                 GameManager.instance.player.GetComponent<playerDamage>().setAmmoMultiplier(GameManager.instance.player.GetComponent<playerDamage>().getAmmoMultiplier() + item.batteryUP);
 

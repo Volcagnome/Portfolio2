@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playerDamage : MonoBehaviour, IDamage
+public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
 {
     [Header("----- Controller -----")]
     [SerializeField] CharacterController controller;
@@ -22,6 +22,23 @@ public class playerDamage : MonoBehaviour, IDamage
     [SerializeField] float HP;
     [SerializeField] float HPRegenRate;
     [SerializeField] float HPRegenWaitTime;
+
+    [Header("----- Status Effects -----")]
+    [SerializeField] float burnDamage;
+    [SerializeField] float burnTime;
+    [SerializeField] float burnRate;
+    bool isBurning;
+    Coroutine burnCoroutine = null;
+
+    [SerializeField] float bleedDamage;
+    [SerializeField] float bleedTime;
+    [SerializeField] float bleedRate;
+    bool isBleeding;
+    Coroutine bleedCoroutine = null;
+
+    [SerializeField] float stunTime;
+    bool isStunned;
+    Coroutine stunCoroutine = null;
 
     [Header("----- Particle Effects -----")]
     // Particle effects for dealing damage
@@ -469,6 +486,51 @@ public class playerDamage : MonoBehaviour, IDamage
         isEmittingSmoke = false; 
     }
 
+    //Applying Status Effects
+    public void bleed()
+    {
+        if (bleedCoroutine != null) StopCoroutine(bleedCoroutine);
+        StartCoroutine(bleedRoutine());
+    }
+
+    IEnumerator bleedRoutine()
+    {
+        isBleeding = true;
+        yield return new WaitForSeconds(bleedTime);
+        isBleeding = false;
+    }
+
+    public void shock()
+    {
+
+    }
+
+    public void burn()
+    {
+        if (burnCoroutine != null) StopCoroutine(burnCoroutine);
+        StartCoroutine(burnRoutine());
+    }
+
+    IEnumerator burnRoutine()
+    {
+        isBurning = true;
+        yield return new WaitForSeconds(burnTime);
+        isBurning = false;
+    }
+
+    public void stun()
+    {
+        if (stunCoroutine != null) StopCoroutine(stunCoroutine);
+        StartCoroutine(stunRoutine());
+    }
+
+    IEnumerator stunRoutine()
+    {
+        isStunned = true;
+        yield return new WaitForSeconds(stunTime);
+        isStunned = false;
+    }
+
     // *** HUD METHODS *** //
     public void adjustHPBar()
     {
@@ -499,6 +561,9 @@ public class playerDamage : MonoBehaviour, IDamage
 
     public float getAmmoMultiplier() { return maxAmmoMultiplier; }
     public void setAmmoMultiplier(float value) { maxAmmoMultiplier = value; }
+
+    public bool getIsBurning() { return isBurning; }
+    public void setIsBurning(bool value) { isBurning = value; }
 
     public int GetSelectedGun() { return selectedGun; } 
 
