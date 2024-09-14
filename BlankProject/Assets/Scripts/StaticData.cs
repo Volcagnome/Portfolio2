@@ -67,15 +67,17 @@ public class StaticData : MonoBehaviour
 
 
     //Dictionary of collected scene command codes and security password
-    public static Dictionary<int, keyItemsState> levelData = new Dictionary<int, keyItemsState>()
-    { { 0, keyItemsStateScene1 }, { 1, keyItemsStateScene2 }, { 2, keyItemsStateScene2 }};
+    public static Dictionary<int, playerPickupState> levelData = new Dictionary<int, playerPickupState>()
+    { { 0, playerPickupsStateScene1 }, { 1, playerPickupsStateScene2 }, { 2, playerPickupsStateScene2 }};
 
-    public struct keyItemsState
+    public struct playerPickupState
     {
         public int sceneCommandCodesCollected_Static;
         public int sceneCommandCodesTotal_Static;
-        public int scenePickupsCollected_Static;
-        public int scenePickupsTotal_Static;
+        public int sceneStatPickupsCollected_Static;
+        public int sceneStatPickupsTotal_Static;
+        public int sceneWeaponPickupsCollected_Static;
+        public int sceneWeaponPickupsTotal_Static;
         public int sceneSecurityPassword_Static;
     }
 
@@ -101,9 +103,9 @@ public class StaticData : MonoBehaviour
     public static List<pickupState> pickupStatesScene3 = new List<pickupState>();
 
     //States for each level that holds data specific to each level
-    public static keyItemsState keyItemsStateScene1 = new keyItemsState();
-    public static keyItemsState keyItemsStateScene2 = new keyItemsState();
-    public static keyItemsState keyItemsStateScene3 = new keyItemsState();
+    public static playerPickupState playerPickupsStateScene1 = new playerPickupState();
+    public static playerPickupState playerPickupsStateScene2 = new playerPickupState();
+    public static playerPickupState playerPickupsStateScene3 = new playerPickupState();
 
 
     //Dictionary of scene enemy states;
@@ -117,6 +119,7 @@ public class StaticData : MonoBehaviour
         public Quaternion pickupRotation_Static;
         public bool itemPickedUp_Static;
         public pickupStats item_Static;
+        public GameObject pickupPrefab_Static;
     }
 
     //Dictionary of scene pickup states;

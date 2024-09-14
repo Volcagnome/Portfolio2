@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1186611872361348}
   m_Layer: 0
   m_Name: Pickup Platform - Command Code(No Model)
-  m_TagString: Untagged
+  m_TagString: Pickup Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,10 +46,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81720927d7525b24b918bc58ad840bb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startingAxes: {x: 0, y: 0, z: 0}
+  startingAngle: 0
   rotationSpeed: {x: 30, y: 0, z: 0}
   item: {fileID: 11400000, guid: bb283de971a757544b125cba042e5ba6, type: 2}
   grabbableByEnemy: 0
   grabbableByPlayer: 1
+  type: 4
+  pickupSound: {fileID: 0}
+  pickupVol: 0
 --- !u!135 &1186611872361348
 SphereCollider:
   m_ObjectHideFlags: 0
