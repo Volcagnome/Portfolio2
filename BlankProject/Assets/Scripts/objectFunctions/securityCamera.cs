@@ -63,7 +63,7 @@ public class securityCamera : MonoBehaviour, IDamage, IToggle
         {
             foreach (Collider ally in alliesInRange)
             {
-                ally.gameObject.GetComponent<SharedEnemyAI>().AlertEnemy();
+                if (ally.gameObject.GetComponent<SharedEnemyAI>() != null) ally.gameObject.GetComponent<SharedEnemyAI>().AlertEnemy();
             }
         }
     }
