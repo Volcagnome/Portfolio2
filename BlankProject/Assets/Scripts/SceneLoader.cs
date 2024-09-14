@@ -41,7 +41,7 @@ public class SceneLoader : MonoBehaviour
             StaticData.nextLevel = true;
         }
 
-        GameManager.instance.SaveKeyItemData();
+        GameManager.instance.SavePlayerPickupData();
         SaveEnemyStates(sceneEnemies[SceneManager.GetActiveScene().buildIndex]);
         SavePickupStates(scenePickups[SceneManager.GetActiveScene().buildIndex]);
 
@@ -107,7 +107,9 @@ public class SceneLoader : MonoBehaviour
                 pickupLocation_Static = pickup.transform.position,
                 pickupRotation_Static = pickup.transform.rotation,
                 itemPickedUp_Static = pickup.GetComponent<itemPickup>().GetIfItemCollected(),
-                item_Static = pickup.GetComponent<itemPickup>().GetItemPickupStats()
+                item_Static = pickup.GetComponent<itemPickup>().GetItemPickupStats(),
+                pickupPrefab_Static = GameManager.instance.GetPickupPrefab(pickup.GetComponent<itemPickup>().GetPlatformType())
+
             };
 
             scenePickupsList.Add(state);

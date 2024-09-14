@@ -10,6 +10,8 @@ public class itemPickup : MonoBehaviour, IPickup
     [SerializeField] pickupStats item;
     [SerializeField] bool grabbableByEnemy;
     [SerializeField] bool grabbableByPlayer;
+    public enum platformType { none, health, stamina, speed, commandCode, damage, securityPassword, weapon};
+    [SerializeField] platformType type;
     bool pickupCollected;
 
     GameObject displayedItem = null;
@@ -88,7 +90,7 @@ public class itemPickup : MonoBehaviour, IPickup
                 Destroy(displayedItem);
                 displayedItem = null;
 
-                GameManager.instance.IncrementScenePickupCounter();
+                GameManager.instance.IncrementSceneWeaponPickupCounter();
                 break;
             }
                 case (pickupStats.pickupType.upgrade):
@@ -112,7 +114,7 @@ public class itemPickup : MonoBehaviour, IPickup
                 Destroy(displayedItem);
                 displayedItem = null;
 
-                GameManager.instance.IncrementScenePickupCounter();
+                GameManager.instance.IncrementSceneStatPickupCounter();
                 break;
             }
                 case (pickupStats.pickupType.commandCode):
@@ -149,5 +151,7 @@ public class itemPickup : MonoBehaviour, IPickup
     public void SetIfItemCollected(bool status) { pickupCollected = status; }   
 
     public void SetItemPickupStats(pickupStats itemStats) { item = itemStats; }
+
+    public itemPickup.platformType  GetPlatformType() { return type; }
     
 }
