@@ -76,8 +76,8 @@ public class patrolAI : SharedEnemyAI,IDamage
                         AlertEnemy();
                     AlertAllies();
                     playerInViewIndicator.SetActive(true);
-                    if (!LevelManager.instance.GetIntruderAlert() && !LevelManager.instance.GetIsRaisingAlarm()
-                        && LevelManager.instance.intruderAlertButtons.Count != 0)
+                    if (!IntruderAlertManager.instance.GetIntruderAlert() && !IntruderAlertManager.instance.GetIsRaisingAlarm()
+                        && IntruderAlertManager.instance.intruderAlertButtons.Count != 0)
                         RaiseAlarm();
 
                     else
@@ -146,7 +146,7 @@ public class patrolAI : SharedEnemyAI,IDamage
 
         audioPlayer.PlayOneShot(raisingAlarmSound);
 
-        GameObject nearestButton = LevelManager.instance.SetIsRaisingAlarm(gameObject);
+        GameObject nearestButton = IntruderAlertManager.instance.SetIsRaisingAlarm(gameObject);
 
         agent.stoppingDistance = 1f;
         agent.SetDestination(nearestButton.transform.position);
@@ -186,7 +186,7 @@ public class patrolAI : SharedEnemyAI,IDamage
 
         if (isWhistleBlower)
         {
-            LevelManager.instance.WhistleBlowerKilled();
+            IntruderAlertManager.instance.WhistleBlowerKilled();
         }
 
         StartCoroutine(DespawnDeadRobot(gameObject));

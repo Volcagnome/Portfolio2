@@ -11,7 +11,7 @@ public class BossFight : MonoBehaviour
 {
     //Scene objects
     [SerializeField] bossAI boss;
-    [SerializeField] GameObject reinforcementSpawner;
+    [SerializeField] List<GameObject> bossReinforcements;
     [SerializeField] GameObject bossDefaultPost2;
     [SerializeField] GameObject bossFightGuard;
     [SerializeField] GameObject bossFightTitan;
@@ -37,16 +37,21 @@ public class BossFight : MonoBehaviour
     //Tracks whether or not reinforcements have been called for respective fight stage
     bool spawnedStage2Reinforcements;
     bool spawnedStage3Reinforcements;
- 
+
     // Start is called before the first frame update
     void Start()
     {
+
         fightStage = 0;
         spawnedStage2Reinforcements = false;
-        spawnedStage3Reinforcements= false;
+        spawnedStage3Reinforcements = false;
 
         MainFrameDoor.transform.GetChild(1).gameObject.SetActive(false);
         MainFrameDoor.transform.GetChild(2).gameObject.SetActive(true);
+
+
+        if (!EnemyManager.instance.GetIsBossFight())
+            EnemyManager.instance.SetIsBossFight(true);
     }
 
     // Update is called once per frame
@@ -57,15 +62,14 @@ public class BossFight : MonoBehaviour
     void Update()
     {
 
-
-        if (boss.GetComponent<bossAI>().GetIsDead())
+        if (EnemyManager.instance.GetBossIsDead())
         {
             CommandCodeBossPlatform.SetActive(true);
 
             MainFrameDoor.transform.GetChild(1).gameObject.SetActive(false);
             MainFrameDoor.transform.GetChild(2).gameObject.SetActive(true);
 
-            if (GameManager.instance.GetCommandCodesEntered() == 3)
+            if (GameManager.instance.GetCommandCodesEntered() == GameManager.instance.GetTotalGameCommandCodes())
             {
                 LeverCover.SetActive(false);
                 LeverCoverOpen.SetActive(true);
@@ -94,14 +98,26 @@ public class BossFight : MonoBehaviour
     //When player exits arena entry area, the doors to the mainframe will close, the boss will emerge and the fight will begin.
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Player") && bossFightBegin == false)
+        if (other.gameObject.CompareTag("Player") && bossFightBegin == false && fightStage == 0)
         {
             bossFightBegin = true;
+            EnemyManager.instance.SetIsBossFight(true);
             BossApproach();
             fightStage = 1;
             boss.GetEnemyHealthBar().SetActive(true);
 
             MainFrameDoor.transform.GetChild(1).gameObject.SetActive(true);
+        }
+
+        else
+        {
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            foreach (GameObject enemy in enemies)
+            {
+                StopCoroutine(enemy.GetComponent<SharedEnemyAI>().SearchArea(transform.position, 99));
+                enemy.GetComponent<SharedEnemyAI>().SetIsSearching(false);
+                enemy.GetComponent<SharedEnemyAI>().SetLastKnownPlayerLocation(GameManager.instance.transform.position);
+            }
         }
     }
 
@@ -117,6 +133,8 @@ public class BossFight : MonoBehaviour
     //around the spawner so they will be slightly dispersed.
     private void SpawnReinforcements(int stage)
     {
+        GameObject spawner = IntruderAlertManager.instance.FindClosestObject(bossReinforcements, GameManager.instance.player.transform.position);
+
         int fightStageGuards = 0;
         int fightStageTitans = 0;
 
@@ -137,27 +155,35 @@ public class BossFight : MonoBehaviour
         for (int reinforcement = 0; reinforcement < fightStageGuards; reinforcement++)
         {
             randomDist = UnityEngine.Random.insideUnitSphere * 3f;
-            randomDist += reinforcementSpawner.transform.position;
+            randomDist += spawner.transform.position;
 
             NavMeshHit hit;
             NavMesh.SamplePosition(randomDist, out hit, 3f, 1);
 
-            GameObject guard = Instantiate(bossFightGuard, hit.position, reinforcementSpawner.transform.rotation);
+            GameObject guard = Instantiate(bossFightGuard, hit.position, spawner.transform.rotation);
 
-            guard.GetComponent<SharedEnemyAI>().SetDefaultPost(reinforcementSpawner);
+            guard.GetComponent<SharedEnemyAI>().SetDefaultPost(spawner);
+            guard.GetComponent<SharedEnemyAI>().SetCurrentDestination(spawner);
+            guard.GetComponent<SharedEnemyAI>().SetLastKnownPlayerLocation(GameManager.instance.player.transform.position);
+            guard.GetComponent<NavMeshAgent>().SetDestination(guard.GetComponent<SharedEnemyAI>().GetLastKnownPlayerLocation());
         }
 
         for (int reinforcement = 0; reinforcement < fightStageTitans; reinforcement++)
         {
             randomDist = UnityEngine.Random.insideUnitSphere * 3f;
-            randomDist += reinforcementSpawner.transform.position;
+            randomDist += spawner.transform.position;
 
             NavMeshHit hit;
             NavMesh.SamplePosition(randomDist, out hit, 3f, 1);
 
-            GameObject titan = Instantiate(bossFightTitan, hit.position, reinforcementSpawner.transform.rotation);
-            titan.GetComponent<SharedEnemyAI>().SetDefaultPost(reinforcementSpawner);
+            GameObject titan = Instantiate(bossFightTitan, hit.position, spawner.transform.rotation);
+            titan.GetComponent<SharedEnemyAI>().SetDefaultPost(spawner);
+            titan.GetComponent<SharedEnemyAI>().SetCurrentDestination(spawner);
+            titan.GetComponent<SharedEnemyAI>().SetLastKnownPlayerLocation(GameManager.instance.player.transform.position);
+            titan.GetComponent<NavMeshAgent>().SetDestination(titan.GetComponent<SharedEnemyAI>().GetLastKnownPlayerLocation());
         }
     }
+
+
 
 }

@@ -12,6 +12,20 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class StaticData : MonoBehaviour
 {
+
+    ////////////////////////////////////////
+    ///       GLOBAL GAME DATA           ///
+    ///////////////////////////////////////
+
+    //Will inform the GameManager to set the currentSpawn variable to the Player Spawn Entry in the scene.
+    public static bool isGameStart = true;
+
+    //Tracks how many total command codes the player has collected so far
+    public static int commandCodesCollectedTotal_Static;
+
+
+
+
     ////////////////////////////////////////
     ///          PLAYER DATA             ///
     ///////////////////////////////////////
@@ -25,6 +39,7 @@ public class StaticData : MonoBehaviour
     public static float playerMaxStamina = 100;
     public static List<pickupStats> playerWeaponsList = new List<pickupStats>();
     public static int playerSelectedGun;
+
 
 
 
@@ -50,13 +65,26 @@ public class StaticData : MonoBehaviour
         public bool loadedFromState;
     }
 
+
+    //Dictionary of collected scene command codes and security password
+    public static Dictionary<int, keyItemsState> levelData = new Dictionary<int, keyItemsState>()
+    { { 0, keyItemsStateScene1 }, { 1, keyItemsStateScene2 }, { 2, keyItemsStateScene2 }};
+
+    public struct keyItemsState
+    {
+        public int sceneCommandCodesCollected_Static;
+        public int sceneCommandCodesTotal_Static;
+        public int scenePickupsCollected_Static;
+        public int scenePickupsTotal_Static;
+        public int sceneSecurityPassword_Static;
+    }
+
+
+
     ////////////////////////////////////////
     ///          LEVEL DATA             ///
     ///////////////////////////////////////
 
-
-    //Will inform the GameManager to set the currentSpawn variable to the Player Spawn Entry in the scene.
-    public static bool isGameStart = true;
 
     //Tracks which spawn point the player should be spawned at after walking through a Loading Zone.
     public static bool previousLevel = false;
@@ -67,31 +95,36 @@ public class StaticData : MonoBehaviour
     public static List<enemyState> enemyStatesScene2 = new List<enemyState>();
     public static List<enemyState> enemyStatesScene3 = new List<enemyState>();
 
-    //Dictionary that returns a level's list of enemy states when passed the scene name.
-    public static Dictionary<string, List<enemyState>> sceneEnemies = new Dictionary<string, List<enemyState>> 
-    { {"Test1", enemyStatesScene1 }, { "Test2", enemyStatesScene2 }};
+    //List that holds all pickups states for each level;
+    public static List<pickupState> pickupStatesScene1 = new List<pickupState>();
+    public static List<pickupState> pickupStatesScene2 = new List<pickupState>();
+    public static List<pickupState> pickupStatesScene3 = new List<pickupState>();
 
-    //Dictionary that returns if this is the first time the player has entered a given scene.
-    public static Dictionary<string, bool> firstTimeInScene = new Dictionary<string, bool>() 
-    { { "Test1", true }, { "Test2",true } };
+    //States for each level that holds data specific to each level
+    public static keyItemsState keyItemsStateScene1 = new keyItemsState();
+    public static keyItemsState keyItemsStateScene2 = new keyItemsState();
+    public static keyItemsState keyItemsStateScene3 = new keyItemsState();
 
 
-    struct levelData
+    //Dictionary of scene enemy states;
+    public static Dictionary<int, List<enemyState>> sceneEnemies = new Dictionary<int, List<enemyState>> 
+    { {0, enemyStatesScene1 }, { 1, enemyStatesScene2 }, { 2, enemyStatesScene3 }};
+
+    //Struct to hold state for each pickup platform in scene
+    public struct pickupState
     {
-        bool firstTimeInScene;
-        List<enemyState> enemyStates;
-        int sceneCommandCodesCollected;
-        int sceneCommandCodesTotal;
-        int scenePickupsCollected;
-        int scenePickupsTotal;
-        int sceneSecurityPassword;
-        int passwordFound;
+        public Vector3 pickupLocation_Static;
+        public Quaternion pickupRotation_Static;
+        public bool itemPickedUp_Static;
+        public pickupStats item_Static;
     }
 
+    //Dictionary of scene pickup states;
+    public static Dictionary<int, List<pickupState>> scenePickups = new Dictionary<int, List<pickupState>>
+    { {0, pickupStatesScene1 }, { 1, pickupStatesScene2 }, { 2, pickupStatesScene3 }};
 
-    public void SaveLevelData(string sceneName)
-    {
-
-    }
+    //Dictionary of if this is the player's first time in the scene
+    public static Dictionary<int, bool> firstTimeInScene = new Dictionary<int, bool>
+    { {0, true }, { 1, true },{ 2, true }};
 
 }

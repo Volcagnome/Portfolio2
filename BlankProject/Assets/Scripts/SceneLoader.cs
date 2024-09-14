@@ -41,14 +41,15 @@ public class SceneLoader : MonoBehaviour
             StaticData.nextLevel = true;
         }
 
-        SaveEnemyStates(sceneEnemies[SceneManager.GetActiveScene().name]);
+        GameManager.instance.SaveKeyItemData();
+        SaveEnemyStates(sceneEnemies[SceneManager.GetActiveScene().buildIndex]);
+        SavePickupStates(scenePickups[SceneManager.GetActiveScene().buildIndex]);
 
-        if (LevelManager.instance.GetIntruderAlert())
-            LevelManager.instance.CancelIntruderAlert();
+        if (IntruderAlertManager.instance.GetIntruderAlert())
+            IntruderAlertManager.instance.CancelIntruderAlert();
 
         //Loads the scene entered in the Scene To Load field.
         SceneManager.LoadScene(SceneToLoad);
-
     }
 
 
@@ -91,6 +92,25 @@ public class SceneLoader : MonoBehaviour
                     sceneEnemyList.Add(state);
                 }
             }
+        }
+    }
+
+    public void SavePickupStates(List<pickupState> scenePickupsList)
+    {
+        scenePickupsList.Clear();
+
+        GameObject[] scenePickups = GameObject.FindGameObjectsWithTag("Pickup Platform");
+        foreach (GameObject pickup in scenePickups)
+        {
+            pickupState state = new pickupState
+            {
+                pickupLocation_Static = pickup.transform.position,
+                pickupRotation_Static = pickup.transform.rotation,
+                itemPickedUp_Static = pickup.GetComponent<itemPickup>().GetIfItemCollected(),
+                item_Static = pickup.GetComponent<itemPickup>().GetItemPickupStats()
+            };
+
+            scenePickupsList.Add(state);
         }
     }
 

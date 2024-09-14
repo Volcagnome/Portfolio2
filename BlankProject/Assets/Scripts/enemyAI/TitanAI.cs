@@ -31,8 +31,8 @@ public class TitanAI : SharedEnemyAI, IDamage
 
         if (defaultPost == null)
         {
-            if (Vector3.Distance(transform.position, LevelManager.instance.GetReinforcementSpawner().transform.position) < 0.5f)
-                defaultPost = LevelManager.instance.GetReinforcementSpawner();
+            if (Vector3.Distance(transform.position, IntruderAlertManager.instance.GetReinforcementSpawner().transform.position) < 0.5f)
+                defaultPost = IntruderAlertManager.instance.GetReinforcementSpawner();
             else
                 EnemyManager.instance.AssignTitanPost(gameObject);
         }
@@ -75,8 +75,8 @@ public class TitanAI : SharedEnemyAI, IDamage
         if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) <= 5f && !isBashing)
             StartCoroutine(ShieldBash());
 
-        if (LevelManager.instance.GetIntruderAlert())
-            LevelManager.instance.FoundTheIntruder(lastKnownPlayerLocation);
+        if (IntruderAlertManager.instance.GetIntruderAlert())
+            IntruderAlertManager.instance.FoundTheIntruder(lastKnownPlayerLocation);
     }
 
 
@@ -124,8 +124,8 @@ public class TitanAI : SharedEnemyAI, IDamage
             EnemyManager.instance.RemoveTitanFromRoster(gameObject);
         }
 
-        if (LevelManager.instance.responseTeam.Contains(gameObject))
-            LevelManager.instance.responseTeam.Remove(gameObject);
+        if (IntruderAlertManager.instance.responseTeam.Contains(gameObject))
+            IntruderAlertManager.instance.responseTeam.Remove(gameObject);
 
         StartCoroutine(DespawnDeadRobot(gameObject));
     }
