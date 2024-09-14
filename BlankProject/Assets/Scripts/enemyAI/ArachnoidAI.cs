@@ -163,8 +163,8 @@ public class ArachnoidAI : SharedEnemyAI,IDamage
         if (playerInView && !isShooting && !caughtPlayer)
             StartCoroutine(shoot());
 
-        if (LevelManager.instance.GetIntruderAlert())
-            LevelManager.instance.FoundTheIntruder(lastKnownPlayerLocation);
+        if (IntruderAlertManager.instance.GetIntruderAlert())
+            IntruderAlertManager.instance.FoundTheIntruder(lastKnownPlayerLocation);
     }
 
     //Shoots web projectile at player, on instantiation remembers spider who shot it so line rendererer can be enabled

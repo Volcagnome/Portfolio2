@@ -51,7 +51,9 @@ public class EnemyManager : MonoBehaviour
     private int maxAllowedRobots;
     private bool readyToCallFabricator;
 
-    bossAI bossRobot;
+    [SerializeField] GameObject bossRobot;
+    bool bossIsDead;
+    bool isBossFight;
     public List<AudioClip> robotHitSounds;
     public List<AudioClip> robotCriticalHitSounds;
 
@@ -62,23 +64,9 @@ public class EnemyManager : MonoBehaviour
     {
         instance = this;
 
-        if (StaticData.firstTimeInScene[SceneManager.GetActiveScene().name] == false)
-        {
-            DestroyDefaultEnemies();
-
-            int listLength = StaticData.sceneEnemies[SceneManager.GetActiveScene().name].Count;
-
-            if (listLength > 0)
-                LoadEnemyStates(StaticData.sceneEnemies[SceneManager.GetActiveScene().name]);
-        }
-        else
-            StaticData.firstTimeInScene[SceneManager.GetActiveScene().name] = false;
-
-        
-
         if (GameManager.instance.GetSelfDestructActivated() )
         {
-            LevelManager.instance.DecreaseSpiderSpawnerCooldown();
+            IntruderAlertManager.instance.DecreaseSpiderSpawnerCooldown();
             ClearDefaultEnemyPostLists();
         }
         else
@@ -317,13 +305,9 @@ public class EnemyManager : MonoBehaviour
     ///////////////////////////////////////
 
 
-    private void DestroyDefaultEnemies()
-    {
+   
 
-        GameObject[] defaultEnemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemy in defaultEnemies)
-            Destroy(enemy);
-    }
+
 
     private void ClearDefaultEnemyPostLists()
     {
@@ -337,6 +321,7 @@ public class EnemyManager : MonoBehaviour
 
         titanPosts_List.Clear();
     }
+
 
     public GameObject GetEnemyPrefab(SharedEnemyAI.enemyType type)
     {
@@ -356,59 +341,7 @@ public class EnemyManager : MonoBehaviour
         return enemyPrefab;
     }
 
-    private GameObject GetEnemyPostObject(Vector3 location)
-    {
-        GameObject post = null;
 
-        Collider[] enemyPosts = Physics.OverlapSphere(location, 1f);
-
-        if (enemyPosts.Length > 0)
-        {
-
-            foreach (Collider enemyPost in enemyPosts)
-            {
-                if (enemyPost.gameObject.CompareTag("Patrol Route Start") || enemyPost.gameObject.CompareTag("Guard Post")
-                    || enemyPost.gameObject.CompareTag("Titan Post") || enemyPost.gameObject.CompareTag("Patrol Waypoint")
-                    || enemyPost.gameObject.CompareTag("Endgame Spawner") || enemyPost.gameObject.CompareTag("Reinforcement Spawner")
-                    || enemyPost.gameObject.CompareTag("Spider Spawner") || enemyPost.gameObject.CompareTag("Boss Post")) 
-                {
-                    post = enemyPost.gameObject;
-                    break;
-                }
-            }
-        }
-
-        return post;
-
-    }
-
-
-    public void LoadEnemyStates(List<enemyState> sceneEnemyList)
-    {
-        GameObject enemy = null;
-
-        if (sceneEnemyList.Count > 0)
-        {
-            sceneEnemyList.ForEach(state =>
-            {
-
-                enemy = Instantiate(state.enemyType, state.position, state.rotation);
-                enemy.GetComponent<SharedEnemyAI>().UpdateEnemyUI();
-                enemy.GetComponent<SharedEnemyAI>().SetMaxHP(state.maxHealth);
-                enemy.GetComponent<SharedEnemyAI>().SetHP(state.health);
-                if (state.isAlerted)
-                    enemy.GetComponent<SharedEnemyAI>().AlertEnemy();
-                enemy.GetComponent<SharedEnemyAI>().SetDefaultPost(GetEnemyPostObject(state.defaultPost));
-                enemy.GetComponent<SharedEnemyAI>().SetCurrentDestination(GetEnemyPostObject(state.currentDestination));
-                enemy.GetComponent<NavMeshAgent>().SetDestination(state.agentDestination);
-                enemy.GetComponent<SharedEnemyAI>().SetLastKnownPlayerLocation(state.lastKnownPlayerLocation);
-                enemy.GetComponent<SharedEnemyAI>().SetIsRespondingToAlert(state.isRespondingToAlert);
-                enemy.GetComponent<SharedEnemyAI>().SetLoadedFromState(state.loadedFromState);
-                enemy.GetComponent<SharedEnemyAI>().SetIsEndGameEnemy(state.isEndGameEnemy); 
-
-            });
-        }
-    }
 
 
     public int GetCurrentNumberGuards() { return NumCurrentGuardRobots; }
@@ -426,6 +359,17 @@ public class EnemyManager : MonoBehaviour
     public void AddTitanToRoster(GameObject titan) { titanRoster.Add(titan); }
 
     public float GetEnemySpawnInterval() { return fabricatorSpawnInterval; }
-    public bossAI GetBoss() { return bossRobot; }
+
+    public bool GetIsBossFight() { return isBossFight; }
+
+    public void SetIsBossFight(bool status) { isBossFight = status; }
+
+    public void SetBossIsDead(bool status) { bossIsDead = status; }
+
+    public bool GetBossIsDead() { return bossIsDead; }
+ 
+    public GameObject GetBoss() { return bossRobot; }
+
+
 
 }

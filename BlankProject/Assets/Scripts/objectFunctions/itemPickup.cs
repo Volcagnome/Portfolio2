@@ -10,7 +10,8 @@ public class itemPickup : MonoBehaviour, IPickup
     [SerializeField] pickupStats item;
     [SerializeField] bool grabbableByEnemy;
     [SerializeField] bool grabbableByPlayer;
-    
+    bool pickupCollected;
+
     GameObject displayedItem = null;
 
     [Header("----- Sounds -----")]
@@ -19,11 +20,15 @@ public class itemPickup : MonoBehaviour, IPickup
 
     void Start()
     {
+
         startingAxes.Normalize();
         Vector3 startingPosition = transform.position; startingPosition.y += 1.5F;
-        displayedItem = Instantiate(item.itemModel, startingPosition, Quaternion.identity);
-        displayedItem.transform.rotation = Quaternion.AngleAxis(startingAngle, startingAxes);
-        displayedItem.GetComponent<Transform>().localScale *= item.modelScale;
+        if (!pickupCollected)
+        {
+            displayedItem = Instantiate(item.itemModel, startingPosition, Quaternion.identity);
+            displayedItem.transform.rotation = Quaternion.AngleAxis(startingAngle, startingAxes);
+            displayedItem.GetComponent<Transform>().localScale *= item.modelScale;
+        }
     }
 
     // Update is called once per frame
@@ -82,6 +87,8 @@ public class itemPickup : MonoBehaviour, IPickup
                 GameManager.instance.player.GetComponent<playerDamage>().addWeapon(item);
                 Destroy(displayedItem);
                 displayedItem = null;
+
+                GameManager.instance.IncrementScenePickupCounter();
                 break;
             }
                 case (pickupStats.pickupType.upgrade):
@@ -104,26 +111,22 @@ public class itemPickup : MonoBehaviour, IPickup
 
                 Destroy(displayedItem);
                 displayedItem = null;
+
+                GameManager.instance.IncrementScenePickupCounter();
                 break;
             }
                 case (pickupStats.pickupType.commandCode):
                     Destroy(displayedItem);
                     displayedItem = null;
+
                     GameManager.instance.PickedUpCommandCode();
-                    
-                
                     break;
 
                 case (pickupStats.pickupType.securityPassword):
                     Destroy(displayedItem);
                     displayedItem= null;
 
-                    //if (GameManager.instance.GetCurrentLevel() == 0)
-                    //    GameManager.instance.SetSecurtyPasswordLevel1(item.passwordCombo);
-                    //else if (GameManager.instance.GetCurrentLevel() == 1)
-                    //    GameManager.instance.SetSecurtyPasswordLevel2(item.passwordCombo);
-
-
+                    GameManager.instance.SecurityPasswordFound();
 
                     break;
 
@@ -133,8 +136,18 @@ public class itemPickup : MonoBehaviour, IPickup
             }
             }
         }
+
+
+        pickupCollected = true;
   
     }
 
+    public bool GetIfItemCollected() { return pickupCollected; }
+
+    public pickupStats GetItemPickupStats() { return item; }
+
+    public void SetIfItemCollected(bool status) { pickupCollected = status; }   
+
+    public void SetItemPickupStats(pickupStats itemStats) { item = itemStats; }
     
 }

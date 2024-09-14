@@ -12,10 +12,10 @@ using static UnityEditor.FilePathAttribute;
 
 //Handles the Intruder Alert event
 
-public class LevelManager : MonoBehaviour
+public class IntruderAlertManager: MonoBehaviour
 {
 
-    public static LevelManager instance;
+    public static IntruderAlertManager instance;
     
     //Objects in scene
     [SerializeField] GameObject reinforcementSpawner;
@@ -70,7 +70,7 @@ public class LevelManager : MonoBehaviour
     bool intruderAlert;
     bool isRaisingAlarm;
     bool intruderFound;
-    bool isBossFight;
+
    
 
     Coroutine breachIncreaseTimer;
@@ -288,7 +288,7 @@ public class LevelManager : MonoBehaviour
         for (int newGuards = 0; newGuards < numExtras; newGuards++)
         {
             randomDist = UnityEngine.Random.insideUnitSphere * 3f;
-            randomDist += LevelManager.instance.reinforcementSpawner.transform.position;
+            randomDist += reinforcementSpawner.transform.position;
 
             NavMeshHit hit;
             NavMesh.SamplePosition(randomDist, out hit, 3f, 1);
@@ -299,6 +299,7 @@ public class LevelManager : MonoBehaviour
             responseTeam.Add(reinforcement);
 
             reinforcement.GetComponent<SharedEnemyAI>().StartOrUpdateFindIntruder(intruderLocation);
+  
 
             yield return new WaitForSeconds(0.75f);
         }
@@ -464,16 +465,13 @@ public class LevelManager : MonoBehaviour
 
     public float GetWebSpeedDebuff() { return webSpeedDebuff; }
 
-    public bool GetIsBossFight() { return isBossFight; }
-
     public bool GetIntruderAlert() { return intruderAlert; }
 
     public bool GetIsRaisingAlarm() { return isRaisingAlarm; }
 
     public Vector3 GetIntruderLocation() { return intruderLocation; }
 
-
-
+    public int GetMaxSearchAttempts() { return maxSearchAttempts; }    
 
 
 }

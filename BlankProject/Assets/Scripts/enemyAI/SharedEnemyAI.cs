@@ -124,15 +124,16 @@ public class SharedEnemyAI : MonoBehaviour
 
             //If boss fight is currently in progress, enemies will immediately proceed to the player's location 
             //regardless of if they are in range.
-            if (LevelManager.instance.GetIsBossFight())
+            if (EnemyManager.instance.GetIsBossFight() && !isSearching)
             {
                 isAlerted = true;
+                onDuty = false;
                 agent.speed = combatSpeed;
                 agent.stoppingDistance = combatStoppingDistance;
                 agent.SetDestination(GameManager.instance.player.transform.position);
             }
         
-            //If player is in view, notes their location, chages their alert status, alerts nearby allies and
+            //If player is in view, notes their location, changes their alert status, alerts nearby allies and
             //begins engaging with the player. Otherwise reduces their stopping distance so they can reach their
             //destinations, stops aiming their weapon, and deactivates their playerInView indicator.
             if (playerInView)
@@ -177,7 +178,7 @@ public class SharedEnemyAI : MonoBehaviour
                 if (readyToSpeak)
                     StartCoroutine(playIdleSound());
 
-                if (!onDuty && defaultPost != null && !LevelManager.instance.GetIsBossFight())
+                if (!onDuty && defaultPost != null && !EnemyManager.instance.GetIsBossFight())
                     ReturnToPost();
             }
 
@@ -202,7 +203,7 @@ public class SharedEnemyAI : MonoBehaviour
 
     ////////////////////////////////////////
     ///        PLAYER DETECTION         ///
-    ///////////////////////////////////////
+    //////////////////////////////////////
 
 
     //Trigger colliders track if player is in detection range, if so starts the field of view coroutine to monitor
@@ -226,7 +227,6 @@ public class SharedEnemyAI : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-
             playerDetectionCircle.SetActive(false);
 
             playerInRange = false;
@@ -235,7 +235,10 @@ public class SharedEnemyAI : MonoBehaviour
 
             if (isAlerted && !GameManager.instance.GetIsRespawning())
                 lastKnownPlayerLocation = GameManager.instance.player.transform.position;
-            
+
+            else if (EnemyManager.instance.GetIsBossFight() && GameManager.instance.GetIsRespawning())
+                SearchArea(lastKnownPlayerLocation, 99);
+
             else if (isAlerted && GameManager.instance.GetIsRespawning())
                 CalmEnemy();
         }
@@ -381,8 +384,7 @@ public class SharedEnemyAI : MonoBehaviour
             CalmEnemy();
         }
         else if (agent.remainingDistance <= 0.3f && isEndgameEnemy)
-            StartCoroutine(SearchArea(lastKnownPlayerLocation));
-
+            StartCoroutine(SearchArea(lastKnownPlayerLocation, IntruderAlertManager.instance.GetMaxSearchAttempts()));
     }
 
     // If the FindIntruder coroutine is already in progress, stops it and restarts it with a new location to 
@@ -426,7 +428,7 @@ public class SharedEnemyAI : MonoBehaviour
             {
                 FindIntruderCoroutine = null;
                 isRespondingToAlert = false;
-                StartCoroutine(SearchArea(LevelManager.instance.GetIntruderLocation()));
+                StartCoroutine(SearchArea(IntruderAlertManager.instance.GetIntruderLocation(),IntruderAlertManager.instance.GetMaxSearchAttempts()));
                 break;
             }
         }
@@ -437,13 +439,13 @@ public class SharedEnemyAI : MonoBehaviour
     //selecting a new random search location. If player not found after the configured max number of search attempts
     //will return to their idle behavior.
 
-    public IEnumerator SearchArea(Vector3 location)
+    public IEnumerator SearchArea(Vector3 location, int searchAttempts)
     {
         isSearching = true;
 
-        int maxSearchAttempts = LevelManager.instance.GetSearchAttempts();
-        float searchRadius = LevelManager.instance.GetSearchRadius();
-        float searchTimer = LevelManager.instance.GetSearchTimer();
+        int maxSearchAttempts = IntruderAlertManager.instance.GetSearchAttempts();
+        float searchRadius = IntruderAlertManager.instance.GetSearchRadius();
+        float searchTimer = IntruderAlertManager.instance.GetSearchTimer();
         bool playerFound = false;
 
         for (int attempts = 0; attempts < maxSearchAttempts; attempts++)
@@ -511,8 +513,8 @@ public class SharedEnemyAI : MonoBehaviour
         if (!isShooting && !isDead)
             StartCoroutine(shoot());
 
-        if (LevelManager.instance.GetIntruderAlert())
-            LevelManager.instance.FoundTheIntruder(lastKnownPlayerLocation);
+        if (IntruderAlertManager.instance.GetIntruderAlert())
+            IntruderAlertManager.instance.FoundTheIntruder(lastKnownPlayerLocation);
     }
 
     //Sets Shoot animation trigger and waits for the configured shootRate number of seconds.
@@ -537,28 +539,29 @@ public class SharedEnemyAI : MonoBehaviour
     //calls the death function.
     public void takeDamage(float amount)
     {
-
         HP -= amount;
         isTakingDamage = true;
-
-        lastKnownPlayerLocation = GameManager.instance.player.transform.position;
-
-        if (!isAlerted)
-            AlertEnemy();
-        AlertAllies();
-        StartCoroutine(flashYellow());
-
-        if (!playerSpotted && !isAlerted)
-        {
-            audioPlayer.PlayOneShot(foundPlayer, 0.75f);
-            playerSpotted = true;
-        }
 
         if (HP <= 0 && !isDead)
         {
             isDead = true;
 
             Death();
+        }
+        else 
+        {
+            lastKnownPlayerLocation = GameManager.instance.player.transform.position;
+
+            if (!isAlerted)
+                AlertEnemy();
+            AlertAllies();
+            StartCoroutine(flashYellow());
+
+            if (!playerSpotted && !isAlerted)
+            {
+                audioPlayer.PlayOneShot(foundPlayer, 0.75f);
+                playerSpotted = true;
+            }
         }
     }
 
@@ -743,9 +746,6 @@ public class SharedEnemyAI : MonoBehaviour
     ////////////////////////////////////////
     ///          GETTERS/SETTERS         ///
     ///////////////////////////////////////
-
-
-
 
 public GameObject GetEnemyHealthBar() { return enemyHPBar; }
 

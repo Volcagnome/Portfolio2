@@ -30,8 +30,8 @@ public class guardAI : SharedEnemyAI, IDamage
                 defaultPost.GetComponent<GuardPost>().SetIsOccupied(true);
                 defaultPost.GetComponent<GuardPost>().AssignGuard(gameObject);
             }
-            else if (Vector3.Distance(transform.position, LevelManager.instance.GetReinforcementSpawner().transform.position) < 0.5f)
-                defaultPost = LevelManager.instance.GetReinforcementSpawner();
+            else if (Vector3.Distance(transform.position, IntruderAlertManager.instance.GetReinforcementSpawner().transform.position) < 0.5f)
+                defaultPost = IntruderAlertManager.instance.GetReinforcementSpawner();
         }
         else
             EnemyManager.instance.AssignGuardPost(gameObject);
@@ -61,8 +61,8 @@ public class guardAI : SharedEnemyAI, IDamage
             EnemyManager.instance.RemoveGuardFromRoster(gameObject);
         }
 
-        if (LevelManager.instance.responseTeam.Contains(gameObject))
-            LevelManager.instance.responseTeam.Remove(gameObject);
+        if (IntruderAlertManager.instance.responseTeam.Contains(gameObject))
+            IntruderAlertManager.instance.responseTeam.Remove(gameObject);
 
 
         GetComponent<guardAI>().enabled = false;

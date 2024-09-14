@@ -57,7 +57,7 @@ public class SpiderSpawner : MonoBehaviour
         currentSpider.GetComponent<SharedEnemyAI>().SetDefaultPost(gameObject);
         currentSpider.GetComponent<SharedEnemyAI>().SetCurrentDestination(gameObject);
 
-        yield return new WaitForSeconds(LevelManager.instance.GetMinTimeBetweenSpiderSpawn());
+        yield return new WaitForSeconds(IntruderAlertManager.instance.GetMinTimeBetweenSpiderSpawn());
 
         readyToSpawn = true;
     }

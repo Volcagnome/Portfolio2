@@ -314,6 +314,8 @@ public class bossAI : SharedEnemyAI, IDamage
     //before their corpse is despawned.
     protected override void Death()
     {
+        EnemyManager.instance.SetBossIsDead(true);
+
         DeathShared();
 
         agent.isStopped = true;
@@ -332,6 +334,8 @@ public class bossAI : SharedEnemyAI, IDamage
         StartCoroutine(DeathSparks());
 
         StartCoroutine(DespawnDeadRobot(gameObject));
+
+        
 
     }
 

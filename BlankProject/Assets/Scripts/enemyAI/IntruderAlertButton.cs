@@ -14,7 +14,7 @@ public class IntruderAlertButton : MonoBehaviour
     {
         if (other.gameObject.GetComponent<patrolAI>() && other.GetComponent<patrolAI>().GetIsWhistleBlower())
         {
-            LevelManager.instance.IntruderAlert(other.GetComponent<SharedEnemyAI>().GetLastKnownPlayerLocation());
+            IntruderAlertManager.instance.IntruderAlert(other.GetComponent<SharedEnemyAI>().GetLastKnownPlayerLocation());
             
         }
         else

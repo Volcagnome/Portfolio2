@@ -68,6 +68,8 @@ public class Rocket : damage
     {
         IDamage dmg;
 
+
+
         Collider[] targetsHit = Physics.OverlapSphere(gameObject.transform.position, areaOfEffect);
 
         if (targetsHit.Length > 0)
@@ -79,11 +81,12 @@ public class Rocket : damage
 
                 if (dmg != null && target.gameObject != directHit && target.gameObject != EnemyManager.instance.GetBoss())
                 {
+                    Debug.Log(target.gameObject.name);
+
+
                     dmg.takeDamage(aoeDamage);
                 }
             }
         }
     }
-
-
 }
