@@ -76,8 +76,15 @@ public class GameManager : MonoBehaviour
 
 
     //Pickup Info
-    [SerializeField] int totalGameCommandCodes;
-    [SerializeField] GameObject pickupPlatform;
+    [SerializeField] GameObject healthPickup;
+    [SerializeField] GameObject staminaPickup;
+    [SerializeField] GameObject speedPickup;
+    [SerializeField] GameObject damagePickup;
+    [SerializeField] GameObject weaponPickup;
+    [SerializeField] GameObject commandCodePickup;
+    [SerializeField] GameObject securityPasswordPickup;
+
+    
 
     [SerializeField] GameObject commandCodesCollectedTotalDisplay;
 
@@ -85,18 +92,22 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject sceneCommandCodesTotalDisplay;
     [SerializeField] int sceneCommandCodesTotal;
 
-    [SerializeField] GameObject scenePickupsCollectedDisplay;
-    [SerializeField] GameObject scenePickupsTotalDisplay;
-    [SerializeField] int scenePickupsTotal;
+    [SerializeField] GameObject sceneStatPickupsCollectedDisplay;
+    [SerializeField] GameObject sceneStatPickupsTotalDisplay;
+    [SerializeField] int sceneStatPickupsTotal;
+
+    [SerializeField] GameObject sceneWeaponPickupsCollectedDisplay;
+    [SerializeField] GameObject sceneWeaponPickupsTotalDisplay;
+    [SerializeField] int sceneWeaponPickupsTotal;
 
     [SerializeField] GameObject securityPasswordDisplay;
     [SerializeField] int sceneSecurityPassword;
 
-
     int sceneCommandCodesCollected;
-    int scenePickupsCollected;
+    int sceneStatPickupsCollected;
+    int sceneWeaponPickupsCollected;
 
-    
+    [SerializeField] int totalGameCommandCodes;
     int commandCodesCollectedTotal;
     
     [SerializeField] TMP_Text PickupMessage;
@@ -128,7 +139,7 @@ public class GameManager : MonoBehaviour
             DestroyDefaultObjects("Enemy");
             DestroyDefaultObjects("Pickup Platform");
 
-            LoadKeyItemData(levelData[SceneManager.GetActiveScene().buildIndex]);
+            LoadPlayerPickupData(levelData[SceneManager.GetActiveScene().buildIndex]);
 
             int pickupListLength = StaticData.scenePickups[SceneManager.GetActiveScene().buildIndex].Count;
             if (pickupListLength > 0)
@@ -139,17 +150,17 @@ public class GameManager : MonoBehaviour
                 LoadEnemyStates(StaticData.sceneEnemies[SceneManager.GetActiveScene().buildIndex]);
         }
         else
-        {
             StaticData.firstTimeInScene[SceneManager.GetActiveScene().buildIndex] = false;
-        }
 
         sceneCommandCodesCollectedDisplay.GetComponent<TMP_Text>().text = sceneCommandCodesCollected.ToString();
         sceneCommandCodesTotalDisplay.GetComponent<TMP_Text>().text = sceneCommandCodesTotal.ToString();
         commandCodesCollectedTotal = StaticData.commandCodesCollectedTotal_Static;
         commandCodesCollectedTotalDisplay.GetComponent<TMP_Text>().text = commandCodesCollectedTotal.ToString();
 
-        scenePickupsCollectedDisplay.GetComponent<TMP_Text>().text = scenePickupsCollected.ToString();
-        scenePickupsTotalDisplay.GetComponent<TMP_Text>().text = scenePickupsTotal.ToString();
+        sceneStatPickupsCollectedDisplay.GetComponent<TMP_Text>().text = sceneStatPickupsCollected.ToString();
+        sceneStatPickupsTotalDisplay.GetComponent<TMP_Text>().text = sceneStatPickupsTotal.ToString();
+        sceneWeaponPickupsCollectedDisplay.GetComponent<TMP_Text>().text = sceneWeaponPickupsCollected.ToString();
+        sceneWeaponPickupsTotalDisplay.GetComponent<TMP_Text>().text = sceneWeaponPickupsTotal.ToString();
 
 
 
@@ -287,15 +298,17 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void SaveKeyItemData()
+    public void SavePlayerPickupData()
     {
-        keyItemsState state = new keyItemsState
+        playerPickupState state = new playerPickupState
 
         {
             sceneCommandCodesCollected_Static = sceneCommandCodesCollected,
             sceneCommandCodesTotal_Static = sceneCommandCodesTotal,
-            scenePickupsCollected_Static = scenePickupsCollected,
-            scenePickupsTotal_Static = scenePickupsTotal,
+            sceneStatPickupsCollected_Static = sceneStatPickupsCollected,
+            sceneStatPickupsTotal_Static = sceneStatPickupsTotal,
+            sceneWeaponPickupsCollected_Static = sceneWeaponPickupsCollected,
+            sceneWeaponPickupsTotal_Static = sceneWeaponPickupsTotal,
             sceneSecurityPassword_Static = sceneSecurityPassword
 
         };
@@ -304,12 +317,14 @@ public class GameManager : MonoBehaviour
         StaticData.commandCodesCollectedTotal_Static = StaticData.commandCodesCollectedTotal_Static + sceneCommandCodesCollected;
     }
 
-    public void LoadKeyItemData(keyItemsState state)
+    public void LoadPlayerPickupData(playerPickupState state)
     {
         sceneCommandCodesCollected = state.sceneCommandCodesCollected_Static;
         sceneCommandCodesTotal = state.sceneCommandCodesTotal_Static;
-        scenePickupsCollected = state.scenePickupsCollected_Static;
-        scenePickupsTotal = state.scenePickupsTotal_Static;
+        sceneStatPickupsCollected = state.sceneStatPickupsCollected_Static;
+        sceneStatPickupsTotal = state.sceneStatPickupsTotal_Static;
+        sceneWeaponPickupsCollected = state.sceneWeaponPickupsCollected_Static;
+        sceneWeaponPickupsTotal = state.sceneWeaponPickupsTotal_Static;
         sceneSecurityPassword = state.sceneSecurityPassword_Static;
         securityPasswordDisplay.GetComponent<TMP_Text>().text = sceneSecurityPassword.ToString();
  
@@ -331,7 +346,7 @@ public class GameManager : MonoBehaviour
         {
             scenePickups.ForEach(state =>
             {
-                pickup = Instantiate(pickupPlatform, state.pickupLocation_Static, state.pickupRotation_Static);
+                pickup = Instantiate(state.pickupPrefab_Static, state.pickupLocation_Static, state.pickupRotation_Static);
                 pickup.GetComponent<itemPickup>().SetIfItemCollected(state.itemPickedUp_Static);
                 pickup.GetComponent<itemPickup>().SetItemPickupStats(state.item_Static);
             });
@@ -391,15 +406,45 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public GameObject GetPickupPrefab(itemPickup.platformType type)
+    {
+        GameObject pickupPrefab = null;
+
+        if (type == itemPickup.platformType.health)
+            pickupPrefab = healthPickup;
+        else if (type == itemPickup.platformType.speed)
+            pickupPrefab = speedPickup;
+        else if (type == itemPickup.platformType.stamina)
+            pickupPrefab = staminaPickup;
+        else if (type == itemPickup.platformType.damage)
+            pickupPrefab = damagePickup;
+        else if (type == itemPickup.platformType.weapon)
+            pickupPrefab = weaponPickup;
+        else if (type == itemPickup.platformType.commandCode)
+            pickupPrefab = commandCodePickup;
+        else if (type == itemPickup.platformType.securityPassword)
+            pickupPrefab = securityPasswordPickup;
+
+        return pickupPrefab;
+    }
+
+
     public void SecurityPasswordFound() 
     { 
         securityPasswordDisplay.GetComponent<TMP_Text>().text = sceneSecurityPassword.ToString();
     }
 
-    public void IncrementScenePickupCounter() 
+    public void IncrementSceneStatPickupCounter() 
     { 
-        scenePickupsCollected++;
-        scenePickupsCollectedDisplay.GetComponent<TMP_Text>().text = scenePickupsCollected.ToString();
+        sceneStatPickupsCollected++;
+        sceneStatPickupsCollectedDisplay.GetComponent<TMP_Text>().text = sceneStatPickupsCollected.ToString();
+
+    }
+
+    public void IncrementSceneWeaponPickupCounter()
+    {
+        sceneWeaponPickupsCollected++;
+        sceneWeaponPickupsCollectedDisplay.GetComponent<TMP_Text>().text = sceneWeaponPickupsCollected.ToString();
 
     }
 
