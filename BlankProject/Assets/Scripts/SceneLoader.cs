@@ -16,47 +16,45 @@ public class SceneLoader : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        {//When the player enters the loading zone will save their current stats to the static variables in the StaticPlayerData script.
+            StaticData.playerHealth = GameManager.instance.player.GetComponent<playerDamage>().getHP();
+            StaticData.playerMaxHealth = GameManager.instance.player.GetComponent<playerDamage>().getMaxHP();
+            StaticData.playerSpeedOG = GameManager.instance.player.GetComponent<playerMovement>().GetSpeedOG();
+            StaticData.playerMaxStamina = GameManager.instance.player.GetComponent<playerMovement>().getMaxStamina();
+            StaticData.playerWeaponsList = GameManager.instance.player.GetComponent<playerDamage>().GetWeaponList();
+            StaticData.playerSelectedGun = GameManager.instance.player.GetComponent<playerDamage>().GetSelectedGun();
+            StaticData.playerXrayAbility = GameManager.instance.player.GetComponent<playerCrouch>().GetXrayAbilityUnlocked();
 
-        //When the player enters the loading zone will save their current stats to the static variables in the StaticPlayerData script.
-        StaticData.playerHealth = GameManager.instance.player.GetComponent<playerDamage>().getHP();
-        StaticData.playerMaxHealth = GameManager.instance.player.GetComponent<playerDamage>().getMaxHP();
-        StaticData.playerSpeedOG = GameManager.instance.player.GetComponent<playerMovement>().GetSpeedOG();
-        StaticData.playerMaxStamina = GameManager.instance.player.GetComponent<playerMovement>().getMaxStamina();
-        StaticData.playerWeaponsList = GameManager.instance.player.GetComponent<playerDamage>().GetWeaponList();
-        StaticData.playerSelectedGun = GameManager.instance.player.GetComponent<playerDamage>().GetSelectedGun();
-        StaticData.playerXrayAbility = GameManager.instance.player.GetComponent<playerCrouch>().GetXrayAbilityUnlocked();
-     
+            //Checks if the Loading Zone is an entrance or an exit. If it was an entrance, the player is loading into the previous level and
+            //the GameManager will know to spawn them at the spawn point near the exit of the previous level. If they walked through an exit,
+            //they are advancing to the next level and the GameManager will know to spawn them at the spawn point near the entrance of the next level. 
+            if (isEntry)
+            {
+                StaticData.previousLevel = true;
+                StaticData.nextLevel = false;
+            }
+            else if (isExit)
+            {
+                StaticData.previousLevel = false;
+                StaticData.nextLevel = true;
+            }
 
+            if (GameManager.instance.GetSelfDestructActivated())
+            {
 
-        //Checks if the Loading Zone is an entrance or an exit. If it was an entrance, the player is loading into the previous level and
-        //the GameManager will know to spawn them at the spawn point near the exit of the previous level. If they walked through an exit,
-        //they are advancing to the next level and the GameManager will know to spawn them at the spawn point near the entrance of the next level. 
-        if (isEntry)
-        {
-            StaticData.previousLevel = true;
-            StaticData.nextLevel = false;
+                totalTime_Static = GameManager.instance.GetTotalTimeLeft();
+            }
+
+            GameManager.instance.SavePlayerPickupData();
+            SaveEnemyStates(sceneEnemies[SceneManager.GetActiveScene().buildIndex]);
+            SavePickupStates(scenePickups[SceneManager.GetActiveScene().buildIndex]);
+
+            if (IntruderAlertManager.instance.GetIntruderAlert())
+                IntruderAlertManager.instance.CancelIntruderAlert();
+
+            //Loads the scene entered in the Scene To Load field.
+            SceneManager.LoadScene(SceneToLoad);
         }
-        else if (isExit)
-        {
-            StaticData.previousLevel = false;
-            StaticData.nextLevel = true;
-        }
-
-        if(GameManager.instance.GetSelfDestructActivated())
-        {
-
-            totalTime_Static = GameManager.instance.GetTotalTimeLeft();
-}
-
-        GameManager.instance.SavePlayerPickupData();
-        SaveEnemyStates(sceneEnemies[SceneManager.GetActiveScene().buildIndex]);
-        SavePickupStates(scenePickups[SceneManager.GetActiveScene().buildIndex]);
-
-        if (IntruderAlertManager.instance.GetIntruderAlert())
-            IntruderAlertManager.instance.CancelIntruderAlert();
-
-        //Loads the scene entered in the Scene To Load field.
-        SceneManager.LoadScene(SceneToLoad);
     }
 
 

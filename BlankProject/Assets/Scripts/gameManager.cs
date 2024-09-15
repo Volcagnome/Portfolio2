@@ -61,16 +61,10 @@ public class GameManager : MonoBehaviour
     
     bool isRespawning;
 
-
     //Current Game State
     public bool youWin;
     private bool playerEscaped;
     private bool selfDestructActivated;
-
-
-
-
-
 
     private bool wasDisabled;
 
@@ -139,6 +133,8 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         player = GameObject.FindWithTag("Player");
+        playerSpawnEntry = GameObject.FindWithTag("Player Spawn Entry");
+        playerSpawnExit = GameObject.FindWithTag("Player Spawn Exit");
 
         // Player Scripts assigned:
         playerScript = player.GetComponent<playerMovement>();
@@ -148,6 +144,17 @@ public class GameManager : MonoBehaviour
 
         selfDestructActivated = StaticData.selfDestructActivated_Static;
         totalTime = StaticData.totalTime_Static;
+
+        //Checks if the player has been to this scene before
+        firstTimeInScene = StaticData.firstTimeInScene[SceneManager.GetActiveScene().buildIndex];
+
+        if (StaticData.previousLevel == true)
+        {
+            currentSpawn = playerSpawnExit;
+        }
+        else
+            currentSpawn = playerSpawnEntry;
+
 
         //If the game was just started, sets the current spawn point to the spawn point at the beginning of the level the game was started on.
         if (StaticData.isGameStart == true)
@@ -161,9 +168,6 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex == 2)
             securityPasswordDisplay.GetComponent<TMP_Text>().text = "none";
 
-
-        //Checks if the player has been to this scene before
-        firstTimeInScene = StaticData.firstTimeInScene[SceneManager.GetActiveScene().buildIndex];
 
         //If so, loads the saved key item data (command codes/securtiy passwords), loads the previous states for all pickup platform objects
         //and loads previous states for all enemies.
@@ -186,7 +190,6 @@ public class GameManager : MonoBehaviour
         else
             StaticData.firstTimeInScene[SceneManager.GetActiveScene().buildIndex] = false;
 
-        //UpdatePickupsUI();
 
         sceneCommandCodesCollectedDisplay.GetComponent<TMP_Text>().text = sceneCommandCodesCollected.ToString();
         sceneCommandCodesTotalDisplay.GetComponent<TMP_Text>().text = sceneCommandCodesTotal.ToString();
@@ -198,13 +201,9 @@ public class GameManager : MonoBehaviour
         sceneWeaponPickupsCollectedDisplay.GetComponent<TMP_Text>().text = sceneWeaponPickupsCollected.ToString();
         sceneWeaponPickupsTotalDisplay.GetComponent<TMP_Text>().text = sceneWeaponPickupsTotal.ToString();
 
-        playerSpawnEntry = GameObject.FindWithTag("Player Spawn Entry");
-        playerSpawnExit = GameObject.FindWithTag("Player Spawn Exit");
+       
 
-        if (StaticData.previousLevel == true)
-            currentSpawn = playerSpawnExit;
-        else
-            currentSpawn = playerSpawnEntry;
+       
     }
 
     //Update is called once per frame
@@ -229,6 +228,15 @@ public class GameManager : MonoBehaviour
             selfDestructTimer.SetActive(true);
             timer.text = timeLeft;
             BeginCountdown();
+        }
+
+        if(selfDestructActivated && totalTime == 0f)
+        {
+
+            statePause();
+            menuActive = almostWinMenu;
+
+            menuActive.SetActive(true);
         }
 
     }
@@ -267,9 +275,8 @@ public class GameManager : MonoBehaviour
     {
         statePause();
 
-        if (selfDestructActivated)
+        
             menuActive = almostWinMenu;
-        else
             menuActive = menuLose;
 
         menuActive.SetActive(true);
@@ -451,6 +458,8 @@ public class GameManager : MonoBehaviour
         else if (type == itemPickup.platformType.commandCode)
             pickupPrefab = commandCodePickup;
         else if (type == itemPickup.platformType.securityPassword)
+            pickupPrefab = securityPasswordPickup;
+        else if (type == itemPickup.platformType.xray)
             pickupPrefab = securityPasswordPickup;
 
         return pickupPrefab;
