@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
     public playerMovement playerScript;
     public playerCrouch crouchScript;
     public playerDamage damageScript;
-    public grenadeThrow grenadeThrowScript;
+    
     bool isRespawning;
 
 
@@ -144,7 +144,7 @@ public class GameManager : MonoBehaviour
         playerScript = player.GetComponent<playerMovement>();
         crouchScript = player.GetComponent<playerCrouch>();
         damageScript = player.GetComponent<playerDamage>();
-        grenadeThrowScript = player.GetComponent<grenadeThrow>();
+        
 
         selfDestructActivated = StaticData.selfDestructActivated_Static;
         totalTime = StaticData.totalTime_Static;
