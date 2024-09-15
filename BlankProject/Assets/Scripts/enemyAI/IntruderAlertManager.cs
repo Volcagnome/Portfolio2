@@ -192,7 +192,7 @@ public class IntruderAlertManager: MonoBehaviour
     public void WhistleBlowerKilled()
     {
         whistleBlower = null;
-        isRaisingAlarm = false;
+        isRaisingAlarm = true;
         StartCoroutine(AlarmCooldown());
     }
 

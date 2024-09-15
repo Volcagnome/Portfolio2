@@ -52,18 +52,20 @@ public class guardAI : SharedEnemyAI, IDamage
     protected override void Death()
     {
         DeathShared();
-        
-        if (defaultPost.GetComponent<GuardPost>())
+
+        if (!StaticData.selfDestructActivated_Static)
         {
-            EnemyManager.instance.RemoveDeadRobot(gameObject);
-            defaultPost.GetComponent<GuardPost>().SetIsOccupied(false);
-            defaultPost.GetComponent<GuardPost>().AssignGuard(null);
-            EnemyManager.instance.RemoveGuardFromRoster(gameObject);
+            if (defaultPost.GetComponent<GuardPost>())
+            {
+                EnemyManager.instance.RemoveDeadRobot(gameObject);
+                defaultPost.GetComponent<GuardPost>().SetIsOccupied(false);
+                defaultPost.GetComponent<GuardPost>().AssignGuard(null);
+                EnemyManager.instance.RemoveGuardFromRoster(gameObject);
+            }
+
+            if (IntruderAlertManager.instance.responseTeam.Contains(gameObject))
+                IntruderAlertManager.instance.responseTeam.Remove(gameObject);
         }
-
-        if (IntruderAlertManager.instance.responseTeam.Contains(gameObject))
-            IntruderAlertManager.instance.responseTeam.Remove(gameObject);
-
 
         GetComponent<guardAI>().enabled = false;
         StartCoroutine(DespawnDeadRobot(gameObject));
@@ -78,6 +80,22 @@ public class guardAI : SharedEnemyAI, IDamage
 
             audioPlayer.PlayOneShot(footsteps[playTrack], 1);
         }
+    }
+
+    public override void XrayEnemy(GameObject enemy, bool xrayApplied)
+    {
+        Material materialToApply;
+
+        if (xrayApplied)
+            materialToApply = xrayMaterial;
+
+        else
+            materialToApply = originalMaterial;
+
+        for (int bodyPart = 3; bodyPart < 11; bodyPart++)
+                enemy.transform.GetChild(bodyPart).GetComponent<SkinnedMeshRenderer>().material = materialToApply;
+
+
     }
 
 }

@@ -4,7 +4,9 @@ using UnityEngine;
 public class damage : MonoBehaviour
 {
     [SerializeField] enum damageType {bullet, web, stationary, shield, playerBullet}
+    [SerializeField] enum effectType {none, burn, bleed, shock, stun}
     [SerializeField] damageType type;
+    [SerializeField] effectType status;
     [SerializeField] protected Rigidbody rb;
 
 
@@ -43,6 +45,34 @@ public class damage : MonoBehaviour
         {
             dmg.takeDamage(damageAmount);
 
+            switch (status)
+            {
+                default:
+                    {
+                        break;
+                    }
+                case (effectType.burn):
+                    {
+                        other.GetComponent<playerDamage>().burn();
+                        break;
+                    }
+                case (effectType.bleed):
+                    {
+                        other.GetComponent<playerDamage>().bleed();
+                        break;
+                    }
+                case (effectType.stun):
+                    {
+                        other.GetComponent<playerDamage>().stun();
+                        break;
+                    }
+                case (effectType.shock):
+                    {
+                        if (damageType.stationary == type) other.GetComponent<playerDamage>().shock();
+                        break;
+                    }
+            }
+
             if (type == damageType.bullet)
                 Destroy(gameObject);
 
@@ -55,4 +85,13 @@ public class damage : MonoBehaviour
             
         }
     }
+
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player" && damageType.stationary == type && status == effectType.shock) other.gameObject.GetComponent<playerDamage>().unshock();
+    }
+
+    public float GetDamageAmount() { return damageAmount; } 
+
 }

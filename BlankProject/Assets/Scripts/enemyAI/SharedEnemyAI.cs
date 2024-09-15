@@ -28,10 +28,13 @@ public class SharedEnemyAI : MonoBehaviour
     [SerializeField] protected Transform DeathFXPos;
     [SerializeField] GameObject weakspot;
     [SerializeField] protected AudioSource audioPlayer;
+    [SerializeField] protected Material xrayMaterial;
+    [SerializeField] protected Material originalMaterial;
 
     [SerializeField] protected Transform shootPos;
     [SerializeField] protected GameObject weapon_R;
     [SerializeField] protected GameObject ammoType;
+    [SerializeField] protected float aimOffset;
 
     //PlayerDetection
     [SerializeField] protected float FOV_Angle;
@@ -100,6 +103,10 @@ public class SharedEnemyAI : MonoBehaviour
     protected float currentIdleSoundCooldown;
 
 
+    [SerializeField] float xraydius;
+    [SerializeField] float xrayAbilityTime;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -112,7 +119,10 @@ public class SharedEnemyAI : MonoBehaviour
         readyToSpeak = true;
         playerSpotted = false;
         currentIdleSoundCooldown = Random.Range(5, maxIdleSoundCooldown);
-    }
+
+        
+  
+}
 
     // Update is called once per frame
     void Update()
@@ -225,6 +235,7 @@ public class SharedEnemyAI : MonoBehaviour
     //idle behavior.
     protected void OnTriggerExit(Collider other)
     {
+
         if (other.CompareTag("Player"))
         {
             playerDetectionCircle.SetActive(false);
@@ -237,7 +248,7 @@ public class SharedEnemyAI : MonoBehaviour
                 lastKnownPlayerLocation = GameManager.instance.player.transform.position;
 
             else if (EnemyManager.instance.GetIsBossFight() && GameManager.instance.GetIsRespawning())
-                SearchArea(lastKnownPlayerLocation, 99);
+                    SearchArea(lastKnownPlayerLocation, 99);
 
             else if (isAlerted && GameManager.instance.GetIsRespawning())
                 CalmEnemy();
@@ -252,7 +263,7 @@ public class SharedEnemyAI : MonoBehaviour
         while (playerInRange)
         {
             yield return new WaitForSeconds(0.05f);
-            FieldOfViewCheck();
+            playerInView = FieldOfViewCheck();
         }
     }
 
@@ -267,6 +278,7 @@ public class SharedEnemyAI : MonoBehaviour
 
         if (playerInRange)
         {
+
             RaycastHit hit;
             if (Physics.Raycast(headPos.position, playerDirection, out hit))
             {
@@ -281,8 +293,6 @@ public class SharedEnemyAI : MonoBehaviour
             else result = false;
         }
         else result = false;
-
-        playerInView = result;
 
         return result;
     }
@@ -378,7 +388,7 @@ public class SharedEnemyAI : MonoBehaviour
 
         agent.SetDestination(lastKnownPlayerLocation);
 
-        if (!isEndgameEnemy && agent.remainingDistance <= 0.3f || !agent.hasPath)
+        if (!EnemyManager.instance.GetIsBossFight() && !isEndgameEnemy && agent.remainingDistance <= 0.3f || !agent.hasPath)
         {
             yield return new WaitForSeconds(1.5f);
             CalmEnemy();
@@ -511,19 +521,27 @@ public class SharedEnemyAI : MonoBehaviour
         weapon_R.transform.LookAt(GameManager.instance.player.transform.position + new Vector3(0f, 1f, 0f));
 
         if (!isShooting && !isDead)
-            StartCoroutine(shoot());
+            StartCoroutine(shoot(ammoType));
 
         if (IntruderAlertManager.instance.GetIntruderAlert())
             IntruderAlertManager.instance.FoundTheIntruder(lastKnownPlayerLocation);
     }
 
     //Sets Shoot animation trigger and waits for the configured shootRate number of seconds.
-    protected virtual IEnumerator shoot()
+    protected virtual IEnumerator shoot(GameObject ammoType)
     {
         anim.SetTrigger("Shoot");
 
         isShooting = true;
 
+        Vector3 offset = new Vector3(Random.Range(-aimOffset, aimOffset), 0f, Random.Range(aimOffset, aimOffset));
+        playerDirection = GameManager.instance.player.transform.position - shootPos.position;
+
+        RaycastHit hit;
+        if (Physics.Raycast(shootPos.position, playerDirection + offset, out hit))
+            if (hit.collider.gameObject.CompareTag("Player"))
+                GameManager.instance.player.GetComponent<IDamage>().takeDamage(ammoType.GetComponent<damage>().GetDamageAmount());
+                
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
     }
@@ -690,7 +708,8 @@ public class SharedEnemyAI : MonoBehaviour
 
     //Travels to their default post.
     protected virtual void ReturnToPost()
-    {
+    { 
+
         onDuty = true;
 
         if (defaultPost != null)
@@ -743,11 +762,23 @@ public class SharedEnemyAI : MonoBehaviour
         readyToSpeak = true;
     }
 
+
+    public virtual void XrayEnemy(GameObject enemy,bool xrayApplied)
+    {
+
+        if(xrayApplied)
+            enemy.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = xrayMaterial;
+        else
+            enemy.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = originalMaterial;
+
+    }
+
+
     ////////////////////////////////////////
     ///          GETTERS/SETTERS         ///
     ///////////////////////////////////////
 
-public GameObject GetEnemyHealthBar() { return enemyHPBar; }
+    public GameObject GetEnemyHealthBar() { return enemyHPBar; }
 
 public GameObject GetDefaultPost() { return defaultPost; }
 
@@ -802,6 +833,10 @@ public void SetLoadedFromState(bool status) {  loadedFromState = status; }
 public bool GetIsEndGameEnemy() { return isEndgameEnemy; } 
 
 public void SetIsEndGameEnemy(bool status) { isEndgameEnemy= status; }
+
+public Material GetXrayMaterial() { return xrayMaterial; }
+
+public Material GetOriginalMaterial() { return originalMaterial; }
 
 
 }

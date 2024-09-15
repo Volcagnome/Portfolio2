@@ -599,7 +599,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4686492742703008262, guid: 230fd286e77a35d4e9fe5cfa56ce0a97, type: 3}
       propertyPath: m_TagString
-      value: Enemy
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 5400914300693636115, guid: 230fd286e77a35d4e9fe5cfa56ce0a97, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -1672,9 +1672,12 @@ MonoBehaviour:
   DeathFXPos: {fileID: 1612221431707091603}
   weakspot: {fileID: 3110617636192311290}
   audioPlayer: {fileID: 497875255768104274}
+  xrayMaterial: {fileID: 2100000, guid: ad3d527baa2d06948bb4c21df20dacb7, type: 2}
+  originalMaterial: {fileID: 2100000, guid: eac569fffc8708e45bfc4d3eb33a7055, type: 2}
   shootPos: {fileID: 4308819190186378879}
   weapon_R: {fileID: 8424071460399303199}
   ammoType: {fileID: 6804835773319123192, guid: f3238337713f29e4bad8388c8f8db6d6, type: 3}
+  aimOffset: 0.5
   FOV_Angle: 60
   rotationSpeed: 5
   playerDetectionCircle: {fileID: 8626104996312365364}
@@ -1706,6 +1709,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d2e6c349ae192604bac411418d194f36, type: 3}
   - {fileID: 8300000, guid: 2d04c0ffd3322234eab448f1be849ba3, type: 3}
   foundPlayer: {fileID: 8300000, guid: 63611ff481b798441b97d0258459fe2e, type: 3}
+  xraydius: 0
+  xrayAbilityTime: 0
   shieldBashCollider: {fileID: 7271325000883408684}
   minTimeBetweenBashes: 3
   shieldSwing: {fileID: 8300000, guid: 223d0ffcf9736bd4eab854fddaa3c808, type: 3}

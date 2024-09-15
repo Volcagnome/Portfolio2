@@ -24,6 +24,7 @@ public class SceneLoader : MonoBehaviour
         StaticData.playerMaxStamina = GameManager.instance.player.GetComponent<playerMovement>().getMaxStamina();
         StaticData.playerWeaponsList = GameManager.instance.player.GetComponent<playerDamage>().GetWeaponList();
         StaticData.playerSelectedGun = GameManager.instance.player.GetComponent<playerDamage>().GetSelectedGun();
+        StaticData.playerXrayAbility = GameManager.instance.player.GetComponent<playerCrouch>().GetXrayAbilityUnlocked();
      
 
 

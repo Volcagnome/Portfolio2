@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,6 +12,8 @@ public class ArachnoidAI : SharedEnemyAI,IDamage
 
     //Web line renderer
     [SerializeField] LineRenderer web;
+    [SerializeField] Material originalMaterial2;
+    [SerializeField] Material xrayMaterial2;
   
     bool caughtPlayer;
 
@@ -104,15 +107,12 @@ public class ArachnoidAI : SharedEnemyAI,IDamage
             web.SetPosition(1, transform.InverseTransformPoint(GameManager.instance.player.transform.position));
             GameManager.instance.webbedOverlay.SetActive(true);
 
-            if (GameManager.instance.player.GetComponent<playerDamage>().getHP()<= 0)
+            if (GameManager.instance.player.GetComponent<playerDamage>().getHP()<= 0 || !playerInView)
             {
-                GameManager.instance.webbedOverlay.SetActive(false);
-                caughtPlayer = false;
-                web.enabled = false;
-                GameManager.instance.playerScript.SetIsCaught(false);
-                GameManager.instance.playerScript.SetSpeed(GameManager.instance.playerScript.GetSpeedOG());
+                ReleaseFromWeb();
             }
         }
+        
 
     }
 
@@ -161,7 +161,7 @@ public class ArachnoidAI : SharedEnemyAI,IDamage
         agent.stoppingDistance = combatStoppingDistance;
 
         if (playerInView && !isShooting && !caughtPlayer)
-            StartCoroutine(shoot());
+            StartCoroutine(shoot(ammoType));
 
         if (IntruderAlertManager.instance.GetIntruderAlert())
             IntruderAlertManager.instance.FoundTheIntruder(lastKnownPlayerLocation);
@@ -169,7 +169,7 @@ public class ArachnoidAI : SharedEnemyAI,IDamage
 
     //Shoots web projectile at player, on instantiation remembers spider who shot it so line rendererer can be enabled
     //if player is hit.
-    protected override IEnumerator shoot()
+    protected override IEnumerator shoot(GameObject ammoType)
     {
         isShooting = true;
 
@@ -200,11 +200,48 @@ public class ArachnoidAI : SharedEnemyAI,IDamage
         Destroy(gameObject);
     }
 
+    private void ReleaseFromWeb()
+    {
+        web.enabled = false;
+        caughtPlayer = false;
+        GameManager.instance.playerScript.SetIsCaught(false);
+        GameManager.instance.playerScript.SetSpeed(GameManager.instance.playerScript.GetSpeedOG());
+        GameManager.instance.webbedOverlay.SetActive(false);
+    }
+
     protected override void playFootstepSound()
     {
         int playTrack = Random.Range(0, footsteps.Count);
 
         audioPlayer.PlayOneShot(footsteps[playTrack],3f);
+    }
+
+    public override void XrayEnemy(GameObject spider, bool xrayApplied)
+    {
+        Material body1 = null;
+        Material body2 = null;
+
+
+        if (xrayApplied)
+        {
+            body1 = xrayMaterial;
+            body2 = xrayMaterial2;
+        }
+        else
+        {
+             body1 = originalMaterial;
+             body2 = originalMaterial2;
+        }
+
+        transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().material = body2;
+
+        for(int bodyPart = 3; bodyPart < 11; bodyPart++) 
+        {
+            if(bodyPart <7)
+                transform.GetChild(bodyPart).GetComponent<SkinnedMeshRenderer>().material = body1;
+            else
+                transform.GetChild(bodyPart).GetComponent<SkinnedMeshRenderer>().material = body2;
+        }
     }
 
 

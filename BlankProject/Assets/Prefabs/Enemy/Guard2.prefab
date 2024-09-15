@@ -523,9 +523,12 @@ MonoBehaviour:
   DeathFXPos: {fileID: 1042012439092104159}
   weakspot: {fileID: 8539032962440716035}
   audioPlayer: {fileID: 6835416988291081141}
+  xrayMaterial: {fileID: 2100000, guid: 6a80a0d52731c4f429d32eab727f0ed6, type: 2}
+  originalMaterial: {fileID: 2100000, guid: a10f2ffdb2d39e04e928792eaec157cd, type: 2}
   shootPos: {fileID: 6658946209463232583}
   weapon_R: {fileID: 7921804915135829648}
   ammoType: {fileID: 6804835773319123192, guid: 691bd9694255b394ba715e419013b5c0, type: 3}
+  aimOffset: 0.5
   FOV_Angle: 60
   rotationSpeed: 8
   playerDetectionCircle: {fileID: 5272966130106366152}
@@ -562,6 +565,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cca8763d66e982c4684d3bccc6f95570, type: 3}
   - {fileID: 8300000, guid: e5746a36b320bfd47b1cfc26b831cb8d, type: 3}
   foundPlayer: {fileID: 8300000, guid: ee793f4544110b6498d19d2944827b59, type: 3}
+  xraydius: 0
+  xrayAbilityTime: 0
 --- !u!95 &3788560258377371370
 Animator:
   serializedVersion: 5
@@ -1153,7 +1158,6 @@ Transform:
   - {fileID: 1550421450317766345}
   - {fileID: 3013750707448379701}
   - {fileID: 5857701560383006283}
-  - {fileID: 6658946209463232583}
   - {fileID: 7924909695344133792}
   m_Father: {fileID: 2343714563803341014}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2019,12 +2023,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4253469141141378625}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.3807968, y: -0.551855, z: -0.677053, w: 0.303396}
+  m_LocalPosition: {x: -0.003, y: 0.0127, z: 0.3292}
+  m_LocalScale: {x: 1.5000002, y: 1.5000001, z: 1.5000001}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8710474164858938112}
+  m_Father: {fileID: 7924909695344133792}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4303787717251740617
 GameObject:
@@ -4242,7 +4246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4484884709661165677, guid: 600051abf90af2d46a8780aa9ce26216, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.66666657
+      value: 0.74386656
       objectReference: {fileID: 0}
     - target: {fileID: 4484884709661165677, guid: 600051abf90af2d46a8780aa9ce26216, type: 3}
       propertyPath: m_LocalScale.y
@@ -4250,7 +4254,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4484884709661165677, guid: 600051abf90af2d46a8780aa9ce26216, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.66666657
+      value: 0.9848147
       objectReference: {fileID: 0}
     - target: {fileID: 4484884709661165677, guid: 600051abf90af2d46a8780aa9ce26216, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4298,7 +4302,10 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 41ffb3636708ecc4986116f3ea488446, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4484884709661165677, guid: 600051abf90af2d46a8780aa9ce26216, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6658946209463232583}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4478981672208652381, guid: 600051abf90af2d46a8780aa9ce26216, type: 3}
       insertIndex: -1

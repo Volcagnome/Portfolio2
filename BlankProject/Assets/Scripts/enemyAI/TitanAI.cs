@@ -69,7 +69,7 @@ public class TitanAI : SharedEnemyAI, IDamage
 
         if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) > 5f &&!isShooting)
         {
-            StartCoroutine(shoot());
+            StartCoroutine(shoot(ammoType));
         }
        
         if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) <= 5f && !isBashing)
@@ -116,16 +116,19 @@ public class TitanAI : SharedEnemyAI, IDamage
 
         Instantiate(DeathVFX, DeathFXPos.position, Quaternion.identity);
 
-        if (defaultPost.GetComponent<TitanPost>())
+        if (!StaticData.selfDestructActivated_Static)
         {
-            EnemyManager.instance.RemoveDeadRobot(gameObject);
-            defaultPost.GetComponent<TitanPost>().SetIsOccupied(false);
-            defaultPost.GetComponent<TitanPost>().AssignTitan(null);
-            EnemyManager.instance.RemoveTitanFromRoster(gameObject);
-        }
+            if (defaultPost.GetComponent<TitanPost>())
+            {
+                EnemyManager.instance.RemoveDeadRobot(gameObject);
+                defaultPost.GetComponent<TitanPost>().SetIsOccupied(false);
+                defaultPost.GetComponent<TitanPost>().AssignTitan(null);
+                EnemyManager.instance.RemoveTitanFromRoster(gameObject);
+            }
 
-        if (IntruderAlertManager.instance.responseTeam.Contains(gameObject))
-            IntruderAlertManager.instance.responseTeam.Remove(gameObject);
+            if (IntruderAlertManager.instance.responseTeam.Contains(gameObject))
+                IntruderAlertManager.instance.responseTeam.Remove(gameObject);
+        }
 
         StartCoroutine(DespawnDeadRobot(gameObject));
     }

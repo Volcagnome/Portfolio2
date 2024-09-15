@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playerDamage : MonoBehaviour, IDamage
+public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
 {
     [Header("----- Controller -----")]
     [SerializeField] CharacterController controller;
@@ -22,6 +22,25 @@ public class playerDamage : MonoBehaviour, IDamage
     [SerializeField] float HP;
     [SerializeField] float HPRegenRate;
     [SerializeField] float HPRegenWaitTime;
+
+    [Header("----- Status Effects -----")]
+    [SerializeField] float burnDamage;
+    [SerializeField] float burnTime;
+    [SerializeField] float burnRate;
+    bool isBurning;
+    Coroutine burnCoroutine = null;
+
+    [SerializeField] float bleedDamage;
+    [SerializeField] float bleedTime;
+    [SerializeField] float bleedRate;
+    bool isBleeding;
+    Coroutine bleedCoroutine = null;
+
+    bool isShocked;
+
+    [SerializeField] float stunTime;
+    bool isStunned;
+    Coroutine stunCoroutine = null;
 
     [Header("----- Particle Effects -----")]
     // Particle effects for dealing damage
@@ -125,6 +144,9 @@ public class playerDamage : MonoBehaviour, IDamage
             }
             if (cooldownCoroutine == null) coolWeapon();
             if (usedToMax && !isEmittingSmoke) StartCoroutine(emitSmoke());
+
+            if (isBurning) HP -= burnDamage * burnRate * Time.deltaTime;
+            if (isBleeding) HP -= bleedDamage * bleedRate * Time.deltaTime;
         }
     }
 
@@ -132,16 +154,18 @@ public class playerDamage : MonoBehaviour, IDamage
     void aiming()
     {
         // Listen for shooting, interacting or flashlight:
-
-        if (Input.GetButton("Shoot") && weapons.Count > 0 && maxHeat > currentHeat && !usedToMax && !isShooting)
-            StartCoroutine(shoot());
-
-        if (Input.GetButtonDown("Interact"))
+        if (!isStunned && !isShocked)
         {
-            interact();
-        }
+            if (Input.GetButton("Shoot") && weapons.Count > 0 && maxHeat > currentHeat && !usedToMax && !isShooting)
+                StartCoroutine(shoot());
 
-        useFlashlight();
+            if (Input.GetButtonDown("Interact"))
+            {
+                interact();
+            }
+
+            useFlashlight();
+        }
     }
 
     ////////////////////////////////////////////////////
@@ -261,6 +285,7 @@ public class playerDamage : MonoBehaviour, IDamage
         // Mouse wheel switching:
         if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < weapons.Count - 1)
         {
+            weapons[selectedGun].currentHeat = currentHeat;
             selectedGun++;
             setWeapon(weapons[selectedGun]);
             // Play weapon switch sound:
@@ -268,6 +293,7 @@ public class playerDamage : MonoBehaviour, IDamage
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
         {
+            weapons[selectedGun].currentHeat = currentHeat;
             selectedGun--;
             setWeapon(weapons[selectedGun]);
             // Play weapon switch sound:
@@ -292,6 +318,7 @@ public class playerDamage : MonoBehaviour, IDamage
                 if (tempIndex-1 != selectedGun)
                 {
                     // Update index:
+                    weapons[selectedGun].currentHeat = currentHeat;
                     selectedGun = tempIndex - 1;
                     // Set to that weapon.
                     setWeapon(weapons[selectedGun]);
@@ -395,8 +422,6 @@ public class playerDamage : MonoBehaviour, IDamage
 
     public void setWeapon(pickupStats weapon)
     {
-        float heatHolder = maxHeat;
-
         weapon.modelRotationAxis.Normalize();
         shootRate = weapon.shootRate;
         shootDamage = weapon.shootDamage;
@@ -407,8 +432,7 @@ public class playerDamage : MonoBehaviour, IDamage
         coolRate = weapon.coolRate;
         coolWaitTime = weapon.coolWaitTime;
         isShotgun = weapon.shotgun;
-
-        currentHeat *= maxHeat / heatHolder; 
+        currentHeat = weapon.currentHeat;
 
         muzzleFlash.transform.SetParent(GameManager.instance.player.transform, true);
         flashlight.transform.SetParent(GameManager.instance.player.transform, true);
@@ -429,7 +453,7 @@ public class playerDamage : MonoBehaviour, IDamage
 
     public void addWeapon(pickupStats weapon)
     {
-        currentHeat = 0;
+        if (weapons.Count > 0) weapons[selectedGun].currentHeat = currentHeat;
         weapons.Add(weapon);
         setWeapon(weapon);
         selectedGun = weapons.IndexOf(weapon);
@@ -469,6 +493,61 @@ public class playerDamage : MonoBehaviour, IDamage
         isEmittingSmoke = false; 
     }
 
+    //Applying Status Effects
+    public void bleed()
+    {
+        if (bleedCoroutine != null) StopCoroutine(bleedCoroutine);
+        StartCoroutine(bleedRoutine());
+    }
+
+    IEnumerator bleedRoutine()
+    {
+        isBleeding = true;
+        yield return new WaitForSeconds(bleedTime);
+        isBleeding = false;
+    }
+
+    public void shock()
+    {
+        isShocked = true;
+    }
+
+    public void unshock()
+    {
+        isShocked = false;
+    }
+
+    public void burn()
+    {
+        if (burnCoroutine != null) StopCoroutine(burnCoroutine);
+        StartCoroutine(burnRoutine());
+    }
+
+    IEnumerator burnRoutine()
+    {
+        isBurning = true;
+        yield return new WaitForSeconds(burnTime);
+        isBurning = false;
+    }
+
+    public void stun()
+    {
+        if (stunCoroutine != null) StopCoroutine(stunCoroutine);
+        StartCoroutine(stunRoutine());
+    }
+
+    IEnumerator stunRoutine()
+    {
+        isStunned = true;
+        float speedStorage = controller.gameObject.GetComponent<playerMovement>().getPlayerSpeedOG();
+        controller.gameObject.GetComponent<playerMovement>().setPlayerSpeed(0);
+        controller.gameObject.GetComponent<playerMovement>().SetPlayerSpeedOG(0);
+        yield return new WaitForSeconds(stunTime);
+        controller.gameObject.GetComponent<playerMovement>().SetPlayerSpeedOG(speedStorage);
+        controller.gameObject.GetComponent<playerMovement>().setPlayerSpeed(speedStorage);
+        isStunned = false;
+    }
+
     // *** HUD METHODS *** //
     public void adjustHPBar()
     {
@@ -499,6 +578,9 @@ public class playerDamage : MonoBehaviour, IDamage
 
     public float getAmmoMultiplier() { return maxAmmoMultiplier; }
     public void setAmmoMultiplier(float value) { maxAmmoMultiplier = value; }
+
+    public bool getIsBurning() { return isBurning; }
+    public void setIsBurning(bool value) { isBurning = value; }
 
     public int GetSelectedGun() { return selectedGun; } 
 
@@ -531,4 +613,7 @@ public class playerDamage : MonoBehaviour, IDamage
         else
             flashlight.SetActive(false);
     }
+
+
+
 }

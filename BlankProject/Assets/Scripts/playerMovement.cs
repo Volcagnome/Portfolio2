@@ -228,5 +228,6 @@ public class playerMovement : MonoBehaviour
     public float getPlayerSpeed() { return speed; }
     public void setPlayerSpeed(float value) { speed = value; }
 
+    public float getPlayerSpeedOG() { return speedOG; }
     public void SetPlayerSpeedOG(float newSpeed) { speedOG = newSpeed; }
 }

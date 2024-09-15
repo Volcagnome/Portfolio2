@@ -58,8 +58,6 @@ public class EnemyManager : MonoBehaviour
     public List<AudioClip> robotCriticalHitSounds;
 
 
-    List<GameObject> endgameSpawnTriggers;
-
     void Awake()
     {
         instance = this;

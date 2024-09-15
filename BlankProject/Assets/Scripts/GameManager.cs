@@ -119,6 +119,7 @@ public class GameManager : MonoBehaviour
         instance = this;
         player = GameObject.FindWithTag("Player");
 
+        selfDestructActivated = StaticData.selfDestructActivated_Static;
 
         //If the game was just started, sets the current spawn point to the spawn point at the beginning of the level the game was started on.
         if (StaticData.isGameStart == true)
@@ -127,15 +128,21 @@ public class GameManager : MonoBehaviour
             StaticData.isGameStart = false;
         }
 
+        if (SceneManager.GetActiveScene().buildIndex == 2)
+            securityPasswordDisplay.GetComponent<TMP_Text>().text = "none";
+
 
         //Checks if the player has been to this scene before
         firstTimeInScene = StaticData.firstTimeInScene[SceneManager.GetActiveScene().buildIndex];
 
 
+
+
         //If so, loads the saved key item data (command codes/securtiy passwords), loads the previous states for all pickup platform objects
         //and loads previous states for all enemies.
-        if (!firstTimeInScene)
+        if (!firstTimeInScene || StaticData.selfDestructActivated_Static )
         {
+            Debug.Log("test");
             DestroyDefaultObjects("Enemy");
             DestroyDefaultObjects("Pickup Platform");
 

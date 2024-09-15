@@ -1384,9 +1384,12 @@ MonoBehaviour:
   DeathFXPos: {fileID: 6865169551853031881}
   weakspot: {fileID: 7700505768945022687}
   audioPlayer: {fileID: 547232007048367341}
+  xrayMaterial: {fileID: 2100000, guid: f60dcce2fb6dd3944a4db3e68585ddff, type: 2}
+  originalMaterial: {fileID: 2100000, guid: dc56d848015841b4da9eeccbeb643c16, type: 2}
   shootPos: {fileID: 1459278233647416252}
   weapon_R: {fileID: 3989913575741451918}
   ammoType: {fileID: 4005459997384909482, guid: f3df2a379677235429bf837d6aa0e3c7, type: 3}
+  aimOffset: 0.5
   FOV_Angle: 60
   rotationSpeed: 8
   playerDetectionCircle: {fileID: 117442370378002146}
@@ -1420,6 +1423,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 43a8a1d9c2af1214c865592b4ee98bb2, type: 3}
   - {fileID: 8300000, guid: 0bb154657d26f124d87aba816edb215f, type: 3}
   foundPlayer: {fileID: 8300000, guid: 6101ac5937154c945ad1f35ca58956d1, type: 3}
+  xraydius: 0
+  xrayAbilityTime: 0
   raisingAlarmSound: {fileID: 8300000, guid: ab24a09624ddd334180c26e2c3f438b6, type: 3}
 --- !u!195 &4011634809921055029
 NavMeshAgent:

@@ -33,9 +33,9 @@ public class compactorArm : MonoBehaviour
             {
                 if (other.gameObject.GetComponent<playerDamage>() != null)
                 {
-                    Debug.Log("Player Detected");
                     StartCoroutine(compactor.GetComponent<trashCompactor>().turnAround());
                     other.GetComponent<playerDamage>().takeDamage(compactor.GetComponent<trashCompactor>().getPlayerDamage());
+                    other.GetComponent<playerDamage>().bleed();
                 }
                 else if (other.gameObject.GetComponent<SharedEnemyAI>() != null)
                 {

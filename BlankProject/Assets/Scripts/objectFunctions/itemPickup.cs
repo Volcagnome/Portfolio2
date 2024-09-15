@@ -10,7 +10,7 @@ public class itemPickup : MonoBehaviour, IPickup
     [SerializeField] pickupStats item;
     [SerializeField] bool grabbableByEnemy;
     [SerializeField] bool grabbableByPlayer;
-    public enum platformType { none, health, stamina, speed, commandCode, damage, securityPassword, weapon};
+    public enum platformType { none, health, stamina, speed, commandCode, damage, securityPassword, weapon, xray};
     [SerializeField] platformType type;
     bool pickupCollected;
 
@@ -107,9 +107,13 @@ public class itemPickup : MonoBehaviour, IPickup
                 GameManager.instance.player.GetComponent<playerDamage>().setBulletUpgrades(GameManager.instance.player.GetComponent<playerDamage>().getBulletUpgrades() + item.damageUP);
 
                 GameManager.instance.player.GetComponent<playerMovement>().setPlayerSpeed(GameManager.instance.player.GetComponent<playerMovement>().getPlayerSpeed() + item.speed);
+                GameManager.instance.player.GetComponent<playerMovement>().SetPlayerSpeedOG(GameManager.instance.player.GetComponent<playerMovement>().getPlayerSpeedOG() + item.speed);
 
                 GameManager.instance.player.GetComponent<playerDamage>().setAmmoMultiplier(GameManager.instance.player.GetComponent<playerDamage>().getAmmoMultiplier() + item.batteryUP);
 
+
+                GameManager.instance.player.GetComponent<playerCrouch>().UnlockXrayAbility();
+                
                 Destroy(displayedItem);
                 displayedItem = null;
 

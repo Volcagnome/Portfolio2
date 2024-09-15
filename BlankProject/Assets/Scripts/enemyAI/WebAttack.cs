@@ -15,7 +15,7 @@ public class WebAttack : damage
     //player and shooter to true. Otherwise destroys the projectile.
     protected override void OnTriggerEnter(Collider other)
     {
-        if (other.isTrigger)
+        if (other.isTrigger || other.gameObject.CompareTag("Enemy"))
         {
             return;
         }
