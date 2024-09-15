@@ -30,8 +30,6 @@ public class patrolAI : SharedEnemyAI,IDamage
             EnemyManager.instance.AddRobotToCount(gameObject);
         }
 
-        colorOrig = model.sharedMaterial.color;
-
         enemyDetectionLevel = 0;
 
         readyToSpeak = true;
@@ -77,7 +75,7 @@ public class patrolAI : SharedEnemyAI,IDamage
                     AlertAllies();
                     playerInViewIndicator.SetActive(true);
                     if (!IntruderAlertManager.instance.GetIntruderAlert() && !IntruderAlertManager.instance.GetIsRaisingAlarm()
-                        && IntruderAlertManager.instance.intruderAlertButtons.Count != 0)
+                        && IntruderAlertManager.instance.intruderAlertButtons.Count != 0 && !StaticData.selfDestructActivated_Static)
                         RaiseAlarm();
 
                     else
@@ -181,8 +179,11 @@ public class patrolAI : SharedEnemyAI,IDamage
     {
         DeathShared();
 
-        EnemyManager.instance.RemoveDeadRobot(gameObject);
-        defaultPost.GetComponent<PatrolWaypoint>().RemoveRobotFromRoute(gameObject);
+        if (!StaticData.selfDestructActivated_Static)
+        {
+            EnemyManager.instance.RemoveDeadRobot(gameObject);
+            defaultPost.GetComponent<PatrolWaypoint>().RemoveRobotFromRoute(gameObject);
+        }
 
         if (isWhistleBlower)
         {

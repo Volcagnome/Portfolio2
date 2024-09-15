@@ -86,8 +86,12 @@ public class damage : MonoBehaviour
         }
     }
 
+
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Player" && damageType.stationary == type && status == effectType.shock) other.gameObject.GetComponent<playerDamage>().unshock();
     }
+
+    public float GetDamageAmount() { return damageAmount; } 
+
 }

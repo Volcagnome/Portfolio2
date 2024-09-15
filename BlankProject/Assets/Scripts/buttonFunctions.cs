@@ -36,5 +36,6 @@ public class buttonFunctions : MonoBehaviour
         GameManager.instance.player.GetComponent<playerMovement>().enabled = false;
         GameManager.instance.player.transform.position = GameManager.instance.currentSpawn.transform.position;
         GameManager.instance.player.GetComponent<playerMovement>().enabled = true;
+
     }
 }

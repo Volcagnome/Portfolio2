@@ -22,6 +22,10 @@ public class bossAI : SharedEnemyAI, IDamage
     [SerializeField] GameObject TurretCycler_L;
     [SerializeField] GameObject TurretCycler_R;
     [SerializeField] GameObject weapon_L;
+
+    [SerializeField] Transform mainTurretShootPosL;
+    [SerializeField] Transform mainTurretShootPosR;
+
     //[SerializeField] GameObject ShieldIndicator;
 
 
@@ -83,8 +87,8 @@ public class bossAI : SharedEnemyAI, IDamage
         if (playerInView)
         {
             lastKnownPlayerLocation = GameManager.instance.player.transform.position;
-           
-            if(!isAlerted)
+
+            if (!isAlerted)
                 AlertEnemy();
             FoundPlayer();
 
@@ -94,7 +98,8 @@ public class bossAI : SharedEnemyAI, IDamage
                 playerSpotted = true;
             }
 
-        }
+        }else if (playerInRange && isAlerted && !GameManager.instance.GetIsRespawning())
+            agent.SetDestination(GameManager.instance.player.transform.position);
 
 
         //If player moves outside of 25f, reduces their stopping distance and sets a path to their location. Otherwise
@@ -264,15 +269,23 @@ public class bossAI : SharedEnemyAI, IDamage
 
         AudioSource audioPlayer = TurretCycler_L.GetComponent<AudioSource>();
 
+
+
+        StartCoroutine(shoot(MainTurretAmmo,mainTurretShootPosL));
         Instantiate(MainTurretAmmo, MainTurret_L.transform.GetChild(0).transform.position, MainTurret_L.transform.localRotation);
         audioPlayer.PlayOneShot(mainTurretSounds[Random.Range(0, 2)]);
+
+        StartCoroutine(shoot(MainTurretAmmo, mainTurretShootPosR));
         Instantiate(MainTurretAmmo, MainTurret_R.transform.GetChild(0).transform.position, MainTurret_R.transform.localRotation);
         audioPlayer.PlayOneShot(mainTurretSounds[Random.Range(0, 2)]);
+
         yield return new WaitForSeconds(0.2f);
 
-
+        StartCoroutine(shoot(MainTurretAmmo, mainTurretShootPosL));
         Instantiate(MainTurretAmmo, MainTurret_L.transform.GetChild(1).transform.position, MainTurret_L.transform.localRotation);
         audioPlayer.PlayOneShot(mainTurretSounds[Random.Range(0, 2)]);
+
+        StartCoroutine(shoot(MainTurretAmmo, mainTurretShootPosR));
         Instantiate(MainTurretAmmo, MainTurret_R.transform.GetChild(1).transform.position, MainTurret_R.transform.localRotation);
         audioPlayer.PlayOneShot(mainTurretSounds[Random.Range(0, 2)]);
         
@@ -281,6 +294,28 @@ public class bossAI : SharedEnemyAI, IDamage
 
         isShooting = false;
     }
+
+    protected virtual IEnumerator shoot(GameObject ammoType, Transform shootPos)
+    {
+        anim.SetTrigger("Shoot");
+
+        isShooting = true;
+
+        playerDirection = GameManager.instance.player.transform.position - shootPos.position;
+
+        Vector3 offset = new Vector3(Random.Range(-aimOffset, aimOffset), 0f, Random.Range(-aimOffset, aimOffset));
+
+        RaycastHit hit;
+        if (Physics.Raycast(shootPos.position, playerDirection + offset, out hit))
+        {
+            if (hit.collider.gameObject.CompareTag("Player"))
+                GameManager.instance.player.GetComponent<IDamage>().takeDamage(ammoType.GetComponent<damage>().GetDamageAmount());
+        }
+
+            yield return new WaitForSeconds(shootRate);
+        isShooting = false;
+    }
+
 
     //Shoots two rockets from each turret with a slight delay between them and plays their missleLaunch audio clip.
     IEnumerator FireRocketTurrets()
@@ -314,7 +349,7 @@ public class bossAI : SharedEnemyAI, IDamage
     //before their corpse is despawned.
     protected override void Death()
     {
-        EnemyManager.instance.SetBossIsDead(true);
+        StaticData.bossIsDead_Static = true;
 
         DeathShared();
 

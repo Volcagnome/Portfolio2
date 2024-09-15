@@ -10,7 +10,7 @@ using UnityEngine.AI;
 public class BossFight : MonoBehaviour
 {
     //Scene objects
-    [SerializeField] bossAI boss;
+    [SerializeField] GameObject boss;
     [SerializeField] List<GameObject> bossReinforcements;
     [SerializeField] GameObject bossDefaultPost2;
     [SerializeField] GameObject bossFightGuard;
@@ -19,8 +19,6 @@ public class BossFight : MonoBehaviour
     [SerializeField] GameObject LeverCover;
     [SerializeField] GameObject LeverCoverOpen;
     [SerializeField] GameObject SelfDestructLever;
-    [SerializeField] GameObject SelfDestructTimer;
-    [SerializeField] TMP_Text timeLeft;
     [SerializeField] GameObject CommandCodeBossPlatform;
 
 
@@ -33,6 +31,8 @@ public class BossFight : MonoBehaviour
     
     int fightStage;
     bool bossFightBegin = false;
+    bool bossIsDead;
+    bool playerRespawned;
 
     //Tracks whether or not reinforcements have been called for respective fight stage
     bool spawnedStage2Reinforcements;
@@ -61,9 +61,10 @@ public class BossFight : MonoBehaviour
     //the countdown.
     void Update()
     {
-
-        if (EnemyManager.instance.GetBossIsDead())
+        
+        if (StaticData.bossIsDead_Static)
         {
+
             CommandCodeBossPlatform.SetActive(true);
 
             MainFrameDoor.transform.GetChild(1).gameObject.SetActive(false);
@@ -78,8 +79,13 @@ public class BossFight : MonoBehaviour
             if (SelfDestructLever.GetComponent<togglingItem>().getState())
             {
                 GameManager.instance.ActivateSelfDestruct();
+                StaticData.selfDestructActivated_Static = true;
             }
+
+            EnemyManager.instance.SetIsBossFight(false);
+
         }
+
         else if (boss.GetComponent<SharedEnemyAI>().GetHP() < fightStage_2_threshhold && !spawnedStage2Reinforcements)
         {
             fightStage = 2;
@@ -104,20 +110,27 @@ public class BossFight : MonoBehaviour
             EnemyManager.instance.SetIsBossFight(true);
             BossApproach();
             fightStage = 1;
-            boss.GetEnemyHealthBar().SetActive(true);
+
 
             MainFrameDoor.transform.GetChild(1).gameObject.SetActive(true);
         }
 
-        else
+        else if(!StaticData.bossIsDead_Static)
         {
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
             foreach (GameObject enemy in enemies)
             {
-                StopCoroutine(enemy.GetComponent<SharedEnemyAI>().SearchArea(transform.position, 99));
-                enemy.GetComponent<SharedEnemyAI>().SetIsSearching(false);
-                enemy.GetComponent<SharedEnemyAI>().SetLastKnownPlayerLocation(GameManager.instance.transform.position);
+
+                if (enemy.GetComponent<SharedEnemyAI>().GetIsSearching())   
+                {
+                    StopCoroutine(enemy.GetComponent<SharedEnemyAI>().SearchArea(transform.position, 99));
+                    enemy.GetComponent<SharedEnemyAI>().SetIsSearching(false);
+                    enemy.GetComponent<SharedEnemyAI>().SetLastKnownPlayerLocation(GameManager.instance.transform.position);
+                }
             }
+        }else if (bossIsDead)
+        {
+
         }
     }
 
@@ -160,7 +173,7 @@ public class BossFight : MonoBehaviour
             NavMeshHit hit;
             NavMesh.SamplePosition(randomDist, out hit, 3f, 1);
 
-            GameObject guard = Instantiate(bossFightGuard, hit.position, spawner.transform.rotation);
+            GameObject guard = Instantiate(bossFightGuard, spawner.transform.position, spawner.transform.rotation);
 
             guard.GetComponent<SharedEnemyAI>().SetDefaultPost(spawner);
             guard.GetComponent<SharedEnemyAI>().SetCurrentDestination(spawner);
@@ -176,7 +189,7 @@ public class BossFight : MonoBehaviour
             NavMeshHit hit;
             NavMesh.SamplePosition(randomDist, out hit, 3f, 1);
 
-            GameObject titan = Instantiate(bossFightTitan, hit.position, spawner.transform.rotation);
+            GameObject titan = Instantiate(bossFightTitan, spawner.transform.position, spawner.transform.rotation);
             titan.GetComponent<SharedEnemyAI>().SetDefaultPost(spawner);
             titan.GetComponent<SharedEnemyAI>().SetCurrentDestination(spawner);
             titan.GetComponent<SharedEnemyAI>().SetLastKnownPlayerLocation(GameManager.instance.player.transform.position);

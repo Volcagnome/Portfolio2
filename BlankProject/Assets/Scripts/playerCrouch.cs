@@ -16,6 +16,14 @@ public class playerCrouch : MonoBehaviour
     [SerializeField] float crouchSpeed = 10f;
     [SerializeField] float proneTime;
 
+    //Xray ability varaibles
+    [SerializeField] float xraydius;
+    [SerializeField] LayerMask enemyLayer;
+    [SerializeField] float xrayEffectDuration;
+    [SerializeField] float xrayAbilityCooldown;
+    bool xrayAblityUnlocked;
+    bool xrayInEffect;
+
     bool isCrouched;
     bool isProne;
     float holdCrouch;
@@ -25,13 +33,14 @@ public class playerCrouch : MonoBehaviour
 
     private void Awake()
     {
-        
+        xrayAblityUnlocked = StaticData.playerXrayAbility;
     }
     // Start is called before the first frame update
     void Start()
     {
         initialCamPos = mainCam.transform.localPosition;
         standingHeight = GameManager.instance.playerScript.playerHeight;
+        xrayInEffect = false;
     }
 
     // Update is called once per frame
@@ -39,6 +48,9 @@ public class playerCrouch : MonoBehaviour
     {
         crouchInput();
         crouch();
+
+        if(xrayAblityUnlocked)
+            xrayInput();
     }
 
     void crouchInput()
@@ -131,4 +143,55 @@ public class playerCrouch : MonoBehaviour
         }
         mainCam.transform.localPosition = newCamPos;
     }
+
+    void xrayInput()
+    {
+
+        Material xrayMaterial = null;
+        Material materialOrig = null;
+
+        // On crouch key activation:
+        if (Input.GetButtonDown("Xray"))
+        {
+
+            Collider[] nearbyEnemies = Physics.OverlapSphere(gameObject.transform.position, xraydius, enemyLayer);
+
+            if (nearbyEnemies.Length > 0)
+
+            {
+                foreach (Collider enemy in nearbyEnemies)
+                { 
+
+                    if (enemy.gameObject.GetComponent<SharedEnemyAI>())
+                    {
+
+                        if (enemy.GetComponent<SharedEnemyAI>().GetIsDead() == false)
+
+                            StartCoroutine(XrayEffect(enemy.gameObject));
+
+                    }
+                }
+            }
+        }
+    }
+
+    IEnumerator XrayEffect(GameObject enemy)
+    {
+        xrayInEffect = true;
+
+        enemy.GetComponent<SharedEnemyAI>().XrayEnemy(enemy, true);
+
+        yield return new WaitForSeconds(xrayEffectDuration);
+
+        enemy.GetComponent<SharedEnemyAI>().XrayEnemy(enemy, false);
+
+        yield return new WaitForSeconds(xrayAbilityCooldown);
+
+        xrayInEffect = false;
+    }
+    
+
+    public void UnlockXrayAbility() { xrayAblityUnlocked = true; }
+
+    public bool GetXrayAbilityUnlocked() { return xrayAblityUnlocked; }
 }

@@ -23,6 +23,9 @@ public class StaticData : MonoBehaviour
     //Tracks how many total command codes the player has collected so far
     public static int commandCodesCollectedTotal_Static;
 
+    public static bool selfDestructActivated_Static;
+
+    public static bool bossIsDead_Static;
 
 
 
@@ -39,7 +42,7 @@ public class StaticData : MonoBehaviour
     public static float playerMaxStamina = 100;
     public static List<pickupStats> playerWeaponsList = new List<pickupStats>();
     public static int playerSelectedGun;
-
+    public static bool playerXrayAbility = false;
 
 
 
@@ -68,7 +71,7 @@ public class StaticData : MonoBehaviour
 
     //Dictionary of collected scene command codes and security password
     public static Dictionary<int, playerPickupState> levelData = new Dictionary<int, playerPickupState>()
-    { { 0, playerPickupsStateScene1 }, { 1, playerPickupsStateScene2 }, { 2, playerPickupsStateScene2 }};
+    { { 0, playerPickupsStateScene1 }, { 1, playerPickupsStateScene2 }, { 2, playerPickupsStateScene2 },{ 3, TEST_3 }};
 
     public struct playerPickupState
     {
@@ -96,21 +99,25 @@ public class StaticData : MonoBehaviour
     public static List<enemyState> enemyStatesScene1 = new List<enemyState>();
     public static List<enemyState> enemyStatesScene2 = new List<enemyState>();
     public static List<enemyState> enemyStatesScene3 = new List<enemyState>();
+    public static List<enemyState> TEST_1 = new List<enemyState>();
 
     //List that holds all pickups states for each level;
     public static List<pickupState> pickupStatesScene1 = new List<pickupState>();
     public static List<pickupState> pickupStatesScene2 = new List<pickupState>();
     public static List<pickupState> pickupStatesScene3 = new List<pickupState>();
+    public static List<pickupState> TEST_2 = new List<pickupState>();
 
     //States for each level that holds data specific to each level
     public static playerPickupState playerPickupsStateScene1 = new playerPickupState();
     public static playerPickupState playerPickupsStateScene2 = new playerPickupState();
     public static playerPickupState playerPickupsStateScene3 = new playerPickupState();
 
+    public static playerPickupState TEST_3 = new playerPickupState();
+
 
     //Dictionary of scene enemy states;
     public static Dictionary<int, List<enemyState>> sceneEnemies = new Dictionary<int, List<enemyState>> 
-    { {0, enemyStatesScene1 }, { 1, enemyStatesScene2 }, { 2, enemyStatesScene3 }};
+    { {0, enemyStatesScene1 }, { 1, enemyStatesScene2 }, { 2, enemyStatesScene3 }, { 3, TEST_1 }};
 
     //Struct to hold state for each pickup platform in scene
     public struct pickupState
@@ -124,10 +131,10 @@ public class StaticData : MonoBehaviour
 
     //Dictionary of scene pickup states;
     public static Dictionary<int, List<pickupState>> scenePickups = new Dictionary<int, List<pickupState>>
-    { {0, pickupStatesScene1 }, { 1, pickupStatesScene2 }, { 2, pickupStatesScene3 }};
+    { {0, pickupStatesScene1 }, { 1, pickupStatesScene2 }, { 2, pickupStatesScene3 }, { 3, TEST_2 }};
 
     //Dictionary of if this is the player's first time in the scene
     public static Dictionary<int, bool> firstTimeInScene = new Dictionary<int, bool>
-    { {0, true }, { 1, true },{ 2, true }};
+    { {0, true }, { 1, true },{ 2, true },{ 3, true }};
 
 }

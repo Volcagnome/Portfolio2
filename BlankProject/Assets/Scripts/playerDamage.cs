@@ -613,4 +613,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         else
             flashlight.SetActive(false);
     }
+
+
+
 }
