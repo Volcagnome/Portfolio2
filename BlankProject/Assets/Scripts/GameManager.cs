@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
     //Current Game State
     public bool youWin;
     private bool playerEscaped;
-    private bool selfDestructActivated;
+    private bool selfDestructActivated = true;
 
     int commandCodesCollected;
     int commandCodesEntered;
@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
 
     private bool wasDisabled;
 
-    bool firstTimeInScene;
+    bool firstTimeInScene = false;
 
 
 

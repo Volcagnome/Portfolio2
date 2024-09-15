@@ -12,6 +12,7 @@ public class BossFight : MonoBehaviour
     //Scene objects
     [SerializeField] GameObject boss;
     [SerializeField] List<GameObject> bossReinforcements;
+    [SerializeField] GameObject bossDefaultPost1;
     [SerializeField] GameObject bossDefaultPost2;
     [SerializeField] GameObject bossFightGuard;
     [SerializeField] GameObject bossFightTitan;
