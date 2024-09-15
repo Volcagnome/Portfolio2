@@ -179,11 +179,13 @@ public class playerCrouch : MonoBehaviour
     {
         xrayInEffect = true;
 
-        enemy.GetComponent<SharedEnemyAI>().XrayEnemy(enemy, true);
+        if (enemy != null)
+            enemy.GetComponent<SharedEnemyAI>().XrayEnemy(enemy, true);
 
         yield return new WaitForSeconds(xrayEffectDuration);
 
-        enemy.GetComponent<SharedEnemyAI>().XrayEnemy(enemy, false);
+        if (enemy != null)
+            enemy.GetComponent<SharedEnemyAI>().XrayEnemy(enemy, false);
 
         yield return new WaitForSeconds(xrayAbilityCooldown);
 
