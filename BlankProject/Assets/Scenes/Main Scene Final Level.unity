@@ -1057,11 +1057,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 103330042}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &116103067 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7883878235333084115, guid: 7e760880bd002484baa29bfb3e400dc9, type: 3}
-  m_PrefabInstance: {fileID: 656212450}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &131186750
 GameObject:
   m_ObjectHideFlags: 0
@@ -1725,17 +1720,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 203040695}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &217923479 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1782890741702399105, guid: 27588f91456f8014db83655de54ff72d, type: 3}
-  m_PrefabInstance: {fileID: 4887514273169369920}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 829b35388cb1ffb4db2689d40e259ac9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &228006212
 GameObject:
   m_ObjectHideFlags: 0
@@ -1951,11 +1935,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 259425219}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &304476780 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7883878235333084115, guid: 7e760880bd002484baa29bfb3e400dc9, type: 3}
-  m_PrefabInstance: {fileID: 9093492316187188413}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &314158101
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2599,11 +2578,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 465446718}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &467248540 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 856497848990839297, guid: 21765e1389c1574498d9e4bfcb496aae, type: 3}
-  m_PrefabInstance: {fileID: 99446622}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &498158831 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3761960195058011227, guid: aa2791bf05d897c44865eee871ada02a, type: 3}
@@ -6847,11 +6821,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce5713b9d1d3d3641a6837e3be5c3c59, type: 3}
---- !u!1 &1032049528 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7044101418763987416, guid: 3d0322972e6672847b12d02f34ce8574, type: 3}
-  m_PrefabInstance: {fileID: 2713713285111168293}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1032841974 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6044750211905199557, guid: 2e848ecb42c349f489fe063122a9f045, type: 3}
@@ -13578,27 +13547,47 @@ MonoBehaviour:
   menuPause: {fileID: 4655950610353047872}
   menuWin: {fileID: 3142177486054050010}
   menuLose: {fileID: 1246479919880843374}
-  crouchWindow: {fileID: 8339222321400403559}
-  proneWindow: {fileID: 1513013927685181235}
+  tutorialWindow: {fileID: 0}
+  isPaused: 0
   totalTime: 600
   timer: {fileID: 743920471}
   selfDestructTimer: {fileID: 515155486}
-  PickupMessage: {fileID: 7473238581519753464}
-  tutorialWindow: {fileID: 0}
+  playerSpawnEntry: {fileID: 0}
+  playerSpawnExit: {fileID: 0}
+  currentSpawn: {fileID: 0}
+  crouchWindow: {fileID: 8339222321400403559}
+  proneWindow: {fileID: 1513013927685181235}
   staminaBar: {fileID: 8697403103299750363}
   healthbar: {fileID: 1190527937698216766}
   overheatMeter: {fileID: 0}
   redFlash: {fileID: 303293356292848510}
   webbedOverlay: {fileID: 0}
-  playerSpawnEntry: {fileID: 0}
-  playerSpawnExit: {fileID: 0}
-  currentSpawn: {fileID: 0}
   player: {fileID: 599124457}
   playerScript: {fileID: 599124461}
   crouchScript: {fileID: 599124458}
   damageScript: {fileID: 0}
   youWin: 0
-  isPaused: 0
+  healthPickup: {fileID: 0}
+  staminaPickup: {fileID: 0}
+  speedPickup: {fileID: 0}
+  damagePickup: {fileID: 0}
+  weaponPickup: {fileID: 0}
+  commandCodePickup: {fileID: 0}
+  securityPasswordPickup: {fileID: 0}
+  commandCodesCollectedTotalDisplay: {fileID: 0}
+  sceneCommandCodesCollectedDisplay: {fileID: 0}
+  sceneCommandCodesTotalDisplay: {fileID: 0}
+  sceneCommandCodesTotal: 0
+  sceneStatPickupsCollectedDisplay: {fileID: 0}
+  sceneStatPickupsTotalDisplay: {fileID: 0}
+  sceneStatPickupsTotal: 0
+  sceneWeaponPickupsCollectedDisplay: {fileID: 0}
+  sceneWeaponPickupsTotalDisplay: {fileID: 0}
+  sceneWeaponPickupsTotal: 0
+  securityPasswordDisplay: {fileID: 0}
+  sceneSecurityPassword: 0
+  totalGameCommandCodes: 0
+  PickupMessage: {fileID: 7473238581519753464}
 --- !u!224 &338497878083934038
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13957,135 +13946,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1246479919880843374}
   m_CullTransparentMesh: 1
---- !u!1001 &998280853919250512
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1096792827919658957, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: m_Size.y
-      value: 9.803778
-      objectReference: {fileID: 0}
-    - target: {fileID: 1096792827919658957, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: m_Size.z
-      value: 24.894363
-      objectReference: {fileID: 0}
-    - target: {fileID: 1096792827919658957, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: m_Center.y
-      value: 4.401889
-      objectReference: {fileID: 0}
-    - target: {fileID: 1096792827919658957, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: m_Center.z
-      value: -0.021408081
-      objectReference: {fileID: 0}
-    - target: {fileID: 3384251143021717046, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: m_Name
-      value: BossFightController
-      objectReference: {fileID: 0}
-    - target: {fileID: 3384251143021717046, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3384251143021717046, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3737508234949347683, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -37.331
-      objectReference: {fileID: 0}
-    - target: {fileID: 3737508234949347683, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 26.83
-      objectReference: {fileID: 0}
-    - target: {fileID: 3737508234949347683, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 90.28
-      objectReference: {fileID: 0}
-    - target: {fileID: 3737508234949347683, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3737508234949347683, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3737508234949347683, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3737508234949347683, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3737508234949347683, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3737508234949347683, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3737508234949347683, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517390777781143654, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: boss
-      value: 
-      objectReference: {fileID: 217923479}
-    - target: {fileID: 4517390777781143654, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: timeLeft
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517390777781143654, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: LeverCover
-      value: 
-      objectReference: {fileID: 304476780}
-    - target: {fileID: 4517390777781143654, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: MainFrameDoor
-      value: 
-      objectReference: {fileID: 1032049528}
-    - target: {fileID: 4517390777781143654, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: LeverCoverOpen
-      value: 
-      objectReference: {fileID: 116103067}
-    - target: {fileID: 4517390777781143654, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: CommandcodeBoss
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517390777781143654, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: bossDefaultPost2
-      value: 
-      objectReference: {fileID: 33081650}
-    - target: {fileID: 4517390777781143654, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: SelfDestructLever
-      value: 
-      objectReference: {fileID: 467248540}
-    - target: {fileID: 4517390777781143654, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: SelfDestructTimer
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517390777781143654, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: reinforcementSpawner
-      value: 
-      objectReference: {fileID: 980768490}
-    - target: {fileID: 4517390777781143654, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: CommandCodeBossPlatform
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4517390777781143654, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
-      propertyPath: CommandcodeBossPlatform
-      value: 
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c7d1a2b29c6cdc04c9a4fd170fc8f709, type: 3}
 --- !u!65 &1017240708933365505
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23161,7 +23021,6 @@ SceneRoots:
   - {fileID: 1971762765}
   - {fileID: 1334965444}
   - {fileID: 314158101}
-  - {fileID: 998280853919250512}
   - {fileID: 7129675226199211488}
   - {fileID: 9093492316187188413}
   - {fileID: 656212450}

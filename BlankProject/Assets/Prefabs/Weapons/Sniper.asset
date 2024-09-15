@@ -21,15 +21,16 @@ MonoBehaviour:
   damageUP: 0
   batteryUP: 0
   speed: 0
+  xrayAbilityUnlocked: 0
   shotgun: 0
-  shootRate: 1
-  shootDamage: 2
+  shootRate: 0.85
+  shootDamage: 3
   shootDist: 50
-  dmgMultiplier: 5
-  maxHeat: 20
-  heatPerShot: 1
+  dmgMultiplier: 3
+  currentHeat: 0
+  maxHeat: 40
+  heatPerShot: 8
   coolRate: 1
-  coolWaitTime: 5
+  coolWaitTime: 3
   modelRotationAxis: {x: 1, y: 0, z: 0}
   rotationAngle: 90
-  passwordCombo: 0
