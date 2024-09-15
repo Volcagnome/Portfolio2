@@ -135,8 +135,13 @@ public class IntruderAlertManager: MonoBehaviour
     //behavior.
     public void IntruderAlert(Vector3 location)
     {
+
+
         intruderAlert = true;
         isRaisingAlarm = false;
+
+
+        GameManager.instance.DisplayMessage("Intruder Alert");
 
         intruderLocation = location;
 

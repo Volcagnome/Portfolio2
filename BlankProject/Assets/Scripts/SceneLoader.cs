@@ -42,6 +42,12 @@ public class SceneLoader : MonoBehaviour
             StaticData.nextLevel = true;
         }
 
+        if(GameManager.instance.GetSelfDestructActivated())
+        {
+
+            totalTime_Static = GameManager.instance.GetTotalTimeLeft();
+}
+
         GameManager.instance.SavePlayerPickupData();
         SaveEnemyStates(sceneEnemies[SceneManager.GetActiveScene().buildIndex]);
         SavePickupStates(scenePickups[SceneManager.GetActiveScene().buildIndex]);

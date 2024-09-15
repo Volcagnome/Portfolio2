@@ -81,6 +81,7 @@ public class itemPickup : MonoBehaviour, IPickup
         {
             // Play item pickup sound:
             GameManager.instance.playAud(pickupSound, pickupVol);
+            StartCoroutine(GameManager.instance.DisplayMessage(item.name + " collected"));
 
             switch (item.type)
             {
@@ -117,7 +118,7 @@ public class itemPickup : MonoBehaviour, IPickup
                 Destroy(displayedItem);
                 displayedItem = null;
 
-                GameManager.instance.IncrementSceneStatPickupCounter();
+                GameManager.instance.IncrementSceneUpgradePickupCounter();
                 break;
             }
                 case (pickupStats.pickupType.commandCode):
@@ -140,11 +141,13 @@ public class itemPickup : MonoBehaviour, IPickup
                 break;
             }
             }
+
+            
+            pickupCollected = true;
         }
 
+        
 
-        pickupCollected = true;
-  
     }
 
     public bool GetIfItemCollected() { return pickupCollected; }

@@ -189,7 +189,26 @@ public class playerCrouch : MonoBehaviour
 
         xrayInEffect = false;
     }
-    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Enemy") && isCrouched)
+        {
+            float OGradius = other.gameObject.GetComponent<SharedEnemyAI>().GetDetectionRadius();
+            other.gameObject.GetComponent<SharedEnemyAI>().SetDetectionRadius(OGradius * 0.5f);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            float OGradius = other.gameObject.GetComponent<SharedEnemyAI>().GetDetectionRadius();
+            other.gameObject.GetComponent<SharedEnemyAI>().SetDetectionRadius(OGradius);
+        }
+    }
+
+
 
     public void UnlockXrayAbility() { xrayAblityUnlocked = true; }
 

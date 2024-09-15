@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -21,7 +22,10 @@ public class BossFight : MonoBehaviour
     [SerializeField] GameObject LeverCoverOpen;
     [SerializeField] GameObject SelfDestructLever;
     [SerializeField] GameObject CommandCodeBossPlatform;
-
+    [SerializeField] GameObject ComputerCore1;
+    [SerializeField] GameObject ComputerCore2;
+    [SerializeField] GameObject ComputerCore3;
+    [SerializeField] Material ComputerCoreNonEmissive;
 
     //Boss health threshholds that separate different stages of fight and determines when reinforcements will be called and how many
     [SerializeField] int fightStage_2_threshhold;
@@ -42,6 +46,7 @@ public class BossFight : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.instance.UpdateObjectiveUI("Defeat the Juggernaut.\r\n\r\nPlug in the command codes.\r\n\r\nActivate the self destruct protocol.");
 
         fightStage = 0;
         spawnedStage2Reinforcements = false;
@@ -71,14 +76,30 @@ public class BossFight : MonoBehaviour
             MainFrameDoor.transform.GetChild(1).gameObject.SetActive(false);
             MainFrameDoor.transform.GetChild(2).gameObject.SetActive(true);
 
-            if (GameManager.instance.GetCommandCodesEntered() == GameManager.instance.GetTotalGameCommandCodes())
+            if (GameManager.instance.GetCommandCodesEntered() >= 2)
             {
+                ComputerCore1.GetComponent<Renderer>().material = ComputerCoreNonEmissive;
+                ComputerCore1.GetComponent<Light>().enabled = false;
+            }
+            
+            if(GameManager.instance.GetCommandCodesEntered() >= 4) 
+            {
+                ComputerCore2.GetComponent<Renderer>().material = ComputerCoreNonEmissive;
+                ComputerCore2.GetComponent<Light>().enabled = false;
+            }
+           
+            if (GameManager.instance.GetCommandCodesEntered() == 6)
+            {
+                ComputerCore3.GetComponent<Renderer>().material = ComputerCoreNonEmissive;
+                ComputerCore3.GetComponent<Light>().enabled = false;
+
                 LeverCover.SetActive(false);
                 LeverCoverOpen.SetActive(true);
             }
 
             if (SelfDestructLever.GetComponent<togglingItem>().getState())
             {
+                GameManager.instance.UpdateObjectiveUI("\r\n\r\nEscape and warn the Planetary Defence Force!!");
                 GameManager.instance.ActivateSelfDestruct();
                 StaticData.selfDestructActivated_Static = true;
             }

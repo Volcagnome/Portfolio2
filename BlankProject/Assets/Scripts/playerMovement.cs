@@ -60,6 +60,8 @@ public class playerMovement : MonoBehaviour
 
         staminaOG = StaticData.playerMaxStamina;
         speedOG = StaticData.playerSpeedOG; 
+
+        GameManager.instance.UpdatePlayerStatsUI();
     }
 
     // Update is called once per frame

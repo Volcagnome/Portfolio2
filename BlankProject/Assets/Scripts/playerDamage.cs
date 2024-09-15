@@ -123,6 +123,8 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
 
         selectedGun = StaticData.playerSelectedGun;
         setWeapon(weapons[selectedGun]);
+        GameManager.instance.UpdateCurrentWeaponUI(selectedGun,weapons);
+        GameManager.instance.UpdatePlayerStatsUI();
 
         spawnPlayer();
     }
@@ -327,6 +329,8 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
                 }
             }
         }
+
+        GameManager.instance.UpdateCurrentWeaponUI(selectedGun, weapons);
     }
 
     // Sounds for weapon switching:
@@ -343,7 +347,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         if (Physics.Raycast(Camera.main.transform.position,
             Camera.main.transform.forward, out hit, interactDist, ~ignoreMask))
         {
-            Debug.Log(hit.collider.name);
+
             IInteract interactWith = hit.collider.GetComponent<IInteract>();
 
             if (interactWith != null)
@@ -585,6 +589,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
     public int GetSelectedGun() { return selectedGun; } 
 
     public List<pickupStats> GetWeaponList() { return weapons; }
+
 
 
     // *** SPAWN *** //

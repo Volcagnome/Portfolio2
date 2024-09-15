@@ -716,6 +716,7 @@ GameObject:
   - component: {fileID: 4135028201554134082}
   - component: {fileID: 4121500091823156705}
   - component: {fileID: 2156902001026399159}
+  - component: {fileID: 4549488081459690737}
   m_Layer: 3
   m_Name: PlayerV3
   m_TagString: Player
@@ -765,6 +766,13 @@ MonoBehaviour:
   HP: 25
   HPRegenRate: 7.5
   HPRegenWaitTime: 5
+  burnDamage: 0
+  burnTime: 0
+  burnRate: 0
+  bleedDamage: 0
+  bleedTime: 0
+  bleedRate: 0
+  stunTime: 0
   botDmgFX: {fileID: 198966096496560358, guid: 46889c7ec78c0eb42ab487ecb6367592, type: 3}
   botCritFX: {fileID: 198966096496560358, guid: 368f309b52ba5b84bac9d33c4f7bf841, type: 3}
   bulletHoleFX: {fileID: 198966096496560358, guid: e29b6bf97446db54994952048fdb9a96, type: 3}
@@ -1050,3 +1058,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!135 &4549488081459690737
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8911946099950133126}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 2147485567
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 10
+  m_Center: {x: 0, y: 0, z: 0}

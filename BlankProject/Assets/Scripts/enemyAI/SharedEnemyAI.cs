@@ -53,6 +53,7 @@ public class SharedEnemyAI : MonoBehaviour
     [SerializeField] protected GameObject playerInViewIndicator;
     Coroutine FindIntruderCoroutine;
     Coroutine PursuePlayerCoroutine;
+    [SerializeField] float detectionRadiusOriginal;
 
 
     //Current State
@@ -120,7 +121,7 @@ public class SharedEnemyAI : MonoBehaviour
         playerSpotted = false;
         currentIdleSoundCooldown = Random.Range(5, maxIdleSoundCooldown);
 
-        
+        detectionRadiusOriginal = GetComponent<SphereCollider>().radius;
   
 }
 
@@ -837,6 +838,16 @@ public void SetIsEndGameEnemy(bool status) { isEndgameEnemy= status; }
 public Material GetXrayMaterial() { return xrayMaterial; }
 
 public Material GetOriginalMaterial() { return originalMaterial; }
+
+public float GetDetectionRadius()
+{
+        return transform.GetComponent<SphereCollider>().radius;
+}
+
+    public void SetDetectionRadius(float newRadius)
+    {
+        GetComponent<SphereCollider>().radius = newRadius;
+    }
 
 
 }

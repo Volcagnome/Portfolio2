@@ -27,7 +27,9 @@ public class StaticData : MonoBehaviour
 
     public static bool bossIsDead_Static;
 
+    public static float totalTime_Static = 300;
 
+    public static string gameObjective_Static;
 
     ////////////////////////////////////////
     ///          PLAYER DATA             ///
@@ -36,7 +38,7 @@ public class StaticData : MonoBehaviour
     //Stores the player's current stats. Defaults are updated when the player walks through a loading zone to reflect any changes from stat pickups.
     //The new stats are applied to the player object of the loaded scene.
 
-    public static float playerHealth = 75;
+    public static float playerHealth = 75;  
     public static float playerMaxHealth = 75;
     public static float playerSpeedOG = 5;
     public static float playerMaxStamina = 100;
@@ -77,8 +79,8 @@ public class StaticData : MonoBehaviour
     {
         public int sceneCommandCodesCollected_Static;
         public int sceneCommandCodesTotal_Static;
-        public int sceneStatPickupsCollected_Static;
-        public int sceneStatPickupsTotal_Static;
+        public int sceneUpgradePickupsCollected_Static;
+        public int sceneUpgradePickupsTotal_Static;
         public int sceneWeaponPickupsCollected_Static;
         public int sceneWeaponPickupsTotal_Static;
         public int sceneSecurityPassword_Static;
@@ -127,6 +129,7 @@ public class StaticData : MonoBehaviour
         public bool itemPickedUp_Static;
         public pickupStats item_Static;
         public GameObject pickupPrefab_Static;
+
     }
 
     //Dictionary of scene pickup states;
