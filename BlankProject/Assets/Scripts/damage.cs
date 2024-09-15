@@ -9,7 +9,6 @@ public class damage : MonoBehaviour
     [SerializeField] effectType status;
     [SerializeField] protected Rigidbody rb;
 
-
     [SerializeField] protected float damageAmount;
     [SerializeField] protected int speed;
     [SerializeField] protected int destroyTime;

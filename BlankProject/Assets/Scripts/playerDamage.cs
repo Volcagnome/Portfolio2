@@ -64,16 +64,8 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
     [SerializeField] float coolWaitTime;
 
     Coroutine cooldownCoroutine;
+
     [Header("----- Weapon Sounds -----")]
-    [SerializeField] AudioClip pistolSound;
-    [SerializeField] float PistolVol;
-
-    [SerializeField] AudioClip rifleSound;
-    [SerializeField] float rifleVol;
-
-    [SerializeField] AudioClip shotgunSound;
-    [SerializeField] float shotgunVol;
-
     [SerializeField] AudioClip switchGunSound;
     [SerializeField] float switchGunVol;
 
@@ -181,8 +173,12 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         if (cooldownCoroutine != null) StopCoroutine(cooldownCoroutine);
         StartCoroutine(flashMuzzle());
         cooldownCoroutine = StartCoroutine(enableCooling());
+
         // Spawns a tracer round (playerBullet prefab)
         Instantiate(bulletPrefab, shootPos.position, shootPos.transform.rotation);
+        // Play firing sound for selected weapon:
+        GameManager.instance.playAud(weapons[selectedGun].fireSound, weapons[selectedGun].fireVol);
+
         currentHeat += heatPerShot;
         
 

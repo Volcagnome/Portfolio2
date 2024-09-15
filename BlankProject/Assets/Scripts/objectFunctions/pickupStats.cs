@@ -41,4 +41,8 @@ public class pickupStats : ScriptableObject
     public Vector3 modelRotationAxis;
     [Range(-180, 180)] public float rotationAngle;
 
+    [Header("----Sounds----")]
+    public AudioClip fireSound;
+    public float fireVol;
+
 }

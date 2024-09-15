@@ -40,6 +40,7 @@ public class playerCrouch : MonoBehaviour
     {
         initialCamPos = mainCam.transform.localPosition;
         standingHeight = GameManager.instance.playerScript.playerHeight;
+        currentHeight = standingHeight;
         xrayInEffect = false;
     }
 
@@ -146,7 +147,6 @@ public class playerCrouch : MonoBehaviour
 
     void xrayInput()
     {
-
         Material xrayMaterial = null;
         Material materialOrig = null;
 
