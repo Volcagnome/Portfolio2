@@ -738,8 +738,8 @@ RectTransform:
   - {fileID: 4589704876844935122}
   - {fileID: 5414411472985001449}
   - {fileID: 1985416685942505847}
-  - {fileID: 8211462523813033309}
   - {fileID: 2231195081593777487}
+  - {fileID: 8211462523813033309}
   - {fileID: 383811367540830296}
   - {fileID: 8232700195889398079}
   - {fileID: 633829652147343712}
@@ -2468,6 +2468,8 @@ MonoBehaviour:
   menuPause: {fileID: 0}
   menuWin: {fileID: 3142177487760655812}
   menuLose: {fileID: 1246479921596398960}
+  almostWinMenu: {fileID: 0}
+  SelfDestructFlavorText: {fileID: 0}
   tutorialWindow: {fileID: 2882089152602820066}
   isPaused: 0
   totalTime: 300
@@ -4182,8 +4184,13 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1396844780421991658}
+    - target: {fileID: 8606897328726540014, guid: 8d6f567018665ba409fa4eaca9c98d45, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -105
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4845305468797241266, guid: 8d6f567018665ba409fa4eaca9c98d45, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d6f567018665ba409fa4eaca9c98d45, type: 3}
@@ -4209,9 +4216,13 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1396844780421991658}
+    - target: {fileID: 1727433166096754638, guid: 4a40263eec81dfb4da6617760109082f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -59
+      objectReference: {fileID: 0}
     - target: {fileID: 2344262559394869254, guid: 4a40263eec81dfb4da6617760109082f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -107
+      value: -120.3
       objectReference: {fileID: 0}
     - target: {fileID: 3756480050235876980, guid: 4a40263eec81dfb4da6617760109082f, type: 3}
       propertyPath: m_Pivot.x
@@ -4246,6 +4257,18 @@ PrefabInstance:
       value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 3756480050235876980, guid: 4a40263eec81dfb4da6617760109082f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.8839
+      objectReference: {fileID: 0}
+    - target: {fileID: 3756480050235876980, guid: 4a40263eec81dfb4da6617760109082f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.8839
+      objectReference: {fileID: 0}
+    - target: {fileID: 3756480050235876980, guid: 4a40263eec81dfb4da6617760109082f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.8839
+      objectReference: {fileID: 0}
+    - target: {fileID: 3756480050235876980, guid: 4a40263eec81dfb4da6617760109082f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -4263,15 +4286,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3756480050235876980, guid: 4a40263eec81dfb4da6617760109082f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3756480050235876980, guid: 4a40263eec81dfb4da6617760109082f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3756480050235876980, guid: 4a40263eec81dfb4da6617760109082f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3756480050235876980, guid: 4a40263eec81dfb4da6617760109082f, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -4279,7 +4302,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3756480050235876980, guid: 4a40263eec81dfb4da6617760109082f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -0.000030517578
       objectReference: {fileID: 0}
     - target: {fileID: 3756480050235876980, guid: 4a40263eec81dfb4da6617760109082f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4306,7 +4329,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2573032503665680018, guid: 4a40263eec81dfb4da6617760109082f, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a40263eec81dfb4da6617760109082f, type: 3}
@@ -5500,7 +5524,7 @@ PrefabInstance:
       objectReference: {fileID: 2393175190188051406, guid: 7544a082c16fc9b4abeeaa135f35b8d6, type: 3}
     - target: {fileID: 2788266153474522228, guid: 2f2d2a1450ed1dd4a8cafe0c335e4c0d, type: 3}
       propertyPath: fabricatorSpawnInterval
-      value: 60
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2788266153474522228, guid: 2f2d2a1450ed1dd4a8cafe0c335e4c0d, type: 3}
       propertyPath: robotHitSounds.Array.size
@@ -6081,6 +6105,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1396844780421991658}
+    - target: {fileID: 4905316884241869764, guid: 6ad41182f77f55940aca0eb84a11d23d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -105
+      objectReference: {fileID: 0}
     - target: {fileID: 5463505199969559669, guid: 6ad41182f77f55940aca0eb84a11d23d, type: 3}
       propertyPath: m_Name
       value: Invasion Flavor Text
@@ -6169,8 +6197,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9168372527505090757, guid: 6ad41182f77f55940aca0eb84a11d23d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -69
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8273635064175741723, guid: 6ad41182f77f55940aca0eb84a11d23d, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ad41182f77f55940aca0eb84a11d23d, type: 3}

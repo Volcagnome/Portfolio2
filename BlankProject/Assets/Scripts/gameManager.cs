@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
+    [SerializeField] GameObject almostWinMenu;
+    [SerializeField] GameObject SelfDestructFlavorText;
     public GameObject tutorialWindow;
     public bool isPaused;
 
@@ -263,7 +265,12 @@ public class GameManager : MonoBehaviour
     public void youLose()
     {
         statePause();
-        menuActive = menuLose;
+
+        if (selfDestructActivated)
+            menuActive = almostWinMenu;
+        else
+            menuActive = menuLose;
+
         menuActive.SetActive(true);
     }
 
@@ -549,6 +556,15 @@ public class GameManager : MonoBehaviour
         menuActive.SetActive(true);
     }
 
+    public void ShowSelfDestructFlavorText()
+    {
+        isPaused = !isPaused;
+        Time.timeScale = 0;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+        menuActive = SelfDestructFlavorText;
+        SelfDestructFlavorText.SetActive(true);
+    }
 
     public IEnumerator DisplayMessage(string message)
     { 
