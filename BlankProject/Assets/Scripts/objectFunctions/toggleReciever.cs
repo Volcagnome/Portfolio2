@@ -6,8 +6,8 @@ public class toggleReciever : MonoBehaviour, IToggle
 {
     [SerializeField] GameObject toggleRecipientOn;
     [SerializeField] GameObject toggleRecipientOff;
-    [SerializeField] GameObject controller;
-    private bool currentState;
+    [SerializeField] protected GameObject controller;
+    protected bool currentState;
 
     [Header("----- Sounds -----")]
     [SerializeField] public AudioClip toggleSound;
@@ -31,7 +31,7 @@ public class toggleReciever : MonoBehaviour, IToggle
         }
     }
 
-    public void toggle(bool state)
+    public virtual void toggle(bool state)
     {
         currentState = state;
 

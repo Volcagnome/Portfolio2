@@ -534,7 +534,6 @@ MonoBehaviour:
   playerDetectionCircle: {fileID: 5272966130106366152}
   playerDetectionCircleFill: {fileID: 1566815049962771137}
   playerInViewIndicator: {fileID: 5055395013262287134}
-  detectionRadiusOriginal: 0
   enemy_Type: 1
   HPOrig: 25
   shootRate: 0.5
@@ -542,6 +541,8 @@ MonoBehaviour:
   combatStoppingDistance: 12
   idleStoppingDistance: 0.3
   idleSpeed: 3
+  originalDetectionRadius: 15
+  detectionRadiusPlayerCrouched: 7.5
   allyRadius: 12
   allyLayer:
     serializedVersion: 2

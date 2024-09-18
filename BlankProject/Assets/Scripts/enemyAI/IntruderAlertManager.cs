@@ -207,9 +207,11 @@ public class IntruderAlertManager: MonoBehaviour
     //robot who sees the player can become the WhistleBlower after the configured cooldown.
     public void WhistleBlowerKilled()
     {
-        whistleBlower = null;
+        
         isRaisingAlarm = true;
         currentButton.GetComponent<IntruderAlertButton>().UpdateButtonState(IntruderAlertButton.buttonState.idle);
+        whistleBlower.GetComponentInChildren<SkinnedMeshRenderer>().material = whistleBlower.GetComponent<SharedEnemyAI>().GetOriginalMaterial();
+        whistleBlower = null;
         StartCoroutine(AlarmCooldown());
     }
 

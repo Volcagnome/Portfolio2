@@ -26,8 +26,8 @@ public class WebAttack : damage
         {
             if (shooter != null)
             {
-                shooter.GetComponent<ArachnoidAI>().SetCaughtPlayer(true);
-                GameManager.instance.playerScript.SetIsCaught(true);
+                //shooter.GetComponent<ArachnoidAI>().SetCaughtPlayer(true);
+                //GameManager.instance.playerScript.SetIsCaught(true);
             }
             else Destroy(gameObject);
         }

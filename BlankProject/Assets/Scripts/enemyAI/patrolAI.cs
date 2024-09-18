@@ -40,6 +40,8 @@ public class patrolAI : SharedEnemyAI,IDamage
         currentIdleSoundCooldown = Random.Range(5, maxIdleSoundCooldown);
 
         isWhistleBlower = false;
+        inCrouchRadius = false;
+
     }
 
     // Update is called once per frame
@@ -48,6 +50,12 @@ public class patrolAI : SharedEnemyAI,IDamage
         if (!isDead)
         {
             CallMovementAnimation();
+
+            if ( inCrouchRadius && !isAlerted && GameManager.instance.player.GetComponent<playerCrouch>().GetIsCrouched() )
+                    SetPlayerCrouchedDetectionRadius();
+
+            else
+                RevertDetectionRadius();
 
             //If patrol is whistleblower, ignores all other AI until it sucessfully activates the Intruder Alert button, or
             //dies trying.
@@ -90,7 +98,8 @@ public class patrolAI : SharedEnemyAI,IDamage
 
                     if (!playerSpotted)
                     {
-                        audioPlayer.PlayOneShot(foundPlayer, 0.75f);
+                        if(!audioPlayer.isPlaying)
+                            audioPlayer.PlayOneShot(foundPlayer, 0.75f);
                         playerSpotted = true;
                     }
                 }

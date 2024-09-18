@@ -12,7 +12,7 @@ public class TitanSpawner : MonoBehaviour
     //If there is no Intruder Alert in progress, and guards have returned to the reinforcement spawner, despawns them.
     private void OnTriggerEnter(Collider other)
     {
-        if (!IntruderAlertManager.instance.GetIntruderAlert() && !EnemyManager.instance.GetIsBossFight())
+        if (!IntruderAlertManager.instance.GetIntruderAlert() && other.gameObject.GetComponent<SharedEnemyAI>().GetDefaultPost() == gameObject)
             Destroy(other.gameObject);
     }
 

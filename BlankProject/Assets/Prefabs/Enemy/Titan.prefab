@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 3
+  status: 0
   rb: {fileID: 6194992815561829467}
   damageAmount: 10
   speed: 0
@@ -1690,6 +1691,8 @@ MonoBehaviour:
   combatStoppingDistance: 15
   idleStoppingDistance: 0.5
   idleSpeed: 3
+  originalDetectionRadius: 15
+  detectionRadiusPlayerCrouched: 7.5
   allyRadius: 12
   allyLayer:
     serializedVersion: 2
@@ -1709,8 +1712,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d2e6c349ae192604bac411418d194f36, type: 3}
   - {fileID: 8300000, guid: 2d04c0ffd3322234eab448f1be849ba3, type: 3}
   foundPlayer: {fileID: 8300000, guid: 63611ff481b798441b97d0258459fe2e, type: 3}
-  xraydius: 0
-  xrayAbilityTime: 0
   shieldBashCollider: {fileID: 7271325000883408684}
   minTimeBetweenBashes: 3
   shieldSwing: {fileID: 8300000, guid: 223d0ffcf9736bd4eab854fddaa3c808, type: 3}
@@ -1806,7 +1807,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 10
+  m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &497875255768104274
 AudioSource:
