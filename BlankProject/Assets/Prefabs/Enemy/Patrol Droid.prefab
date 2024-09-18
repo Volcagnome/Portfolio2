@@ -1395,13 +1395,14 @@ MonoBehaviour:
   playerDetectionCircle: {fileID: 117442370378002146}
   playerDetectionCircleFill: {fileID: 6715458616957486315}
   playerInViewIndicator: {fileID: 4013727725787506343}
+  detectionRadiusOriginal: 0
   enemy_Type: 2
   HPOrig: 10
   shootRate: 0.5
   combatSpeed: 7
   combatStoppingDistance: 12
   idleStoppingDistance: 0.4
-  idleSpeed: 4
+  idleSpeed: 2.5
   allyRadius: 12
   allyLayer:
     serializedVersion: 2
@@ -1426,6 +1427,7 @@ MonoBehaviour:
   xraydius: 0
   xrayAbilityTime: 0
   raisingAlarmSound: {fileID: 8300000, guid: ab24a09624ddd334180c26e2c3f438b6, type: 3}
+  whistleBlowerOutline: {fileID: 2100000, guid: 1815ffa568757234cb9eee0f7a978986, type: 2}
 --- !u!195 &4011634809921055029
 NavMeshAgent:
   m_ObjectHideFlags: 0

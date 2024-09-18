@@ -81,7 +81,7 @@ public class itemPickup : MonoBehaviour, IPickup
         {
             // Play item pickup sound:
             GameManager.instance.playAud(pickupSound, pickupVol);
-            StartCoroutine(GameManager.instance.DisplayMessage(item.name + " collected"));
+            StartCoroutine(GameManager.instance.DisplayMessage(item.itemName + " collected"));
 
             switch (item.type)
             {

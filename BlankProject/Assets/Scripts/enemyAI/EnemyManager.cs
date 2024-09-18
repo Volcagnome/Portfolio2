@@ -8,7 +8,7 @@ using UnityEngine.AI;
 using UnityEngine.Lumin;
 using UnityEngine.SceneManagement;
 using static StaticData;
-using static UnityEditor.FilePathAttribute;
+//using static UnityEditor.FilePathAttribute;
 
 //Handles all guard post and patrol route assingments and keeps track of how many respawnable robots are currently in the scene.
 

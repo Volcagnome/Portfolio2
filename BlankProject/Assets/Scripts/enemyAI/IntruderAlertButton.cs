@@ -7,6 +7,13 @@ using UnityEngine;
 
 public class IntruderAlertButton : MonoBehaviour
 {
+    [SerializeField] Material outlineMaterial;
+    [SerializeField] Material originalMaterial;
+    [SerializeField] Sprite idleScreenSprite;
+    [SerializeField] Sprite alertScreenSprite;
+
+    public enum buttonState { idle, raisingAlarm, Alert };
+
 
     //If the current WhistleBlower enters the trigger box, activates the intruder alert and passes the location where
     //the WhistleBlower last saw the player. 
@@ -19,5 +26,25 @@ public class IntruderAlertButton : MonoBehaviour
         }
         else
             return;
+    }
+
+    public void UpdateButtonState(buttonState state)
+    { 
+        if(state == buttonState.idle)
+        {
+            GetComponentInChildren<MeshRenderer>().material = originalMaterial;
+            GetComponentInChildren<SpriteRenderer>().sprite = idleScreenSprite;
+            GetComponentInChildren<SpriteRenderer>().color = Color.green;
+        }
+        else if(state == buttonState.raisingAlarm)
+        {
+            GetComponentInChildren<MeshRenderer>().material = outlineMaterial;
+        }
+        else if(state == buttonState.Alert)
+        {
+            GetComponentInChildren<MeshRenderer>().material = originalMaterial;
+            GetComponentInChildren<SpriteRenderer>().sprite = alertScreenSprite;
+            GetComponentInChildren<SpriteRenderer>().color = Color.red;
+        }
     }
 }

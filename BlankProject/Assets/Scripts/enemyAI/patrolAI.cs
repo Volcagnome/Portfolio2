@@ -6,11 +6,15 @@ using UnityEngine;
 
 //Handles all behavior unique to patrol robots, everything else handled by SharedEnemyAI.
 
+
+
+
 public class patrolAI : SharedEnemyAI,IDamage
 {
 
     bool isWhistleBlower;
     [SerializeField] AudioClip raisingAlarmSound;
+    [SerializeField] Material whistleBlowerOutline;
 
 
     // Start is called before the first frame update
@@ -143,6 +147,8 @@ public class patrolAI : SharedEnemyAI,IDamage
         isWhistleBlower = true;
 
         audioPlayer.PlayOneShot(raisingAlarmSound);
+
+        GetComponentInChildren<SkinnedMeshRenderer>().material = whistleBlowerOutline;
 
         GameObject nearestButton = IntruderAlertManager.instance.SetIsRaisingAlarm(gameObject);
 

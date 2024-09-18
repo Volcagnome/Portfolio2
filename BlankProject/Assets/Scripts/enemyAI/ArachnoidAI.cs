@@ -53,8 +53,9 @@ public class ArachnoidAI : SharedEnemyAI,IDamage
 
             if (!playerSpotted)
             {
-                audioPlayer.PlayOneShot(foundPlayer, 4f);
+                Debug.Log("test");
                 playerSpotted = true;
+                audioPlayer.PlayOneShot(foundPlayer, 0.5f);     
             }
 
         }

@@ -128,6 +128,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject messageWindow;
 
 
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -148,14 +149,6 @@ public class GameManager : MonoBehaviour
         //Checks if the player has been to this scene before
         firstTimeInScene = StaticData.firstTimeInScene[SceneManager.GetActiveScene().buildIndex];
 
-        if (StaticData.previousLevel == true)
-        {
-            currentSpawn = playerSpawnExit;
-        }
-        else
-            currentSpawn = playerSpawnEntry;
-
-
         //If the game was just started, sets the current spawn point to the spawn point at the beginning of the level the game was started on.
         if (StaticData.isGameStart == true)
         {
@@ -163,33 +156,44 @@ public class GameManager : MonoBehaviour
             StaticData.isGameStart = false;
         }
         else
+        {
+            if (StaticData.previousLevel == true)
+            {
+                currentSpawn = playerSpawnExit;
+            }
+            else if (firstTimeInScene == true)
+                currentSpawn = playerSpawnEntry;
+
             GameObjectiveDisplay.GetComponent<TMP_Text>().text = StaticData.gameObjective_Static;
+
+            //Loads the saved key item data (command codes/security passwords), loads the previous states for all pickup platform objects
+            //and loads previous states for all enemies.
+            if (!firstTimeInScene || StaticData.selfDestructActivated_Static)
+            {
+
+                DestroyDefaultObjects("Enemy");
+                DestroyDefaultObjects("Pickup Platform");
+
+                LoadPlayerPickupData(levelData[SceneManager.GetActiveScene().buildIndex]);
+
+                int pickupListLength = StaticData.scenePickups[SceneManager.GetActiveScene().buildIndex].Count;
+                if (pickupListLength > 0)
+                    LoadScenePickupData(StaticData.scenePickups[SceneManager.GetActiveScene().buildIndex]);
+
+                int enemyListLength = StaticData.sceneEnemies[SceneManager.GetActiveScene().buildIndex].Count;
+                if (enemyListLength > 0)
+                    LoadEnemyStates(StaticData.sceneEnemies[SceneManager.GetActiveScene().buildIndex]);
+            }
+            else
+                StaticData.firstTimeInScene[SceneManager.GetActiveScene().buildIndex] = false;
+        }
 
         if (SceneManager.GetActiveScene().buildIndex == 2)
             securityPasswordDisplay.GetComponent<TMP_Text>().text = "none";
 
 
-        //If so, loads the saved key item data (command codes/securtiy passwords), loads the previous states for all pickup platform objects
-        //and loads previous states for all enemies.
-        if (!firstTimeInScene || StaticData.selfDestructActivated_Static )
-        {
-
-            DestroyDefaultObjects("Enemy");
-            DestroyDefaultObjects("Pickup Platform");
-
-            LoadPlayerPickupData(levelData[SceneManager.GetActiveScene().buildIndex]);
-
-            int pickupListLength = StaticData.scenePickups[SceneManager.GetActiveScene().buildIndex].Count;
-            if (pickupListLength > 0)
-                LoadScenePickupData(StaticData.scenePickups[SceneManager.GetActiveScene().buildIndex]);
-
-            int enemyListLength = StaticData.sceneEnemies[SceneManager.GetActiveScene().buildIndex].Count;
-            if (enemyListLength > 0)
-                LoadEnemyStates(StaticData.sceneEnemies[SceneManager.GetActiveScene().buildIndex]);
-        }
-        else
-            StaticData.firstTimeInScene[SceneManager.GetActiveScene().buildIndex] = false;
-
+        
+       
 
         sceneCommandCodesCollectedDisplay.GetComponent<TMP_Text>().text = sceneCommandCodesCollected.ToString();
         sceneCommandCodesTotalDisplay.GetComponent<TMP_Text>().text = sceneCommandCodesTotal.ToString();
@@ -577,8 +581,8 @@ public class GameManager : MonoBehaviour
     }
 
     public IEnumerator DisplayMessage(string message)
-    { 
-        messageWindow.GetComponent<TMP_Text>().text = message;
+    {
+        messageWindow.GetComponentInChildren<TMP_Text>().text = message;
         messageWindow.SetActive(true);
 
         yield return new WaitForSeconds(5f);

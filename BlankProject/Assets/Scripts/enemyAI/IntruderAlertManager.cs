@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEditor.FilePathAttribute;
+//using static UnityEditor.FilePathAttribute;
 
 
 //Handles the Intruder Alert event
@@ -23,6 +23,7 @@ public class IntruderAlertManager: MonoBehaviour
     public List<GameObject> responseTeam;
     public List<GameObject> spiderSpawners;
     GameObject whistleBlower;
+    GameObject currentButton;
 
     //Prefabs for guard and titan reinforcements
     [SerializeField] GameObject guardReinforcement;
@@ -136,9 +137,15 @@ public class IntruderAlertManager: MonoBehaviour
     public void IntruderAlert(Vector3 location)
     {
 
-
         intruderAlert = true;
         isRaisingAlarm = false;
+        intruderAlertButtons.ForEach(button =>
+        {
+            
+            button.GetComponent<IntruderAlertButton>().UpdateButtonState(IntruderAlertButton.buttonState.Alert);
+        });
+            
+        whistleBlower.GetComponentInChildren<SkinnedMeshRenderer>().material = whistleBlower.GetComponent<SharedEnemyAI>().GetOriginalMaterial();
 
 
         GameManager.instance.DisplayMessage("Intruder Alert");
@@ -162,6 +169,7 @@ public class IntruderAlertManager: MonoBehaviour
             AddToResponseTeam(numGuardResponders, EnemyManager.instance.GetCurrentNumberGuards());
             StartCoroutine(CallReinforcements(numTitanResponders, titanReinforcement));
 
+            whistleBlower.GetComponentInChildren<SkinnedMeshRenderer>().material = whistleBlower.GetComponent<SharedEnemyAI>().GetOriginalMaterial();
             whistleBlower.GetComponent<patrolAI>().SetIsWhistleBlower(false);
         }
 
@@ -189,7 +197,10 @@ public class IntruderAlertManager: MonoBehaviour
 
         whistleBlower = patrolBot;
 
-        return FindClosestObject(intruderAlertButtons, patrolBot.transform.position);
+        currentButton = FindClosestObject(intruderAlertButtons, patrolBot.transform.position);
+        currentButton.GetComponent<IntruderAlertButton>().UpdateButtonState(IntruderAlertButton.buttonState.raisingAlarm);
+
+        return currentButton;
     }
 
     //If the WhistleBlower is killed, clears the whistleBlower variable and sets isRaisingAlarm bool to false so another patrol
@@ -198,6 +209,7 @@ public class IntruderAlertManager: MonoBehaviour
     {
         whistleBlower = null;
         isRaisingAlarm = true;
+        currentButton.GetComponent<IntruderAlertButton>().UpdateButtonState(IntruderAlertButton.buttonState.idle);
         StartCoroutine(AlarmCooldown());
     }
 
@@ -379,7 +391,12 @@ public class IntruderAlertManager: MonoBehaviour
     public void CancelIntruderAlert()
     {
         intruderAlert = false;
- 
+
+        intruderAlertButtons.ForEach(button =>
+        {
+            button.GetComponent<IntruderAlertButton>().UpdateButtonState(IntruderAlertButton.buttonState.idle);
+        });
+
         if (responseTeam.Count > 0)
             ReturnToRoster();
 
