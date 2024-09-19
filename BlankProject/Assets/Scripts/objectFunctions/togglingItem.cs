@@ -8,6 +8,7 @@ public class togglingItem : MonoBehaviour, IInteract, ISendState
     [SerializeField] GameObject itemOffState;
     [SerializeField] bool itemState;
     [SerializeField] bool vital;
+  
 
     [Header("----- Sounds -----")]
     [SerializeField] AudioClip interactSound;
@@ -28,11 +29,11 @@ public class togglingItem : MonoBehaviour, IInteract, ISendState
     public void interact()
     {
         itemState = !itemState;
-
         setState(itemState);
+        
 
         //// Play interact sound:
-        //GameManager.instance.playAud(interactSound, interactVol);
+        GameManager.instance.playAud(interactSound, interactVol);
 
         // Action the toggled object's sound:
         //GameManager.instance.playAud(itemOnState.GetComponent<toggleReciever>().toggleSound, itemOnState.GetComponent<toggleReciever>().toggleVol);
@@ -41,13 +42,9 @@ public class togglingItem : MonoBehaviour, IInteract, ISendState
     void setState(bool state)
     {
         itemOnState.SetActive(state);
+        
         itemOffState.SetActive(!state);
 
-        if (vital)
-        {
-            //if (state) GameManager.instance.UpdateWinCondition(1);
-            //else GameManager.instance.UpdateWinCondition(-1);
-        }
     }
 
     public bool getState()
