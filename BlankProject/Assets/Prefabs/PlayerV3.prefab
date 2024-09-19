@@ -783,17 +783,17 @@ MonoBehaviour:
   shootRate: 0
   shootDist: 0
   dmgMultiplier: 0
-  interactDist: 2
+  interactDist: 3
   maxHeat: 0
   heatPerShot: 0
   coolRate: 0
   coolWaitTime: 0
   switchGunSound: {fileID: 8300000, guid: dd751109e45f1cc4bbbf109f961b30a3, type: 3}
-  switchGunVol: 0
+  switchGunVol: 0.5
   overheatSound: {fileID: 8300000, guid: ed0e19936118ae04b884c6166d325f6a, type: 3}
   overheatVol: 0.5
   audioLowHP: {fileID: 8300000, guid: 39e3eb73754fa6e48bba2ad729eca67a, type: 3}
-  lowHPVol: 0.1
+  lowHPVol: 0.4
 --- !u!114 &7874694064362075633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -811,8 +811,8 @@ MonoBehaviour:
   staminaWait: 8
   staminaDecrease: 8
   staminaIncrease: 4
-  speed: 5
-  sprintMod: 2
+  speed: 7
+  sprintMod: 1.5
   jumpMax: 2
   jumpSpeed: 5
   gravity: 10
@@ -831,7 +831,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 68c49609a12ece24d8a65b4f81d3f970, type: 3}
   - {fileID: 8300000, guid: 7d72093dfd0e8c64bbfeb6caeb22e1cb, type: 3}
   - {fileID: 8300000, guid: 3920d9cbbb3f50f439598fe08e921605, type: 3}
-  audioStepsVol: 0.05
+  audioStepsVol: 0.1
 --- !u!114 &5543630735747520779
 MonoBehaviour:
   m_ObjectHideFlags: 0

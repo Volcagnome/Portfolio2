@@ -33358,6 +33358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectSoundType: 1
   audioPlayer: {fileID: 4685503645868160064}
+  robotHitVol: 0.3
 --- !u!198 &198966096496560358
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -38179,7 +38180,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1.39
   Loop: 0
   Mute: 0
@@ -38188,9 +38189,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 25
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
