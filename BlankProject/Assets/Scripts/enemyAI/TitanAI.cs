@@ -12,6 +12,7 @@ public class TitanAI : SharedEnemyAI, IDamage
     [SerializeField] int minTimeBetweenBashes;
     [SerializeField] AudioClip shieldSwing;
     [SerializeField] public AudioClip shieldHit;
+    
 
     //[SerializeField] float shieldDamageReduction;
 
@@ -26,6 +27,8 @@ public class TitanAI : SharedEnemyAI, IDamage
     //EnemyManager, and they set their manually assigned default post to occupied.
     void Start()
     {
+        currentAmmo = ammoCapacity;
+
         if (loadedFromState == false)
             HP = HPOrig;
 
@@ -65,20 +68,71 @@ public class TitanAI : SharedEnemyAI, IDamage
         agent.SetDestination(GameManager.instance.player.transform.position);
         agent.stoppingDistance = combatStoppingDistance;
 
-        weapon_R.transform.LookAt(GameManager.instance.player.transform.position + new Vector3(0, -90f, 0)) ;
+        if (currentAmmo < 0)
+            weapon_R.transform.LookAt(GameManager.instance.player.transform.position + new Vector3(0, -90f, 0)) ;
 
-        if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) > 5f &&!isShooting)
+        if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) > 10f &&!isShooting && currentAmmo > 0)
         {
             StartCoroutine(shoot(ammoType));
         }
-       
-        if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) <= 5f && !isBashing)
-            StartCoroutine(ShieldBash());
+        else if (currentAmmo == 0)
+        {
+            anim.SetTrigger("Reload");
+            anim.SetBool("isReloaded", false);
+        }
+
+        if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) <= 10f && !isBashing)
+        {
+            agent.SetDestination(GameManager.instance.player.transform.position);
+
+            if(Vector3.Distance(transform.position,GameManager.instance.player.transform.position) < 2f)
+                StartCoroutine(ShieldBash());
+        }
 
         if (IntruderAlertManager.instance.GetIntruderAlert())
             IntruderAlertManager.instance.FoundTheIntruder(lastKnownPlayerLocation);
     }
 
+
+    protected override void CreateBullet()
+    {
+        currentAmmo--;
+        weapon_R.GetComponentInChildren<Light>().intensity += 0.1f;
+
+        if (currentAmmo < 3)
+            WeaponCoolingVFXStart();
+
+        Instantiate(ammoType, shootPos.position, transform.rotation);
+        Vector3 offset = new Vector3(Random.Range(-aimOffset, aimOffset), 0f, Random.Range(aimOffset, aimOffset));
+        playerDirection = GameManager.instance.player.transform.position - shootPos.position;
+
+        if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) < 6f)
+            offset = offset * 0.5f;
+
+        RaycastHit hit;
+        if (Physics.Raycast(shootPos.position, playerDirection + offset, out hit))
+        {
+            if (hit.collider.gameObject.CompareTag("Player"))
+                GameManager.instance.player.GetComponent<IDamage>().takeDamage(ammoType.GetComponent<damage>().GetDamageAmount());
+        }
+
+
+    }
+    private void WeaponCoolingVFXStart()
+    { 
+        weapon_R.GetComponentInChildren<ParticleSystem>().Play();   
+    }
+
+    private void PlayWeaponCooldownSound()
+    {
+        weapon_R.GetComponent<AudioSource>().PlayOneShot(weaponReload);
+    }
+
+    private void WeaponCoolingVFXStop()
+    {
+        weapon_R.GetComponentInChildren<Light>().intensity = 0f;
+        weapon_R.GetComponentInChildren<ParticleSystem>().Stop();
+    }
 
     //Turns on the shield collider when called by the shield bash animation envent.
     private void ShieldColliderOn()
@@ -95,7 +149,7 @@ public class TitanAI : SharedEnemyAI, IDamage
     //Activates the Bash trigger within the shield bash animation and waits for the configured shield bash cooldown beofore
     //another shield bash can be initiated.
     IEnumerator ShieldBash()
-    { 
+    {
 
         isBashing = true;
 
@@ -113,6 +167,8 @@ public class TitanAI : SharedEnemyAI, IDamage
     protected override void Death()
     {
         DeathShared();
+
+        weapon_R.GetComponent<AudioSource>().mute = true;
 
         Instantiate(DeathVFX, DeathFXPos.position, Quaternion.identity);
 

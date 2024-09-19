@@ -23,6 +23,8 @@ public class patrolAI : SharedEnemyAI,IDamage
     //to the patrol robot count.
     void Start()
     {
+        currentAmmo = ammoCapacity;
+
         if (loadedFromState == false)
             HP = HPOrig;
 
@@ -193,6 +195,7 @@ public class patrolAI : SharedEnemyAI,IDamage
     protected override void Death()
     {
         DeathShared();
+        weapon_R.GetComponent<AudioSource>().mute = true;
 
         if (!StaticData.selfDestructActivated_Static)
         {

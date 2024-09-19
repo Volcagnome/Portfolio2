@@ -24,7 +24,7 @@ public class TitanPost : MonoBehaviour
             Quaternion rotationToFront = Quaternion.LookRotation(frontDirection);
 
 
-            if (titanAtPost && Quaternion.Angle(titan.transform.rotation, rotationToFront) > 2f)
+            if (titanAtPost && Quaternion.Angle(titan.transform.rotation, rotationToFront) > 2f && titan.GetComponent<SharedEnemyAI>().CheckIfOnDuty())
                 titan.transform.rotation = Quaternion.Lerp(titan.transform.rotation, rotationToFront, Time.deltaTime * titan.GetComponent<SharedEnemyAI>().GetRotationSpeed());
         }
     }

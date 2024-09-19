@@ -18,6 +18,8 @@ public class guardAI : SharedEnemyAI, IDamage
     //to the EnemyManager to assign them a guard post.
     void Start()
     {
+        currentAmmo = ammoCapacity;
+
         if (loadedFromState == false)
             HP = HPOrig;
 
@@ -51,7 +53,11 @@ public class guardAI : SharedEnemyAI, IDamage
     //their guardAI and starts the timer to despawn their corpse.
     protected override void Death()
     {
+  
+        weapon_R.GetComponent<AudioSource>().mute = true;
+
         DeathShared();
+     
 
         if (!StaticData.selfDestructActivated_Static)
         {

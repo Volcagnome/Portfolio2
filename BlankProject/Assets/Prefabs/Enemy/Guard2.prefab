@@ -543,6 +543,7 @@ MonoBehaviour:
   idleSpeed: 3
   originalDetectionRadius: 15
   detectionRadiusPlayerCrouched: 7.5
+  ammoCapacity: 12
   allyRadius: 12
   allyLayer:
     serializedVersion: 2
@@ -567,8 +568,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cca8763d66e982c4684d3bccc6f95570, type: 3}
   - {fileID: 8300000, guid: e5746a36b320bfd47b1cfc26b831cb8d, type: 3}
   foundPlayer: {fileID: 8300000, guid: ee793f4544110b6498d19d2944827b59, type: 3}
-  xraydius: 0
-  xrayAbilityTime: 0
+  weaponReload: {fileID: 8300000, guid: f2deeeda530014c47bd415811a85c882, type: 3}
 --- !u!95 &3788560258377371370
 Animator:
   serializedVersion: 5
@@ -4301,7 +4301,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: f2deeeda530014c47bd415811a85c882, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.498
   m_Pitch: 1
