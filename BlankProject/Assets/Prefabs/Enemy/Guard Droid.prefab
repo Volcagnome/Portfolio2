@@ -934,16 +934,20 @@ MonoBehaviour:
   DeathFXPos: {fileID: 1873019735147759632}
   weakspot: {fileID: 7552201656115802248}
   audioPlayer: {fileID: -5651827310847931993}
+  xrayMaterial: {fileID: 0}
+  originalMaterial: {fileID: 0}
   shootPos: {fileID: 4774427128075911827}
   weapon_R: {fileID: 6726406545161658990}
   ammoType: {fileID: 6804835773319123192, guid: 691bd9694255b394ba715e419013b5c0, type: 3}
+  aimOffset: 0
   FOV_Angle: 60
   rotationSpeed: 8
   playerDetectionCircle: {fileID: 1879095918927906700}
   playerDetectionCircleFill: {fileID: 5080276944054267269}
   playerInViewIndicator: {fileID: 5985916596309275394}
+  detectionRadiusOriginal: 0
   enemy_Type: 1
-  HP: 25
+  HPOrig: 0
   shootRate: 0.5
   combatSpeed: 6
   combatStoppingDistance: 15
@@ -964,6 +968,8 @@ MonoBehaviour:
   footsteps: []
   idleSounds: []
   foundPlayer: {fileID: 0}
+  xraydius: 0
+  xrayAbilityTime: 0
 --- !u!195 &4830313184887248644
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1080,7 +1086,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -1089,22 +1095,94 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
+      value: 0.7569046
+      inSlope: -500.20065
+      outSlope: -500.20065
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.004
+      value: 0.5
+      inSlope: -125.05016
+      outSlope: -125.05016
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.008
+      value: 0.25
+      inSlope: -31.26254
+      outSlope: -31.26254
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.016
+      value: 0.125
+      inSlope: -7.815635
+      outSlope: -7.815635
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.032
+      value: 0.0625
+      inSlope: -1.9539088
+      outSlope: -1.9539088
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.064
+      value: 0.03125
+      inSlope: -0.4884772
+      outSlope: -0.4884772
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.128
+      value: 0.015625
+      inSlope: -0.1221193
+      outSlope: -0.1221193
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.256
+      value: 0.0078125
+      inSlope: -0.030529825
+      outSlope: -0.030529825
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.512
+      value: 0.00390625
+      inSlope: -0.0076324563
+      outSlope: -0.0076324563
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      value: 0.002
+      inSlope: -0.002000801
+      outSlope: -0.002000801
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

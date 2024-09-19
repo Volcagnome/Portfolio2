@@ -16,6 +16,8 @@ public class playerCrouch : MonoBehaviour
     [SerializeField] float crouchSpeed = 10f;
     [SerializeField] float proneTime;
 
+    float standMoveSpeed;
+
     //Xray ability varaibles
     [SerializeField] float xraydius;
     [SerializeField] LayerMask enemyLayer;
@@ -41,6 +43,7 @@ public class playerCrouch : MonoBehaviour
         initialCamPos = mainCam.transform.localPosition;
         standingHeight = GameManager.instance.playerScript.playerHeight;
         currentHeight = standingHeight;
+        standMoveSpeed = GameManager.instance.playerScript.getPlayerSpeed();
         xrayInEffect = false;
     }
 
@@ -66,6 +69,12 @@ public class playerCrouch : MonoBehaviour
             isProne = false;
             Debug.Log("test");
 
+            // If button was pressed and player is no longer crouched or prone by effect:
+            if (!isCrouched && !isProne)
+            {
+                // Raises player speed:
+                GameManager.instance.playerScript.setPlayerSpeed(GameManager.instance.playerScript.getPlayerSpeedOG());
+            }
         }
         // If key continues to be held down:
         if (Input.GetButton("Crouch"))
@@ -99,6 +108,9 @@ public class playerCrouch : MonoBehaviour
             targetHeight = crouchHeight;
             camPosition();
 
+            // Lower player speed:
+            GameManager.instance.playerScript.setPlayerSpeed(standMoveSpeed / 1.5f);
+
             // Turn on indicator. (crouch true, prone false)
             GameManager.instance.crouchWindow.SetActive(true);
             GameManager.instance.proneWindow.SetActive(false);
@@ -127,6 +139,9 @@ public class playerCrouch : MonoBehaviour
 
             targetHeight = proneHeight;
             camPosition();
+
+            // Lower player speed:
+            GameManager.instance.playerScript.setPlayerSpeed(standMoveSpeed / 2);
 
             // Turn on indicator. (prone true, crouch false)
             GameManager.instance.proneWindow.SetActive(true);

@@ -14,7 +14,7 @@ public class playerMovement : MonoBehaviour
     [SerializeField] float staminaIncrease;
 
     [SerializeField] float speed;
-    [SerializeField] int sprintMod;
+    [SerializeField] float sprintMod;
 
     [SerializeField] int jumpMax;
     [SerializeField] int jumpSpeed;
