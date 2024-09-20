@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IInteract
 {
     public void interact();
+    public void applyShader();
 }

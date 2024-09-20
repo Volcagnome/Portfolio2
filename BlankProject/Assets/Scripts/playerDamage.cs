@@ -153,10 +153,10 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
             if (Input.GetButton("Shoot") && weapons.Count > 0 && maxHeat > currentHeat && !usedToMax && !isShooting)
                 StartCoroutine(shoot());
 
-            if (Input.GetButtonDown("Interact"))
-            {
-                interact();
-            }
+            
+            
+            interact();
+            
 
             useFlashlight();
         }
@@ -348,7 +348,10 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
 
             if (interactWith != null)
             {
-                interactWith.interact();
+                interactWith.applyShader();
+
+                if (Input.GetButtonDown("Interact"))
+                    interactWith.interact();
             }
         }
 

@@ -30,4 +30,9 @@ public class basicInteractive : MonoBehaviour, IInteract, ISendState
 
         return holder; 
     }  
+
+    public void applyShader()
+    {
+
+    }
 }

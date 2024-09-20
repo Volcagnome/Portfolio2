@@ -34,4 +34,6 @@ public class CommandCodeSlot : MonoBehaviour, IInteract
 
     }
 
+    public void applyShader() { }
+    public void removeShader() { }
 }
