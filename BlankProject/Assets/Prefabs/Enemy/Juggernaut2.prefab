@@ -1573,6 +1573,9 @@ MonoBehaviour:
   combatStoppingDistance: 20
   idleStoppingDistance: 0.2
   idleSpeed: 4.5
+  originalDetectionRadius: 50
+  detectionRadiusPlayerCrouched: 40
+  ammoCapacity: 0
   allyRadius: 15
   allyLayer:
     serializedVersion: 2
@@ -1594,8 +1597,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0982eabbd31233f459d4e6310abcbd39, type: 3}
   - {fileID: 8300000, guid: 28817b47e060b43449a5ecd8e16b3030, type: 3}
   foundPlayer: {fileID: 8300000, guid: 9d71debcd5e445043a2769edac3e35d9, type: 3}
-  xraydius: 0
-  xrayAbilityTime: 0
+  weaponReload: {fileID: 0}
   FlameThrower_L: {fileID: 6720410252989233720}
   FlameThrower_R: {fileID: 1128961364905282028}
   MainTurret_L: {fileID: 335595772514820874}

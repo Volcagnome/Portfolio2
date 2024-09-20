@@ -53,9 +53,10 @@ public class ArachnoidAI : SharedEnemyAI,IDamage
 
             if (!playerSpotted)
             {
-                Debug.Log("test");
                 playerSpotted = true;
-                audioPlayer.PlayOneShot(foundPlayer, 0.5f);     
+
+                if (!audioPlayer.isPlaying)
+                    audioPlayer.PlayOneShot(foundPlayer, 0.5f);     
             }
 
         }
@@ -96,23 +97,29 @@ public class ArachnoidAI : SharedEnemyAI,IDamage
         else
             enemyHPBar.SetActive(false);
 
-       
+
         //If player is hit by their web attack, enables their line renderer and sets begin point at their
         //shoot position, and the end point at the player's position. Applies the webbed overlay. If player
         //is dead, disables line renderer and reverses effects.
         if (caughtPlayer)
         {
-            web.enabled = true;
-  
-            web.SetPosition(0, transform.InverseTransformPoint(shootPos.position));
-            web.SetPosition(1, transform.InverseTransformPoint(GameManager.instance.player.transform.position));
-            GameManager.instance.webbedOverlay.SetActive(true);
 
-            if (GameManager.instance.player.GetComponent<playerDamage>().getHP()<= 0 || !playerInView)
+            if (GameManager.instance.player.GetComponent<playerDamage>().getHP() <= 0 || !playerInView)
             {
                 ReleaseFromWeb();
             }
+            else
+            {
+                web.SetPosition(0, transform.InverseTransformPoint(shootPos.position));
+                web.SetPosition(1, transform.InverseTransformPoint(GameManager.instance.player.transform.position - new Vector3(0f, -0.5f, 0f)));
+
+                web.enabled = true;
+                GameManager.instance.webbedOverlay.SetActive(true);
+            }
+            
         }
+        else
+            ReleaseFromWeb();
         
 
     }
@@ -178,7 +185,16 @@ public class ArachnoidAI : SharedEnemyAI,IDamage
 
         GameObject projectile = Instantiate(ammoType, shootPos.position, transform.rotation);
 
-        projectile.GetComponent<WebAttack>().SetShooter(gameObject);
+        Vector3 offset = new Vector3(Random.Range(-aimOffset, aimOffset), 0f, Random.Range(aimOffset, aimOffset));
+        playerDirection = GameManager.instance.player.transform.position  - shootPos.position;
+
+        RaycastHit hit;
+        if (Physics.Raycast(shootPos.position, playerDirection + offset, out hit))
+            if (hit.collider.gameObject.CompareTag("Player"))
+            {
+                caughtPlayer = true;
+                GameManager.instance.playerScript.SetIsCaught(true);
+            }
 
         yield return new WaitForSeconds(shootRate);
         isShooting = false;

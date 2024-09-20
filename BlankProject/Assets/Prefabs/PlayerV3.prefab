@@ -763,7 +763,7 @@ MonoBehaviour:
   muzzleFlash: {fileID: 1161149025592466324}
   bulletPrefab: {fileID: 772141482392699435, guid: 273d9b48098ab3e47a5f213386b35e1c, type: 3}
   shootPos: {fileID: 4827944566636450223}
-  HP: 75
+  HP: 85
   HPRegenRate: 7.5
   HPRegenWaitTime: 5
   burnDamage: 0
@@ -783,17 +783,17 @@ MonoBehaviour:
   shootRate: 0
   shootDist: 0
   dmgMultiplier: 0
-  interactDist: 2
+  interactDist: 3
   maxHeat: 0
   heatPerShot: 0
   coolRate: 0
   coolWaitTime: 0
   switchGunSound: {fileID: 8300000, guid: dd751109e45f1cc4bbbf109f961b30a3, type: 3}
-  switchGunVol: 0
+  switchGunVol: 0.5
   overheatSound: {fileID: 8300000, guid: ed0e19936118ae04b884c6166d325f6a, type: 3}
   overheatVol: 0.5
   audioLowHP: {fileID: 8300000, guid: 39e3eb73754fa6e48bba2ad729eca67a, type: 3}
-  lowHPVol: 0.1
+  lowHPVol: 0.4
 --- !u!114 &7874694064362075633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -807,13 +807,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 5242881738740521314}
-  stamina: 100
-  staminaWait: 8
-  staminaDecrease: 8
-  staminaIncrease: 4
-  speed: 5
-  sprintMod: 2
-  jumpMax: 2
+  stamina: 50
+  staminaWait: 4
+  staminaDecrease: 16
+  staminaIncrease: 8
+  speed: 6
+  sprintMod: 1.5
+  jumpMax: 1
   jumpSpeed: 5
   gravity: 10
   audioJump: {fileID: 8300000, guid: 76fec2784222cc34f8f7aa71bd01c1e4, type: 3}
@@ -831,7 +831,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 68c49609a12ece24d8a65b4f81d3f970, type: 3}
   - {fileID: 8300000, guid: 7d72093dfd0e8c64bbfeb6caeb22e1cb, type: 3}
   - {fileID: 8300000, guid: 3920d9cbbb3f50f439598fe08e921605, type: 3}
-  audioStepsVol: 0.05
+  audioStepsVol: 0.1
 --- !u!114 &5543630735747520779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1071,5 +1071,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 10
+  m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}

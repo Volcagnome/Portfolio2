@@ -16,6 +16,8 @@ public class playerCrouch : MonoBehaviour
     [SerializeField] float crouchSpeed = 10f;
     [SerializeField] float proneTime;
 
+    float standMoveSpeed;
+
     //Xray ability varaibles
     [SerializeField] float xraydius;
     [SerializeField] LayerMask enemyLayer;
@@ -41,6 +43,7 @@ public class playerCrouch : MonoBehaviour
         initialCamPos = mainCam.transform.localPosition;
         standingHeight = GameManager.instance.playerScript.playerHeight;
         currentHeight = standingHeight;
+        standMoveSpeed = GameManager.instance.playerScript.getPlayerSpeed();
         xrayInEffect = false;
     }
 
@@ -64,14 +67,22 @@ public class playerCrouch : MonoBehaviour
             // Toggles crouch bool and sets isProne to false.
             isCrouched = !isCrouched;
             isProne = false;
+            Debug.Log("test");
+
+            // If button was pressed and player is no longer crouched or prone by effect:
+            if (!isCrouched && !isProne)
+            {
+                // Raises player speed:
+                GameManager.instance.playerScript.setPlayerSpeed(GameManager.instance.playerScript.getPlayerSpeedOG());
+            }
         }
         // If key continues to be held down:
         if (Input.GetButton("Crouch"))
         {
             // Count towards prone time requirement.
             holdCrouch += Time.deltaTime;
+            Debug.Log("test2");
 
-            
 
             // If met, enter prone mode:
             if (holdCrouch >= proneTime)
@@ -97,9 +108,13 @@ public class playerCrouch : MonoBehaviour
             targetHeight = crouchHeight;
             camPosition();
 
+            // Lower player speed:
+            GameManager.instance.playerScript.setPlayerSpeed(standMoveSpeed / 1.5f);
+
             // Turn on indicator. (crouch true, prone false)
             GameManager.instance.crouchWindow.SetActive(true);
             GameManager.instance.proneWindow.SetActive(false);
+
         }
 
         if (isCrouched == false)
@@ -114,6 +129,7 @@ public class playerCrouch : MonoBehaviour
             // Turn off indicator. (both false)
             GameManager.instance.crouchWindow.SetActive(false);
             GameManager.instance.proneWindow.SetActive(false);
+
         }
 
         if (isProne == true)
@@ -123,6 +139,9 @@ public class playerCrouch : MonoBehaviour
 
             targetHeight = proneHeight;
             camPosition();
+
+            // Lower player speed:
+            GameManager.instance.playerScript.setPlayerSpeed(standMoveSpeed / 2);
 
             // Turn on indicator. (prone true, crouch false)
             GameManager.instance.proneWindow.SetActive(true);
@@ -175,6 +194,8 @@ public class playerCrouch : MonoBehaviour
         }
     }
 
+
+
     IEnumerator XrayEffect(GameObject enemy)
     {
         xrayInEffect = true;
@@ -194,25 +215,25 @@ public class playerCrouch : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy") && isCrouched)
-        {
-            float OGradius = other.gameObject.GetComponent<SharedEnemyAI>().GetDetectionRadius();
-            other.gameObject.GetComponent<SharedEnemyAI>().SetDetectionRadius(OGradius * 0.5f);
-        }
+        if (other.gameObject.CompareTag("Enemy") && other.isTrigger == false)
+           other.gameObject.GetComponent<SharedEnemyAI>().SetInCrouchRadius(true);
+        else
+            return;
+
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy"))
-        {
-            float OGradius = other.gameObject.GetComponent<SharedEnemyAI>().GetDetectionRadius();
-            other.gameObject.GetComponent<SharedEnemyAI>().SetDetectionRadius(OGradius);
-        }
+            other.gameObject.GetComponent<SharedEnemyAI>().SetInCrouchRadius(false);
+        else
+            return;
     }
-
 
 
     public void UnlockXrayAbility() { xrayAblityUnlocked = true; }
 
     public bool GetXrayAbilityUnlocked() { return xrayAblityUnlocked; }
+
+    public bool GetIsCrouched() { return isCrouched; }
 }

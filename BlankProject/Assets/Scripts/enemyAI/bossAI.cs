@@ -82,6 +82,12 @@ public class bossAI : SharedEnemyAI, IDamage
         distanceToPlayer = Vector3.Distance(transform.position, GameManager.instance.player.transform.position);
         anim.SetFloat("Speed", agent.velocity.magnitude);
 
+        if (!isAlerted && inCrouchRadius && GameManager.instance.player.GetComponent<playerCrouch>().GetIsCrouched())
+        {
+            SetPlayerCrouchedDetectionRadius();
+        }
+        else
+            RevertDetectionRadius();
 
         //When player is in view, travels to their location, changes their alert status and engages with player.
         if (playerInView)
@@ -94,7 +100,8 @@ public class bossAI : SharedEnemyAI, IDamage
 
             if (!playerSpotted)
             {
-                audioPlayer.PlayOneShot(foundPlayer, 3f);
+                if (!audioPlayer.isPlaying)
+                    audioPlayer.PlayOneShot(foundPlayer, 3f);
                 playerSpotted = true;
             }
 

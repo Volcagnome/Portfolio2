@@ -14,7 +14,7 @@ public class playerMovement : MonoBehaviour
     [SerializeField] float staminaIncrease;
 
     [SerializeField] float speed;
-    [SerializeField] int sprintMod;
+    [SerializeField] float sprintMod;
 
     [SerializeField] int jumpMax;
     [SerializeField] int jumpSpeed;
@@ -41,6 +41,7 @@ public class playerMovement : MonoBehaviour
     bool isSprinting;
     bool isPlayingSteps;
     bool isCaught;
+    bool isJumping;
     
 
     public float playerHeight
@@ -70,7 +71,6 @@ public class playerMovement : MonoBehaviour
         movement();
         sprint();
         staminaUsage();
-
 
         //If player is currently caught by a spider web, debuffs speed per the serialized field in LevelManager
         if (isCaught)
@@ -144,16 +144,15 @@ public class playerMovement : MonoBehaviour
     void sprint()
     {
         // Sprint modifiers modify speed:
-        if (Input.GetButtonDown("Sprint") && hasStamina)
+        if (Input.GetButtonDown("Sprint") && hasStamina && isPlayingSteps)
         {
             speed *= sprintMod;
             isSprinting = true;
         }
 
-
         else if (Input.GetButtonUp("Sprint") && hasStamina)
         {
-            stopSprint();
+              stopSprint();
         }
     }
 

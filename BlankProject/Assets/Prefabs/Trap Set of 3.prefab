@@ -556,15 +556,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 158a2754b8217a548853ca2f9dabba9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  toggleRecipientOn: {fileID: 0}
+  toggleRecipientOff: {fileID: 0}
+  controller: {fileID: 0}
+  toggleSound: {fileID: 0}
+  toggleVol: 0
   type: 1
   rb: {fileID: 3536138286623509851}
-  itemOn1State: {fileID: 1152855771138481372}
-  itemOn2State: {fileID: 5899408621124017419}
-  itemOn3State: {fileID: 6572928930066112795}
-  itemOff1State: {fileID: 9174628713317092421}
-  itemOff2State: {fileID: 2112149927066031675}
-  itemOff3State: {fileID: 2180232007174142474}
+  spikeOne: {fileID: 0}
+  spikeTwo: {fileID: 0}
+  spikeThree: {fileID: 0}
+  resetTime: 0
   damageAmount: 10
+  itemState: 0
 --- !u!54 &3536138286623509851
 Rigidbody:
   m_ObjectHideFlags: 0

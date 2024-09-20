@@ -33,11 +33,11 @@ public class togglingItem : MonoBehaviour, IInteract, ISendState
     public void interact()
     {
         itemState = !itemState;
-
         setState(itemState);
+        
 
         //// Play interact sound:
-        //GameManager.instance.playAud(interactSound, interactVol);
+        GameManager.instance.playAud(interactSound, interactVol);
 
         // Action the toggled object's sound:
         //GameManager.instance.playAud(itemOnState.GetComponent<toggleReciever>().toggleSound, itemOnState.GetComponent<toggleReciever>().toggleVol);
@@ -46,8 +46,8 @@ public class togglingItem : MonoBehaviour, IInteract, ISendState
     void setState(bool state)
     {
         itemOnState.SetActive(state);
+        
         itemOffState.SetActive(!state);
-
 
     }
 

@@ -42,47 +42,53 @@ public class damage : MonoBehaviour
 
         else if(dmg != null && other.gameObject.tag == "Player")
         {
-            dmg.takeDamage(damageAmount);
 
-            switch (status)
+            //If damage type has a status effect to apply, applies status effect
+            if (status != effectType.none)
             {
-                default:
-                    {
-                        break;
-                    }
-                case (effectType.burn):
-                    {
-                        other.GetComponent<playerDamage>().burn();
-                        break;
-                    }
-                case (effectType.bleed):
-                    {
-                        other.GetComponent<playerDamage>().bleed();
-                        break;
-                    }
-                case (effectType.stun):
-                    {
-                        other.GetComponent<playerDamage>().stun();
-                        break;
-                    }
-                case (effectType.shock):
-                    {
-                        if (damageType.stationary == type) other.GetComponent<playerDamage>().shock();
-                        break;
-                    }
+                switch (status)
+                {
+                    default:
+                        {
+                            break;
+                        }
+                    case (effectType.burn):
+                        {
+                            other.GetComponent<playerDamage>().burn();
+                            break;
+                        }
+                    case (effectType.bleed):
+                        {
+                            other.GetComponent<playerDamage>().bleed();
+                            break;
+                        }
+                    case (effectType.stun):
+                        {
+                            other.GetComponent<playerDamage>().stun();
+                            break;
+                        }
+                    case (effectType.shock):
+                        {
+                            if (damageType.stationary == type) other.GetComponent<playerDamage>().shock();
+                            break;
+                        }
+                }
             }
 
-            if (type == damageType.bullet)
+            //if damage type is bullet, is destroyed
+            else if(type == damageType.bullet)
                 Destroy(gameObject);
 
+            //if damage type is the Titan Shield, applies damage
             else if (type == damageType.shield)
             {
+                dmg.takeDamage(damageAmount);
                 gameObject.GetComponent<AudioSource>().PlayOneShot(GetComponentInParent<TitanAI>().shieldHit);
             }
 
-            
-            
         }
+        else
+            Destroy(gameObject);
     }
 
 

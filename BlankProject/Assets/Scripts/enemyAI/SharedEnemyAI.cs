@@ -15,8 +15,7 @@ using System.Data.Common;
 
 
 public class SharedEnemyAI : MonoBehaviour
-{
-
+{ 
     //Components
     [SerializeField] protected Transform headPos;
     [SerializeField] protected Renderer model;
@@ -53,7 +52,8 @@ public class SharedEnemyAI : MonoBehaviour
     [SerializeField] protected GameObject playerInViewIndicator;
     Coroutine FindIntruderCoroutine;
     Coroutine PursuePlayerCoroutine;
-    [SerializeField] float detectionRadiusOriginal;
+
+
 
 
     //Current State
@@ -69,6 +69,7 @@ public class SharedEnemyAI : MonoBehaviour
     protected bool isEndgameEnemy;
     protected bool isSearching;
     protected bool loadedFromState;
+    protected bool inCrouchRadius;
 
 
     //Stats
@@ -80,8 +81,11 @@ public class SharedEnemyAI : MonoBehaviour
     [SerializeField] protected float combatStoppingDistance;
     [SerializeField] protected float idleStoppingDistance;
     [SerializeField] protected float idleSpeed;
-
-
+    [SerializeField] float originalDetectionRadius;
+    [SerializeField] float detectionRadiusPlayerCrouched;
+    [SerializeField] protected int ammoCapacity;
+    protected int currentAmmo;
+  
     //Ally Detection
     [SerializeField] protected int allyRadius;
     [SerializeField] protected LayerMask allyLayer;
@@ -100,17 +104,17 @@ public class SharedEnemyAI : MonoBehaviour
     [SerializeField] List<AudioClip> shootSounds;
     [SerializeField] protected List<AudioClip> footsteps;
     [SerializeField] protected List<AudioClip> idleSounds;
-    [SerializeField] protected AudioClip foundPlayer; 
+    [SerializeField] protected AudioClip foundPlayer;
+    [SerializeField] protected AudioClip weaponReload;
     protected float currentIdleSoundCooldown;
 
-
-    [SerializeField] float xraydius;
-    [SerializeField] float xrayAbilityTime;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        currentAmmo = ammoCapacity;
+
         GameManager.instance.player.GetComponent<Camera>().transform.position = GameManager.instance.player.GetComponent<Camera>().transform.position - new Vector3(0f, 1f, 0f);
 
         colorOrig = gameObject.GetComponentInChildren<Renderer>().sharedMaterial.color;
@@ -119,19 +123,24 @@ public class SharedEnemyAI : MonoBehaviour
         enemyDetectionLevel = 0;
         readyToSpeak = true;
         playerSpotted = false;
-        currentIdleSoundCooldown = Random.Range(5, maxIdleSoundCooldown);
-
-        detectionRadiusOriginal = GetComponent<SphereCollider>().radius;
-  
-}
+        currentIdleSoundCooldown = Random.Range(5, maxIdleSoundCooldown); 
+        inCrouchRadius = false;
+    }
 
     // Update is called once per frame
     void Update()
     {
+
         if (!isDead)
         {
             CallMovementAnimation();
 
+            if (!isAlerted && inCrouchRadius && GameManager.instance.player.GetComponent<playerCrouch>().GetIsCrouched())
+            {
+                SetPlayerCrouchedDetectionRadius();
+            }
+            else
+                RevertDetectionRadius();
 
             //If boss fight is currently in progress, enemies will immediately proceed to the player's location 
             //regardless of if they are in range.
@@ -151,15 +160,19 @@ public class SharedEnemyAI : MonoBehaviour
             {
                 lastKnownPlayerLocation = GameManager.instance.player.transform.position;
 
+
                 if (!isAlerted)
                 {
-                    audioPlayer.PlayOneShot(foundPlayer, 0.75f);
+                    if(!audioPlayer.isPlaying)
+                        audioPlayer.PlayOneShot(foundPlayer, 0.75f);
                     AlertEnemy();
                 }
 
                 AlertAllies();
                 FoundPlayer();
                 agent.stoppingDistance = combatStoppingDistance;
+
+                enemyDetectionLevel = 100f;
                 playerInViewIndicator.SetActive(true);
 
             }
@@ -169,6 +182,8 @@ public class SharedEnemyAI : MonoBehaviour
                     agent.stoppingDistance = idleStoppingDistance;
                 anim.SetBool("Aiming", false);
                 playerInViewIndicator.SetActive(false);
+
+               
             }
 
 
@@ -176,6 +191,7 @@ public class SharedEnemyAI : MonoBehaviour
             //Otherwise if a boss fight is not in progress, they will return to their post.
             if (isAlerted)
             {
+
                 if (!playerInView && !isRespondingToAlert && !isSearching)
                 { 
                     StartCoroutine(PursuePlayer());
@@ -236,7 +252,6 @@ public class SharedEnemyAI : MonoBehaviour
     //idle behavior.
     protected void OnTriggerExit(Collider other)
     {
-
         if (other.CompareTag("Player"))
         {
             playerDetectionCircle.SetActive(false);
@@ -514,15 +529,23 @@ public class SharedEnemyAI : MonoBehaviour
     //player's location.
     protected virtual void FoundPlayer()
     {
-
         agent.SetDestination(lastKnownPlayerLocation);
         agent.stoppingDistance = combatStoppingDistance;
+        RotateToPlayer();
 
         anim.SetBool("Aiming", true);
-        weapon_R.transform.LookAt(GameManager.instance.player.transform.position + new Vector3(0f, 1f, 0f));
+        if(currentAmmo > 0)
+            weapon_R.transform.LookAt(GameManager.instance.player.transform.position + new Vector3(0f, 1f, 0f));
 
-        if (!isShooting && !isDead)
+        angleToPlayer = Vector3.Angle(playerDirection, transform.forward);
+
+        if (!isShooting && !isDead && currentAmmo > 0 && angleToPlayer < 20f)
             StartCoroutine(shoot(ammoType));
+        else if (currentAmmo == 0)
+        {
+            anim.SetTrigger("Reload");
+            anim.SetBool("isReloaded", false);
+        }
 
         if (IntruderAlertManager.instance.GetIntruderAlert())
             IntruderAlertManager.instance.FoundTheIntruder(lastKnownPlayerLocation);
@@ -534,23 +557,42 @@ public class SharedEnemyAI : MonoBehaviour
         anim.SetTrigger("Shoot");
 
         isShooting = true;
-
-        Vector3 offset = new Vector3(Random.Range(-aimOffset, aimOffset), 0f, Random.Range(aimOffset, aimOffset));
-        playerDirection = GameManager.instance.player.transform.position - shootPos.position;
-
-        RaycastHit hit;
-        if (Physics.Raycast(shootPos.position, playerDirection + offset, out hit))
-            if (hit.collider.gameObject.CompareTag("Player"))
-                GameManager.instance.player.GetComponent<IDamage>().takeDamage(ammoType.GetComponent<damage>().GetDamageAmount());
                 
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
     }
 
     //Instantiates a bullet when called by the shooting animation event.
-    private void CreateBullet()
+    protected virtual void CreateBullet()
     {
+        currentAmmo--; 
+
         Instantiate(ammoType, shootPos.position, transform.rotation);
+        Vector3 offset = new Vector3(Random.Range(-aimOffset, aimOffset), 0f, Random.Range(aimOffset, aimOffset));
+        playerDirection = GameManager.instance.player.transform.position - shootPos.position;
+
+        if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) < 6f)
+            offset = offset * 0.5f;
+
+        RaycastHit hit;
+        if (Physics.Raycast(shootPos.position, playerDirection + offset, out hit))
+        {
+            if (hit.collider.gameObject.CompareTag("Player"))
+                GameManager.instance.player.GetComponent<IDamage>().takeDamage(ammoType.GetComponent<damage>().GetDamageAmount());
+        }
+
+        
+    }
+
+    protected void PlayWeaponReloadSound()
+    {
+        weapon_R.GetComponent<AudioSource>().Play();
+    }
+
+    protected virtual void ReloadWeapon()
+    {
+        currentAmmo = ammoCapacity;
+        anim.SetBool("isReloaded", true);
     }
 
     //When enemy is shot, they note the player's current location, update their alert status,
@@ -576,9 +618,10 @@ public class SharedEnemyAI : MonoBehaviour
             AlertAllies();
             StartCoroutine(flashYellow());
 
-            if (!playerSpotted && !isAlerted)
+            if (!playerSpotted && !isAlerted )
             {
-                audioPlayer.PlayOneShot(foundPlayer, 0.75f);
+                if(!audioPlayer.isPlaying)
+                    audioPlayer.PlayOneShot(foundPlayer, 0.75f);
                 playerSpotted = true;
             }
         }
@@ -664,6 +707,7 @@ public class SharedEnemyAI : MonoBehaviour
     //changes their speed to their configured combat speed, and toggles their onDuty boo
     public virtual void AlertEnemy()
     {
+        RevertDetectionRadius();
         isAlerted = true;
         enemyDetectionLevel = enemyDetectionLevelOG;
         transform.GetChild(0).tag = "Alerted";
@@ -774,6 +818,16 @@ public class SharedEnemyAI : MonoBehaviour
 
     }
 
+    protected void SetPlayerCrouchedDetectionRadius()
+    {
+        GetComponent<SphereCollider>().radius = detectionRadiusPlayerCrouched;
+    }
+
+    protected void RevertDetectionRadius()
+    {
+        GetComponent<SphereCollider>().radius = originalDetectionRadius;
+    }
+
 
     ////////////////////////////////////////
     ///          GETTERS/SETTERS         ///
@@ -839,15 +893,7 @@ public Material GetXrayMaterial() { return xrayMaterial; }
 
 public Material GetOriginalMaterial() { return originalMaterial; }
 
-public float GetDetectionRadius()
-{
-        return transform.GetComponent<SphereCollider>().radius;
-}
-
-    public void SetDetectionRadius(float newRadius)
-    {
-        GetComponent<SphereCollider>().radius = newRadius;
-    }
+public void SetInCrouchRadius(bool status) { inCrouchRadius = status;  }
 
 
 }
