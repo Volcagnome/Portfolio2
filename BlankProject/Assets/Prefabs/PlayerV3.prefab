@@ -763,7 +763,7 @@ MonoBehaviour:
   muzzleFlash: {fileID: 1161149025592466324}
   bulletPrefab: {fileID: 772141482392699435, guid: 273d9b48098ab3e47a5f213386b35e1c, type: 3}
   shootPos: {fileID: 4827944566636450223}
-  HP: 75
+  HP: 85
   HPRegenRate: 7.5
   HPRegenWaitTime: 5
   burnDamage: 0
@@ -807,13 +807,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 5242881738740521314}
-  stamina: 100
-  staminaWait: 8
-  staminaDecrease: 8
-  staminaIncrease: 4
-  speed: 7
+  stamina: 50
+  staminaWait: 4
+  staminaDecrease: 16
+  staminaIncrease: 8
+  speed: 6
   sprintMod: 1.5
-  jumpMax: 2
+  jumpMax: 1
   jumpSpeed: 5
   gravity: 10
   audioJump: {fileID: 8300000, guid: 76fec2784222cc34f8f7aa71bd01c1e4, type: 3}
