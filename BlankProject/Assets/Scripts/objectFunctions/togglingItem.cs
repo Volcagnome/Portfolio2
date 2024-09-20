@@ -15,18 +15,25 @@ public class togglingItem : MonoBehaviour, IInteract, ISendState
 
     [Header("----Interaction Shaders----")]
     [SerializeField] Material shader;
-    [SerializeField] List<GameObject> shadedParts;
+    [SerializeField] Material nonShaderPlaceholder;
+    [SerializeField] List<MeshRenderer> shadedParts;
     bool shaderApplied;
+    bool hitFlag;
 
     // Start is called before the first frame update
     void Start()
     {
-        //applyShader();
-
         setState(itemState);
+
+        List<Material> baseMaterials = new List<Material>();
+        
+        for (int i = 0; i < shadedParts.Count; i++)
+        {
+            baseMaterials = shadedParts[i].materials.ToList();
+            baseMaterials.Add(nonShaderPlaceholder);
+            shadedParts[i].SetMaterials(baseMaterials);
+        }
     }
-
-
 
 
     // Update is called once per frame
@@ -58,43 +65,33 @@ public class togglingItem : MonoBehaviour, IInteract, ISendState
 
     public void applyShader()
     {
-       if (shader != null && shaderApplied == false)
+       if (shader != null)
         {
-            shaderApplied = true;
-            List<Material> baseMaterials = gameObject.GetComponent<MeshRenderer>().materials.ToList();
-            baseMaterials.Add(shader);
-            gameObject.GetComponent<MeshRenderer>().SetMaterials(baseMaterials);
+
+            List<Material> baseMaterials = new List<Material> ();
 
             for (int i = 0; i < shadedParts.Count; i++)
             {
-                baseMaterials = shadedParts[i].GetComponent<MeshRenderer>().materials.ToList();
-                baseMaterials.Add(shader);
-                shadedParts[i].GetComponent<MeshRenderer>().SetMaterials(baseMaterials);
+                baseMaterials = shadedParts[i].materials.ToList();
+                baseMaterials[baseMaterials.Count - 1] = shader;
+                shadedParts[i].SetMaterials(baseMaterials);
             }
 
-            StartCoroutine(removeShader());
+            
         }
     }
 
-    IEnumerator removeShader()
+    public void removeShader()
     {
-       List<Material> baseMaterials = gameObject.GetComponent<MeshRenderer>().materials.ToList();
-        baseMaterials.Remove(shader);
+        List<Material> baseMaterials = gameObject.GetComponent<MeshRenderer>().materials.ToList();
+        baseMaterials[baseMaterials.Count - 1] = nonShaderPlaceholder;
         gameObject.GetComponent<MeshRenderer>().SetMaterials(baseMaterials);
-
-
-        yield return new WaitForSeconds(1);
 
         for (int i = 0; i < shadedParts.Count; i++)
         {
-            baseMaterials.Clear();
-
-            for (int j = 0; j < shadedParts[i].GetComponent<MeshRenderer>().materials.ToList().Count() - 1; j++) baseMaterials.Add(shadedParts[i].GetComponent<MeshRenderer>().materials.ToList()[j]);
-
-            shadedParts[i].GetComponent<MeshRenderer>().SetMaterials(baseMaterials);
+            baseMaterials = shadedParts[i].materials.ToList();
+            baseMaterials[baseMaterials.Count - 1] = nonShaderPlaceholder;
+            shadedParts[i].SetMaterials(baseMaterials);
         }
-
-
-        shaderApplied = false;
     }
 }

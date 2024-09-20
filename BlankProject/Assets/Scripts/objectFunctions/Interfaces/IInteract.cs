@@ -6,4 +6,5 @@ public interface IInteract
 {
     public void interact();
     public void applyShader();
+    public void removeShader();
 }

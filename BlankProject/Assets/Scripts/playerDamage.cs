@@ -77,6 +77,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
     [SerializeField] float lowHPVol;
 
     Coroutine regenCoroutine;
+    GameObject currentlyHighlighted;
 
     float hpOG;
     float currentHeat;
@@ -117,6 +118,8 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         setWeapon(weapons[selectedGun]);
         GameManager.instance.UpdateCurrentWeaponUI(selectedGun,weapons);
         GameManager.instance.UpdatePlayerStatsUI();
+
+        currentlyHighlighted = null;
 
         spawnPlayer();
     }
@@ -348,13 +351,34 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
 
             if (interactWith != null)
             {
-                interactWith.applyShader();
+                if (hit.collider.gameObject != currentlyHighlighted)
+                {
+                    if (currentlyHighlighted != null) currentlyHighlighted.GetComponent<IInteract>().removeShader();
+
+                    interactWith.applyShader();
+                    currentlyHighlighted = hit.collider.gameObject;
+                }
 
                 if (Input.GetButtonDown("Interact"))
                     interactWith.interact();
             }
+            else
+            {
+                if (currentlyHighlighted != null)
+                {
+                    currentlyHighlighted.GetComponent<IInteract>().removeShader();
+                    currentlyHighlighted = null;
+                }
+            }
         }
-
+        else
+        {
+            if (currentlyHighlighted != null)
+            {
+                currentlyHighlighted.GetComponent<IInteract>().removeShader();
+                currentlyHighlighted = null;
+            }
+        }
 
     }
 

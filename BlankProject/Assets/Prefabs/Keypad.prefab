@@ -290,6 +290,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe040b1c32eca0244b1e6f8cf1ac6062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 2100000, guid: a1501f278342cd24890e72a9afed9675, type: 2}
+  nonShaderPlaceholder: {fileID: 2100000, guid: 065d82a422c998f4c81a71b45a6d0be1, type: 2}
 --- !u!1 &1621771979264898654
 GameObject:
   m_ObjectHideFlags: 0
@@ -751,6 +753,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe040b1c32eca0244b1e6f8cf1ac6062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 2100000, guid: a1501f278342cd24890e72a9afed9675, type: 2}
+  nonShaderPlaceholder: {fileID: 2100000, guid: 065d82a422c998f4c81a71b45a6d0be1, type: 2}
 --- !u!1 &2871432320008427514
 GameObject:
   m_ObjectHideFlags: 0
@@ -1238,6 +1242,9 @@ MonoBehaviour:
   nineButton: {fileID: 6111600768690265272}
   backspaceButton: {fileID: 3338897478976840731}
   confirmButton: {fileID: 6640554862134909084}
+  correct: 0
+  clickSound: {fileID: 0}
+  clickVol: 0
 --- !u!1 &3338897478976840731
 GameObject:
   m_ObjectHideFlags: 0
@@ -1357,6 +1364,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe040b1c32eca0244b1e6f8cf1ac6062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 2100000, guid: a1501f278342cd24890e72a9afed9675, type: 2}
+  nonShaderPlaceholder: {fileID: 2100000, guid: 065d82a422c998f4c81a71b45a6d0be1, type: 2}
 --- !u!1 &3375554947841544617
 GameObject:
   m_ObjectHideFlags: 0
@@ -1476,6 +1485,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe040b1c32eca0244b1e6f8cf1ac6062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 2100000, guid: a1501f278342cd24890e72a9afed9675, type: 2}
+  nonShaderPlaceholder: {fileID: 2100000, guid: 065d82a422c998f4c81a71b45a6d0be1, type: 2}
 --- !u!1 &3421745969891424274
 GameObject:
   m_ObjectHideFlags: 0
@@ -1766,6 +1777,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe040b1c32eca0244b1e6f8cf1ac6062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 2100000, guid: a1501f278342cd24890e72a9afed9675, type: 2}
+  nonShaderPlaceholder: {fileID: 2100000, guid: 065d82a422c998f4c81a71b45a6d0be1, type: 2}
 --- !u!1 &5194402024189157752
 GameObject:
   m_ObjectHideFlags: 0
@@ -2163,6 +2176,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe040b1c32eca0244b1e6f8cf1ac6062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 2100000, guid: a1501f278342cd24890e72a9afed9675, type: 2}
+  nonShaderPlaceholder: {fileID: 2100000, guid: 065d82a422c998f4c81a71b45a6d0be1, type: 2}
 --- !u!1 &6157650476598926442
 GameObject:
   m_ObjectHideFlags: 0
@@ -2282,6 +2297,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe040b1c32eca0244b1e6f8cf1ac6062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 2100000, guid: a1501f278342cd24890e72a9afed9675, type: 2}
+  nonShaderPlaceholder: {fileID: 2100000, guid: 065d82a422c998f4c81a71b45a6d0be1, type: 2}
 --- !u!1 &6302927821311169663
 GameObject:
   m_ObjectHideFlags: 0
@@ -2572,6 +2589,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe040b1c32eca0244b1e6f8cf1ac6062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 2100000, guid: a1501f278342cd24890e72a9afed9675, type: 2}
+  nonShaderPlaceholder: {fileID: 2100000, guid: 065d82a422c998f4c81a71b45a6d0be1, type: 2}
 --- !u!1 &6640554862134909084
 GameObject:
   m_ObjectHideFlags: 0
@@ -2692,6 +2711,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe040b1c32eca0244b1e6f8cf1ac6062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 2100000, guid: a1501f278342cd24890e72a9afed9675, type: 2}
+  nonShaderPlaceholder: {fileID: 2100000, guid: 065d82a422c998f4c81a71b45a6d0be1, type: 2}
 --- !u!1 &6838646666986645229
 GameObject:
   m_ObjectHideFlags: 0
@@ -2982,6 +3003,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe040b1c32eca0244b1e6f8cf1ac6062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 2100000, guid: a1501f278342cd24890e72a9afed9675, type: 2}
+  nonShaderPlaceholder: {fileID: 2100000, guid: 065d82a422c998f4c81a71b45a6d0be1, type: 2}
 --- !u!1 &7817259391884260949
 GameObject:
   m_ObjectHideFlags: 0
@@ -3785,6 +3808,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe040b1c32eca0244b1e6f8cf1ac6062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 2100000, guid: a1501f278342cd24890e72a9afed9675, type: 2}
+  nonShaderPlaceholder: {fileID: 2100000, guid: 065d82a422c998f4c81a71b45a6d0be1, type: 2}
 --- !u!1 &8908677179802997544
 GameObject:
   m_ObjectHideFlags: 0
@@ -3904,6 +3929,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe040b1c32eca0244b1e6f8cf1ac6062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 2100000, guid: a1501f278342cd24890e72a9afed9675, type: 2}
+  nonShaderPlaceholder: {fileID: 2100000, guid: 065d82a422c998f4c81a71b45a6d0be1, type: 2}
 --- !u!1 &9193229936528085964
 GameObject:
   m_ObjectHideFlags: 0
