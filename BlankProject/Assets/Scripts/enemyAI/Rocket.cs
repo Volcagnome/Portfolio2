@@ -47,6 +47,7 @@ public class Rocket : damage
         }
         else if (dmg != null && other.gameObject != EnemyManager.instance.GetBoss())
         {
+
             directHit = other.gameObject;
 
             dmg.criticalHit(damageAmount);
@@ -81,9 +82,6 @@ public class Rocket : damage
 
                 if (dmg != null && target.gameObject != directHit && target.gameObject != EnemyManager.instance.GetBoss())
                 {
-                    Debug.Log(target.gameObject.name);
-
-
                     dmg.takeDamage(aoeDamage);
                 }
             }

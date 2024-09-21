@@ -32,7 +32,7 @@ public class IntruderAlertLight : MonoBehaviour
     //changes light color and bulb color to original. If object is alert light, flashing coroutine will end naturally.
     void Update()
     {
-        if (IntruderAlertManager.instance.GetIntruderAlert())
+        if (IntruderAlertManager.instance.GetIntruderAlert() || GameManager.instance.GetSelfDestructActivated())
         {
             if (flashLightCoroutine == null && type==LightType.alert)
                 flashLightCoroutine = StartCoroutine(flashLight());

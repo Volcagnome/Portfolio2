@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioSource audioPlayer;
 
     // UI menus:
-    [SerializeField] GameObject menuActive;
+    public GameObject menuActive;
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
@@ -126,7 +126,9 @@ public class GameManager : MonoBehaviour
  
     
     [SerializeField] GameObject messageWindow;
-
+    public GameObject hintWindow;
+    public bool hintOff = false;
+ 
 
 
     // Start is called before the first frame update
@@ -152,17 +154,21 @@ public class GameManager : MonoBehaviour
         //If the game was just started, sets the current spawn point to the spawn point at the beginning of the level the game was started on.
         if (StaticData.isGameStart == true)
         {
+            StaticData.gameObjective_Static = "Search the area for command codes.\r\n\r\nFind the password to bypass the security checkpoint.\r\n\r\nAdvance deeper into the facility until you reach the mainframe.";
+
             currentSpawn = playerSpawnEntry = GameObject.FindWithTag("Player Spawn Entry");
             StaticData.isGameStart = false;
         }
-        else
-        {
+      
             if (StaticData.previousLevel == true)
             {
                 currentSpawn = playerSpawnExit;
             }
-            else if (firstTimeInScene == true)
+            else if (StaticData.nextLevel == true)
                 currentSpawn = playerSpawnEntry;
+    
+        if (SceneManager.GetActiveScene().name == "Main Scene Final Level" && !selfDestructActivated)
+            StaticData.gameObjective_Static = "Defeat the Juggernaut.\r\n\r\nPlug in the command codes.\r\n\r\nActivate the self destruct protocol.";
 
             GameObjectiveDisplay.GetComponent<TMP_Text>().text = StaticData.gameObjective_Static;
 
@@ -183,18 +189,16 @@ public class GameManager : MonoBehaviour
                 int enemyListLength = StaticData.sceneEnemies[SceneManager.GetActiveScene().buildIndex].Count;
                 if (enemyListLength > 0)
                     LoadEnemyStates(StaticData.sceneEnemies[SceneManager.GetActiveScene().buildIndex]);
+
+                if(SceneManager.GetActiveScene().name == "Main Scene Final Level" && !StaticData.bossIsDead_Static)
+                    BossFight.instance.SetBoss(FindBoss());
+
             }
-            else
-                StaticData.firstTimeInScene[SceneManager.GetActiveScene().buildIndex] = false;
-        }
-
-        if (SceneManager.GetActiveScene().buildIndex == 2)
-            securityPasswordDisplay.GetComponent<TMP_Text>().text = "none";
-
-
-        
-       
-
+            else if (firstTimeInScene)
+            {
+                firstTimeInScene = false;
+            }
+      
         sceneCommandCodesCollectedDisplay.GetComponent<TMP_Text>().text = sceneCommandCodesCollected.ToString();
         sceneCommandCodesTotalDisplay.GetComponent<TMP_Text>().text = sceneCommandCodesTotal.ToString();
         commandCodesCollectedTotal = StaticData.commandCodesCollectedTotal_Static;
@@ -205,9 +209,7 @@ public class GameManager : MonoBehaviour
         sceneWeaponPickupsCollectedDisplay.GetComponent<TMP_Text>().text = sceneWeaponPickupsCollected.ToString();
         sceneWeaponPickupsTotalDisplay.GetComponent<TMP_Text>().text = sceneWeaponPickupsTotal.ToString();
 
-       
 
-       
     }
 
     //Update is called once per frame
@@ -279,8 +281,9 @@ public class GameManager : MonoBehaviour
     {
         statePause();
 
-        
+        if(selfDestructActivated)
             menuActive = almostWinMenu;
+        else
             menuActive = menuLose;
 
         menuActive.SetActive(true);
@@ -564,6 +567,7 @@ public class GameManager : MonoBehaviour
 
     public float GetTotalTimeLeft() { return totalTime; }
 
+
     public void GetWinMenu()
     {
         isPaused = !isPaused;
@@ -572,6 +576,26 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
         menuActive = menuWin;
         menuActive.SetActive(true);
+    }
+
+    public GameObject FindBoss()
+    {
+        GameObject bossRobot = null;
+
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        if (enemies.Length > 0)
+        {
+            foreach (GameObject enemy in enemies)
+            {
+                if (enemy.GetComponent<SharedEnemyAI>().GetEnemyType() == SharedEnemyAI.enemyType.Boss)
+                {
+                    bossRobot = enemy;
+                }
+            }
+        }
+
+        return bossRobot;
     }
 
     public void ShowSelfDestructFlavorText()
@@ -594,13 +618,34 @@ public class GameManager : MonoBehaviour
         messageWindow.SetActive(false);
     }
 
+    public void DisplayHint(string hint)
+    {
+        Time.timeScale = 0;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+        hintOff = false;
+        hintWindow.SetActive(true);
+        hintWindow.GetComponentInChildren<TMP_Text>().text = hint;
+     
+     
+    }
+
 
     public IEnumerator RespawnBuffer()
     {
         isRespawning = true;
 
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach (var enemy in enemies)
+        {
+            if(!EnemyManager.instance.GetIsBossFight())
+                enemy.GetComponent<SharedEnemyAI>().CalmEnemy();
+        }
+
         yield return new WaitForSeconds(2f);
 
         isRespawning = false;
     }
+
 }

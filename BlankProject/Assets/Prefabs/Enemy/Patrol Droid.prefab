@@ -299,7 +299,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2876687186463868151
 Transform:
   m_ObjectHideFlags: 0
@@ -1384,17 +1384,21 @@ MonoBehaviour:
   DeathFXPos: {fileID: 6865169551853031881}
   weakspot: {fileID: 7700505768945022687}
   audioPlayer: {fileID: 547232007048367341}
-  xrayMaterial: {fileID: 2100000, guid: f60dcce2fb6dd3944a4db3e68585ddff, type: 2}
+  searchingMaterial: {fileID: 2100000, guid: f8eaf123f3d808b469d2005457c9f3d1, type: 2}
+  hostileMaterial: {fileID: 2100000, guid: f60dcce2fb6dd3944a4db3e68585ddff, type: 2}
   originalMaterial: {fileID: 2100000, guid: dc56d848015841b4da9eeccbeb643c16, type: 2}
+  passiveMaterial: {fileID: 2100000, guid: 1815ffa568757234cb9eee0f7a978986, type: 2}
   shootPos: {fileID: 1459278233647416252}
   weapon_R: {fileID: 3989913575741451918}
   ammoType: {fileID: 4005459997384909482, guid: f3df2a379677235429bf837d6aa0e3c7, type: 3}
   aimOffset: 0.5
   FOV_Angle: 60
   rotationSpeed: 8
+  enemyDetectionLevelOG: 2.7
   playerDetectionCircle: {fileID: 117442370378002146}
   playerDetectionCircleFill: {fileID: 6715458616957486315}
   playerInViewIndicator: {fileID: 4013727725787506343}
+  detectTime: 2.7
   enemy_Type: 2
   HPOrig: 10
   shootRate: 0.5
@@ -1402,8 +1406,8 @@ MonoBehaviour:
   combatStoppingDistance: 12
   idleStoppingDistance: 0.4
   idleSpeed: 2.5
-  originalDetectionRadius: 12
-  detectionRadiusPlayerCrouched: 6
+  originalDetectionRadius: 17
+  detectionRadiusPlayerCrouched: 12
   ammoCapacity: 14
   allyRadius: 12
   allyLayer:
@@ -1421,12 +1425,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f2e802c95ee416c40a6976481b1cbc72, type: 3}
   idleSounds:
   - {fileID: 8300000, guid: 20121354061bf3243af8bb1028a297a7, type: 3}
-  - {fileID: 8300000, guid: 08b58a2ac5ab92b4993c9b4759b786b8, type: 3}
+  - {fileID: 8300000, guid: b6a84c37a47ba6d40a2e0d47bca32d23, type: 3}
   - {fileID: 8300000, guid: 863070456fd2bdf498b638414a45fcd9, type: 3}
   - {fileID: 8300000, guid: 43a8a1d9c2af1214c865592b4ee98bb2, type: 3}
   - {fileID: 8300000, guid: 0bb154657d26f124d87aba816edb215f, type: 3}
   foundPlayer: {fileID: 8300000, guid: 6101ac5937154c945ad1f35ca58956d1, type: 3}
   weaponReload: {fileID: 8300000, guid: 785c802692e6abf4b9d133225408557e, type: 3}
+  whatWasThat: {fileID: 8300000, guid: e005c6bcfe644ed47bfc0747dd34d5ae, type: 3}
+  mustHaveBeenTheWind: {fileID: 8300000, guid: 467fa945c48e4cf49a07bdc2f78e3431, type: 3}
   raisingAlarmSound: {fileID: 8300000, guid: ab24a09624ddd334180c26e2c3f438b6, type: 3}
   whistleBlowerOutline: {fileID: 2100000, guid: 1815ffa568757234cb9eee0f7a978986, type: 2}
 --- !u!195 &4011634809921055029
@@ -1493,7 +1499,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 12
+  m_Radius: 17
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1822346372569148870
 Rigidbody:
@@ -1928,15 +1934,15 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 629c356021184af419a09273fc97c0d7, type: 3}
     - target: {fileID: 4565427909029712784, guid: e730623cb86fb8d479e54d51f2e481eb, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4565427909029712784, guid: e730623cb86fb8d479e54d51f2e481eb, type: 3}
       propertyPath: m_Color.g
-      value: 0.92442274
+      value: 0.0032806396
       objectReference: {fileID: 0}
     - target: {fileID: 4565427909029712784, guid: e730623cb86fb8d479e54d51f2e481eb, type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4565427909029712784, guid: e730623cb86fb8d479e54d51f2e481eb, type: 3}
       propertyPath: m_FillAmount
@@ -1945,6 +1951,10 @@ PrefabInstance:
     - target: {fileID: 4565427909029712784, guid: e730623cb86fb8d479e54d51f2e481eb, type: 3}
       propertyPath: m_FillMethod
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4565427909029712784, guid: e730623cb86fb8d479e54d51f2e481eb, type: 3}
+      propertyPath: m_FillOrigin
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4565427909029712784, guid: e730623cb86fb8d479e54d51f2e481eb, type: 3}
       propertyPath: m_FillClockwise

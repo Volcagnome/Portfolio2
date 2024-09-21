@@ -7,11 +7,22 @@ public class CommandCodeSlot : MonoBehaviour, IInteract
     [SerializeField] GameObject commandCode;
     [SerializeField] GameObject lightbulb;
     [SerializeField] Material lightBulbGlow;
+    [SerializeField] AudioClip insertCode;
+    [SerializeField] int slotNumber;
+
+    bool slotFull;
 
     // Start is called before the first frame update
     void Start()
     {
-        commandCode.SetActive(false);
+        slotFull = StaticData.commandCodeSlotFull[slotNumber];
+
+        if (slotFull)
+        {
+            commandCode.SetActive(true);
+            lightbulb.GetComponent<MeshRenderer>().material = lightBulbGlow;
+        }
+        
     }
 
     // Update is called once per frame
@@ -22,11 +33,15 @@ public class CommandCodeSlot : MonoBehaviour, IInteract
 
     public void interact()
     {
-        if (GameManager.instance.GetCommandCodesCollected() > 0)
+        if (GameManager.instance.GetCommandCodesCollected() > 0 && !slotFull)
         {
             GameManager.instance.PlugInCode();
             commandCode.SetActive(true);
             lightbulb.GetComponent<MeshRenderer>().material = lightBulbGlow;
+            GetComponent<AudioSource>().PlayOneShot(insertCode);
+            slotFull = true;
+            StaticData.commandCodeSlotFull[slotNumber] = true;
+
         }
         else
             return;

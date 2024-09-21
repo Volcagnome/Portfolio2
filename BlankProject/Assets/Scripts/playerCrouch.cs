@@ -24,7 +24,6 @@ public class playerCrouch : MonoBehaviour
     [SerializeField] float xrayEffectDuration;
     [SerializeField] float xrayAbilityCooldown;
     bool xrayAblityUnlocked;
-    bool xrayInEffect;
 
     bool isCrouched;
     bool isProne;
@@ -44,7 +43,6 @@ public class playerCrouch : MonoBehaviour
         standingHeight = GameManager.instance.playerScript.playerHeight;
         currentHeight = standingHeight;
         standMoveSpeed = GameManager.instance.playerScript.getPlayerSpeed();
-        xrayInEffect = false;
     }
 
     // Update is called once per frame
@@ -81,8 +79,6 @@ public class playerCrouch : MonoBehaviour
         {
             // Count towards prone time requirement.
             holdCrouch += Time.deltaTime;
-            Debug.Log("test2");
-
 
             // If met, enter prone mode:
             if (holdCrouch >= proneTime)
@@ -198,7 +194,7 @@ public class playerCrouch : MonoBehaviour
 
     IEnumerator XrayEffect(GameObject enemy)
     {
-        xrayInEffect = true;
+
 
         if (enemy != null)
             enemy.GetComponent<SharedEnemyAI>().XrayEnemy(enemy, true);
@@ -210,7 +206,7 @@ public class playerCrouch : MonoBehaviour
 
         yield return new WaitForSeconds(xrayAbilityCooldown);
 
-        xrayInEffect = false;
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -224,7 +220,7 @@ public class playerCrouch : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy") && other.isTrigger == false)
             other.gameObject.GetComponent<SharedEnemyAI>().SetInCrouchRadius(false);
         else
             return;

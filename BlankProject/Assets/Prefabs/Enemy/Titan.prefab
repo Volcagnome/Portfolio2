@@ -52,7 +52,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 59.282215
   m_Height: 276.28262
@@ -97,10 +97,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0c8d225f30c1264d857ac009dd937f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 3
+  type: 4
   status: 0
   rb: {fileID: 6194992815561829467}
-  damageAmount: 10
+  damageAmount: 5
   speed: 0
   destroyTime: 0
 --- !u!82 &2847460687129663518
@@ -115,16 +115,16 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.699
-  m_Pitch: -0.07
+  m_Volume: 0.837
+  m_Pitch: 2.02
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 0
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 10
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -574,100 +574,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8424071460399404607}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6273438621346244963
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2517011196351817284}
-  - component: {fileID: 9146601475071174865}
-  - component: {fileID: 5758515441540467537}
-  - component: {fileID: 4837656038220419237}
-  m_Layer: 7
-  m_Name: Outer Detection Sphere
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2517011196351817284
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6273438621346244963}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8797669582340282608}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9146601475071174865
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6273438621346244963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c60f3558bc7bb0e409b148adb723ec76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!54 &5758515441540467537
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6273438621346244963}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!135 &4837656038220419237
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6273438621346244963}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 2147484535
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 18
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &30418687718236622
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -928,15 +834,15 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 629c356021184af419a09273fc97c0d7, type: 3}
     - target: {fileID: 4565427909029712784, guid: e730623cb86fb8d479e54d51f2e481eb, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4565427909029712784, guid: e730623cb86fb8d479e54d51f2e481eb, type: 3}
       propertyPath: m_Color.g
-      value: 0.92442274
+      value: 0.003179423
       objectReference: {fileID: 0}
     - target: {fileID: 4565427909029712784, guid: e730623cb86fb8d479e54d51f2e481eb, type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4565427909029712784, guid: e730623cb86fb8d479e54d51f2e481eb, type: 3}
       propertyPath: m_FillAmount
@@ -1724,15 +1630,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -30.548069
+      value: -17.26
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.00000047683716
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -158.69371
+      value: -16.55
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1776,9 +1682,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 400094, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}
       insertIndex: 0
       addedObject: {fileID: 4169356372175282167}
-    - targetCorrespondingSourceObject: {fileID: 400094, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 2517011196351817284}
     - targetCorrespondingSourceObject: {fileID: 400094, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}
       insertIndex: -1
       addedObject: {fileID: 529219038533651510}
@@ -1857,19 +1760,23 @@ MonoBehaviour:
   DeathFXPos: {fileID: 1612221431707091603}
   weakspot: {fileID: 3110617636192311290}
   audioPlayer: {fileID: 497875255768104274}
-  xrayMaterial: {fileID: 2100000, guid: ad3d527baa2d06948bb4c21df20dacb7, type: 2}
+  searchingMaterial: {fileID: 2100000, guid: b1d7473027ce0bb479d6776726c885f4, type: 2}
+  hostileMaterial: {fileID: 2100000, guid: ad3d527baa2d06948bb4c21df20dacb7, type: 2}
   originalMaterial: {fileID: 2100000, guid: eac569fffc8708e45bfc4d3eb33a7055, type: 2}
+  passiveMaterial: {fileID: 2100000, guid: a7485d90b09a7bc43a0f48d222e5fbbc, type: 2}
   shootPos: {fileID: 4308819190186378879}
   weapon_R: {fileID: 8424071460399303199}
   ammoType: {fileID: 6804835773319123192, guid: f3238337713f29e4bad8388c8f8db6d6, type: 3}
-  aimOffset: 0.5
+  aimOffset: 0.4
   FOV_Angle: 60
   rotationSpeed: 5
+  enemyDetectionLevelOG: 3
   playerDetectionCircle: {fileID: 8626104996312365364}
   playerDetectionCircleFill: {fileID: 3108948241304523581}
   playerInViewIndicator: {fileID: 5261958614516085279}
+  detectTime: 3
   enemy_Type: 3
-  HPOrig: 50
+  HPOrig: 200
   shootRate: 0.5
   combatSpeed: 3
   combatStoppingDistance: 15
@@ -1898,6 +1805,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2d04c0ffd3322234eab448f1be849ba3, type: 3}
   foundPlayer: {fileID: 8300000, guid: 63611ff481b798441b97d0258459fe2e, type: 3}
   weaponReload: {fileID: 8300000, guid: 3e332b5cf2cd659418f7aa5d4000b221, type: 3}
+  whatWasThat: {fileID: 8300000, guid: a75abb3e6366d6845a3d2f7d9feea1af, type: 3}
+  mustHaveBeenTheWind: {fileID: 8300000, guid: ff6510277105e0e438c641a9725079ac, type: 3}
   shieldBashCollider: {fileID: 7271325000883408684}
   minTimeBetweenBashes: 3
   shieldSwing: {fileID: 8300000, guid: 223d0ffcf9736bd4eab854fddaa3c808, type: 3}
@@ -1921,7 +1830,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: -0.12
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!136 &3151778533451312120
@@ -1937,7 +1846,7 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 2147484151
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0

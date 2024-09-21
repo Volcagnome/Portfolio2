@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -16,13 +17,13 @@ public class patrolAI : SharedEnemyAI,IDamage
     [SerializeField] AudioClip raisingAlarmSound;
     [SerializeField] Material whistleBlowerOutline;
 
-
     // Start is called before the first frame update
     //If patrol has no default post, is passed to EnemyManager for patrol route assignment. Otherwise, if default post has been
     //manually assigned will add itself to the list of robots assigned to the route and pass itself to the enemy manager to add it
     //to the patrol robot count.
     void Start()
     {
+
         currentAmmo = ammoCapacity;
 
         if (loadedFromState == false)
@@ -37,13 +38,13 @@ public class patrolAI : SharedEnemyAI,IDamage
         }
 
         enemyDetectionLevel = 0;
+        currentDetectTime = detectTime;
 
         readyToSpeak = true;
         currentIdleSoundCooldown = Random.Range(5, maxIdleSoundCooldown);
 
         isWhistleBlower = false;
         inCrouchRadius = false;
-
     }
 
     // Update is called once per frame
@@ -75,22 +76,46 @@ public class patrolAI : SharedEnemyAI,IDamage
 
                         agent.SetDestination(currentDestination.transform.position);
                     }
-                    
                 }
+
+
+                if (playerInView)
+                {
+                    if(!detecting)
+                        lastKnownPlayerLocation = GameManager.instance.player.transform.position;
+                    playerInViewIndicator.SetActive(true);
+
+                }
+                else
+                    playerInViewIndicator.SetActive(false);
+
+                if (!isAlerted && !playerDetected && playerInView && !detecting)
+                    StartCoroutine(DetectPlayerCoroutine());
+
+
+                if (detecting || isSearching || isPursuing)
+                    ChangeMaterial(searchingMaterial);
+                else if (playerDetected)
+                    ChangeMaterial(hostileMaterial);
+                else if (!isXrayed)
+                    ChangeMaterial(originalMaterial);
+
 
                 //If player in patrol's field of view, changes its alert status and alerts nearby allies. If there is 
                 //not currently an Intruder Alert in progress and no one is already running for an Intruder Alert button,
                 //patrol will become the WhistleBlower and run to the nearest Intruder Alert button and then return to engage
                 //with the player. Otherwise will engage with the player normally.
-                if (playerInView)
+                if (playerInView && playerDetected)
                 {
                     if(!isAlerted)
                         AlertEnemy();
                     AlertAllies();
-                    playerInViewIndicator.SetActive(true);
+          
                     if (!IntruderAlertManager.instance.GetIntruderAlert() && !IntruderAlertManager.instance.GetIsRaisingAlarm()
                         && IntruderAlertManager.instance.intruderAlertButtons.Count != 0 && !StaticData.selfDestructActivated_Static)
+                    {
                         RaiseAlarm();
+                    }
 
                     else
                     {
@@ -141,7 +166,7 @@ public class patrolAI : SharedEnemyAI,IDamage
 
             //If player is within its outer range or is alerted, makes its detection meter visible and updates it appropriately,
             //otherwise hides it.
-            if (playerInOuterRange || isAlerted)
+            if (detecting || isAlerted)
                 UpdateDetectionUI();
             else
             {
@@ -155,17 +180,20 @@ public class patrolAI : SharedEnemyAI,IDamage
     //Intruder Alert button. Robot travels to the given Intruder Alert Button.
     public void RaiseAlarm()
     {
-        isWhistleBlower = true;
+        if (!isDead)
+        {
+            isWhistleBlower = true;
 
-        audioPlayer.PlayOneShot(raisingAlarmSound);
+            audioPlayer.PlayOneShot(raisingAlarmSound);
 
-        GetComponentInChildren<SkinnedMeshRenderer>().material = whistleBlowerOutline;
+            GetComponentInChildren<SkinnedMeshRenderer>().material = hostileMaterial;
 
-        GameObject nearestButton = IntruderAlertManager.instance.SetIsRaisingAlarm(gameObject);
+            GameObject nearestButton = IntruderAlertManager.instance.SetIsRaisingAlarm(gameObject);
 
-        agent.stoppingDistance = 1f;
-        agent.SetDestination(nearestButton.transform.position);
+            agent.stoppingDistance = 1f;
+            agent.SetDestination(nearestButton.transform.position);
 
+        }
     }
 
     //Returns to their current destination (the point on their patrol route they were en route to when interrupted)
@@ -196,6 +224,8 @@ public class patrolAI : SharedEnemyAI,IDamage
     {
         DeathShared();
         weapon_R.GetComponent<AudioSource>().mute = true;
+        agent.isStopped = true;
+        GetComponent<AudioSource>().mute = true;
 
         if (!StaticData.selfDestructActivated_Static)
         {
@@ -210,7 +240,6 @@ public class patrolAI : SharedEnemyAI,IDamage
 
         StartCoroutine(DespawnDeadRobot(gameObject));
     }
-
 
     public bool GetIsWhistleBlower() { return isWhistleBlower; }
 

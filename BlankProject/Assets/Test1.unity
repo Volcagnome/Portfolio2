@@ -745,6 +745,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3258120185545076371, guid: 0d3f2fba35f2b7a419ef3b094b4b0387, type: 3}
+      propertyPath: hostileMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 6a80a0d52731c4f429d32eab727f0ed6, type: 2}
+    - target: {fileID: 3258120185545076371, guid: 0d3f2fba35f2b7a419ef3b094b4b0387, type: 3}
+      propertyPath: passiveMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: eb595aa8cf9835b41bcd6644f892f4d8, type: 2}
+    - target: {fileID: 3258120185545076371, guid: 0d3f2fba35f2b7a419ef3b094b4b0387, type: 3}
+      propertyPath: searchingMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 3e083aa4f7022e5469ae74dc3d9f294d, type: 2}
     - target: {fileID: 4202015870818891207, guid: 0d3f2fba35f2b7a419ef3b094b4b0387, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.57
@@ -1648,6 +1660,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 318873755}
     - target: {fileID: -8986180890284389129, guid: b2c5178c02aded448b84086b73aa7d87, type: 3}
+      propertyPath: hostileMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: f60dcce2fb6dd3944a4db3e68585ddff, type: 2}
+    - target: {fileID: -8986180890284389129, guid: b2c5178c02aded448b84086b73aa7d87, type: 3}
+      propertyPath: passiveMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 1815ffa568757234cb9eee0f7a978986, type: 2}
+    - target: {fileID: -8986180890284389129, guid: b2c5178c02aded448b84086b73aa7d87, type: 3}
+      propertyPath: searchingMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: f8eaf123f3d808b469d2005457c9f3d1, type: 2}
+    - target: {fileID: -8986180890284389129, guid: b2c5178c02aded448b84086b73aa7d87, type: 3}
       propertyPath: currentDestination
       value: 
       objectReference: {fileID: 318873755}
@@ -1915,6 +1939,10 @@ PrefabInstance:
     - target: {fileID: 2393175190188051406, guid: 7544a082c16fc9b4abeeaa135f35b8d6, type: 3}
       propertyPath: m_Name
       value: Spider_Robot
+      objectReference: {fileID: 0}
+    - target: {fileID: 2393175190188051406, guid: 7544a082c16fc9b4abeeaa135f35b8d6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3061766648330424692, guid: 7544a082c16fc9b4abeeaa135f35b8d6, type: 3}
       propertyPath: m_LocalPosition.x

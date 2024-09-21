@@ -717,6 +717,7 @@ GameObject:
   - component: {fileID: 4121500091823156705}
   - component: {fileID: 2156902001026399159}
   - component: {fileID: 4549488081459690737}
+  - component: {fileID: 8057526121634683670}
   m_Layer: 3
   m_Name: PlayerV3
   m_TagString: Player
@@ -766,9 +767,9 @@ MonoBehaviour:
   HP: 85
   HPRegenRate: 7.5
   HPRegenWaitTime: 5
-  burnDamage: 0
-  burnTime: 0
-  burnRate: 0
+  burnDamage: 1
+  burnTime: 3
+  burnRate: 0.5
   bleedDamage: 0
   bleedTime: 0
   bleedRate: 0
@@ -851,7 +852,7 @@ MonoBehaviour:
   proneHeight: -0.75
   crouchSpeed: 10
   proneTime: 1.5
-  xraydius: 20
+  xraydius: 30
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -1073,3 +1074,24 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &8057526121634683670
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8911946099950133126}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

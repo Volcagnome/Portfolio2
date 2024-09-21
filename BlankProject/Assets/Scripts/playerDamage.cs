@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
@@ -85,6 +86,12 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
     int bulletUpgradeTotal;
     float maxAmmoMultiplier;
 
+    Dictionary<pickupStats.weaponType, Coroutine> weaponCooldownCoroutines;
+    Dictionary<pickupStats.weaponType, float> weaponCurrentHeats;
+    Dictionary<pickupStats.weaponType, bool> weaponsCanCool;
+
+    pickupStats.weaponType gunType;
+
     bool isFlashOn;
     bool isShooting;
     bool isInteracting;
@@ -99,6 +106,11 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
     //Sets the player's health and max health stats pulled from the StaticPlayerData script.
     void Start()
     {
+
+        weaponCooldownCoroutines = new Dictionary<pickupStats.weaponType, Coroutine> { { pickupStats.weaponType.pistol, null}, { pickupStats.weaponType.rifle, null }, { pickupStats.weaponType.shotgun, null }, { pickupStats.weaponType.sniper, null } };
+        weaponCurrentHeats = new Dictionary<pickupStats.weaponType, float> { { pickupStats.weaponType.pistol, 0f },{ pickupStats.weaponType.rifle, 0f }, { pickupStats.weaponType.shotgun, 0f }, { pickupStats.weaponType.sniper, 0f } };
+        weaponsCanCool = new Dictionary<pickupStats.weaponType, bool> { { pickupStats.weaponType.pistol, true }, { pickupStats.weaponType.rifle, true }, { pickupStats.weaponType.shotgun, true }, { pickupStats.weaponType.sniper, true } };
+
         //Sets original starting stats:
         //hpOG = HP;
         HP = StaticData.playerHealth;
@@ -139,12 +151,17 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
                 if (!isTakingDamage)
                     RegenerateHealth();
             }
-            if (cooldownCoroutine == null) coolWeapon();
+            if (weaponCooldownCoroutines[pickupStats.weaponType.pistol] == null) coolWeapon(pickupStats.weaponType.pistol,GetCoolRate(pickupStats.weaponType.pistol));
+            if(StaticData.hasRifle && weaponCooldownCoroutines[pickupStats.weaponType.rifle] == null) coolWeapon(pickupStats.weaponType.rifle, GetCoolRate(pickupStats.weaponType.rifle));
+            if (StaticData.hasShotgun && weaponCooldownCoroutines[pickupStats.weaponType.shotgun] == null) coolWeapon(pickupStats.weaponType.shotgun, GetCoolRate(pickupStats.weaponType.shotgun));
+            if (StaticData.hasSniper && weaponCooldownCoroutines[pickupStats.weaponType.sniper] == null) coolWeapon(pickupStats.weaponType.sniper, GetCoolRate(pickupStats.weaponType.sniper));
+
             if (usedToMax && !isEmittingSmoke) StartCoroutine(emitSmoke());
 
             if (isBurning) HP -= burnDamage * burnRate * Time.deltaTime;
             if (isBleeding) HP -= bleedDamage * bleedRate * Time.deltaTime;
         }
+
     }
 
     // Contains GetButton methods that may be called any update:
@@ -173,19 +190,19 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
     IEnumerator shoot()
     {
         isShooting = true;
-        if (cooldownCoroutine != null) StopCoroutine(cooldownCoroutine);
+        if (weaponCooldownCoroutines[gunType] != null) StopCoroutine(weaponCooldownCoroutines[gunType]);
         StartCoroutine(flashMuzzle());
-        cooldownCoroutine = StartCoroutine(enableCooling());
+        weaponCooldownCoroutines[gunType] = StartCoroutine(enableCooling(gunType));
 
         // Spawns a tracer round (playerBullet prefab)
         Instantiate(bulletPrefab, shootPos.position, shootPos.transform.rotation);
         // Play firing sound for selected weapon:
         GameManager.instance.playAud(weapons[selectedGun].fireSound, weapons[selectedGun].fireVol);
 
-        currentHeat += heatPerShot;
-        
+        //currentHeat += heatPerShot;
+        weaponCurrentHeats[gunType] += heatPerShot;
 
-        if (maxHeat <= currentHeat + heatPerShot)
+        if (maxHeat <= weaponCurrentHeats[gunType] + heatPerShot)
         {
             usedToMax = true;
             currentHeat = maxHeat;
@@ -328,7 +345,6 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
                 }
             }
         }
-
         GameManager.instance.UpdateCurrentWeaponUI(selectedGun, weapons);
     }
 
@@ -444,7 +460,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
 
     public void criticalHit(float amount)
     {
-
+        takeDamage(amount);
     }
 
     public void setWeapon(pickupStats weapon)
@@ -459,7 +475,8 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         coolRate = weapon.coolRate;
         coolWaitTime = weapon.coolWaitTime;
         isShotgun = weapon.shotgun;
-        currentHeat = weapon.currentHeat;
+        gunType = weapon.gunType;
+        currentHeat = weaponCurrentHeats[gunType];
 
         muzzleFlash.transform.SetParent(GameManager.instance.player.transform, true);
         flashlight.transform.SetParent(GameManager.instance.player.transform, true);
@@ -476,6 +493,8 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = weapon.itemModel.GetComponent<MeshRenderer>().sharedMaterial;
 
         adjustGlow();
+
+        
     }
 
     public void addWeapon(pickupStats weapon)
@@ -484,25 +503,79 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         weapons.Add(weapon);
         setWeapon(weapon);
         selectedGun = weapons.IndexOf(weapon);
+
+        if(weapon.gunType == pickupStats.weaponType.rifle)
+            StaticData.hasRifle = true;
+        else if(weapon.gunType == pickupStats.weaponType.shotgun)
+            StaticData.hasShotgun = true;   
+        else if(weapon.gunType == pickupStats.weaponType.sniper)
+            StaticData.hasSniper = true;
+
     }
 
-    void coolWeapon()
+    void coolWeapon(pickupStats.weaponType weaponType, float weaponCoolRate)
     {
-        currentHeat -= coolRate * Time.deltaTime;
+        weaponCurrentHeats[weaponType] -= weaponCoolRate * Time.deltaTime;
 
-        if (currentHeat < 0) { currentHeat = 0; }
-        if (currentHeat == 0 && usedToMax) usedToMax = false;
+        if (weaponCurrentHeats[weaponType] < 0) { weaponCurrentHeats[weaponType] = 0; }
+        if (weaponCurrentHeats[weaponType] == 0 && usedToMax) usedToMax = false;
 
         adjustGlow();
     }
 
-    IEnumerator enableCooling()
+    IEnumerator enableCooling(pickupStats.weaponType weaponType)
     {
-        canCool = false;
-        yield return new WaitForSeconds(coolWaitTime);
-        canCool = true;
-        cooldownCoroutine = null;
+        weaponsCanCool[weaponType] = false;
+        yield return new WaitForSeconds(GetCoolTime(weaponType));
+        weaponsCanCool[weaponType] = true;
+        weaponCooldownCoroutines[weaponType] = null;
     }
+
+    float GetCoolRate(pickupStats.weaponType gunType)
+    {
+        float weaponCoolRate = 0f;
+
+        weapons.ForEach(weapon =>
+        {
+            if (weapon.gunType == gunType)
+                weaponCoolRate = weapon.coolRate;
+        });
+
+
+        return weaponCoolRate;
+
+    }
+
+    float GetCoolTime(pickupStats.weaponType gunType)
+    {
+        float weaponCoolTime = 0f;
+
+        weapons.ForEach(weapon =>
+        {
+            if (weapon.gunType == gunType)
+                weaponCoolTime = weapon.coolWaitTime;
+        });
+
+
+        return weaponCoolTime;
+
+    }
+
+    float GetMaxHeat(pickupStats.weaponType gunType)
+    {
+        float weaponMaxHeat = 0f;
+
+        weapons.ForEach(weapon =>
+        {
+            if (weapon.gunType == gunType)
+                weaponMaxHeat = weapon.maxHeat;
+        });
+
+
+        return weaponMaxHeat;
+
+    }
+
 
     void adjustGlow()
     {
@@ -590,7 +663,8 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
 
     void adjustOverheatMeter()
     {
-        GameManager.instance.overheatMeter.fillAmount = currentHeat / maxHeat;
+        if(gunType != pickupStats.weaponType.none)
+            GameManager.instance.overheatMeter.fillAmount = weaponCurrentHeats[gunType] / GetMaxHeat(gunType);
     }
 
     //Getters and setters

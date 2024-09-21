@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class damage : MonoBehaviour
 {
-    [SerializeField] enum damageType {bullet, web, stationary, shield, playerBullet}
+    [SerializeField] enum damageType {bullet, fireball, web, stationary, shield, playerBullet}
     [SerializeField] enum effectType {none, burn, bleed, shock, stun}
     [SerializeField] damageType type;
     [SerializeField] effectType status;
@@ -19,15 +19,9 @@ public class damage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (type == damageType.bullet || type == damageType.web)
+        if (type == damageType.bullet || type == damageType.web || type == damageType.fireball)
         {
             rb.velocity = (GameManager.instance.player.transform.position - transform.position).normalized * speed;
-            Destroy(gameObject, destroyTime);
-        }
-
-        if (type == damageType.playerBullet)
-        {
-            rb.velocity = transform.forward * speed;
             Destroy(gameObject, destroyTime);
         }
     }
@@ -42,6 +36,7 @@ public class damage : MonoBehaviour
 
         else if(dmg != null && other.gameObject.tag == "Player")
         {
+            
 
             //If damage type has a status effect to apply, applies status effect
             if (status != effectType.none)
@@ -54,7 +49,8 @@ public class damage : MonoBehaviour
                         }
                     case (effectType.burn):
                         {
-                            other.GetComponent<playerDamage>().burn();
+                            Debug.Log(other.gameObject.name);
+                            other.gameObject.GetComponent<playerDamage>().burn();
                             break;
                         }
                     case (effectType.bleed):
@@ -76,14 +72,21 @@ public class damage : MonoBehaviour
             }
 
             //if damage type is bullet, is destroyed
-            else if(type == damageType.bullet)
+            if(type == damageType.bullet)
                 Destroy(gameObject);
+
+            else if(type == damageType.fireball)
+            {
+                dmg.takeDamage(damageAmount);
+                Destroy(gameObject);
+            }
 
             //if damage type is the Titan Shield, applies damage
             else if (type == damageType.shield)
             {
                 dmg.takeDamage(damageAmount);
-                gameObject.GetComponent<AudioSource>().PlayOneShot(GetComponentInParent<TitanAI>().shieldHit);
+                gameObject.GetComponent<AudioSource>().clip = GetComponentInParent<TitanAI>().shieldHit;
+                gameObject.GetComponent<AudioSource>().Play();
             }
 
         }
