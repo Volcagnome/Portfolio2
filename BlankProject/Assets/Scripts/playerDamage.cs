@@ -444,7 +444,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
 
     public void criticalHit(float amount)
     {
-
+        takeDamage(amount);
     }
 
     public void setWeapon(pickupStats weapon)

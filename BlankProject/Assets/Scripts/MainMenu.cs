@@ -40,7 +40,7 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        SetActiveScene(SceneManager.GetSceneByBuildIndex(2));
+        SetActiveScene(SceneManager.GetSceneByBuildIndex(0));
     }
 
     public static void SetActiveScene(UnityEngine.SceneManagement.Scene scene)
@@ -49,7 +49,7 @@ public class MainMenu : MonoBehaviour
     }
     public void Play()
     {
-        SceneManager.LoadScene("Main Scene");
+        SceneManager.LoadScene("Main Scene Tutorial Level");
     }
 
     public void Quit()

@@ -10336,18 +10336,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  status: 1
   rb: {fileID: 5932395650138997657}
   damageAmount: 10
-  speed: 35
+  speed: 30
   destroyTime: 10
-  audioP: {fileID: 0}
-  hit: {fileID: 0}
   explosion: {fileID: 4596544553357837919, guid: 0ae0194d957f652498badc204efa0729, type: 3}
   audioPlayer: {fileID: -5289838688238568820}
   flightLoop: {fileID: 8300000, guid: 41c40a240cf254a40a1889f057f70cd8, type: 3}
-  areaOfEffect: 5
+  areaOfEffect: 10
   aoeDamage: 5
-  offsetRange: 0
+  offsetRange: 2
 --- !u!23 &2657847126532783500
 MeshRenderer:
   m_ObjectHideFlags: 0

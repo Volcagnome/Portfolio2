@@ -28,10 +28,11 @@ public class buttonFunctions : MonoBehaviour
 
     public void respawn()
     {
-        StartCoroutine(GameManager.instance.RespawnBuffer());
         GameManager.instance.stateUnpaused();
+        StartCoroutine(GameManager.instance.RespawnBuffer());
         //GameManager.instance.player.GetComponent<playerDamage>().spawnPlayer();
         GameManager.instance.player.GetComponent<playerDamage>().setHP(GameManager.instance.player.GetComponent<playerDamage>().getMaxHP());
+        GameManager.instance.player.GetComponent<playerMovement>().setStamina(GameManager.instance.player.GetComponent<playerMovement>().getMaxStamina());
         GameManager.instance.player.GetComponent<playerDamage>().adjustHPBar();
         GameManager.instance.player.GetComponent<playerMovement>().enabled = false;
         GameManager.instance.player.transform.position = GameManager.instance.currentSpawn.transform.position;

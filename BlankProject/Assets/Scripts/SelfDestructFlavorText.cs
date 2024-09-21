@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class SelfDestructFlavorText : MonoBehaviour
 {
 
@@ -9,6 +10,7 @@ public class SelfDestructFlavorText : MonoBehaviour
     {
         if(GameManager.instance.GetCommandCodesEntered() ==6)
         {
+            BossFight.instance.ChangeToInvasionScreen();
             GameManager.instance.ShowSelfDestructFlavorText();
         }
     }

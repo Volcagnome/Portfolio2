@@ -44,7 +44,7 @@ public class togglingItem : MonoBehaviour, IInteract, ISendState
         
 
         //// Play interact sound:
-        GameManager.instance.playAud(interactSound, interactVol);
+        GetComponent<AudioSource>().PlayOneShot(interactSound, interactVol);
 
         // Action the toggled object's sound:
         //GameManager.instance.playAud(itemOnState.GetComponent<toggleReciever>().toggleSound, itemOnState.GetComponent<toggleReciever>().toggleVol);

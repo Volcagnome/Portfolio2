@@ -20,6 +20,10 @@ public class guardAI : SharedEnemyAI, IDamage
     {
         currentAmmo = ammoCapacity;
 
+        enemyDetectionLevel = 0;
+        currentDetectTime = detectTime;
+
+
         if (loadedFromState == false)
             HP = HPOrig;
 
@@ -90,18 +94,24 @@ public class guardAI : SharedEnemyAI, IDamage
 
     public override void XrayEnemy(GameObject enemy, bool xrayApplied)
     {
-        Material materialToApply;
+        //Material materialToApply;
 
-        if (xrayApplied)
-            materialToApply = xrayMaterial;
+        //if (xrayApplied)
+        //    materialToApply = xrayMaterial;
 
-        else
-            materialToApply = originalMaterial;
+        //else
+        //    materialToApply = originalMaterial;
 
-        for (int bodyPart = 3; bodyPart < 11; bodyPart++)
-                enemy.transform.GetChild(bodyPart).GetComponent<SkinnedMeshRenderer>().material = materialToApply;
+        //for (int bodyPart = 3; bodyPart < 11; bodyPart++)
+        //        enemy.transform.GetChild(bodyPart).GetComponent<SkinnedMeshRenderer>().material = materialToApply;
 
 
     }
 
+    protected override void ChangeMaterial(Material material)
+    {
+
+        for (int bodyPart = 1; bodyPart < 9; bodyPart++)
+            gameObject.transform.GetChild(bodyPart).GetComponentInChildren<SkinnedMeshRenderer>().material = material;
+    }
 }

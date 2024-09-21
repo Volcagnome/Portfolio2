@@ -486,7 +486,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5094525618360395878}
-  - {fileID: 5324973315049305798}
   - {fileID: 3766914114314167456}
   - {fileID: 5733093869059873986}
   - {fileID: 1017801309110602861}
@@ -523,7 +522,8 @@ MonoBehaviour:
   DeathFXPos: {fileID: 1042012439092104159}
   weakspot: {fileID: 8539032962440716035}
   audioPlayer: {fileID: 6835416988291081141}
-  xrayMaterial: {fileID: 2100000, guid: 6a80a0d52731c4f429d32eab727f0ed6, type: 2}
+  detectingMaterial: {fileID: 2100000, guid: 3e083aa4f7022e5469ae74dc3d9f294d, type: 2}
+  detectedMaterial: {fileID: 2100000, guid: 6a80a0d52731c4f429d32eab727f0ed6, type: 2}
   originalMaterial: {fileID: 2100000, guid: a10f2ffdb2d39e04e928792eaec157cd, type: 2}
   shootPos: {fileID: 6658946209463232583}
   weapon_R: {fileID: 7921804915135829648}
@@ -531,11 +531,13 @@ MonoBehaviour:
   aimOffset: 0.2
   FOV_Angle: 60
   rotationSpeed: 8
+  enemyDetectionLevelOG: 3
   playerDetectionCircle: {fileID: 5272966130106366152}
   playerDetectionCircleFill: {fileID: 1566815049962771137}
   playerInViewIndicator: {fileID: 5055395013262287134}
+  detectTime: 3
   enemy_Type: 1
-  HPOrig: 25
+  HPOrig: 35
   shootRate: 0.5
   combatSpeed: 6
   combatStoppingDistance: 12
@@ -561,14 +563,16 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 298375992589dd144bf8a4e4c38afcc4, type: 3}
   idleSounds:
   - {fileID: 8300000, guid: ce9f6e09e1337e14ca8ac70add61bdf0, type: 3}
-  - {fileID: 8300000, guid: fa921e953374f4e478f6930b95a77083, type: 3}
+  - {fileID: 8300000, guid: 0c093dfe989715d488411c19041b780f, type: 3}
   - {fileID: 8300000, guid: 53469338270657d4abd9828716208b6d, type: 3}
-  - {fileID: 8300000, guid: 903731ea5f531624db6d814ae18b0f3f, type: 3}
+  - {fileID: 8300000, guid: efdbcc9a887150c4686304ab30abe384, type: 3}
   - {fileID: 8300000, guid: 700d345f344a77e4aa8e7c8a915d370e, type: 3}
   - {fileID: 8300000, guid: cca8763d66e982c4684d3bccc6f95570, type: 3}
   - {fileID: 8300000, guid: e5746a36b320bfd47b1cfc26b831cb8d, type: 3}
   foundPlayer: {fileID: 8300000, guid: ee793f4544110b6498d19d2944827b59, type: 3}
   weaponReload: {fileID: 8300000, guid: f2deeeda530014c47bd415811a85c882, type: 3}
+  whatWasThat: {fileID: 8300000, guid: 5dd4130fad68d0e4ebf33cd7140f6213, type: 3}
+  mustHaveBeenTheWind: {fileID: 8300000, guid: b5c0d25a49c00434b82b2a1d12ae9c05, type: 3}
 --- !u!95 &3788560258377371370
 Animator:
   serializedVersion: 5
@@ -876,100 +880,6 @@ Transform:
   - {fileID: 179200672982819768}
   m_Father: {fileID: 1778476228570209765}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1362190719836003995
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5324973315049305798}
-  - component: {fileID: 5257140365575163532}
-  - component: {fileID: 7007188413779429083}
-  - component: {fileID: 9148110086135734673}
-  m_Layer: 7
-  m_Name: Outer Detection Sphere
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5324973315049305798
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1362190719836003995}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1493173211685652627}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5257140365575163532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1362190719836003995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c60f3558bc7bb0e409b148adb723ec76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!135 &7007188413779429083
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1362190719836003995}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 2147484535
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 22
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &9148110086135734673
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1362190719836003995}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &1660895762044957240
 GameObject:
   m_ObjectHideFlags: 0
@@ -3892,15 +3802,15 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 629c356021184af419a09273fc97c0d7, type: 3}
     - target: {fileID: 4565427909029712784, guid: e730623cb86fb8d479e54d51f2e481eb, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4565427909029712784, guid: e730623cb86fb8d479e54d51f2e481eb, type: 3}
       propertyPath: m_Color.g
-      value: 0.92442274
+      value: 0.07026876
       objectReference: {fileID: 0}
     - target: {fileID: 4565427909029712784, guid: e730623cb86fb8d479e54d51f2e481eb, type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4565427909029712784, guid: e730623cb86fb8d479e54d51f2e481eb, type: 3}
       propertyPath: m_FillAmount

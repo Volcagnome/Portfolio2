@@ -27,7 +27,8 @@ public class SharedEnemyAI : MonoBehaviour
     [SerializeField] protected Transform DeathFXPos;
     [SerializeField] GameObject weakspot;
     [SerializeField] protected AudioSource audioPlayer;
-    [SerializeField] protected Material xrayMaterial;
+    [SerializeField] protected Material detectingMaterial;
+    [SerializeField] protected Material detectedMaterial;
     [SerializeField] protected Material originalMaterial;
 
     [SerializeField] protected Transform shootPos;
@@ -46,13 +47,18 @@ public class SharedEnemyAI : MonoBehaviour
     protected bool playerInOuterRange;
     protected bool playerInView;
     protected float enemyDetectionLevel;
-    float enemyDetectionLevelOG = 100f;
+    [SerializeField] float enemyDetectionLevelOG;
     [SerializeField] protected GameObject playerDetectionCircle;
     [SerializeField] protected Image playerDetectionCircleFill;
     [SerializeField] protected GameObject playerInViewIndicator;
     Coroutine FindIntruderCoroutine;
     Coroutine PursuePlayerCoroutine;
 
+    [SerializeField] protected int detectTime;
+    protected float currentDetectTime;
+    protected bool playerDetected;
+    protected bool detecting;
+    protected bool playerSeenInLast3Sec;
 
 
 
@@ -70,6 +76,7 @@ public class SharedEnemyAI : MonoBehaviour
     protected bool isSearching;
     protected bool loadedFromState;
     protected bool inCrouchRadius;
+    protected bool isPursuing;
 
 
     //Stats
@@ -106,6 +113,9 @@ public class SharedEnemyAI : MonoBehaviour
     [SerializeField] protected List<AudioClip> idleSounds;
     [SerializeField] protected AudioClip foundPlayer;
     [SerializeField] protected AudioClip weaponReload;
+    [SerializeField] AudioClip whatWasThat;
+    [SerializeField] AudioClip mustHaveBeenTheWind;
+
     protected float currentIdleSoundCooldown;
 
 
@@ -113,18 +123,23 @@ public class SharedEnemyAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         currentAmmo = ammoCapacity;
+        enemyDetectionLevel = 0;
+        currentDetectTime = detectTime;
 
         GameManager.instance.player.GetComponent<Camera>().transform.position = GameManager.instance.player.GetComponent<Camera>().transform.position - new Vector3(0f, 1f, 0f);
 
         colorOrig = gameObject.GetComponentInChildren<Renderer>().sharedMaterial.color;
         isAlerted = false;
 
-        enemyDetectionLevel = 0;
+        enemyDetectionLevel = enemyDetectionLevelOG;
         readyToSpeak = true;
         playerSpotted = false;
         currentIdleSoundCooldown = Random.Range(5, maxIdleSoundCooldown); 
         inCrouchRadius = false;
+
+        
     }
 
     // Update is called once per frame
@@ -144,22 +159,47 @@ public class SharedEnemyAI : MonoBehaviour
 
             //If boss fight is currently in progress, enemies will immediately proceed to the player's location 
             //regardless of if they are in range.
-            if (EnemyManager.instance.GetIsBossFight() && !isSearching)
-            {
-                isAlerted = true;
-                onDuty = false;
-                agent.speed = combatSpeed;
-                agent.stoppingDistance = combatStoppingDistance;
-                agent.SetDestination(GameManager.instance.player.transform.position);
+            if (EnemyManager.instance.GetIsBossFight())
+            {   
+                if(!BossFight.instance.GetPlayerRespawned())
+                {
+                    isAlerted = true;
+                    onDuty = false;
+                    agent.speed = combatSpeed;
+                    agent.stoppingDistance = combatStoppingDistance;
+                    agent.SetDestination(GameManager.instance.player.transform.position);
+                }
+                else if(BossFight.instance.GetPlayerRespawned())
+                    agent.SetDestination(defaultPost.transform.position);
             }
-        
+
+
+            if (playerInView)
+            {
+                if (!detecting)
+                    lastKnownPlayerLocation = GameManager.instance.player.transform.position;
+                playerInViewIndicator.SetActive(true);
+
+            }
+            else
+                playerInViewIndicator.SetActive(false);
+
+            if (!isAlerted && !playerDetected && playerInView && !detecting)
+                StartCoroutine(DetectPlayerCoroutine());
+
+            if (detecting || isSearching || isPursuing)
+                ChangeMaterial(detectingMaterial);
+            else if (playerDetected)
+                ChangeMaterial(detectedMaterial);
+            else
+                ChangeMaterial(originalMaterial);
+
+
             //If player is in view, notes their location, changes their alert status, alerts nearby allies and
             //begins engaging with the player. Otherwise reduces their stopping distance so they can reach their
             //destinations, stops aiming their weapon, and deactivates their playerInView indicator.
-            if (playerInView)
+            if (playerInView && playerDetected)
             {
-                lastKnownPlayerLocation = GameManager.instance.player.transform.position;
-
 
                 if (!isAlerted)
                 {
@@ -192,7 +232,7 @@ public class SharedEnemyAI : MonoBehaviour
             if (isAlerted)
             {
 
-                if (!playerInView && !isRespondingToAlert && !isSearching)
+                if (!playerInView && !isRespondingToAlert && !isSearching && !EnemyManager.instance.GetIsBossFight())
                 { 
                     StartCoroutine(PursuePlayer());
                 }
@@ -218,7 +258,7 @@ public class SharedEnemyAI : MonoBehaviour
 
             //If player is within its outer range or is alerted, makes its detection meter visible and updates it appropriately,
             //otherwise hides it.
-            if (isAlerted || playerInOuterRange)
+            if (detecting || isAlerted)
                 UpdateDetectionUI();
             else
             {
@@ -237,7 +277,7 @@ public class SharedEnemyAI : MonoBehaviour
     //if player is in view.
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !isDead)
+        if (other.CompareTag("Player") && !isDead && !other.isTrigger)
         {
             playerInRange = true;
             StartCoroutine(FOVRoutine());
@@ -252,7 +292,7 @@ public class SharedEnemyAI : MonoBehaviour
     //idle behavior.
     protected void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !other.isTrigger)
         {
             playerDetectionCircle.SetActive(false);
 
@@ -263,15 +303,114 @@ public class SharedEnemyAI : MonoBehaviour
             if (isAlerted && !GameManager.instance.GetIsRespawning())
                 lastKnownPlayerLocation = GameManager.instance.player.transform.position;
 
-            else if (EnemyManager.instance.GetIsBossFight() && GameManager.instance.GetIsRespawning())
-                    SearchArea(lastKnownPlayerLocation, 99);
-
-            else if (isAlerted && GameManager.instance.GetIsRespawning())
+            else if (isAlerted && GameManager.instance.GetIsRespawning() && !EnemyManager.instance.GetIsBossFight())
                 CalmEnemy();
         }
         else
             return;
     }
+
+    protected void DetectPlayer()
+    {
+        agent.isStopped = true;
+        RotateToPlayer();
+
+        if (currentDetectTime > 0)
+        {
+            currentDetectTime -= Time.deltaTime;
+
+            if (playerInView)
+                enemyDetectionLevel += Time.deltaTime;
+            else if (!playerInView)
+                enemyDetectionLevel -= Time.deltaTime;
+        }
+
+        if (currentDetectTime <= 0 && playerInView)
+        {
+            enemyDetectionLevel = enemyDetectionLevelOG;
+            agent.isStopped = false;
+            playerDetected = true;
+            currentDetectTime = detectTime;
+        }
+        else if (currentDetectTime <= 0 && !playerInView)
+        {
+            enemyDetectionLevel = 0;
+            agent.isStopped = false;
+            currentDetectTime = detectTime + 0.1f;
+        }
+
+        //if (enemyDetectionLevel > 0)
+        //    enemyDetectionLevel -= Time.deltaTime;
+
+        //if (enemyDetectionLevel <= 0 && playerInView)
+        //{
+        //    agent.isStopped = false;
+        //    playerDetected = true;
+        //}
+        //else if (enemyDetectionLevel <= 0 && !playerInView)
+        //{
+        //    enemyDetectionLevel = enemyDetectionLevelOG;
+        //    agent.isStopped = false;
+        //}
+    }
+
+    protected IEnumerator DetectPlayerCoroutine()
+    {
+        detecting = true;
+
+        GetComponent<AudioSource>().PlayOneShot(whatWasThat);
+        agent.isStopped = true;
+
+
+        while (currentDetectTime > 0 )
+        {
+            playerDirection = lastKnownPlayerLocation - transform.position;
+            Quaternion rotationToPlayer = Quaternion.LookRotation(playerDirection);
+            transform.rotation = Quaternion.Lerp(transform.rotation, rotationToPlayer, Time.deltaTime * rotationSpeed);
+
+            currentDetectTime -= Time.deltaTime;
+
+            if (playerInView)
+                enemyDetectionLevel += Time.deltaTime;
+            else if (!playerInView)
+                enemyDetectionLevel -= Time.deltaTime;
+
+            yield return null;
+        }
+
+        if (enemyDetectionLevel >= enemyDetectionLevelOG)
+        {
+            enemyDetectionLevel = enemyDetectionLevelOG;
+            playerDetected = true;
+            currentDetectTime = detectTime;
+        }
+        else if (currentDetectTime <= 0 && !playerInView)
+        {
+            enemyDetectionLevel = 0;
+            currentDetectTime = detectTime;
+            GetComponent<AudioSource>().PlayOneShot(mustHaveBeenTheWind);
+        }
+
+        agent.isStopped = false;
+        detecting = false;
+        yield break;
+    }
+
+    protected IEnumerator PlayerSeenTimer()
+    {
+        playerSeenInLast3Sec = true;
+
+        yield return new WaitForSeconds(3f);
+
+        if (!playerInView)
+        {
+            playerSeenInLast3Sec = false;
+            yield break;
+        }
+        else if(playerInView)
+            StartCoroutine(PlayerSeenTimer());
+    }
+
 
     //Calls the FieldOfViewCheck function at regular intervals, but not every single frame.
     protected IEnumerator FOVRoutine()
@@ -335,52 +474,55 @@ public class SharedEnemyAI : MonoBehaviour
     {
         playerDetectionCircle.SetActive(true);
 
-        float innerDetectionRadius = (gameObject.GetComponent<SphereCollider>().radius) * gameObject.transform.localScale.x;
-        float outerDetectionRadius = (gameObject.transform.GetChild(1).GetComponent<SphereCollider>().radius) * gameObject.transform.localScale.x;
+        
 
-        playerDirection = GameManager.instance.player.transform.position - headPos.position;
-        angleToPlayer = Vector3.Angle(playerDirection, transform.forward);
-        distanceToPlayer = Vector3.Distance(GameManager.instance.player.transform.position, transform.position);
 
-        if (playerInRange)
-        {
-            if (angleToPlayer > 90f)
-                enemyDetectionLevel = 0f;
-            else if (angleToPlayer <= 90f && angleToPlayer >= 60f)
-                enemyDetectionLevel = ((90f - angleToPlayer) / 30f) * 100f;
-        }
-        else if (playerInOuterRange && angleToPlayer < 60f)
-        {
+        //float innerDetectionRadius = (gameObject.GetComponent<SphereCollider>().radius) * gameObject.transform.localScale.x;
+        //float outerDetectionRadius = (gameObject.transform.GetChild(1).GetComponent<SphereCollider>().radius) * gameObject.transform.localScale.x;
 
-            if (distanceToPlayer >= innerDetectionRadius && distanceToPlayer < outerDetectionRadius)
-                enemyDetectionLevel = (100f - (((distanceToPlayer - innerDetectionRadius) / (outerDetectionRadius - innerDetectionRadius)) * 100f));
-        }
-        else if (playerInOuterRange && angleToPlayer > 60f)
-            enemyDetectionLevel = 0f;
+        //playerDirection = GameManager.instance.player.transform.position - headPos.position;
+        //angleToPlayer = Vector3.Angle(playerDirection, transform.forward);
+        //distanceToPlayer = Vector3.Distance(GameManager.instance.player.transform.position, transform.position);
+
+        //if (playerInRange)
+        //{
+        //    if (angleToPlayer > 90f)
+        //        enemyDetectionLevel = 0f;
+        //    else if (angleToPlayer <= 90f && angleToPlayer >= 60f)
+        //        enemyDetectionLevel = ((90f - angleToPlayer) / 30f) * 100f;
+        //}
+        //else if (playerInOuterRange && angleToPlayer < 60f)
+        //{
+
+        //    if (distanceToPlayer >= innerDetectionRadius && distanceToPlayer < outerDetectionRadius)
+        //        enemyDetectionLevel = (100f - (((distanceToPlayer - innerDetectionRadius) / (outerDetectionRadius - innerDetectionRadius)) * 100f));
+        //}
+        //else if (playerInOuterRange && angleToPlayer > 60f)
+        //    enemyDetectionLevel = 0f;
 
 
 
         playerDetectionCircleFill.fillAmount = enemyDetectionLevel / enemyDetectionLevelOG;
         playerDetectionCircle.transform.parent.rotation = Camera.main.transform.rotation;
 
-        if (enemyDetectionLevel > enemyDetectionLevelOG)
-            enemyDetectionLevel = enemyDetectionLevelOG;
+        //if (enemyDetectionLevel > enemyDetectionLevelOG)
+        //    enemyDetectionLevel = enemyDetectionLevelOG;
 
-        if (enemyDetectionLevel <= 33f)
-        {
-            playerDetectionCircleFill.color = Color.cyan;
+        //if (enemyDetectionLevel <= 33f)
+        //{
+        //    playerDetectionCircleFill.color = Color.cyan;
 
-        }
-        else if (enemyDetectionLevel > 33f && enemyDetectionLevel <= 66f)
-        {
-            playerDetectionCircleFill.color = Color.yellow;
+        //}
+        //else if (enemyDetectionLevel > 33f && enemyDetectionLevel <= 66f)
+        //{
+        //    playerDetectionCircleFill.color = Color.yellow;
 
-        }
-        else if (enemyDetectionLevel > 66f)
-        {
-            playerDetectionCircleFill.color = Color.red;
+        //}
+        //else if (enemyDetectionLevel > 66f)
+        //{
+        //    playerDetectionCircleFill.color = Color.red;
 
-        }
+        //}
     }
 
 
@@ -401,7 +543,7 @@ public class SharedEnemyAI : MonoBehaviour
     //if they reach the player's last known location, pauses for a second, then returns to their idle behavior.
     protected IEnumerator PursuePlayer()
     {
-
+        isPursuing = true;
         agent.SetDestination(lastKnownPlayerLocation);
 
         if (!EnemyManager.instance.GetIsBossFight() && !isEndgameEnemy && agent.remainingDistance <= 0.3f || !agent.hasPath)
@@ -411,6 +553,8 @@ public class SharedEnemyAI : MonoBehaviour
         }
         else if (agent.remainingDistance <= 0.3f && isEndgameEnemy)
             StartCoroutine(SearchArea(lastKnownPlayerLocation, IntruderAlertManager.instance.GetMaxSearchAttempts()));
+
+        isPursuing = false;
     }
 
     // If the FindIntruder coroutine is already in progress, stops it and restarts it with a new location to 
@@ -709,6 +853,7 @@ public class SharedEnemyAI : MonoBehaviour
     {
         RevertDetectionRadius();
         isAlerted = true;
+        playerDetected = true;
         enemyDetectionLevel = enemyDetectionLevelOG;
         transform.GetChild(0).tag = "Alerted";
         agent.speed = combatSpeed;
@@ -811,11 +956,16 @@ public class SharedEnemyAI : MonoBehaviour
     public virtual void XrayEnemy(GameObject enemy,bool xrayApplied)
     {
 
-        if(xrayApplied)
-            enemy.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = xrayMaterial;
-        else
-            enemy.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = originalMaterial;
+        //if(xrayApplied)
+        //    enemy.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = xrayMaterial;
+        //else
+        //    enemy.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = originalMaterial;
 
+    }
+
+    protected virtual void ChangeMaterial(Material material)
+    {
+            GetComponentInChildren<SkinnedMeshRenderer>().material = material;
     }
 
     protected void SetPlayerCrouchedDetectionRadius()
@@ -889,11 +1039,13 @@ public bool GetIsEndGameEnemy() { return isEndgameEnemy; }
 
 public void SetIsEndGameEnemy(bool status) { isEndgameEnemy= status; }
 
-public Material GetXrayMaterial() { return xrayMaterial; }
+//public Material GetXrayMaterial() { return xrayMaterial; }
 
 public Material GetOriginalMaterial() { return originalMaterial; }
 
 public void SetInCrouchRadius(bool status) { inCrouchRadius = status;  }
+
+public bool GetIsDetecting() { return detecting; }
 
 
 }

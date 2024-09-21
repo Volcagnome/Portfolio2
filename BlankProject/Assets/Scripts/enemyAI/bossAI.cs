@@ -98,12 +98,12 @@ public class bossAI : SharedEnemyAI, IDamage
                 AlertEnemy();
             FoundPlayer();
 
-            if (!playerSpotted)
-            {
-                if (!audioPlayer.isPlaying)
-                    audioPlayer.PlayOneShot(foundPlayer, 3f);
-                playerSpotted = true;
-            }
+            //if (!playerSpotted)
+            //{
+            //    if (!audioPlayer.isPlaying)
+            //        audioPlayer.PlayOneShot(foundPlayer, 3f);
+            //    playerSpotted = true;
+            //}
 
         }else if (playerInRange && isAlerted && !GameManager.instance.GetIsRespawning())
             agent.SetDestination(GameManager.instance.player.transform.position);
@@ -276,8 +276,6 @@ public class bossAI : SharedEnemyAI, IDamage
 
         AudioSource audioPlayer = TurretCycler_L.GetComponent<AudioSource>();
 
-
-
         StartCoroutine(shoot(MainTurretAmmo,mainTurretShootPosL));
         Instantiate(MainTurretAmmo, MainTurret_L.transform.GetChild(0).transform.position, MainTurret_L.transform.localRotation);
         audioPlayer.PlayOneShot(mainTurretSounds[Random.Range(0, 2)]);
@@ -304,7 +302,6 @@ public class bossAI : SharedEnemyAI, IDamage
 
     protected virtual IEnumerator shoot(GameObject ammoType, Transform shootPos)
     {
-        anim.SetTrigger("Shoot");
 
         isShooting = true;
 
@@ -361,6 +358,8 @@ public class bossAI : SharedEnemyAI, IDamage
         DeathShared();
 
         agent.isStopped = true;
+
+        GetComponent<AudioSource>().mute = true;
 
         anim.SetBool("isDead", true);
         playerInRange = false;

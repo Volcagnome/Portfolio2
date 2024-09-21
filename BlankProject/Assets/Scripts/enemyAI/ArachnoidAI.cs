@@ -7,9 +7,6 @@ using UnityEngine.AI;
 //Handles all behavior unique to spider robots, everything else handled by SharedEnemyAI.
 public class ArachnoidAI : SharedEnemyAI,IDamage
 {
-
-   
-
     //Web line renderer
     [SerializeField] LineRenderer web;
     [SerializeField] Material originalMaterial2;
@@ -235,30 +232,30 @@ public class ArachnoidAI : SharedEnemyAI,IDamage
 
     public override void XrayEnemy(GameObject spider, bool xrayApplied)
     {
-        Material body1 = null;
-        Material body2 = null;
+        //Material body1 = null;
+        //Material body2 = null;
 
 
-        if (xrayApplied)
-        {
-            body1 = xrayMaterial;
-            body2 = xrayMaterial2;
-        }
-        else
-        {
-             body1 = originalMaterial;
-             body2 = originalMaterial2;
-        }
+        //if (xrayApplied)
+        //{
+        //    body1 = xrayMaterial;
+        //    body2 = xrayMaterial2;
+        //}
+        //else
+        //{
+        //     body1 = originalMaterial;
+        //     body2 = originalMaterial2;
+        //}
 
-        transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().material = body2;
+        //transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().material = body2;
 
-        for(int bodyPart = 3; bodyPart < 11; bodyPart++) 
-        {
-            if(bodyPart <7)
-                transform.GetChild(bodyPart).GetComponent<SkinnedMeshRenderer>().material = body1;
-            else
-                transform.GetChild(bodyPart).GetComponent<SkinnedMeshRenderer>().material = body2;
-        }
+        //for(int bodyPart = 3; bodyPart < 11; bodyPart++) 
+        //{
+        //    if(bodyPart <7)
+        //        transform.GetChild(bodyPart).GetComponent<SkinnedMeshRenderer>().material = body1;
+        //    else
+        //        transform.GetChild(bodyPart).GetComponent<SkinnedMeshRenderer>().material = body2;
+        //}
     }
 
 
