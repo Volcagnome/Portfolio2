@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8784239593785723963
 Transform:
   m_ObjectHideFlags: 0
@@ -97,10 +97,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0c8d225f30c1264d857ac009dd937f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 3
-  status: 4
+  type: 4
+  status: 0
   rb: {fileID: 6194992815561829467}
-  damageAmount: 10
+  damageAmount: 5
   speed: 0
   destroyTime: 0
 --- !u!82 &2847460687129663518
@@ -1766,7 +1766,7 @@ MonoBehaviour:
   shootPos: {fileID: 4308819190186378879}
   weapon_R: {fileID: 8424071460399303199}
   ammoType: {fileID: 6804835773319123192, guid: f3238337713f29e4bad8388c8f8db6d6, type: 3}
-  aimOffset: 0.5
+  aimOffset: 0.4
   FOV_Angle: 60
   rotationSpeed: 5
   enemyDetectionLevelOG: 3

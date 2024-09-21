@@ -1393,11 +1393,11 @@ MonoBehaviour:
   aimOffset: 0.5
   FOV_Angle: 60
   rotationSpeed: 8
-  enemyDetectionLevelOG: 3
+  enemyDetectionLevelOG: 2.7
   playerDetectionCircle: {fileID: 117442370378002146}
   playerDetectionCircleFill: {fileID: 6715458616957486315}
   playerInViewIndicator: {fileID: 4013727725787506343}
-  detectTime: 3
+  detectTime: 2.7
   enemy_Type: 2
   HPOrig: 10
   shootRate: 0.5
@@ -1405,8 +1405,8 @@ MonoBehaviour:
   combatStoppingDistance: 12
   idleStoppingDistance: 0.4
   idleSpeed: 2.5
-  originalDetectionRadius: 12
-  detectionRadiusPlayerCrouched: 6
+  originalDetectionRadius: 17
+  detectionRadiusPlayerCrouched: 12
   ammoCapacity: 14
   allyRadius: 12
   allyLayer:
@@ -1498,7 +1498,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 12
+  m_Radius: 17
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1822346372569148870
 Rigidbody:

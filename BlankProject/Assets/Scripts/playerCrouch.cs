@@ -224,7 +224,7 @@ public class playerCrouch : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy") && other.isTrigger == false)
             other.gameObject.GetComponent<SharedEnemyAI>().SetInCrouchRadius(false);
         else
             return;

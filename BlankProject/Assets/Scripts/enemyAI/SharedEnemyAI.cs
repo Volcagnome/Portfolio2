@@ -54,7 +54,7 @@ public class SharedEnemyAI : MonoBehaviour
     Coroutine FindIntruderCoroutine;
     Coroutine PursuePlayerCoroutine;
 
-    [SerializeField] protected int detectTime;
+    [SerializeField] protected float detectTime;
     protected float currentDetectTime;
     protected bool playerDetected;
     protected bool detecting;
