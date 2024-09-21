@@ -543,6 +543,10 @@ public class GameManager : MonoBehaviour
         sceneWeaponPickupsTotalDisplay.GetComponent<TMP_Text>().text = sceneWeaponPickupsTotal.ToString();
     }
 
+    public void AddWeaponIcon(pickupStats weapon)
+    {
+
+    }
 
     // Getters / setters:
     public int GetCommandCodesEntered() { return commandCodesEntered; }

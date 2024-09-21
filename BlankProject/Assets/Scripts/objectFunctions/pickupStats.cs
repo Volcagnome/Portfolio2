@@ -7,6 +7,7 @@ using UnityEngine;
 public class pickupStats : ScriptableObject
 {
     public enum pickupType { upgrade, weapon, commandCode, securityPassword}
+    public enum weaponType { pistol, shotgun, rifle, sniper}
 
 
     [Header("----Name----")]
@@ -28,7 +29,7 @@ public class pickupStats : ScriptableObject
     public bool xrayAbilityUnlocked;
 
     [Header("----Weapon Stats----")]
-    public bool shotgun;
+    public 
     public float shootRate;
     public int shootDamage;
     public float shootDist;
