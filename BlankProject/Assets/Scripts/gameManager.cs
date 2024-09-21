@@ -631,6 +631,14 @@ public class GameManager : MonoBehaviour
     {
         isRespawning = true;
 
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach (var enemy in enemies)
+        {
+            if(!EnemyManager.instance.GetIsBossFight())
+                enemy.GetComponent<SharedEnemyAI>().CalmEnemy();
+        }
+
         yield return new WaitForSeconds(2f);
 
         isRespawning = false;

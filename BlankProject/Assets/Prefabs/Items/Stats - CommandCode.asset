@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae0f0175c4cd0084b90b4432945505f0, type: 3}
   m_Name: Stats - CommandCode
   m_EditorClassIdentifier: 
-  itemName: CommandCode - Level 1
+  itemName: CommandCode
   type: 2
   itemModel: {fileID: 4750624708484409648, guid: 95fe5471a767ea64690a76d078f54a63, type: 3}
   modelScale: 1
@@ -21,15 +21,18 @@ MonoBehaviour:
   damageUP: 0
   batteryUP: 0
   speed: 0
+  xrayAbilityUnlocked: 0
   shotgun: 0
   shootRate: 0
   shootDamage: 0
   shootDist: 0
   dmgMultiplier: 0
+  currentHeat: 0
   maxHeat: 0
   heatPerShot: 0
   coolRate: 0
   coolWaitTime: 0
   modelRotationAxis: {x: 0, y: 0, z: 0}
   rotationAngle: 0
-  passwordCombo: 0
+  fireSound: {fileID: 0}
+  fireVol: 0

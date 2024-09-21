@@ -17,7 +17,6 @@ public class patrolAI : SharedEnemyAI,IDamage
     [SerializeField] AudioClip raisingAlarmSound;
     [SerializeField] Material whistleBlowerOutline;
 
-
     // Start is called before the first frame update
     //If patrol has no default post, is passed to EnemyManager for patrol route assignment. Otherwise, if default post has been
     //manually assigned will add itself to the list of robots assigned to the route and pass itself to the enemy manager to add it
@@ -79,9 +78,6 @@ public class patrolAI : SharedEnemyAI,IDamage
                     }
                 }
 
-                //if (playerInView && !playerSeenInLast3Sec)
-                //    StartCoroutine(PlayerSeenTimer());
-
 
                 if (playerInView)
                 {
@@ -98,10 +94,10 @@ public class patrolAI : SharedEnemyAI,IDamage
 
 
                 if (detecting || isSearching || isPursuing)
-                    ChangeMaterial(detectingMaterial);
+                    ChangeMaterial(searchingMaterial);
                 else if (playerDetected)
-                    ChangeMaterial(detectedMaterial);
-                else
+                    ChangeMaterial(hostileMaterial);
+                else if (!isXrayed)
                     ChangeMaterial(originalMaterial);
 
 
@@ -190,7 +186,7 @@ public class patrolAI : SharedEnemyAI,IDamage
 
             audioPlayer.PlayOneShot(raisingAlarmSound);
 
-            GetComponentInChildren<SkinnedMeshRenderer>().material = detectedMaterial;
+            GetComponentInChildren<SkinnedMeshRenderer>().material = hostileMaterial;
 
             GameObject nearestButton = IntruderAlertManager.instance.SetIsRaisingAlarm(gameObject);
 

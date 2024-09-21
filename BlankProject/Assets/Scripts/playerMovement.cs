@@ -74,7 +74,10 @@ public class playerMovement : MonoBehaviour
 
         //If player is currently caught by a spider web, debuffs speed per the serialized field in LevelManager
         if (isCaught)
+        {
             speed = speedOG * IntruderAlertManager.instance.GetWebSpeedDebuff();
+
+        }
 
     }
 

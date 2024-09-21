@@ -113,10 +113,7 @@ public class ArachnoidAI : SharedEnemyAI,IDamage
                 web.enabled = true;
                 GameManager.instance.webbedOverlay.SetActive(true);
             }
-            
         }
-        else
-            ReleaseFromWeb();
         
 
     }
@@ -190,7 +187,7 @@ public class ArachnoidAI : SharedEnemyAI,IDamage
             if (hit.collider.gameObject.CompareTag("Player"))
             {
                 caughtPlayer = true;
-                GameManager.instance.playerScript.SetIsCaught(true);
+                GameManager.instance.player.GetComponent<playerMovement>().SetIsCaught(true);
             }
 
         yield return new WaitForSeconds(shootRate);
@@ -206,8 +203,8 @@ public class ArachnoidAI : SharedEnemyAI,IDamage
 
         if (caughtPlayer)
         {
-            GameManager.instance.playerScript.SetIsCaught(false);
-            GameManager.instance.playerScript.SetSpeed(GameManager.instance.playerScript.GetSpeedOG());
+            GameManager.instance.player.GetComponent<playerMovement>().SetIsCaught(false);
+            GameManager.instance.player.GetComponent<playerMovement>().SetSpeed(GameManager.instance.player.GetComponent<playerMovement>().GetSpeedOG());
             GameManager.instance.webbedOverlay.SetActive(false);
         }
 
@@ -218,8 +215,8 @@ public class ArachnoidAI : SharedEnemyAI,IDamage
     {
         web.enabled = false;
         caughtPlayer = false;
-        GameManager.instance.playerScript.SetIsCaught(false);
-        GameManager.instance.playerScript.SetSpeed(GameManager.instance.playerScript.GetSpeedOG());
+        GameManager.instance.player.GetComponent<playerMovement>().SetIsCaught(false);
+        GameManager.instance.player.GetComponent<playerMovement>().SetSpeed(GameManager.instance.player.GetComponent<playerMovement>().GetSpeedOG());
         GameManager.instance.webbedOverlay.SetActive(false);
     }
 

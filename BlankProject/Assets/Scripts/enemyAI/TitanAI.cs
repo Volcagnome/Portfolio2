@@ -108,10 +108,10 @@ public class TitanAI : SharedEnemyAI, IDamage
 
 
             if (detecting || isSearching || isPursuing)
-                ChangeMaterial(detectingMaterial);
-            else if (playerDetected)
-                ChangeMaterial(detectedMaterial);
-            else
+                ChangeMaterial(searchingMaterial);
+            else if (isAlerted || playerDetected)
+                ChangeMaterial(hostileMaterial);
+            else if(!isXrayed)
                 ChangeMaterial(originalMaterial);
 
             //If player is in view, notes their location, changes their alert status, alerts nearby allies and
@@ -201,7 +201,7 @@ public class TitanAI : SharedEnemyAI, IDamage
         if (currentAmmo < 0)
             weapon_R.transform.LookAt(GameManager.instance.player.transform.position + new Vector3(0, -90f, 0)) ;
 
-        if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) > 10f &&!isShooting)
+        if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) > 7f &&!isShooting)
         {
             inBashingDistance = false;
             if(currentAmmo > 0)
@@ -213,7 +213,7 @@ public class TitanAI : SharedEnemyAI, IDamage
             }
         }
 
-        else if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) <= 10f && !isBashing)
+        else if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) <= 7f && !isBashing)
         {
             inBashingDistance = true;
             agent.stoppingDistance = idleStoppingDistance;
@@ -271,14 +271,12 @@ public class TitanAI : SharedEnemyAI, IDamage
     //Turns on the shield collider when called by the shield bash animation envent.
     private void ShieldColliderOn()
     {
-        Debug.Log("test");
         shieldBashCollider.enabled = true;
     }
 
     //Turns offthe shield collider when called by the shield bash animation envent.
     private void ShieldColliderOff()
     {
-        Debug.Log("test2");
         shieldBashCollider.enabled = false;
     }
 

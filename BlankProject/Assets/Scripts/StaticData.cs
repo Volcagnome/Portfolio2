@@ -7,9 +7,6 @@ using static StaticData;
 using static UnityEngine.EventSystems.EventTrigger;
 
 
-
-
-
 public class StaticData : MonoBehaviour
 {
 
@@ -33,9 +30,6 @@ public class StaticData : MonoBehaviour
 
     public static bool mainFrameDoorOpen = true;
 
-    
-
-
     ////////////////////////////////////////
     ///          PLAYER DATA             ///
     ///////////////////////////////////////
@@ -50,6 +44,9 @@ public class StaticData : MonoBehaviour
     public static List<pickupStats> playerWeaponsList = new List<pickupStats>();
     public static int playerSelectedGun;
     public static bool playerXrayAbility = false;
+    public static bool hasRifle = false;
+    public static bool hasShotgun = false;
+    public static bool hasSniper = false;
 
     public static Dictionary<int, bool> commandCodeSlotFull = new Dictionary<int, bool>()
     { { 1, false },{ 2,false }, { 3, false }, { 4, false },{ 5,false  },{ 6,false }};

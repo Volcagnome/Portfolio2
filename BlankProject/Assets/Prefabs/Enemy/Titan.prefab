@@ -115,13 +115,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.699
-  m_Pitch: -0.07
+  m_Volume: 0.837
+  m_Pitch: 2.02
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 0
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 10
@@ -1630,15 +1630,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -30.548069
+      value: -17.26
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.00000047683716
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -158.69371
+      value: -16.55
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 4835a6657e57ded45b7a7fe2c2d62822, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1760,9 +1760,10 @@ MonoBehaviour:
   DeathFXPos: {fileID: 1612221431707091603}
   weakspot: {fileID: 3110617636192311290}
   audioPlayer: {fileID: 497875255768104274}
-  detectingMaterial: {fileID: 2100000, guid: b1d7473027ce0bb479d6776726c885f4, type: 2}
-  detectedMaterial: {fileID: 2100000, guid: ad3d527baa2d06948bb4c21df20dacb7, type: 2}
+  searchingMaterial: {fileID: 2100000, guid: b1d7473027ce0bb479d6776726c885f4, type: 2}
+  hostileMaterial: {fileID: 2100000, guid: ad3d527baa2d06948bb4c21df20dacb7, type: 2}
   originalMaterial: {fileID: 2100000, guid: eac569fffc8708e45bfc4d3eb33a7055, type: 2}
+  passiveMaterial: {fileID: 2100000, guid: a7485d90b09a7bc43a0f48d222e5fbbc, type: 2}
   shootPos: {fileID: 4308819190186378879}
   weapon_R: {fileID: 8424071460399303199}
   ammoType: {fileID: 6804835773319123192, guid: f3238337713f29e4bad8388c8f8db6d6, type: 3}
@@ -1829,7 +1830,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: -0.12
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!136 &3151778533451312120
@@ -1845,7 +1846,7 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 2147484151
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0

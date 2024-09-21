@@ -27,9 +27,10 @@ public class SharedEnemyAI : MonoBehaviour
     [SerializeField] protected Transform DeathFXPos;
     [SerializeField] GameObject weakspot;
     [SerializeField] protected AudioSource audioPlayer;
-    [SerializeField] protected Material detectingMaterial;
-    [SerializeField] protected Material detectedMaterial;
+    [SerializeField] protected Material searchingMaterial;
+    [SerializeField] protected Material hostileMaterial;
     [SerializeField] protected Material originalMaterial;
+    [SerializeField] protected Material passiveMaterial;
 
     [SerializeField] protected Transform shootPos;
     [SerializeField] protected GameObject weapon_R;
@@ -77,6 +78,7 @@ public class SharedEnemyAI : MonoBehaviour
     protected bool loadedFromState;
     protected bool inCrouchRadius;
     protected bool isPursuing;
+    protected bool isXrayed;
 
 
     //Stats
@@ -139,7 +141,6 @@ public class SharedEnemyAI : MonoBehaviour
         currentIdleSoundCooldown = Random.Range(5, maxIdleSoundCooldown); 
         inCrouchRadius = false;
 
-        
     }
 
     // Update is called once per frame
@@ -188,10 +189,10 @@ public class SharedEnemyAI : MonoBehaviour
                 StartCoroutine(DetectPlayerCoroutine());
 
             if (detecting || isSearching || isPursuing)
-                ChangeMaterial(detectingMaterial);
-            else if (playerDetected)
-                ChangeMaterial(detectedMaterial);
-            else
+                ChangeMaterial(searchingMaterial);
+            else if (isAlerted || playerDetected)
+                ChangeMaterial(hostileMaterial);
+            else if(!isXrayed)
                 ChangeMaterial(originalMaterial);
 
 
@@ -233,7 +234,7 @@ public class SharedEnemyAI : MonoBehaviour
             {
 
                 if (!playerInView && !isRespondingToAlert && !isSearching && !EnemyManager.instance.GetIsBossFight())
-                { 
+                {
                     StartCoroutine(PursuePlayer());
                 }
 
@@ -310,34 +311,34 @@ public class SharedEnemyAI : MonoBehaviour
             return;
     }
 
-    protected void DetectPlayer()
-    {
-        agent.isStopped = true;
-        RotateToPlayer();
+    //protected void DetectPlayer()
+    //{
+    //    agent.isStopped = true;
+    //    RotateToPlayer();
 
-        if (currentDetectTime > 0)
-        {
-            currentDetectTime -= Time.deltaTime;
+    //    if (currentDetectTime > 0)
+    //    {
+    //        currentDetectTime -= Time.deltaTime;
 
-            if (playerInView)
-                enemyDetectionLevel += Time.deltaTime;
-            else if (!playerInView)
-                enemyDetectionLevel -= Time.deltaTime;
-        }
+    //        if (playerInView)
+    //            enemyDetectionLevel += Time.deltaTime;
+    //        else if (!playerInView)
+    //            enemyDetectionLevel -= Time.deltaTime;
+    //    }
 
-        if (currentDetectTime <= 0 && playerInView)
-        {
-            enemyDetectionLevel = enemyDetectionLevelOG;
-            agent.isStopped = false;
-            playerDetected = true;
-            currentDetectTime = detectTime;
-        }
-        else if (currentDetectTime <= 0 && !playerInView)
-        {
-            enemyDetectionLevel = 0;
-            agent.isStopped = false;
-            currentDetectTime = detectTime + 0.1f;
-        }
+    //    if (currentDetectTime <= 0 && playerInView)
+    //    {
+    //        enemyDetectionLevel = enemyDetectionLevelOG;
+    //        agent.isStopped = false;
+    //        playerDetected = true;
+    //        currentDetectTime = detectTime;
+    //    }
+    //    else if (currentDetectTime <= 0 && !playerInView)
+    //    {
+    //        enemyDetectionLevel = 0;
+    //        agent.isStopped = false;
+    //        currentDetectTime = detectTime + 0.1f;
+    //    }
 
         //if (enemyDetectionLevel > 0)
         //    enemyDetectionLevel -= Time.deltaTime;
@@ -352,13 +353,14 @@ public class SharedEnemyAI : MonoBehaviour
         //    enemyDetectionLevel = enemyDetectionLevelOG;
         //    agent.isStopped = false;
         //}
-    }
+    //}
 
     protected IEnumerator DetectPlayerCoroutine()
     {
         detecting = true;
 
-        GetComponent<AudioSource>().PlayOneShot(whatWasThat);
+        if(!GetComponent<AudioSource>().isPlaying)
+            GetComponent<AudioSource>().PlayOneShot(whatWasThat);
         agent.isStopped = true;
 
 
@@ -388,7 +390,8 @@ public class SharedEnemyAI : MonoBehaviour
         {
             enemyDetectionLevel = 0;
             currentDetectTime = detectTime;
-            GetComponent<AudioSource>().PlayOneShot(mustHaveBeenTheWind);
+            if (!GetComponent<AudioSource>().isPlaying)
+                GetComponent<AudioSource>().PlayOneShot(mustHaveBeenTheWind);
         }
 
         agent.isStopped = false;
@@ -544,9 +547,12 @@ public class SharedEnemyAI : MonoBehaviour
     protected IEnumerator PursuePlayer()
     {
         isPursuing = true;
+
         agent.SetDestination(lastKnownPlayerLocation);
 
-        if (!EnemyManager.instance.GetIsBossFight() && !isEndgameEnemy && agent.remainingDistance <= 0.3f || !agent.hasPath)
+        yield return new WaitForSeconds(0.5f);
+
+        if (!EnemyManager.instance.GetIsBossFight() && !isEndgameEnemy && Vector3.Distance(transform.position,lastKnownPlayerLocation) <= 0.3f || !agent.hasPath)
         {
             yield return new WaitForSeconds(1.5f);
             CalmEnemy();
@@ -755,6 +761,7 @@ public class SharedEnemyAI : MonoBehaviour
         }
         else 
         {
+
             lastKnownPlayerLocation = GameManager.instance.player.transform.position;
 
             if (!isAlerted)
@@ -888,6 +895,7 @@ public class SharedEnemyAI : MonoBehaviour
     {
         enemyDetectionLevel = 0;
         isAlerted = false;
+        playerDetected = false;
         transform.GetChild(0).tag = "Idle";
         ReturnToPost();
         agent.speed = idleSpeed;
@@ -955,12 +963,15 @@ public class SharedEnemyAI : MonoBehaviour
 
     public virtual void XrayEnemy(GameObject enemy,bool xrayApplied)
     {
-
-        //if(xrayApplied)
-        //    enemy.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = xrayMaterial;
-        //else
-        //    enemy.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material = originalMaterial;
-
+        if (xrayApplied && !isAlerted && !isSearching && !isPursuing && !detecting)
+        {
+            isXrayed = true;
+            GetComponentInChildren<SkinnedMeshRenderer>().material = passiveMaterial;
+        }
+        else if (!xrayApplied)
+        {
+            isXrayed = false;
+        }
     }
 
     protected virtual void ChangeMaterial(Material material)
@@ -1046,6 +1057,5 @@ public Material GetOriginalMaterial() { return originalMaterial; }
 public void SetInCrouchRadius(bool status) { inCrouchRadius = status;  }
 
 public bool GetIsDetecting() { return detecting; }
-
 
 }
