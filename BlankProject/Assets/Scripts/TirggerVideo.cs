@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class TirggerVideo : MonoBehaviour
 {
@@ -19,12 +20,15 @@ public class TirggerVideo : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        
         if (other.gameObject.tag == "Player")
         {
-           
-            videoPlayer.SetActive(true);
-            Destroy(videoPlayer, timeStop);
-            this.gameObject.SetActive(false);
+            GameManager.instance.DisplayHint("Beware the patrol robots, they will alert other droids to your location if you let them make it to the alert button!");
+            
+                videoPlayer.SetActive(true);
+                Destroy(videoPlayer, timeStop);
+                this.gameObject.SetActive(false);
+
         }
     }
 }
