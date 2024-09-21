@@ -632,6 +632,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe040b1c32eca0244b1e6f8cf1ac6062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 0}
+  nonShaderPlaceholder: {fileID: 0}
 --- !u!1 &1470023185984972125
 GameObject:
   m_ObjectHideFlags: 0
@@ -751,6 +753,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe040b1c32eca0244b1e6f8cf1ac6062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 0}
+  nonShaderPlaceholder: {fileID: 0}
 --- !u!1 &1904846474887398231
 GameObject:
   m_ObjectHideFlags: 0
@@ -1320,6 +1324,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe040b1c32eca0244b1e6f8cf1ac6062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 0}
+  nonShaderPlaceholder: {fileID: 0}
 --- !u!1 &3455490615378975129
 GameObject:
   m_ObjectHideFlags: 0
@@ -1610,6 +1616,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe040b1c32eca0244b1e6f8cf1ac6062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 0}
+  nonShaderPlaceholder: {fileID: 0}
 --- !u!1 &3694409473621129846
 GameObject:
   m_ObjectHideFlags: 0
@@ -1729,6 +1737,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe040b1c32eca0244b1e6f8cf1ac6062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 0}
+  nonShaderPlaceholder: {fileID: 0}
 --- !u!1 &4020243111314439756
 GameObject:
   m_ObjectHideFlags: 0
@@ -1848,6 +1858,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe040b1c32eca0244b1e6f8cf1ac6062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 0}
+  nonShaderPlaceholder: {fileID: 0}
 --- !u!1 &4260107583518613434
 GameObject:
   m_ObjectHideFlags: 0
@@ -2203,6 +2215,7 @@ GameObject:
   - component: {fileID: 5193259927740505743}
   - component: {fileID: 4329758354944982126}
   - component: {fileID: 8961630575916349605}
+  - component: {fileID: -5401636023895117215}
   m_Layer: 0
   m_Name: Keypad - Level 2
   m_TagString: Untagged
@@ -2335,6 +2348,105 @@ MonoBehaviour:
   nineButton: {fileID: 7953825776808485359}
   backspaceButton: {fileID: 1168573290269466609}
   confirmButton: {fileID: 2905456966219643037}
+  correct: 0
+  clickSound: {fileID: 0}
+  clickVol: 0
+--- !u!82 &-5401636023895117215
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4564027039405275188}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &5451546468159761331
 GameObject:
   m_ObjectHideFlags: 0
@@ -2625,6 +2737,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe040b1c32eca0244b1e6f8cf1ac6062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 0}
+  nonShaderPlaceholder: {fileID: 0}
 --- !u!1 &6175851363831052836
 GameObject:
   m_ObjectHideFlags: 0
@@ -3257,6 +3371,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe040b1c32eca0244b1e6f8cf1ac6062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 0}
+  nonShaderPlaceholder: {fileID: 0}
 --- !u!1 &7387895842947314949
 GameObject:
   m_ObjectHideFlags: 0
@@ -3376,6 +3492,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe040b1c32eca0244b1e6f8cf1ac6062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 0}
+  nonShaderPlaceholder: {fileID: 0}
 --- !u!1 &7953825776808485359
 GameObject:
   m_ObjectHideFlags: 0
@@ -3495,6 +3613,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe040b1c32eca0244b1e6f8cf1ac6062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 0}
+  nonShaderPlaceholder: {fileID: 0}
 --- !u!1 &8076831329274697323
 GameObject:
   m_ObjectHideFlags: 0
@@ -3614,6 +3734,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe040b1c32eca0244b1e6f8cf1ac6062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 0}
+  nonShaderPlaceholder: {fileID: 0}
 --- !u!1 &8698638840158186685
 GameObject:
   m_ObjectHideFlags: 0
@@ -4075,3 +4197,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe040b1c32eca0244b1e6f8cf1ac6062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 0}
+  nonShaderPlaceholder: {fileID: 0}
