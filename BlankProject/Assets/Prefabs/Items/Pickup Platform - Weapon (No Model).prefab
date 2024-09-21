@@ -50,12 +50,13 @@ MonoBehaviour:
   startingAxes: {x: 0, y: 0, z: 0}
   startingAngle: 0
   rotationSpeed: {x: 0, y: 30, z: 0}
-  item: {fileID: 11400000, guid: 59d66959aab29914d849718baaea766f, type: 2}
+  item: {fileID: 11400000, guid: a22e558c330f7634bb1b34223e7bb724, type: 2}
   grabbableByEnemy: 0
   grabbableByPlayer: 1
-  type: 7
-  pickupSound: {fileID: 0}
-  pickupVol: 0
+  type: 1
+  pickupSound: {fileID: 8300000, guid: 2947b988fbff8d24298e62eda7d5d260, type: 3}
+  pickupVol: 0.5
+  pickupLight: {fileID: 7538388805200240822}
 --- !u!135 &4262617891922660732
 SphereCollider:
   m_ObjectHideFlags: 0
