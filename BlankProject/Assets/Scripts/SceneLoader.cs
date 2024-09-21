@@ -16,7 +16,12 @@ public class SceneLoader : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        {//When the player enters the loading zone will save their current stats to the static variables in the StaticPlayerData script.
+        if(other.gameObject.CompareTag("Player"))
+        {
+
+            StaticData.firstTimeInScene[SceneManager.GetActiveScene().buildIndex] = false;
+            
+            //When the player enters the loading zone will save their current stats to the static variables in the StaticPlayerData script.
             StaticData.playerHealth = GameManager.instance.player.GetComponent<playerDamage>().getHP();
             StaticData.playerMaxHealth = GameManager.instance.player.GetComponent<playerDamage>().getMaxHP();
             StaticData.playerSpeedOG = GameManager.instance.player.GetComponent<playerMovement>().GetSpeedOG();

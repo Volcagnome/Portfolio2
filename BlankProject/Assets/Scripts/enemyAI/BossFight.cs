@@ -4,12 +4,17 @@ using TMPro;
 //using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 
 //Handles all events within the Boss Arena
 
 public class BossFight : MonoBehaviour
 {
+
+    public static BossFight instance;
+
     //Scene objects
     [SerializeField] GameObject boss;
     [SerializeField] List<GameObject> bossReinforcements;
@@ -17,15 +22,28 @@ public class BossFight : MonoBehaviour
     [SerializeField] GameObject bossDefaultPost2;
     [SerializeField] GameObject bossFightGuard;
     [SerializeField] GameObject bossFightTitan;
-    [SerializeField] GameObject MainFrameDoor;
+    [SerializeField] GameObject MainFrameDoorControl;
     [SerializeField] GameObject LeverCover;
     [SerializeField] GameObject LeverCoverOpen;
     [SerializeField] GameObject SelfDestructLever;
-    [SerializeField] GameObject CommandCodeBossPlatform;
     [SerializeField] GameObject ComputerCore1;
     [SerializeField] GameObject ComputerCore2;
     [SerializeField] GameObject ComputerCore3;
     [SerializeField] Material ComputerCoreNonEmissive;
+    [SerializeField] AudioClip foundPlayer;
+    [SerializeField] GameObject loadingZone;
+    [SerializeField] GameObject computerTerminalAudioSource;
+    [SerializeField] AudioClip alert;
+    [SerializeField] AudioClip leverCoverOpenSound;
+    [SerializeField] AudioClip selfDestructAlarm;
+    [SerializeField] GameObject selfDestructScreen;
+    [SerializeField] GameObject selfDestructSprite;
+    [SerializeField] GameObject computerTerminalIdle1;
+    [SerializeField] GameObject computerTerminalIdle2;
+    [SerializeField] GameObject invasionScreen;
+    [SerializeField] GameObject invasionSprite;
+    [SerializeField] Material computerCoreMaterial;
+
 
     //Boss health threshholds that separate different stages of fight and determines when reinforcements will be called and how many
     [SerializeField] int fightStage_2_threshhold;
@@ -44,20 +62,26 @@ public class BossFight : MonoBehaviour
     bool spawnedStage3Reinforcements;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        GameManager.instance.UpdateObjectiveUI("Defeat the Juggernaut.\r\n\r\nPlug in the command codes.\r\n\r\nActivate the self destruct protocol.");
+        instance = this;
+        bossIsDead = StaticData.bossIsDead_Static;
 
-        fightStage = 0;
-        spawnedStage2Reinforcements = false;
-        spawnedStage3Reinforcements = false;
+        if (!StaticData.bossIsDead_Static)
+        {
+            fightStage = 0;
+            spawnedStage2Reinforcements = false;
+            spawnedStage3Reinforcements = false;
+        }
 
-        MainFrameDoor.transform.GetChild(1).gameObject.SetActive(false);
-        MainFrameDoor.transform.GetChild(2).gameObject.SetActive(true);
+        
+        if (StaticData.firstTimeInScene[SceneManager.GetActiveScene().buildIndex] || StaticData.mainFrameDoorOpen)
+        {
+                MainFrameDoorControl.GetComponent<togglingItem>().interact();
+        }
 
+        StartCoroutine(ScrollComputercoreTexture());
 
-        if (!EnemyManager.instance.GetIsBossFight())
-            EnemyManager.instance.SetIsBossFight(true);
     }
 
     // Update is called once per frame
@@ -67,58 +91,66 @@ public class BossFight : MonoBehaviour
     //the countdown.
     void Update()
     {
-        
+
+        if (!playerRespawned && GameManager.instance.GetIsRespawning())
+        {
+            playerRespawned = true;
+        }
+
         if (StaticData.bossIsDead_Static)
         {
-
-            CommandCodeBossPlatform.SetActive(true);
-
-            MainFrameDoor.transform.GetChild(1).gameObject.SetActive(false);
-            MainFrameDoor.transform.GetChild(2).gameObject.SetActive(true);
-
-            if (GameManager.instance.GetCommandCodesEntered() >= 2)
-            {
-                ComputerCore1.GetComponent<Renderer>().material = ComputerCoreNonEmissive;
-                ComputerCore1.GetComponent<Light>().enabled = false;
+            if (!StaticData.mainFrameDoorOpen)
+            { 
+                MainFrameDoorControl.GetComponent<togglingItem>().interact();
+                StaticData.mainFrameDoorOpen = true;
+                loadingZone.SetActive(true);
             }
-            
-            if(GameManager.instance.GetCommandCodesEntered() >= 4) 
-            {
-                ComputerCore2.GetComponent<Renderer>().material = ComputerCoreNonEmissive;
-                ComputerCore2.GetComponent<Light>().enabled = false;
-            }
-           
+
             if (GameManager.instance.GetCommandCodesEntered() == 6)
             {
-                ComputerCore3.GetComponent<Renderer>().material = ComputerCoreNonEmissive;
-                ComputerCore3.GetComponent<Light>().enabled = false;
-
-                LeverCover.SetActive(false);
-                LeverCoverOpen.SetActive(true);
+                if (!LeverCoverOpen.activeInHierarchy == true)
+                {
+                    LeverCover.SetActive(false);
+                    LeverCoverOpen.SetActive(true);
+                    computerTerminalAudioSource.GetComponent<AudioSource>().PlayOneShot(leverCoverOpenSound);
+                }
+                
             }
 
             if (SelfDestructLever.GetComponent<togglingItem>().getState())
             {
-                GameManager.instance.UpdateObjectiveUI("\r\n\r\nEscape and warn the Planetary Defence Force!!");
+                AudioSource source = computerTerminalAudioSource.GetComponent <AudioSource>();
+
+                StaticData.gameObjective_Static = "\r\n\r\nEscape and warn the Planetary Defence Force!!";
+                GameManager.instance.UpdateObjectiveUI(StaticData.gameObjective_Static);
                 GameManager.instance.ActivateSelfDestruct();
+                source.clip = selfDestructAlarm;
+                source.loop = true;
+                if(!source.isPlaying)
+                    source.Play();
                 StaticData.selfDestructActivated_Static = true;
+                selfDestructScreen.SetActive(true);
+                StartCoroutine(FlashScreen());
             }
 
-            EnemyManager.instance.SetIsBossFight(false);
+
 
         }
 
-        else if (boss.GetComponent<SharedEnemyAI>().GetHP() < fightStage_2_threshhold && !spawnedStage2Reinforcements)
+        else if (boss != null && !StaticData.bossIsDead_Static)
         {
-            fightStage = 2;
-            SpawnReinforcements(fightStage);
-            spawnedStage2Reinforcements = true;
-        }
-        else if (boss.GetComponent<SharedEnemyAI>().GetHP() < fightStage_3_threshhold && !spawnedStage3Reinforcements)
-        {
-            fightStage = 3;
-            SpawnReinforcements(fightStage);
-            spawnedStage3Reinforcements = true;
+            if (boss.GetComponent<SharedEnemyAI>().GetHP() < fightStage_2_threshhold && !spawnedStage2Reinforcements)
+            {
+                fightStage = 2;
+                SpawnReinforcements(fightStage);
+                spawnedStage2Reinforcements = true;
+            }
+            else if (boss.GetComponent<SharedEnemyAI>().GetHP() < fightStage_3_threshhold && !spawnedStage3Reinforcements)
+            {
+                fightStage = 3;
+                SpawnReinforcements(fightStage);
+                spawnedStage3Reinforcements = true;
+            }
         }
        
     }
@@ -126,33 +158,33 @@ public class BossFight : MonoBehaviour
     //When player exits arena entry area, the doors to the mainframe will close, the boss will emerge and the fight will begin.
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && bossFightBegin == false && fightStage == 0)
+        if (other.gameObject.CompareTag("Player"))
         {
-            bossFightBegin = true;
-            EnemyManager.instance.SetIsBossFight(true);
-            BossApproach();
-            fightStage = 1;
 
-
-            MainFrameDoor.transform.GetChild(1).gameObject.SetActive(true);
-        }
-
-        else if(!StaticData.bossIsDead_Static)
-        {
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            foreach (GameObject enemy in enemies)
+            if (!StaticData.bossIsDead_Static && bossFightBegin == false && fightStage == 0)
             {
+                Debug.Log("test");
+                bossFightBegin = true;
+                boss.GetComponent<AudioSource>().PlayOneShot(foundPlayer);
+                EnemyManager.instance.SetIsBossFight(true);
+                BossApproach();
+                fightStage = 1;
+                MainFrameDoorControl.GetComponent<togglingItem>().interact();
+                StaticData.mainFrameDoorOpen = false;
+                loadingZone.SetActive(false);
+            }
+            else if (fightStage > 0)
+            {
+                playerRespawned = false;
 
-                if (enemy.GetComponent<SharedEnemyAI>().GetIsSearching())   
+                GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+                if (enemies.Length > 0)
                 {
-                    StopCoroutine(enemy.GetComponent<SharedEnemyAI>().SearchArea(transform.position, 99));
-                    enemy.GetComponent<SharedEnemyAI>().SetIsSearching(false);
-                    enemy.GetComponent<SharedEnemyAI>().SetLastKnownPlayerLocation(GameManager.instance.transform.position);
+                    foreach (GameObject enemy in enemies)
+                        enemy.GetComponent<NavMeshAgent>().SetDestination(GameManager.instance.player.transform.position);
                 }
             }
-        }else if (bossIsDead)
-        {
-
         }
     }
 
@@ -168,7 +200,7 @@ public class BossFight : MonoBehaviour
     //around the spawner so they will be slightly dispersed.
     private void SpawnReinforcements(int stage)
     {
-        GameObject spawner = IntruderAlertManager.instance.FindClosestObject(bossReinforcements, GameManager.instance.player.transform.position);
+        GameObject spawner = null;
 
         int fightStageGuards = 0;
         int fightStageTitans = 0;
@@ -189,6 +221,8 @@ public class BossFight : MonoBehaviour
 
         for (int reinforcement = 0; reinforcement < fightStageGuards; reinforcement++)
         {
+            spawner = bossReinforcements[Random.Range(0, bossReinforcements.Count)];
+
             randomDist = UnityEngine.Random.insideUnitSphere * 3f;
             randomDist += spawner.transform.position;
 
@@ -205,6 +239,8 @@ public class BossFight : MonoBehaviour
 
         for (int reinforcement = 0; reinforcement < fightStageTitans; reinforcement++)
         {
+            spawner = bossReinforcements[Random.Range(0, bossReinforcements.Count)];
+
             randomDist = UnityEngine.Random.insideUnitSphere * 3f;
             randomDist += spawner.transform.position;
 
@@ -219,6 +255,45 @@ public class BossFight : MonoBehaviour
         }
     }
 
+    IEnumerator FlashScreen()
+    {
+        while (true)
+        {
+            selfDestructSprite.SetActive(true);
 
+            yield return new WaitForSeconds(0.5f);
+
+            selfDestructSprite.SetActive(false);
+        }
+    }
+
+    IEnumerator ScrollComputercoreTexture()
+    {
+        while(true)
+        {
+            float yValue = computerCoreMaterial.mainTextureOffset.y;
+
+            computerCoreMaterial.mainTextureOffset = new Vector2(0f,yValue + 0.025f );
+
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+
+
+    public bool GetPlayerRespawned()
+    {
+        return playerRespawned;
+    }
+
+    public void SetBoss(GameObject bossRobot) { boss = bossRobot; }
+
+    public void ChangeToInvasionScreen()
+    {
+        computerTerminalAudioSource.GetComponent<AudioSource>().PlayOneShot(alert);
+        computerTerminalIdle1.SetActive(false);
+        computerTerminalIdle2.SetActive(false);
+        invasionScreen.SetActive(true);
+        invasionSprite.SetActive(true);
+    }
 
 }

@@ -12,11 +12,13 @@ public class TitanAI : SharedEnemyAI, IDamage
     [SerializeField] int minTimeBetweenBashes;
     [SerializeField] AudioClip shieldSwing;
     [SerializeField] public AudioClip shieldHit;
+
     
 
     //[SerializeField] float shieldDamageReduction;
 
     bool isBashing;
+    bool inBashingDistance;
 
     // Start is called before the first frame update
     //On start if their default post is null and they are within 0.5f of a reinforcement spawner, they are responding to an
@@ -28,6 +30,8 @@ public class TitanAI : SharedEnemyAI, IDamage
     void Start()
     {
         currentAmmo = ammoCapacity;
+        enemyDetectionLevel = 0;
+        currentDetectTime = detectTime;
 
         if (loadedFromState == false)
             HP = HPOrig;
@@ -58,6 +62,132 @@ public class TitanAI : SharedEnemyAI, IDamage
         currentIdleSoundCooldown = Random.Range(5, maxIdleSoundCooldown);
     }
 
+    void Update()
+    {
+
+        if (!isDead)
+        {
+            CallMovementAnimation();
+
+            if (!isAlerted && inCrouchRadius && GameManager.instance.player.GetComponent<playerCrouch>().GetIsCrouched())
+            {
+                SetPlayerCrouchedDetectionRadius();
+            }
+            else
+                RevertDetectionRadius();
+
+            //If boss fight is currently in progress, enemies will immediately proceed to the player's location 
+            //regardless of if they are in range.
+            if (EnemyManager.instance.GetIsBossFight())
+            {
+                if (!BossFight.instance.GetPlayerRespawned())
+                {
+                    isAlerted = true;
+                    onDuty = false;
+                    agent.speed = combatSpeed;
+                    agent.stoppingDistance = combatStoppingDistance;
+                    agent.SetDestination(GameManager.instance.player.transform.position);
+                }
+                else
+                    agent.SetDestination(defaultPost.transform.position);
+            }
+
+
+            if (playerInView)
+            {
+                if (!detecting)
+                    lastKnownPlayerLocation = GameManager.instance.player.transform.position;
+                playerInViewIndicator.SetActive(true);
+
+            }
+            else
+                playerInViewIndicator.SetActive(false);
+
+            if (!isAlerted && !playerDetected && playerInView && !detecting)
+                StartCoroutine(DetectPlayerCoroutine());
+
+
+            if (detecting || isSearching || isPursuing)
+                ChangeMaterial(detectingMaterial);
+            else if (playerDetected)
+                ChangeMaterial(detectedMaterial);
+            else
+                ChangeMaterial(originalMaterial);
+
+            //If player is in view, notes their location, changes their alert status, alerts nearby allies and
+            //begins engaging with the player. Otherwise reduces their stopping distance so they can reach their
+            //destinations, stops aiming their weapon, and deactivates their playerInView indicator.
+            if (playerInView && playerDetected)
+            {
+                lastKnownPlayerLocation = GameManager.instance.player.transform.position;
+
+
+                if (!isAlerted)
+                {
+                    if (!audioPlayer.isPlaying)
+                        audioPlayer.PlayOneShot(foundPlayer, 0.75f);
+                    AlertEnemy();
+                }
+
+                AlertAllies();
+                FoundPlayer();
+                if(!inBashingDistance)
+                    agent.stoppingDistance = combatStoppingDistance;
+
+                enemyDetectionLevel = 100f;
+                playerInViewIndicator.SetActive(true);
+
+            }
+            else
+            {
+                if (isAlerted)
+                    agent.stoppingDistance = idleStoppingDistance;
+                anim.SetBool("Aiming", false);
+                playerInViewIndicator.SetActive(false);
+
+
+            }
+
+
+            //When alerted, will pursue the player if they are not already en route to the player's location during an Intruder Alert.
+            //Otherwise if a boss fight is not in progress, they will return to their post.
+            if (isAlerted)
+            {
+
+                if (!playerInView && !isRespondingToAlert && !isSearching)
+                {
+                    StartCoroutine(PursuePlayer());
+                }
+
+                if (playerInRange)
+                    RotateToPlayer();
+            }
+            else
+            {
+                if (readyToSpeak)
+                    StartCoroutine(playIdleSound());
+
+                if (!onDuty && defaultPost != null && !EnemyManager.instance.GetIsBossFight())
+                    ReturnToPost();
+            }
+
+            //If enemy has taken damage, makes its health bar visible and updates it to reflect health loss, otherwise hides it
+            if (isPlayerTarget())
+                UpdateEnemyUI();
+            else
+                enemyHPBar.SetActive(false);
+
+
+            //If player is within its outer range or is alerted, makes its detection meter visible and updates it appropriately,
+            //otherwise hides it.
+            if (detecting || isAlerted)
+                UpdateDetectionUI();
+            else
+            {
+                playerDetectionCircle.SetActive(false);
+            }
+        }
+    }
 
     //If the player is in view, they travel to their position up to their combat stopping distance and aim their weapon
     //at the player. If the player is within 5f, they will attempt to bash them with their shield. Otherwise they will 
@@ -71,21 +201,25 @@ public class TitanAI : SharedEnemyAI, IDamage
         if (currentAmmo < 0)
             weapon_R.transform.LookAt(GameManager.instance.player.transform.position + new Vector3(0, -90f, 0)) ;
 
-        if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) > 10f &&!isShooting && currentAmmo > 0)
+        if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) > 10f &&!isShooting)
         {
-            StartCoroutine(shoot(ammoType));
-        }
-        else if (currentAmmo == 0)
-        {
-            anim.SetTrigger("Reload");
-            anim.SetBool("isReloaded", false);
+            inBashingDistance = false;
+            if(currentAmmo > 0)
+                StartCoroutine(shoot(ammoType));
+            else if (currentAmmo == 0)
+            {
+                anim.SetTrigger("Reload");
+                anim.SetBool("isReloaded", false);
+            }
         }
 
-        if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) <= 10f && !isBashing)
+        else if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) <= 10f && !isBashing)
         {
+            inBashingDistance = true;
+            agent.stoppingDistance = idleStoppingDistance;
             agent.SetDestination(GameManager.instance.player.transform.position);
 
-            if(Vector3.Distance(transform.position,GameManager.instance.player.transform.position) < 2f)
+            if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) < 3.5f)
                 StartCoroutine(ShieldBash());
         }
 
@@ -137,12 +271,14 @@ public class TitanAI : SharedEnemyAI, IDamage
     //Turns on the shield collider when called by the shield bash animation envent.
     private void ShieldColliderOn()
     {
+        Debug.Log("test");
         shieldBashCollider.enabled = true;
     }
 
     //Turns offthe shield collider when called by the shield bash animation envent.
     private void ShieldColliderOff()
     {
+        Debug.Log("test2");
         shieldBashCollider.enabled = false;
     }
 
@@ -158,6 +294,7 @@ public class TitanAI : SharedEnemyAI, IDamage
         yield return new WaitForSeconds(minTimeBetweenBashes);
 
         isBashing = false;
+        agent.stoppingDistance = combatStoppingDistance;
     }
 
     //Overrides the standard Death function in SharedEnemyAI. Calls the DeathShared function to execute all common death operations
@@ -198,7 +335,8 @@ public class TitanAI : SharedEnemyAI, IDamage
 
     private void playShieldSwingSound()
     {
-        audioPlayer.PlayOneShot(shieldSwing);
+        audioPlayer.clip = shieldSwing;
+        audioPlayer.Play();
     }
 
     //public float GetShieldDamageReduction() { return shieldDamageReduction; }

@@ -111,4 +111,6 @@ public class SecurityDoor : toggleReciever
         }
 
     }
+
+    public void SetDoorStatus(bool status) { controllerState = status; }
 }
