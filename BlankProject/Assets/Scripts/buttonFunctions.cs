@@ -6,11 +6,20 @@ using UnityEngine.SceneManagement;
 
 public class buttonFunctions : MonoBehaviour
 {
+    public bool isPressed;
+
     public void resume()
     {
         GameManager.instance.stateUnpaused();
     }
-
+    
+    public void ok()
+    {
+        GameManager.instance.hintWindow.SetActive(false);
+        Time.timeScale = 1;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
     public void restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

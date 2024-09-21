@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioSource audioPlayer;
 
     // UI menus:
-    [SerializeField] GameObject menuActive;
+    public GameObject menuActive;
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
@@ -126,7 +126,9 @@ public class GameManager : MonoBehaviour
  
     
     [SerializeField] GameObject messageWindow;
-
+    public GameObject hintWindow;
+    public bool hintOff = false;
+ 
 
 
     // Start is called before the first frame update
@@ -588,6 +590,18 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(5f);
 
         messageWindow.SetActive(false);
+    }
+
+    public void DisplayHint(string hint)
+    {
+        Time.timeScale = 0;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+        hintOff = false;
+        hintWindow.SetActive(true);
+        hintWindow.GetComponentInChildren<TMP_Text>().text = hint;
+     
+     
     }
 
 

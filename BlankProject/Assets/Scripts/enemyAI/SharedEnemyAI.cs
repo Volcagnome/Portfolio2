@@ -237,7 +237,7 @@ public class SharedEnemyAI : MonoBehaviour
     //if player is in view.
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !isDead)
+        if (other.CompareTag("Player") && !isDead && !other.isTrigger)
         {
             playerInRange = true;
             StartCoroutine(FOVRoutine());
@@ -250,9 +250,9 @@ public class SharedEnemyAI : MonoBehaviour
     //already alerted and player didn't leave detection sphere due to respawning, sets their lastKnownLocation to
     //the players position when they exited the sphere. If player exited because they respawned, returns to their
     //idle behavior.
-    protected void OnTriggerExit(Collider other)
+    protected void OnTriggerExit(Collider other )
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !other.isTrigger)
         {
             playerDetectionCircle.SetActive(false);
 
