@@ -79,7 +79,7 @@ public class SharedEnemyAI : MonoBehaviour
     protected bool inCrouchRadius;
     protected bool isPursuing;
     protected bool isXrayed;
-
+    protected bool isStunned;
 
     //Stats
     [SerializeField] public enum enemyType { none, Guard, Patrol, Titan, Turret, Boss, Arachnoid };
@@ -204,7 +204,7 @@ public class SharedEnemyAI : MonoBehaviour
 
                 if (!isAlerted)
                 {
-                    if(!audioPlayer.isPlaying)
+                    if (!audioPlayer.isPlaying)
                         audioPlayer.PlayOneShot(foundPlayer, 0.75f);
                     AlertEnemy();
                 }
@@ -219,12 +219,12 @@ public class SharedEnemyAI : MonoBehaviour
             }
             else
             {
-                if(isAlerted)
+                if (isAlerted)
                     agent.stoppingDistance = idleStoppingDistance;
                 anim.SetBool("Aiming", false);
                 playerInViewIndicator.SetActive(false);
 
-               
+
             }
 
 
@@ -266,13 +266,12 @@ public class SharedEnemyAI : MonoBehaviour
                 playerDetectionCircle.SetActive(false);
             }
         }
-    }
 
+    }
 
     ////////////////////////////////////////
     ///        PLAYER DETECTION         ///
     //////////////////////////////////////
-
 
     //Trigger colliders track if player is in detection range, if so starts the field of view coroutine to monitor
     //if player is in view.
@@ -459,10 +458,13 @@ public class SharedEnemyAI : MonoBehaviour
     //Rotates the enemy to face the player.
     protected virtual void RotateToPlayer()
     {
-        playerDirection = GameManager.instance.player.transform.position - transform.position;
+        if (!isStunned)
+        {
+            playerDirection = GameManager.instance.player.transform.position - transform.position;
 
-        Quaternion rotationToPlayer = Quaternion.LookRotation(playerDirection);
-        transform.rotation = Quaternion.Lerp(transform.rotation, rotationToPlayer, Time.deltaTime * rotationSpeed);
+            Quaternion rotationToPlayer = Quaternion.LookRotation(playerDirection);
+            transform.rotation = Quaternion.Lerp(transform.rotation, rotationToPlayer, Time.deltaTime * rotationSpeed);
+        }
     }
 
 
@@ -573,6 +575,38 @@ public class SharedEnemyAI : MonoBehaviour
         FindIntruderCoroutine = StartCoroutine(FindIntruder(location));
     }
 
+    // STATUS EFFECTS:
+    public void DistractBots(Vector3 decoyPos, float distractTime)
+    {
+        // If enemy isn't already alerted, set distracted bool to true:
+        if (!isAlerted)
+        {
+            // Update destination to decoy position:
+            agent.SetDestination(decoyPos);
+            
+            StartCoroutine(distractStatus(distractTime));
+        }
+    }
+
+    public IEnumerator distractStatus(float distractTime)
+    {
+        yield return new WaitForSeconds(distractTime);
+        CalmEnemy();
+    }
+
+    public IEnumerator WaitForStun(float stunTime, Vector3 grenadePos)
+    {
+        // Checks if enemy type isn't boss to apply emp effect:
+        if (GetEnemyType() != SharedEnemyAI.enemyType.Boss)
+        {
+            isStunned = true;
+            //agent.isStopped = true;
+            yield return new WaitForSeconds(stunTime);
+            isStunned = false;
+            //agent.isStopped = false;
+            CalmEnemy();
+        }
+    }
 
     //Sets isRespondingToAlert bool to true, so they do not stop until they reach their destination. Updates their
     //alert status and their lastKnownPlayerLocation variable with the passed location. While en route, if they player

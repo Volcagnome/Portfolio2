@@ -30,6 +30,9 @@ public class playerMovement : MonoBehaviour
     [SerializeField] AudioClip[] audioSteps;
     [SerializeField] float audioStepsVol;
 
+    [SerializeField] AudioClip audioExhausted;
+    [SerializeField] float exhaustedVol;
+
     Vector3 move;
     Vector3 playerVel;
 
@@ -205,12 +208,16 @@ public class playerMovement : MonoBehaviour
     // Stamina runs out:
     IEnumerator staminaOut()
     {
+        // Play audio feedback:
+        GameManager.instance.playAud(audioExhausted, exhaustedVol);
+
+        // Set stamina to 0 and stop sprinting.
         stamina = 0;
         hasStamina = false;
         stopSprint();
 
+        // Wait before starting to regenerate stamina:
         yield return new WaitForSeconds(staminaWait);
-
         regenStamina();
     }
 

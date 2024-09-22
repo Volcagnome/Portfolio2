@@ -24,6 +24,12 @@ public class damage : MonoBehaviour
             rb.velocity = (GameManager.instance.player.transform.position - transform.position).normalized * speed;
             Destroy(gameObject, destroyTime);
         }
+
+        else if (type == damageType.playerBullet)
+        {
+            rb.velocity = (transform.forward).normalized * speed;
+            Destroy(gameObject, destroyTime);
+        }
     }
 
     protected virtual void OnTriggerEnter(Collider other)

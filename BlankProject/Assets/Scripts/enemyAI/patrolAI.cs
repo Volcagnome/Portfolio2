@@ -12,7 +12,6 @@ using UnityEngine;
 
 public class patrolAI : SharedEnemyAI,IDamage
 {
-
     bool isWhistleBlower;
     [SerializeField] AudioClip raisingAlarmSound;
     [SerializeField] Material whistleBlowerOutline;
@@ -54,8 +53,8 @@ public class patrolAI : SharedEnemyAI,IDamage
         {
             CallMovementAnimation();
 
-            if ( inCrouchRadius && !isAlerted && GameManager.instance.player.GetComponent<playerCrouch>().GetIsCrouched() )
-                    SetPlayerCrouchedDetectionRadius();
+            if (inCrouchRadius && !isAlerted && GameManager.instance.player.GetComponent<playerCrouch>().GetIsCrouched())
+                SetPlayerCrouchedDetectionRadius();
 
             else
                 RevertDetectionRadius();
@@ -71,7 +70,7 @@ public class patrolAI : SharedEnemyAI,IDamage
                 {
                     if (Vector3.Distance(transform.position, currentDestination.transform.position) < 1)
                     {
-                        if(currentDestination.GetComponent<PatrolWaypoint>())
+                        if (currentDestination.GetComponent<PatrolWaypoint>())
                             currentDestination = currentDestination.GetComponent<PatrolWaypoint>().GetNextWaypoint();
 
                         agent.SetDestination(currentDestination.transform.position);
@@ -107,7 +106,7 @@ public class patrolAI : SharedEnemyAI,IDamage
                 //with the player. Otherwise will engage with the player normally.
                 if (playerInView && playerDetected)
                 {
-                    if(!isAlerted)
+                    if (!isAlerted)
                         AlertEnemy();
                     AlertAllies();
           
@@ -125,7 +124,7 @@ public class patrolAI : SharedEnemyAI,IDamage
 
                     if (!playerSpotted)
                     {
-                        if(!audioPlayer.isPlaying)
+                        if (!audioPlayer.isPlaying)
                             audioPlayer.PlayOneShot(foundPlayer, 0.75f);
                         playerSpotted = true;
                     }
@@ -143,8 +142,8 @@ public class patrolAI : SharedEnemyAI,IDamage
 
                     if (playerInRange)
                         RotateToPlayer();
-
                 }
+
                 else if (!onDuty && defaultPost != null)
                 {
                     if (readyToSpeak)

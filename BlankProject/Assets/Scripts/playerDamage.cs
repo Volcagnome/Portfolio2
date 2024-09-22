@@ -82,6 +82,9 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
     [SerializeField] AudioClip audioLowHP;
     [SerializeField] float lowHPVol;
 
+    [SerializeField] AudioClip audioRegenHP;
+    [SerializeField] float regenHPVol;
+
     Coroutine regenCoroutine;
     GameObject currentlyHighlighted;
 
@@ -426,6 +429,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         }
         regenCoroutine = StartCoroutine(EnableHealthRegen());
 
+
         // Play low HP alert if current HP is equal to:
         if (HP <= (hpOG / 3) && !isLowHp)
         {
@@ -457,6 +461,8 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         yield return new WaitForSeconds(HPRegenWaitTime);
         isTakingDamage = false;
         regenCoroutine = null;
+        // Play audio feedback:
+        GameManager.instance.playAud(audioRegenHP, regenHPVol);
     }
 
     public void criticalHit(float amount)

@@ -709,6 +709,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8284814684954952058}
   - component: {fileID: 8666099751638355275}
+  - component: {fileID: 6003384587303119154}
   - component: {fileID: 7874694064362075633}
   - component: {fileID: 5543630735747520779}
   - component: {fileID: 5242881738740521314}
@@ -795,6 +796,45 @@ MonoBehaviour:
   overheatVol: 0.5
   audioLowHP: {fileID: 8300000, guid: 39e3eb73754fa6e48bba2ad729eca67a, type: 3}
   lowHPVol: 0.4
+  audioRegenHP: {fileID: 8300000, guid: 0b05268ca6883584fa8fbb6d56a56df9, type: 3}
+  regenHPVol: 0.4
+--- !u!114 &6003384587303119154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8911946099950133126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3571c1568ec8226499d1cb435924f89c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camPos: {fileID: 8105281110314852485}
+  throwPos: {fileID: 4827944566636450223}
+  grenades: []
+  grenadeEMP: {fileID: 11400000, guid: c9da41470a422434d8069c15dec7ae01, type: 2}
+  grenadeDecoy: {fileID: 11400000, guid: c1d5c3b7dd45bd24da7cf8fa1e4e24ab, type: 2}
+  decoyPings: {fileID: 0}
+  currentGrenade: {fileID: 0}
+  throwForce: 15
+  throwUpForce: 5
+  grenadeCooldown: 2
+  empAmmo: 5
+  decoyAmmo: 7
+  targetHit: 0
+  grenadeMeshRend: {fileID: 0}
+  grenadeModel: {fileID: 0}
+  fuseTime: 0
+  areaOfEffect: 0
+  aoeDamage: 0
+  offsetRange: 0
+  isEMP: 0
+  isDecoy: 0
+  rb: {fileID: 0}
+  explosionFX: {fileID: 0}
+  effectSound: {fileID: 0}
+  effectVol: 0
 --- !u!114 &7874694064362075633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -818,8 +858,9 @@ MonoBehaviour:
   jumpSpeed: 5
   gravity: 10
   audioJump: {fileID: 8300000, guid: 76fec2784222cc34f8f7aa71bd01c1e4, type: 3}
-  audioJumpVol: 0.7
-  audioHurt: []
+  audioJumpVol: 1
+  audioHurt:
+  - {fileID: 0}
   audioHurtVol: 0.2
   audioSteps:
   - {fileID: 8300000, guid: af13c809ae8c4fe4696ccfecb47e325c, type: 3}
@@ -833,6 +874,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7d72093dfd0e8c64bbfeb6caeb22e1cb, type: 3}
   - {fileID: 8300000, guid: 3920d9cbbb3f50f439598fe08e921605, type: 3}
   audioStepsVol: 0.1
+  audioExhausted: {fileID: 8300000, guid: c6de55423cee4684799d17ebffbe4418, type: 3}
+  exhaustedVol: 0.4
 --- !u!114 &5543630735747520779
 MonoBehaviour:
   m_ObjectHideFlags: 0

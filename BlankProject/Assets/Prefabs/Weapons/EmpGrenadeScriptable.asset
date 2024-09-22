@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88049e79035e8ed41a59e6e962b5903b, type: 3}
+  m_Name: EmpGrenadeScriptable
+  m_EditorClassIdentifier: 
+  grenadeMeshRend: {fileID: 2483109078426479566, guid: ecb0aadad956a5b449cc4f04153d87a6, type: 3}
+  grenadeModel: {fileID: 75661572622640313, guid: ecb0aadad956a5b449cc4f04153d87a6, type: 3}
+  isEMP: 1
+  isDecoy: 0
+  fuseTime: 2
+  areaOfEffect: 8
+  aoeDamage: 3
+  offsetRange: 0
+  stunTime: 5
+  ammoCount: 5
+  startFuse: 0
+  distractTime: 0
+  explosionFX: {fileID: 577812841044345583, guid: fcb74f28d107e284e80af037bfec14ca, type: 3}
+  effectSound: {fileID: 8300000, guid: b2cf90332533a1c4b83673482349f7f0, type: 3}
+  effectVol: 0.7
+  isLive: 0
+  rb: {fileID: 0}
