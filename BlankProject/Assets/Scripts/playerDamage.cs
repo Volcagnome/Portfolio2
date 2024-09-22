@@ -129,6 +129,8 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
 
         if (weapons.Count == 0) addWeapon(defaultWeapon);
 
+        if (weapons.Count > GameManager.instance.iconFills.Count || weapons.Count > GameManager.instance.weaponIcons.Count) rebootIcons();
+
         selectedGun = StaticData.playerSelectedGun;
         setWeapon(weapons[selectedGun]);
         GameManager.instance.UpdateCurrentWeaponUI(selectedGun,weapons);
@@ -498,7 +500,9 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         gunModel.GetComponent<MeshFilter>().sharedMesh = weapon.itemModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = weapon.itemModel.GetComponent<MeshRenderer>().sharedMaterial;
 
-        
+        Vector3 iconPosition = Vector3.zero;  iconPosition.Set(GameManager.instance.weaponSelectionIcon.transform.position.x, GameManager.instance.weaponIcons[selectedGun].transform.position.y, GameManager.instance.weaponSelectionIcon.transform.position.z);
+
+        GameManager.instance.weaponSelectionIcon.transform.position = iconPosition;
 
         adjustGlow();
 
@@ -508,17 +512,18 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
     public void addWeapon(pickupStats weapon)
     {
         weapons.Add(weapon);
-        setWeapon(weapon);
         selectedGun = weapons.IndexOf(weapon);
+        GameManager.instance.AddWeaponIcon(weapon.gunType); 
+        setWeapon(weapon);
 
-        if(weapon.gunType == pickupStats.weaponType.rifle)
+        if (weapon.gunType == pickupStats.weaponType.rifle)
             StaticData.hasRifle = true;
         else if(weapon.gunType == pickupStats.weaponType.shotgun)
             StaticData.hasShotgun = true;   
         else if(weapon.gunType == pickupStats.weaponType.sniper)
             StaticData.hasSniper = true;
 
-        GameManager.instance.AddWeaponIcon(weapon.gunType);
+        
     }
 
     void coolWeapon(pickupStats.weaponType weaponType, float weaponCoolRate)
@@ -678,6 +683,17 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         {
             GameManager.instance.iconFills[i].fillAmount  = weaponCurrentHeats[weapons[i].gunType] / GetMaxHeat(weapons[i].gunType);
         }
+    }
+
+    void rebootIcons()
+    {
+        for (int i = 0; i < GameManager.instance.weaponIcons.Count; ++i) Destroy(GameManager.instance.weaponIcons[i]);
+        for (int i = 0; i < GameManager.instance.iconFills.Count; ++i) Destroy(GameManager.instance.iconFills[i]);
+
+        GameManager.instance.weaponIcons.Clear();
+        GameManager.instance.iconFills.Clear();
+
+        for (int i = 0; i < weapons.Count; ++i) GameManager.instance.AddWeaponIcon(weapons[i].gunType);
     }
 
     //Getters and setters

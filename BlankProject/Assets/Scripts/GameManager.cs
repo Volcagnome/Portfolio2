@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
     public Image overheatMeter;
     public GameObject redFlash;
     public GameObject webbedOverlay;
+    public GameObject weaponSelectionIcon;
     public List<GameObject> weaponIcons;
     public List<Image> iconFills;
     [SerializeField] List<GameObject> iconOptions;
@@ -555,7 +556,7 @@ public class GameManager : MonoBehaviour
 
     public void AddWeaponIcon(pickupStats.weaponType weapon)
     {
-        Vector3 position = Vector3.zero; position.x = 159; position.y = 59 + (75 * weaponIcons.Count);
+        Vector3 position = Vector3.zero; position.x = 159; position.y = 175 + (75 * weaponIcons.Count);
 
         switch (weapon)
         {
@@ -584,7 +585,6 @@ public class GameManager : MonoBehaviour
                     break;
                 }
         }
-
     }
 
     // Getters / setters:
