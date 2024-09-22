@@ -7,6 +7,7 @@ public class DecoyPingScript : MonoBehaviour
 {
     grenadeStats thisDecoy;
 
+    [SerializeField] Light pointLight;
     [SerializeField] int NoOfPings;
     float pingDelay;
     int pingCount;
@@ -36,7 +37,11 @@ public class DecoyPingScript : MonoBehaviour
                 // Play next ping:
                 PlayPing();
                 pingCount++;
-                yield return new WaitForSeconds(pingDelay);
+                pointLight.enabled = true;
+                yield return new WaitForSeconds(0.3f);
+                pointLight.enabled = false;
+                // Wait for next ping, minus the delay for the light:
+                yield return new WaitForSeconds(pingDelay-0.3f);
             }
             else
                 break;
