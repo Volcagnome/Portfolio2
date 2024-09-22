@@ -19,7 +19,7 @@ public class itemPickup : MonoBehaviour, IPickup
     [Header("----- Sounds -----")]
     [SerializeField] AudioClip pickupSound;
     [SerializeField] float pickupVol;
-
+    public GameObject pickupLight;
     void Start()
     {
 
@@ -44,6 +44,7 @@ public class itemPickup : MonoBehaviour, IPickup
         if (displayedItem != null && other != displayedItem.GetComponent<Collider>())
         {
             pickup(other);
+            pickupLight.SetActive(false);
         }
     }
 
