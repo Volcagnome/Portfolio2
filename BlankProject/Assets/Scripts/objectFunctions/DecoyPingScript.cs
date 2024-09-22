@@ -1,40 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using UnityEngine;
 
 public class DecoyPingScript : MonoBehaviour
 {
-    [SerializeField] grenadeStats thisDecoy;
-    float pingTimer;
+    grenadeStats thisDecoy;
+
+    [SerializeField] Light pointLight;
+    [SerializeField] int NoOfPings;
+    float pingDelay;
+    int pingCount;
 
     // Start is called before the first frame update
     void Start()
     {
-        pingTimer = Time.time;
+        
+        if (GameManager.instance.grenadeScript.currentGrenade.isDecoy)
+        {
+            thisDecoy = GameManager.instance.grenadeScript.currentGrenade;
+            // Assign an equal delay between pings based on the number of pings entered:
+            pingDelay = (GameManager.instance.grenadeScript.currentGrenade.fuseTime / NoOfPings);
+
+            // Play pings before being destroyed:
+            StartCoroutine(PlayDecoyPings());
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    protected IEnumerator PlayDecoyPings()
     {
-        // Play pings before being destroyed:
-        PlayDecoyPings();
+        // If not the last ping:
+        while (pingCount != NoOfPings)
+        {
+            if (pingCount != NoOfPings)
+            {
+                // Play next ping:
+                PlayPing();
+                pingCount++;
+                pointLight.enabled = true;
+                yield return new WaitForSeconds(0.3f);
+                pointLight.enabled = false;
+                // Wait for next ping, minus the delay for the light:
+                yield return new WaitForSeconds(pingDelay-0.3f);
+            }
+            else
+                break;
+        }
     }
-    protected void PlayDecoyPings()
+
+    protected void PlayPing()
     {
-        if (pingTimer > thisDecoy.fuseTime)
-        {
-            GameManager.instance.playAud(thisDecoy.effectSound, thisDecoy.effectVol);
-        }
-
-        else if (pingTimer == (thisDecoy.fuseTime / 2))
-        {
-            GameManager.instance.playAud(thisDecoy.effectSound, thisDecoy.effectVol);
-        }
-
-        else if (pingTimer == (thisDecoy.fuseTime))
-        {
-            GameManager.instance.playAud(thisDecoy.effectSound, thisDecoy.effectVol);
-            pingTimer = 0;
-        }
+        GameManager.instance.playAud(thisDecoy.effectSound, thisDecoy.effectVol);
     }
 }
