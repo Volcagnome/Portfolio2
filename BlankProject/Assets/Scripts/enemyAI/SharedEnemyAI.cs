@@ -601,14 +601,25 @@ public class SharedEnemyAI : MonoBehaviour
         if (GetEnemyType() != SharedEnemyAI.enemyType.Boss)
         {
             isStunned = true;
-            //agent.isStopped = true;
+            PlayStunVFX();
+            agent.isStopped = true;
             yield return new WaitForSeconds(stunTime);
-            isStunned = false;
-            //agent.isStopped = false;
-            CalmEnemy();
+            
+            if (!isDead)
+            {
+                isStunned = false;
+                agent.isStopped = false;
+            }
         }
     }
 
+    protected void PlayStunVFX()
+    {
+        if (isStunned)
+        {
+            Instantiate(DeathVFX, DeathFXPos.position, Quaternion.identity);
+        }
+    }
     //Sets isRespondingToAlert bool to true, so they do not stop until they reach their destination. Updates their
     //alert status and their lastKnownPlayerLocation variable with the passed location. While en route, if they player
     //stops the coroutine and sets their isRespondingToAlert bool to false so they resume their normal behavior. If

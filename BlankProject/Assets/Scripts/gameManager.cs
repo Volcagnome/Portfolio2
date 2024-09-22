@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject almostWinMenu;
     [SerializeField] GameObject SelfDestructFlavorText;
     public GameObject tutorialWindow;
+    public GameObject grenadeTutWindow;
     public bool isPaused;
 
     //Self Destruct Timer
