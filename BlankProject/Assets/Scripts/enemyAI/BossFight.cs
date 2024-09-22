@@ -163,7 +163,6 @@ public class BossFight : MonoBehaviour
 
             if (!StaticData.bossIsDead_Static && bossFightBegin == false && fightStage == 0)
             {
-                Debug.Log("test");
                 bossFightBegin = true;
                 boss.GetComponent<AudioSource>().PlayOneShot(foundPlayer);
                 EnemyManager.instance.SetIsBossFight(true);

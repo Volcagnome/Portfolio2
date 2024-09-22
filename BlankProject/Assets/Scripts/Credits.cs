@@ -51,7 +51,6 @@ public class Credits : MonoBehaviour
     private void RollCredits()
     {
         creditsCurrentPosition = credits.transform.position;
-        
 
         if (Vector3.Distance(creditsCurrentPosition, creditsFinalPosition) <= 0.05f)
         {
@@ -79,5 +78,6 @@ public class Credits : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+
 
 }

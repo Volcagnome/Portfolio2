@@ -61,7 +61,6 @@ public class guardAI : SharedEnemyAI, IDamage
         isDead = true;
         weapon_R.GetComponent<AudioSource>().mute = true;
         agent.isStopped = true;
-
         DeathShared();
 
         ChangeMaterial(originalMaterial);

@@ -35,6 +35,13 @@ public class buttonFunctions : MonoBehaviour
     #endif
     }
 
+    public void ViewCredits()
+    {
+        GameManager.instance.stateUnpaused();
+        SceneManager.LoadScene("Credits");
+        
+    }
+
     public void respawn()
     {
         GameManager.instance.stateUnpaused();

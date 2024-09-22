@@ -393,7 +393,8 @@ public class SharedEnemyAI : MonoBehaviour
                 GetComponent<AudioSource>().PlayOneShot(mustHaveBeenTheWind);
         }
 
-        agent.isStopped = false;
+        if(!isDead)
+            agent.isStopped = false;
         detecting = false;
         yield break;
     }
@@ -829,6 +830,7 @@ public class SharedEnemyAI : MonoBehaviour
     //their death particle effects.
     protected void DeathShared()
     {
+
         isDead = true;
         agent.isStopped = true;
         anim.SetBool("isDead", true);

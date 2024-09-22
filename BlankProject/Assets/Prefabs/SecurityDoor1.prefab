@@ -500,6 +500,7 @@ GameObject:
   - component: {fileID: 1411082315093747142}
   - component: {fileID: 6701565622317182415}
   - component: {fileID: 8061336380679706386}
+  - component: {fileID: 8698145013432691292}
   m_Layer: 0
   m_Name: RightDoor
   m_TagString: Untagged
@@ -593,6 +594,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &8698145013432691292
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4533052580492084889}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &7022226186170056054
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,6 +622,7 @@ GameObject:
   - component: {fileID: 6709029397737153384}
   - component: {fileID: 365586765659861079}
   - component: {fileID: 8265409964897174095}
+  - component: {fileID: 1354839093976527907}
   m_Layer: 0
   m_Name: LeftDoor
   m_TagString: Untagged
@@ -698,6 +716,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &1354839093976527907
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7022226186170056054}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &7782211778892321460
 GameObject:
   m_ObjectHideFlags: 0
@@ -825,9 +859,11 @@ MonoBehaviour:
   itemOnState: {fileID: 3825892024766332109}
   itemOffState: {fileID: 2682699635661447634}
   itemState: 0
-  vital: 0
   interactSound: {fileID: 8300000, guid: b9885bd30f0adf14f8db91b5677d1269, type: 3}
   interactVol: 0.5
+  shader: {fileID: 0}
+  nonShaderPlaceholder: {fileID: 0}
+  shadedParts: []
 --- !u!82 &3668889079670213788
 AudioSource:
   m_ObjectHideFlags: 0
