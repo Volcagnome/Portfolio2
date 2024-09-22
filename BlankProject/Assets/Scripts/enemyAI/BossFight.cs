@@ -232,6 +232,7 @@ public class BossFight : MonoBehaviour
             GameObject guard = Instantiate(bossFightGuard, spawner.transform.position, spawner.transform.rotation);
 
             guard.GetComponent<SharedEnemyAI>().SetDefaultPost(spawner);
+            guard.GetComponent<SharedEnemyAI>().AlertEnemy();
             guard.GetComponent<SharedEnemyAI>().SetCurrentDestination(spawner);
             guard.GetComponent<SharedEnemyAI>().SetLastKnownPlayerLocation(GameManager.instance.player.transform.position);
             guard.GetComponent<NavMeshAgent>().SetDestination(guard.GetComponent<SharedEnemyAI>().GetLastKnownPlayerLocation());
@@ -249,6 +250,7 @@ public class BossFight : MonoBehaviour
 
             GameObject titan = Instantiate(bossFightTitan, spawner.transform.position, spawner.transform.rotation);
             titan.GetComponent<SharedEnemyAI>().SetDefaultPost(spawner);
+            titan.GetComponent<SharedEnemyAI>().AlertEnemy();
             titan.GetComponent<SharedEnemyAI>().SetCurrentDestination(spawner);
             titan.GetComponent<SharedEnemyAI>().SetLastKnownPlayerLocation(GameManager.instance.player.transform.position);
             titan.GetComponent<NavMeshAgent>().SetDestination(titan.GetComponent<SharedEnemyAI>().GetLastKnownPlayerLocation());

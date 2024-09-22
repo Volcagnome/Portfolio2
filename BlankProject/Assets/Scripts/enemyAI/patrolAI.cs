@@ -221,9 +221,13 @@ public class patrolAI : SharedEnemyAI,IDamage
     //LevelMangager. Starts the timer to despawn their corpse.
     protected override void Death()
     {
+        isDead = true;
+        agent.isStopped = true;
         DeathShared();
         weapon_R.GetComponent<AudioSource>().mute = true;
-        agent.isStopped = true;
+
+        ChangeMaterial(originalMaterial);
+
         GetComponent<AudioSource>().mute = true;
 
         if (!StaticData.selfDestructActivated_Static)

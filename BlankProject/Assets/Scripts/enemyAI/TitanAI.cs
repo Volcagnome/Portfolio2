@@ -106,11 +106,10 @@ public class TitanAI : SharedEnemyAI, IDamage
             if (!isAlerted && !playerDetected && playerInView && !detecting)
                 StartCoroutine(DetectPlayerCoroutine());
 
-
-            if (detecting || isSearching || isPursuing)
-                ChangeMaterial(searchingMaterial);
-            else if (isAlerted || playerDetected)
+            if (isAlerted || playerDetected)
                 ChangeMaterial(hostileMaterial);
+            else if (detecting || isSearching || isPursuing)
+                ChangeMaterial(searchingMaterial);
             else if(!isXrayed)
                 ChangeMaterial(originalMaterial);
 
@@ -302,6 +301,9 @@ public class TitanAI : SharedEnemyAI, IDamage
     protected override void Death()
     {
         DeathShared();
+        agent.isStopped = true;
+
+        ChangeMaterial(originalMaterial);
 
         weapon_R.GetComponent<AudioSource>().mute = true;
 

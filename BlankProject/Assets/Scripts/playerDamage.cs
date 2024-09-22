@@ -174,7 +174,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         // Listen for shooting, interacting or flashlight:
         if (!isStunned && !isShocked)
         {
-            if (Input.GetButton("Shoot") && weapons.Count > 0 && maxHeat > currentHeat && !usedToMax && !isShooting)
+            if (Input.GetButton("Shoot") && weapons.Count > 0 && maxHeat > weaponCurrentHeats[gunType] && !usedToMax && !isShooting)
                 StartCoroutine(shoot());
 
             
@@ -526,7 +526,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         weaponCurrentHeats[weaponType] -= weaponCoolRate * Time.deltaTime;
 
         if (weaponCurrentHeats[weaponType] < 0) { weaponCurrentHeats[weaponType] = 0; }
-        if (weaponCurrentHeats[weaponType] == 0 && usedToMax) usedToMax = false;
+        if (weaponCurrentHeats[weaponType] <= 0 && usedToMax) usedToMax = false;
 
         adjustGlow();
     }

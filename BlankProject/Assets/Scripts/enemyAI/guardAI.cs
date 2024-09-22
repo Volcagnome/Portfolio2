@@ -57,11 +57,14 @@ public class guardAI : SharedEnemyAI, IDamage
     //their guardAI and starts the timer to despawn their corpse.
     protected override void Death()
     {
-  
+
+        isDead = true;
         weapon_R.GetComponent<AudioSource>().mute = true;
+        agent.isStopped = true;
 
         DeathShared();
-     
+
+        ChangeMaterial(originalMaterial);
 
         if (!StaticData.selfDestructActivated_Static)
         {
