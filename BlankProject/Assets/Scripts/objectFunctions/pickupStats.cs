@@ -29,7 +29,6 @@ public class pickupStats : ScriptableObject
     public bool xrayAbilityUnlocked;
 
     [Header("----Weapon Stats----")]
-    public bool shotgun;
     public weaponType gunType;
     public float shootRate;
     public int shootDamage;

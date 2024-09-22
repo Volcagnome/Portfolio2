@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioSource audioPlayer;
 
     // UI menus:
+    [SerializeField] GameObject uI;
     public GameObject menuActive;
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
@@ -52,6 +53,10 @@ public class GameManager : MonoBehaviour
     public Image overheatMeter;
     public GameObject redFlash;
     public GameObject webbedOverlay;
+    public List<GameObject> weaponIcons;
+    public List<Image> iconFills;
+    [SerializeField] List<GameObject> iconOptions;
+    [SerializeField] List<GameObject> fillOptions;
 
     // Player Scripts:
     public GameObject player;
@@ -546,8 +551,37 @@ public class GameManager : MonoBehaviour
         sceneWeaponPickupsTotalDisplay.GetComponent<TMP_Text>().text = sceneWeaponPickupsTotal.ToString();
     }
 
-    public void AddWeaponIcon(pickupStats weapon)
+    public void AddWeaponIcon(pickupStats.weaponType weapon)
     {
+        Vector3 position = Vector3.zero; position.x = 159; position.y = 59 + (75 * weaponIcons.Count);
+
+        switch (weapon)
+        {
+            default:
+                {
+                    weaponIcons.Add(Instantiate(iconOptions[0], position, Quaternion.identity, uI.transform));
+                    iconFills.Add(Instantiate(fillOptions[0], position, Quaternion.identity, uI.transform).GetComponent<Image>());
+                    break;
+                }
+            case (pickupStats.weaponType.rifle):
+                {
+                    weaponIcons.Add(Instantiate(iconOptions[1], position, Quaternion.identity, uI.transform));
+                    iconFills.Add(Instantiate(fillOptions[1], position, Quaternion.identity, uI.transform).GetComponent<Image>());
+                    break;
+                }
+            case (pickupStats.weaponType.shotgun):
+                {
+                    weaponIcons.Add(Instantiate(iconOptions[2], position, Quaternion.identity, uI.transform));
+                    iconFills.Add(Instantiate(fillOptions[2], position, Quaternion.identity, uI.transform).GetComponent<Image>());
+                    break;
+                }
+            case (pickupStats.weaponType.sniper):
+                {
+                    weaponIcons.Add(Instantiate(iconOptions[3], position, Quaternion.identity, uI.transform));
+                    iconFills.Add(Instantiate(fillOptions[3], position, Quaternion.identity, uI.transform).GetComponent<Image>());
+                    break;
+                }
+        }
 
     }
 

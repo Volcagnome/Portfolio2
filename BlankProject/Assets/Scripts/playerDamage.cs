@@ -63,6 +63,11 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
     [SerializeField] float heatPerShot;
     [SerializeField] float coolRate;
     [SerializeField] float coolWaitTime;
+    Dictionary<pickupStats.weaponType, Coroutine> weaponCooldownCoroutines;
+    Dictionary<pickupStats.weaponType, float> weaponCurrentHeats;
+    Dictionary<pickupStats.weaponType, bool> weaponsCanCool;
+
+    pickupStats.weaponType gunType;
 
     Coroutine cooldownCoroutine;
 
@@ -86,11 +91,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
     int bulletUpgradeTotal;
     float maxAmmoMultiplier;
 
-    Dictionary<pickupStats.weaponType, Coroutine> weaponCooldownCoroutines;
-    Dictionary<pickupStats.weaponType, float> weaponCurrentHeats;
-    Dictionary<pickupStats.weaponType, bool> weaponsCanCool;
-
-    pickupStats.weaponType gunType;
+    
 
     bool isFlashOn;
     bool isShooting;
@@ -98,7 +99,6 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
     bool isTakingDamage;
     bool canCool;
     bool usedToMax;
-    bool isShotgun;
     bool isEmittingSmoke;
     bool isLowHp;
 
@@ -118,7 +118,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         isLowHp = false;
 
         adjustHPBar();
-        adjustGlow();
+        
 
         weapons = StaticData.playerWeaponsList;
         
@@ -133,6 +133,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
 
         currentlyHighlighted = null;
 
+        adjustGlow();
         spawnPlayer();
     }
 
@@ -244,7 +245,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
             }
         }
 
-        if (isShotgun)
+        if (GetWeaponList()[selectedGun].gunType == pickupStats.weaponType.shotgun)
         {
             for (int currentPellet = 0; currentPellet < 9; ++currentPellet)
             {
@@ -303,7 +304,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         // Mouse wheel switching:
         if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < weapons.Count - 1)
         {
-            weapons[selectedGun].currentHeat = currentHeat;
+            //weapons[selectedGun].currentHeat = currentHeat;
             selectedGun++;
             setWeapon(weapons[selectedGun]);
             // Play weapon switch sound:
@@ -311,7 +312,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
         {
-            weapons[selectedGun].currentHeat = currentHeat;
+            //weapons[selectedGun].currentHeat = currentHeat;
             selectedGun--;
             setWeapon(weapons[selectedGun]);
             // Play weapon switch sound:
@@ -336,7 +337,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
                 if (tempIndex-1 != selectedGun)
                 {
                     // Update index:
-                    weapons[selectedGun].currentHeat = currentHeat;
+                    //weapons[selectedGun].currentHeat = currentHeat;
                     selectedGun = tempIndex - 1;
                     // Set to that weapon.
                     setWeapon(weapons[selectedGun]);
@@ -474,7 +475,6 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         heatPerShot = weapon.heatPerShot;
         coolRate = weapon.coolRate;
         coolWaitTime = weapon.coolWaitTime;
-        isShotgun = weapon.shotgun;
         gunType = weapon.gunType;
         currentHeat = weaponCurrentHeats[gunType];
 
@@ -492,6 +492,8 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         gunModel.GetComponent<MeshFilter>().sharedMesh = weapon.itemModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = weapon.itemModel.GetComponent<MeshRenderer>().sharedMaterial;
 
+        
+
         adjustGlow();
 
         
@@ -499,7 +501,6 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
 
     public void addWeapon(pickupStats weapon)
     {
-        if (weapons.Count > 0) weapons[selectedGun].currentHeat = currentHeat;
         weapons.Add(weapon);
         setWeapon(weapon);
         selectedGun = weapons.IndexOf(weapon);
@@ -511,6 +512,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         else if(weapon.gunType == pickupStats.weaponType.sniper)
             StaticData.hasSniper = true;
 
+        GameManager.instance.AddWeaponIcon(weapon.gunType);
     }
 
     void coolWeapon(pickupStats.weaponType weaponType, float weaponCoolRate)
@@ -579,8 +581,8 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
 
     void adjustGlow()
     {
-        weaponLight.intensity = glowIntesityMultiplier * currentHeat / maxHeat;
-        gunModel.GetComponent<Light>().intensity = glowIntesityMultiplier * currentHeat / maxHeat;
+        weaponLight.intensity = glowIntesityMultiplier * weaponCurrentHeats[weapons[selectedGun].gunType] / GetMaxHeat(weapons[selectedGun].gunType);
+        gunModel.GetComponent<Light>().intensity = glowIntesityMultiplier * weaponCurrentHeats[weapons[selectedGun].gunType] / GetMaxHeat(weapons[selectedGun].gunType);
         adjustOverheatMeter();
     }
 
@@ -665,6 +667,11 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
     {
         if(gunType != pickupStats.weaponType.none)
             GameManager.instance.overheatMeter.fillAmount = weaponCurrentHeats[gunType] / GetMaxHeat(gunType);
+
+        for (int i = 0; i < weapons.Count && i < GameManager.instance.iconFills.Count; ++i)
+        {
+            GameManager.instance.iconFills[i].fillAmount  = weaponCurrentHeats[weapons[i].gunType] / GetMaxHeat(weapons[i].gunType);
+        }
     }
 
     //Getters and setters
