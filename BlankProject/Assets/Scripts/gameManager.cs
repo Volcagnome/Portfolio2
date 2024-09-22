@@ -556,7 +556,7 @@ public class GameManager : MonoBehaviour
 
     public void AddWeaponIcon(pickupStats.weaponType weapon)
     {
-        Vector3 position = Vector3.zero; position.x = 159; position.y = 175 + (75 * weaponIcons.Count);
+        Vector3 position = Vector3.zero; position.x = 159; position.y = 175 + (uI.GetComponent<CanvasScaler>().referencePixelsPerUnit * .75F * weaponIcons.Count);
 
         switch (weapon)
         {

@@ -339,7 +339,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
             if (tempIndex <= weapons.Count)
             {
                 // If that index isn't already the selected gun:
-                if (tempIndex-1 != selectedGun)
+                if (tempIndex-1 != selectedGun && tempIndex <= weapons.Count)
                 {
                     // Update index:
                     //weapons[selectedGun].currentHeat = currentHeat;
