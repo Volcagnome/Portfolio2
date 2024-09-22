@@ -603,14 +603,24 @@ public class SharedEnemyAI : MonoBehaviour
             isStunned = true;
             PlayStunVFX();
             agent.isStopped = true;
-            yield return new WaitForSeconds(stunTime);
-            
-            if (!isDead)
-            {
-                isStunned = false;
-                agent.isStopped = false;
-            }
+
+            StartCoroutine(stunTimer(stunTime));
         }
+
+        yield break;
+    }
+
+    public IEnumerator stunTimer(float stunTime)
+    {
+        yield return new WaitForSeconds(stunTime);
+
+        isStunned = false;
+        if (!isDead)
+        {
+            agent.isStopped = false;
+            CalmEnemy();
+        }
+
     }
 
     protected void PlayStunVFX()

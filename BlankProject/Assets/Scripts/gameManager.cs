@@ -224,6 +224,7 @@ public class GameManager : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
+
         if (Input.GetButtonDown("Cancel"))
         {
             if (menuActive == null)
@@ -365,7 +366,8 @@ public class GameManager : MonoBehaviour
         };
 
         StaticData.levelData[SceneManager.GetActiveScene().buildIndex] = state;
-        StaticData.commandCodesCollectedTotal_Static = StaticData.commandCodesCollectedTotal_Static + sceneCommandCodesCollected;
+        StaticData.commandCodesCollectedTotal_Static = sceneCommandCodesCollected;
+        StaticData.commandCodesEntered_Static = commandCodesEntered;
     }
 
     public void LoadPlayerPickupData(playerPickupState state)
@@ -378,7 +380,7 @@ public class GameManager : MonoBehaviour
         sceneWeaponPickupsTotal = state.sceneWeaponPickupsTotal_Static;
         sceneSecurityPassword = state.sceneSecurityPassword_Static;
         securityPasswordDisplay.GetComponent<TMP_Text>().text = sceneSecurityPassword.ToString();
- 
+        commandCodesEntered = StaticData.commandCodesEntered_Static;
     }
 
     public void DestroyDefaultObjects(string tag)
@@ -506,6 +508,7 @@ public class GameManager : MonoBehaviour
     public void ActivateSelfDestruct() 
     { 
         selfDestructActivated = true;
+        AudioManager.instance.ChangeTrack(AudioManager.musicTrack.escapeMusic);
 
         foreach (var enemyStateList in sceneEnemies)
         {

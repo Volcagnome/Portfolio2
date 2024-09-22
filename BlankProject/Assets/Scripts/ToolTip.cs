@@ -21,8 +21,6 @@ public class ToolTip : MonoBehaviour
             tooltipWindow.GetComponentInChildren<TMP_Text>().text = toolTips[(int)type];
             tooltipWindow.SetActive(true);
         }
-
-      
     }
 
 

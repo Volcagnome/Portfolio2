@@ -54,8 +54,16 @@ public class MainMenu : MonoBehaviour
 
     public void Quit()
     {
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #else
         Application.Quit();
-        Debug.Log("Player Has Quit The Game");
+        #endif
+    }
+
+    public void ViewCredits()
+    {
+        SceneManager.LoadScene("Credits");
     }
 
     public void SetVolume(float volume)

@@ -53,7 +53,6 @@ public class BossFight : MonoBehaviour
     [SerializeField] int fightStage_3_titans;
     
     int fightStage;
-    bool bossFightBegin = false;
     bool bossIsDead;
     bool playerRespawned;
 
@@ -64,6 +63,7 @@ public class BossFight : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+
         instance = this;
         bossIsDead = StaticData.bossIsDead_Static;
 
@@ -99,11 +99,12 @@ public class BossFight : MonoBehaviour
 
         if (StaticData.bossIsDead_Static)
         {
+            loadingZone.SetActive(true);
+
             if (!StaticData.mainFrameDoorOpen)
             { 
                 MainFrameDoorControl.GetComponent<togglingItem>().interact();
                 StaticData.mainFrameDoorOpen = true;
-                loadingZone.SetActive(true);
             }
 
             if (GameManager.instance.GetCommandCodesEntered() == 6)
@@ -123,17 +124,19 @@ public class BossFight : MonoBehaviour
 
                 StaticData.gameObjective_Static = "\r\n\r\nEscape and warn the Planetary Defence Force!!";
                 GameManager.instance.UpdateObjectiveUI(StaticData.gameObjective_Static);
-                GameManager.instance.ActivateSelfDestruct();
-                source.clip = selfDestructAlarm;
-                source.loop = true;
-                if(!source.isPlaying)
-                    source.Play();
+
+
+                if (!StaticData.selfDestructActivated_Static)
+                    GameManager.instance.ActivateSelfDestruct();
                 StaticData.selfDestructActivated_Static = true;
+                //source.clip = selfDestructAlarm;
+                //source.loop = true;
+                //if(!source.isPlaying)
+                //    source.Play();
+
                 selfDestructScreen.SetActive(true);
                 StartCoroutine(FlashScreen());
             }
-
-
 
         }
 
@@ -160,10 +163,11 @@ public class BossFight : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+         
 
-            if (!StaticData.bossIsDead_Static && bossFightBegin == false && fightStage == 0)
+            if (!StaticData.bossIsDead_Static && fightStage == 0)
             {
-                bossFightBegin = true;
+                AudioManager.instance.ChangeTrack(AudioManager.musicTrack.bossFightMusic);
                 boss.GetComponent<AudioSource>().PlayOneShot(foundPlayer);
                 EnemyManager.instance.SetIsBossFight(true);
                 BossApproach();
@@ -297,4 +301,8 @@ public class BossFight : MonoBehaviour
         invasionSprite.SetActive(true);
     }
 
+    public int GetBossFightStage()
+    {
+        return fightStage;
+    }
 }

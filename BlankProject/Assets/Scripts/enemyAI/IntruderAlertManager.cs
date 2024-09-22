@@ -136,14 +136,14 @@ public class IntruderAlertManager: MonoBehaviour
     //behavior.
     public void IntruderAlert(Vector3 location)
     {
-
         intruderAlert = true;
         isRaisingAlarm = false;
         intruderAlertButtons.ForEach(button =>
         {
-            
             button.GetComponent<IntruderAlertButton>().UpdateButtonState(IntruderAlertButton.buttonState.Alert);
         });
+
+        AudioManager.instance.ChangeTrack(AudioManager.musicTrack.intruderAlertMusic);
             
         whistleBlower.GetComponentInChildren<SkinnedMeshRenderer>().material = whistleBlower.GetComponent<SharedEnemyAI>().GetOriginalMaterial();
 
@@ -394,6 +394,8 @@ public class IntruderAlertManager: MonoBehaviour
     {
         intruderAlert = false;
 
+        AudioManager.instance.ChangeTrack(AudioManager.musicTrack.defaultMusic);
+
         intruderAlertButtons.ForEach(button =>
         {
             button.GetComponent<IntruderAlertButton>().UpdateButtonState(IntruderAlertButton.buttonState.idle);
@@ -408,6 +410,8 @@ public class IntruderAlertManager: MonoBehaviour
         ToggleSpiderSpawners(false);
 
         responseTeam.Clear();
+
+
     }
 
 

@@ -20,6 +20,8 @@ public class StaticData : MonoBehaviour
     //Tracks how many total command codes the player has collected so far
     public static int commandCodesCollectedTotal_Static;
 
+
+
     public static bool selfDestructActivated_Static;
 
     public static bool bossIsDead_Static;
@@ -29,6 +31,8 @@ public class StaticData : MonoBehaviour
     public static string gameObjective_Static;
 
     public static bool mainFrameDoorOpen = true;
+
+    public static int commandCodesEntered_Static;
 
     ////////////////////////////////////////
     ///          PLAYER DATA             ///
@@ -77,7 +81,7 @@ public class StaticData : MonoBehaviour
 
     //Dictionary of collected scene command codes and security password
     public static Dictionary<int, playerPickupState> levelData = new Dictionary<int, playerPickupState>()
-    { { 0, playerMainMenu },{ 1,playerTutorialLevel }, { 2, playerPickupsStateScene1 }, { 3, playerPickupsStateScene2 },{ 4,playerPickupsStateScene3  },{ 5,playerTEST }};
+    { { 0, playerMainMenu },{ 1,playerTutorialLevel }, { 2, playerPickupsStateScene1 }, { 3, playerPickupsStateScene2 },{ 4,playerPickupsStateScene3  },{ 5,playerPickupsStateCredits },{ 6,playerTEST }};
 
     public struct playerPickupState
     {
@@ -107,6 +111,7 @@ public class StaticData : MonoBehaviour
     public static List<enemyState> enemyStatesScene1 = new List<enemyState>();
     public static List<enemyState> enemyStatesScene2 = new List<enemyState>();
     public static List<enemyState> enemyStatesScene3 = new List<enemyState>();
+    public static List<enemyState> enemyStatesCredits = new List<enemyState>();
 
     public static List<enemyState> enemyTEST = new List<enemyState>();
 
@@ -116,6 +121,7 @@ public class StaticData : MonoBehaviour
     public static List<pickupState> pickupStatesScene1 = new List<pickupState>();
     public static List<pickupState> pickupStatesScene2 = new List<pickupState>();
     public static List<pickupState> pickupStatesScene3 = new List<pickupState>();
+    public static List<pickupState> pickupStatesCredits = new List<pickupState>();
 
     public static List<pickupState> pickupTEST= new List<pickupState>();
 
@@ -125,12 +131,13 @@ public class StaticData : MonoBehaviour
     public static playerPickupState playerPickupsStateScene1 = new playerPickupState();
     public static playerPickupState playerPickupsStateScene2 = new playerPickupState();
     public static playerPickupState playerPickupsStateScene3 = new playerPickupState();
+    public static playerPickupState playerPickupsStateCredits = new playerPickupState();
 
     public static playerPickupState playerTEST = new playerPickupState();
 
     //Dictionary of scene enemy states;
     public static Dictionary<int, List<enemyState>> sceneEnemies = new Dictionary<int, List<enemyState>> 
-    { {0, enemyMainMenu }, { 1, enemyTutorialLevel }, { 2, enemyStatesScene1 }, { 3, enemyStatesScene2 }, { 4, enemyStatesScene3 }, { 5, enemyTEST }};
+    { {0, enemyMainMenu }, { 1, enemyTutorialLevel }, { 2, enemyStatesScene1 }, { 3, enemyStatesScene2 }, { 4, enemyStatesScene3 }, { 5, enemyStatesCredits },{ 6, enemyTEST }};
 
     //Struct to hold state for each pickup platform in scene
     public struct pickupState
@@ -144,10 +151,10 @@ public class StaticData : MonoBehaviour
 
     //Dictionary of scene pickup states;
     public static Dictionary<int, List<pickupState>> scenePickups = new Dictionary<int, List<pickupState>>
-    { {0, pickupMainMenu }, { 1, pickupTutorialLevel }, { 2, pickupStatesScene1 }, { 3, pickupStatesScene2 }, { 4, pickupStatesScene3 }, { 5, pickupTEST }};
+    { {0, pickupMainMenu }, { 1, pickupTutorialLevel }, { 2, pickupStatesScene1 }, { 3, pickupStatesScene2 }, { 4, pickupStatesScene3 }, { 5, pickupStatesScene3 }, { 6, pickupTEST }};
 
     //Dictionary of if this is the player's first time in the scene
     public static Dictionary<int, bool> firstTimeInScene = new Dictionary<int, bool>
-    { {0, true }, { 1, true },{ 2, true },{ 3, true },{ 4, true },{ 5, true }};
+    { {0, true }, { 1, true },{ 2, true },{ 3, true },{ 4, true },{ 5, true },{ 6, true }};
 
 }

@@ -101,7 +101,6 @@ public class grenadeEffects : MonoBehaviour
                     // If enemy has SharedAI and isn't already alerted:
                     if (enemy != null)
                     {
-                        
                         // Set enemies last known player location to the decoy's current position.
 
                         // Calls method that updates FindIntruder and waits for a few seconds before
@@ -140,7 +139,7 @@ public class grenadeEffects : MonoBehaviour
                         target.GetComponent<IDamage>().takeDamage(ThrowThisGrenade.aoeDamage);
                     }
                     // Add grenade's stun time to disable enemy for that amount of time:
-                    
+
                     StartCoroutine(enemy.WaitForStun(ThrowThisGrenade.stunTime, decoyPos));
                 }
             }

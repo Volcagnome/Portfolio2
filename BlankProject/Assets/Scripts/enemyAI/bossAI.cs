@@ -356,6 +356,7 @@ public class bossAI : SharedEnemyAI, IDamage
         StaticData.bossIsDead_Static = true;
 
         DeathShared();
+        AudioManager.instance.ChangeTrack(AudioManager.musicTrack.defaultMusic);
 
         agent.isStopped = true;
 
