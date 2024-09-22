@@ -1167,18 +1167,21 @@ MonoBehaviour:
   DeathFXPos: {fileID: 8657334070516537031}
   weakspot: {fileID: 4473498886507278873}
   audioPlayer: {fileID: -8515563581985001358}
-  xrayMaterial: {fileID: 2100000, guid: 6b0094002b553434980733121f374948, type: 2}
+  searchingMaterial: {fileID: 0}
+  hostileMaterial: {fileID: 0}
   originalMaterial: {fileID: 2100000, guid: 8925ba51312eac048a78cb18f15129a5, type: 2}
+  passiveMaterial: {fileID: 0}
   shootPos: {fileID: 2884302309111787798}
   weapon_R: {fileID: 3588450594465189006}
   ammoType: {fileID: 6420008089122250663, guid: ee414b3449b2a514bb3c0e9b09bdd763, type: 3}
-  aimOffset: 0.5
+  aimOffset: 0.35
   FOV_Angle: 360
   rotationSpeed: 5
+  enemyDetectionLevelOG: 0
   playerDetectionCircle: {fileID: 3328373697659866587}
   playerDetectionCircleFill: {fileID: 8260697932922529746}
   playerInViewIndicator: {fileID: 8426796975687580356}
-  detectionRadiusOriginal: 0
+  detectTime: 0
   enemy_Type: 6
   HPOrig: 6
   shootRate: 1
@@ -1188,6 +1191,7 @@ MonoBehaviour:
   idleSpeed: 7
   originalDetectionRadius: 15
   detectionRadiusPlayerCrouched: 7.5
+  ammoCapacity: 0
   allyRadius: 12
   allyLayer:
     serializedVersion: 2
@@ -1210,6 +1214,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3399d82c641016945980489fb3ee9e2f, type: 3}
   - {fileID: 8300000, guid: 5d63adaf9670cb841849ab5e125c99f6, type: 3}
   foundPlayer: {fileID: 8300000, guid: b6fcb4fb2e4f5ae4681ab4fd95aeca19, type: 3}
+  weaponReload: {fileID: 0}
+  whatWasThat: {fileID: 0}
+  mustHaveBeenTheWind: {fileID: 0}
   web: {fileID: 7713615223499435778}
   originalMaterial2: {fileID: 2100000, guid: aeb7bdfeefa446e4999c92547ff201a7, type: 2}
   xrayMaterial2: {fileID: 2100000, guid: 93e1958bb4087f643bae0d476ca8ccb7, type: 2}
