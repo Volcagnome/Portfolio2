@@ -50,6 +50,9 @@ public class grenadeThrow : MonoBehaviour
     public AudioClip effectSound;
     public float effectVol;
 
+    [SerializeField] AudioClip throwSound;
+    [SerializeField] float throwVol;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,11 +68,18 @@ public class grenadeThrow : MonoBehaviour
 
         // Set grenades to max grenade count.
         maxThrows = grenades[selectedGrenade].ammoCount;
+
+        // Update UI to display grenade count:
+        GameManager.instance.grenadeCount.text = maxThrows.ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Update UI:
+        GameManager.instance.empImage.enabled = (isEMP);
+        GameManager.instance.decoyImage.enabled = (isDecoy);
+
         if (Input.GetButtonDown("Throw") && readyForThrow && maxThrows > 0 && grenades.Count > 0)
         {
             throwGrenade();
@@ -98,6 +108,9 @@ public class grenadeThrow : MonoBehaviour
         }
         // Set current grenades to our selection:
         SetGrenade(grenades[selectedGrenade]);
+
+        // Update UI to display grenade count:
+        GameManager.instance.grenadeCount.text = maxThrows.ToString();
     }
 
     private void SetGrenade(grenadeStats selection)
@@ -134,7 +147,8 @@ public class grenadeThrow : MonoBehaviour
 
         // Grenade is instantiated:
         GameObject throwable = Instantiate(grenadeModel, throwPos.position, camPos.rotation);
-
+        // Play throw sound effect:
+        GameManager.instance.playAud(throwSound, throwVol);
         // Get rigidbody and calculate throw force:
         Rigidbody throwableRB = throwable.GetComponent<Rigidbody>();
         Vector3 forceAdded = camPos.transform.forward * throwForce + transform.up * throwUpForce;
@@ -144,7 +158,10 @@ public class grenadeThrow : MonoBehaviour
         // Counter for remaining throws lowers.
         maxThrows--;
         // Update grenade count.
-        maxThrows = grenades[selectedGrenade].ammoCount;
+        grenades[selectedGrenade].ammoCount = maxThrows;
+
+        // Update UI to display grenade count:
+        GameManager.instance.grenadeCount.text = maxThrows.ToString();
 
         // Cooldown grenade throwing:
         Invoke(nameof(resetGrenade), grenadeCooldown);

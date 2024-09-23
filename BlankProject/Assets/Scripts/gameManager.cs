@@ -28,9 +28,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject almostWinMenu;
     [SerializeField] GameObject SelfDestructFlavorText;
+
     public GameObject tutorialWindow;
     public GameObject grenadeTutWindow;
     public bool isPaused;
+
+    // Grenade Count UI:
+    [SerializeField] public TMP_Text grenadeCount;
+    [SerializeField] public Image empImage;
+    [SerializeField] public Image decoyImage;
 
     //Self Destruct Timer
     [SerializeField] float totalTime = 600;
