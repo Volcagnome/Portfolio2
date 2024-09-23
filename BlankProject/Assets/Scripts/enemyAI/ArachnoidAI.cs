@@ -197,9 +197,13 @@ public class ArachnoidAI : SharedEnemyAI,IDamage
 
     //On death, calls the SharedDeath function to execute common death operations. If player is currently webbed by
     //spider, reverses effects and disables line renderer. Finally removes spider from scene.
+
+    
+
     protected override void Death()
     {
         DeathShared();
+        defaultPost.GetComponent<SpiderSpawner>().ResetCurrentSpider();
 
         if (caughtPlayer)
         {
@@ -226,6 +230,8 @@ public class ArachnoidAI : SharedEnemyAI,IDamage
 
         audioPlayer.PlayOneShot(footsteps[playTrack],3f);
     }
+
+   
 
     public override void XrayEnemy(GameObject spider, bool xrayApplied)
     {

@@ -64,4 +64,6 @@ public class SpiderSpawner : MonoBehaviour
 
 
     public void SetIsActive(bool status) { isActive = status; }
+
+    public void ResetCurrentSpider() { currentSpider = null; }
 }
