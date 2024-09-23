@@ -4920,6 +4920,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1604942678046259798, guid: e382cd7ca86865b44a5de8306db47211, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2484588463193824695, guid: e382cd7ca86865b44a5de8306db47211, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -8580,6 +8584,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
   m_PrefabInstance: {fileID: 880989527571091905}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &727262015
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 863709949762271537, guid: 97e16fdf3f45d774d85ca3faed9526ec, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -58.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 863709949762271537, guid: 97e16fdf3f45d774d85ca3faed9526ec, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 35.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 863709949762271537, guid: 97e16fdf3f45d774d85ca3faed9526ec, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -106.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 863709949762271537, guid: 97e16fdf3f45d774d85ca3faed9526ec, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.97116554
+      objectReference: {fileID: 0}
+    - target: {fileID: 863709949762271537, guid: 97e16fdf3f45d774d85ca3faed9526ec, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 863709949762271537, guid: 97e16fdf3f45d774d85ca3faed9526ec, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.23840633
+      objectReference: {fileID: 0}
+    - target: {fileID: 863709949762271537, guid: 97e16fdf3f45d774d85ca3faed9526ec, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 863709949762271537, guid: 97e16fdf3f45d774d85ca3faed9526ec, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 863709949762271537, guid: 97e16fdf3f45d774d85ca3faed9526ec, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -332.415
+      objectReference: {fileID: 0}
+    - target: {fileID: 863709949762271537, guid: 97e16fdf3f45d774d85ca3faed9526ec, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7000403083760631719, guid: 97e16fdf3f45d774d85ca3faed9526ec, type: 3}
+      propertyPath: m_Name
+      value: Security Camera (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 97e16fdf3f45d774d85ca3faed9526ec, type: 3}
 --- !u!4 &727380619 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5026130176336384130, guid: f67781449840fc34c853d63f16bdd96f, type: 3}
@@ -12743,11 +12804,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 863709949762271537, guid: 97e16fdf3f45d774d85ca3faed9526ec, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -44.6
+      value: -46.87
       objectReference: {fileID: 0}
     - target: {fileID: 863709949762271537, guid: 97e16fdf3f45d774d85ca3faed9526ec, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 35.31
+      value: 35.36
       objectReference: {fileID: 0}
     - target: {fileID: 863709949762271537, guid: 97e16fdf3f45d774d85ca3faed9526ec, type: 3}
       propertyPath: m_LocalPosition.z
@@ -73030,6 +73091,7 @@ SceneRoots:
   - {fileID: 1051700213}
   - {fileID: 133868844}
   - {fileID: 1005500942}
+  - {fileID: 727262015}
   - {fileID: 638983019}
   - {fileID: 2008588400}
   - {fileID: 7565761}

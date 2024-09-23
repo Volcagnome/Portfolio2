@@ -2378,19 +2378,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1804641748033388842, guid: 017f2fa3f1489324ba787086f448e4b6, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: -0.25881574
       objectReference: {fileID: 0}
     - target: {fileID: 1804641748033388842, guid: 017f2fa3f1489324ba787086f448e4b6, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1804641748033388842, guid: 017f2fa3f1489324ba787086f448e4b6, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.9659267
       objectReference: {fileID: 0}
     - target: {fileID: 1804641748033388842, guid: 017f2fa3f1489324ba787086f448e4b6, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1804641748033388842, guid: 017f2fa3f1489324ba787086f448e4b6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2398,7 +2398,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1804641748033388842, guid: 017f2fa3f1489324ba787086f448e4b6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -210
       objectReference: {fileID: 0}
     - target: {fileID: 1804641748033388842, guid: 017f2fa3f1489324ba787086f448e4b6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -4271,6 +4271,11 @@ PrefabInstance:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1190965250787387648, guid: aa2791bf05d897c44865eee871ada02a, type: 3}
   m_PrefabInstance: {fileID: 892553931}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &669381570 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6898414591975821404, guid: 1a47022c243ccde44a0e26471f546ebf, type: 3}
+  m_PrefabInstance: {fileID: 980768489}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &692131719
 GameObject:
@@ -10605,6 +10610,18 @@ PrefabInstance:
 
 
         Activate the self destruct.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3057870815505186473, guid: e382cd7ca86865b44a5de8306db47211, type: 3}
+      propertyPath: reinforcementSpawner
+      value: 
+      objectReference: {fileID: 669381570}
+    - target: {fileID: 3057870815505186473, guid: e382cd7ca86865b44a5de8306db47211, type: 3}
+      propertyPath: spiderSpawners.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3057870815505186473, guid: e382cd7ca86865b44a5de8306db47211, type: 3}
+      propertyPath: intruderAlertButtons.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3104325623692677206, guid: e382cd7ca86865b44a5de8306db47211, type: 3}
       propertyPath: m_text

@@ -94,6 +94,10 @@ public class damage : MonoBehaviour
                 gameObject.GetComponent<AudioSource>().clip = GetComponentInParent<TitanAI>().shieldHit;
                 gameObject.GetComponent<AudioSource>().Play();
             }
+            else if (type == damageType.stationary && status == effectType.none)
+            {
+                dmg.takeDamage(damageAmount);
+            }
 
         }
         else
