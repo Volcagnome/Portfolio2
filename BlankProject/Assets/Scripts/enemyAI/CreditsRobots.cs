@@ -9,12 +9,20 @@ public class CreditsRobots : MonoBehaviour
     private void Start()
     {
         nextMove = true;
+        StartCoroutine(StartDancing());
     }
 
     private void NextMove()
     {
         GetComponent<Animator>().SetBool("nextMove", nextMove);
         nextMove = !nextMove;
+    }
+
+    IEnumerator StartDancing()
+    {
+        yield return new WaitForSeconds(1.75f);
+
+        GetComponent<Animator>().SetBool("nextMove", true);
     }
 
 }

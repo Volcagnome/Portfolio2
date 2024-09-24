@@ -67,6 +67,8 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
     Dictionary<pickupStats.weaponType, Coroutine> weaponCooldownCoroutines;
     Dictionary<pickupStats.weaponType, float> weaponCurrentHeats;
     Dictionary<pickupStats.weaponType, bool> weaponsCanCool;
+    Dictionary<pickupStats.weaponType, bool> weaponsUsedToMax;
+
 
     pickupStats.weaponType gunType;
 
@@ -110,10 +112,10 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
     //Sets the player's health and max health stats pulled from the StaticPlayerData script.
     void Start()
     {
-
         weaponCooldownCoroutines = new Dictionary<pickupStats.weaponType, Coroutine> { { pickupStats.weaponType.pistol, null}, { pickupStats.weaponType.rifle, null }, { pickupStats.weaponType.shotgun, null }, { pickupStats.weaponType.sniper, null } };
         weaponCurrentHeats = new Dictionary<pickupStats.weaponType, float> { { pickupStats.weaponType.pistol, 0f },{ pickupStats.weaponType.rifle, 0f }, { pickupStats.weaponType.shotgun, 0f }, { pickupStats.weaponType.sniper, 0f } };
         weaponsCanCool = new Dictionary<pickupStats.weaponType, bool> { { pickupStats.weaponType.pistol, true }, { pickupStats.weaponType.rifle, true }, { pickupStats.weaponType.shotgun, true }, { pickupStats.weaponType.sniper, true } };
+        weaponsUsedToMax = new Dictionary<pickupStats.weaponType, bool> { { pickupStats.weaponType.pistol, false }, { pickupStats.weaponType.rifle, false }, { pickupStats.weaponType.shotgun, false }, { pickupStats.weaponType.sniper, false } };
 
         //Sets original starting stats:
         //hpOG = HP;
@@ -163,7 +165,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
             if (StaticData.hasShotgun && weaponCooldownCoroutines[pickupStats.weaponType.shotgun] == null) coolWeapon(pickupStats.weaponType.shotgun, GetCoolRate(pickupStats.weaponType.shotgun));
             if (StaticData.hasSniper && weaponCooldownCoroutines[pickupStats.weaponType.sniper] == null) coolWeapon(pickupStats.weaponType.sniper, GetCoolRate(pickupStats.weaponType.sniper));
 
-            if (usedToMax && !isEmittingSmoke) StartCoroutine(emitSmoke());
+            if (weaponsUsedToMax[gunType] && !isEmittingSmoke) StartCoroutine(emitSmoke());
 
             if (isBurning) HP -= burnDamage * burnRate * Time.deltaTime;
             if (isBleeding) HP -= bleedDamage * bleedRate * Time.deltaTime;
@@ -177,7 +179,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         // Listen for shooting, interacting or flashlight:
         if (!isStunned && !isShocked)
         {
-            if (Input.GetButton("Shoot") && weapons.Count > 0 && maxHeat > weaponCurrentHeats[gunType] && !usedToMax && !isShooting)
+            if (Input.GetButton("Shoot") && weapons.Count > 0 && GetMaxHeat(gunType) > weaponCurrentHeats[gunType] && !weaponsUsedToMax[gunType] && !isShooting)
                 StartCoroutine(shoot());
 
             
@@ -209,10 +211,10 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         //currentHeat += heatPerShot;
         weaponCurrentHeats[gunType] += heatPerShot;
 
-        if (maxHeat <= weaponCurrentHeats[gunType] + heatPerShot)
+        if (GetMaxHeat(gunType) <= weaponCurrentHeats[gunType] + heatPerShot)
         {
-            usedToMax = true;
-            currentHeat = maxHeat;
+            weaponsUsedToMax[gunType] = true;
+            weaponCurrentHeats[gunType] = GetMaxHeat(gunType);
             GameManager.instance.playAud(overheatSound, overheatVol);
         }
 
@@ -295,7 +297,6 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
 
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
-
     }
 
     IEnumerator flashMuzzle()
@@ -532,7 +533,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         weaponCurrentHeats[weaponType] -= weaponCoolRate * Time.deltaTime;
 
         if (weaponCurrentHeats[weaponType] < 0) { weaponCurrentHeats[weaponType] = 0; }
-        if (weaponCurrentHeats[weaponType] <= 0 && usedToMax) usedToMax = false;
+        if (weaponCurrentHeats[weaponType] <= 0 && weaponsUsedToMax[weaponType]) weaponsUsedToMax[weaponType] = false;
 
         adjustGlow();
     }
