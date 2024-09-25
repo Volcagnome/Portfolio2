@@ -21,15 +21,14 @@ public class TirggerVideo : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         
+
         if (other.gameObject.tag == "Player")
         {
             GameManager.instance.DisplayHint("Beware the patrol robots, they will alert other droids to your location if you let them make it to the alert button!");
-
-            Time.timeScale = 0;
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.Confined;
             videoPlayer.SetActive(true);
+            GameManager.instance.player.SetActive(false);
             Destroy(videoPlayer, timeStop);
+            GameManager.instance.player.SetActive(true);
             this.gameObject.SetActive(false);
 
         }
