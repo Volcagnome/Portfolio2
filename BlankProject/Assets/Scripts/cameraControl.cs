@@ -21,25 +21,28 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Get input:
-        float mouseY = Input.GetAxis("Mouse Y") * sens;
-        float mouseX = Input.GetAxis("Mouse X") * sens;
-        //float mouseY = Input.GetAxis("Mouse Y") * sens * Time.deltaTime;
-        //float mouseX = Input.GetAxis("Mouse X") * sens * Time.deltaTime;
+        if (!GameManager.instance.isPaused)
+        {
+            // Get input:
+            float mouseY = Input.GetAxis("Mouse Y") * sens;
+            float mouseX = Input.GetAxis("Mouse X") * sens;
+            //float mouseY = Input.GetAxis("Mouse Y") * sens * Time.deltaTime;
+            //float mouseX = Input.GetAxis("Mouse X") * sens * Time.deltaTime;
 
-        if (invertY)
-            rotX += mouseY;
-        else
-            rotX -= mouseY;
+            if (invertY)
+                rotX += mouseY;
+            else
+                rotX -= mouseY;
 
-        // Clamp the rotX on the x-axis:
-        rotX = Mathf.Clamp(rotX, lockVertMin, lockVertMax);
+            // Clamp the rotX on the x-axis:
+            rotX = Mathf.Clamp(rotX, lockVertMin, lockVertMax);
 
-        // Rotate the cam on the x-axis:
-        transform.localEulerAngles = Vector3.right * rotX;
-        //transform.localRotation = Quaternion.Euler(rotX, 0, 0);
+            // Rotate the cam on the x-axis:
+            transform.localEulerAngles = Vector3.right * rotX;
+            //transform.localRotation = Quaternion.Euler(rotX, 0, 0);
 
-        // Rotate the player on the y-axis
-        transform.parent.Rotate(Vector3.up * mouseX);
+            // Rotate the player on the y-axis
+            transform.parent.Rotate(Vector3.up * mouseX);
+        }
     }
 }
