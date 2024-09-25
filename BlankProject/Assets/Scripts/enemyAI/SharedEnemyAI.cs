@@ -161,8 +161,8 @@ public class SharedEnemyAI : MonoBehaviour
             //If boss fight is currently in progress, enemies will immediately proceed to the player's location 
             //regardless of if they are in range.
             if (EnemyManager.instance.GetIsBossFight())
-            {   
-                if(!BossFight.instance.GetPlayerRespawned())
+            {
+                if (!BossFight.instance.GetPlayerRespawned())
                 {
                     isAlerted = true;
                     onDuty = false;
@@ -170,8 +170,10 @@ public class SharedEnemyAI : MonoBehaviour
                     agent.stoppingDistance = combatStoppingDistance;
                     agent.SetDestination(GameManager.instance.player.transform.position);
                 }
-                else if(BossFight.instance.GetPlayerRespawned())
-                    agent.SetDestination(defaultPost.transform.position);
+                else if (BossFight.instance.GetPlayerRespawned() && !isSearching)
+                {
+                    StartCoroutine(SearchArea(defaultPost.transform.position, 20));
+                }
             }
 
 
@@ -699,8 +701,11 @@ public class SharedEnemyAI : MonoBehaviour
                 yield break;
             }
         }
-
-        if (!playerFound)
+        if(!playerFound && EnemyManager.instance.GetIsBossFight()) 
+        {
+            StartCoroutine(SearchArea(defaultPost.transform.position, 5));
+        }
+        else if (!playerFound && !EnemyManager.instance.GetIsBossFight())
         {   isSearching = false;
             CalmEnemy();
         }

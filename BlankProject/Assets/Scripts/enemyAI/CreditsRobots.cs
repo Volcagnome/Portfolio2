@@ -14,8 +14,9 @@ public class CreditsRobots : MonoBehaviour
 
     private void NextMove()
     {
-        GetComponent<Animator>().SetBool("nextMove", nextMove);
         nextMove = !nextMove;
+        GetComponent<Animator>().SetBool("nextMove", nextMove);
+        
     }
 
     IEnumerator StartDancing()

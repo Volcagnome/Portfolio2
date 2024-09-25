@@ -24,7 +24,7 @@ public class Credits : MonoBehaviour
     {
         StartCoroutine(FlashLights());
         creditsDone = false;
-        creditsFinalPosition = credits.transform.position + new Vector3(0f, 4475f, 0f);
+        creditsFinalPosition = credits.transform.position + new Vector3(0f, 5012f, 0f);
     }
 
     // Update is called once per frame

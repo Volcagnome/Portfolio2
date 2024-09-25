@@ -180,9 +180,9 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 2147484031
+    m_Bits: 2147484023
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -458,10 +458,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fabricatorDoor: {fileID: 3447483985185283465}
   fabricatorDoorLight: {fileID: 1621498778642639651}
+  spawnPosition: {fileID: 391956937095108341}
   guard: {fileID: 1043329035144271283, guid: 0d3f2fba35f2b7a419ef3b094b4b0387, type: 3}
   patrol: {fileID: 4744974096311210552, guid: b2c5178c02aded448b84086b73aa7d87, type: 3}
-  titan: {fileID: 8797669582339917010, guid: 937d5c52b5d56d046a62ddcda23893fc, type: 3}
-  spawnPosition: {fileID: 391956937095108341}
 --- !u!65 &6175621529393049108
 BoxCollider:
   m_ObjectHideFlags: 0

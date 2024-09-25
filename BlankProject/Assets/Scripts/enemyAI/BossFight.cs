@@ -164,7 +164,6 @@ public class BossFight : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
          
-
             if (!StaticData.bossIsDead_Static && fightStage == 0)
             {
                 AudioManager.instance.ChangeTrack(AudioManager.musicTrack.bossFightMusic);
@@ -185,7 +184,12 @@ public class BossFight : MonoBehaviour
                 if (enemies.Length > 0)
                 {
                     foreach (GameObject enemy in enemies)
+                    {
+                        StopCoroutine(enemy.GetComponent<SharedEnemyAI>().SearchArea(bossDefaultPost1.transform.position,5));
+                        enemy.GetComponent<SharedEnemyAI>().SetIsSearching(false);
                         enemy.GetComponent<NavMeshAgent>().SetDestination(GameManager.instance.player.transform.position);
+                    }
+                        
                 }
             }
         }

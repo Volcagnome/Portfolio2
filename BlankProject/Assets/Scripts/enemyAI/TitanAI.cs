@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 
 //Handles all behavior unique to Titans, everything else handled by SharedEnemyAI.
@@ -19,6 +20,7 @@ public class TitanAI : SharedEnemyAI, IDamage
 
     bool isBashing;
     bool inBashingDistance;
+    bool isRepositioning;
 
     // Start is called before the first frame update
     //On start if their default post is null and they are within 0.5f of a reinforcement spawner, they are responding to an
@@ -130,7 +132,7 @@ public class TitanAI : SharedEnemyAI, IDamage
 
                 AlertAllies();
                 FoundPlayer();
-                if(!inBashingDistance)
+                if(!inBashingDistance && !isRepositioning)
                     agent.stoppingDistance = combatStoppingDistance;
 
                 enemyDetectionLevel = 100f;
@@ -203,13 +205,37 @@ public class TitanAI : SharedEnemyAI, IDamage
         if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) > 7f &&!isShooting)
         {
             inBashingDistance = false;
-            if(currentAmmo > 0)
-                StartCoroutine(shoot(ammoType));
-            else if (currentAmmo == 0)
+
+            if (playerInView)
             {
-                anim.SetTrigger("Reload");
-                anim.SetBool("isReloaded", false);
+                RaycastHit hit;
+                if (Physics.Raycast(shootPos.position + new Vector3(-0.5f, 0f, 0f), playerDirection, out hit))
+                {
+                    if (!hit.collider.gameObject.CompareTag("Player") && angleToPlayer <= FOV_Angle)
+                    {
+                        isRepositioning = true;
+                        Debug.Log("test");
+                        NavMeshHit navHit;
+                        NavMesh.SamplePosition(transform.position + new Vector3(0f, 0f, -2f), out navHit, 5f, 1);
+                        agent.stoppingDistance = idleStoppingDistance;
+                        agent.SetDestination(navHit.position);
+                    }
+                    else
+                    {
+                        isRepositioning = false;
+                        agent.stoppingDistance = combatStoppingDistance;
+                        if (currentAmmo > 0)
+                            StartCoroutine(shoot(ammoType));
+                        else if (currentAmmo == 0)
+                        {
+                            anim.SetTrigger("Reload");
+                            anim.SetBool("isReloaded", false);
+                        }
+                    }
+                }
             }
+            else
+                isRepositioning = false;
         }
 
         else if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) <= 7f && !isBashing)
