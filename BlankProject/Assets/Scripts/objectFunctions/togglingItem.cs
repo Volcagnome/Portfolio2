@@ -17,8 +17,6 @@ public class togglingItem : MonoBehaviour, IInteract, ISendState
     [SerializeField] Material shader;
     [SerializeField] Material nonShaderPlaceholder;
     [SerializeField] List<MeshRenderer> shadedParts;
-    bool shaderApplied;
-    bool hitFlag;
 
     // Start is called before the first frame update
     void Start()
@@ -68,7 +66,9 @@ public class togglingItem : MonoBehaviour, IInteract, ISendState
        if (shader != null)
         {
 
-            List<Material> baseMaterials = new List<Material> ();
+            List<Material> baseMaterials = gameObject.GetComponent<MeshRenderer>().materials.ToList();
+            baseMaterials[baseMaterials.Count - 1] = shader;
+            gameObject.GetComponent<MeshRenderer>().SetMaterials(baseMaterials);
 
             for (int i = 0; i < shadedParts.Count; i++)
             {
