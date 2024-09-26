@@ -29,7 +29,6 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private TMP_Text brightnessTextValue = null;
     [SerializeField] private float defaultBrightness = 1;
 
-    [SerializeField] private Toggle fullScrrenToggle;
 
     private bool _isFullScreen;
     private float _brightnessLevel;
@@ -105,31 +104,21 @@ public class MainMenu : MonoBehaviour
         brightnessTextValue.text = brightness.ToString("0.0");
     }
 
-    public void SetFullScreen(bool isFullScreen)
-    {
-        _isFullScreen = isFullScreen;
-    }
 
     public void GraphicsApply()
     {
         PlayerPrefs.SetFloat("masterBrightness", _brightnessLevel);
-
-        PlayerPrefs.SetInt("masterFullscreen", (_isFullScreen ? 1 : 0));
-        Screen.fullScreen = _isFullScreen;
 
         StartCoroutine(ConfirmationBox());
     }
 
     public void ResetButton(string MenuType)
     {
-        if (MenuType == "Audio")
+        if (MenuType == "Graphic")
         {
             brightnessSlider.value = defaultBrightness;
             brightnessTextValue.text = defaultBrightness.ToString("0.0");
 
-            fullScrrenToggle.isOn = false;
-            Screen.fullScreen = false;
-            GraphicsApply();
         }
 
         if (MenuType == "Audio")
