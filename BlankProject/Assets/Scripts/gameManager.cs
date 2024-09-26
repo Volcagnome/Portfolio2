@@ -175,7 +175,13 @@ public class GameManager : MonoBehaviour
             StaticData.isGameStart = false;
         }
       
-            if (StaticData.previousLevel == true)
+            if(SceneManager.GetActiveScene().name == "Main Scene Final Level" && StaticData.diedDuringEscape == true)
+            {
+                currentSpawn = GameObject.FindWithTag("Escape Sequence Respawn");
+                StaticData.diedDuringEscape = false;
+                
+            }
+            else if (StaticData.previousLevel == true)
             {
                 currentSpawn = playerSpawnExit;
             }
@@ -351,7 +357,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-
+            youLose();
         }
     }
 
@@ -673,7 +679,6 @@ public class GameManager : MonoBehaviour
         hintWindow.SetActive(true);
         hintWindow.GetComponentInChildren<TMP_Text>().text = hint;
      
-     
     }
 
 
@@ -688,6 +693,9 @@ public class GameManager : MonoBehaviour
             if(!EnemyManager.instance.GetIsBossFight())
                 enemy.GetComponent<SharedEnemyAI>().CalmEnemy();
         }
+
+        if (!StaticData.bossIsDead_Static && EnemyManager.instance.GetIsBossFight())
+            BossFight.instance.ResetBossHealth();
 
         yield return new WaitForSeconds(2f);
 

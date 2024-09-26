@@ -67,6 +67,8 @@ public class BossFight : MonoBehaviour
         instance = this;
         bossIsDead = StaticData.bossIsDead_Static;
 
+        computerCoreMaterial.mainTextureOffset = new Vector2(0f, 0f);
+
         if (!StaticData.bossIsDead_Static)
         {
             fightStage = 0;
@@ -78,6 +80,15 @@ public class BossFight : MonoBehaviour
         if (StaticData.firstTimeInScene[SceneManager.GetActiveScene().buildIndex] || StaticData.mainFrameDoorOpen)
         {
                 MainFrameDoorControl.GetComponent<togglingItem>().interact();
+        }
+
+        if(StaticData.selfDestructActivated_Static)
+        {
+            SelfDestructLever.GetComponent<togglingItem>().interact();
+            computerTerminalIdle1.SetActive(false);
+            computerTerminalIdle2.SetActive(false);
+            invasionScreen.SetActive(true);
+            invasionSprite.SetActive(true);
         }
 
         StartCoroutine(ScrollComputercoreTexture());
@@ -122,7 +133,7 @@ public class BossFight : MonoBehaviour
             {
                 AudioSource source = computerTerminalAudioSource.GetComponent <AudioSource>();
 
-                StaticData.gameObjective_Static = "\r\n\r\nEscape and warn the Planetary Defence Force!!";
+                StaticData.gameObjective_Static = "\r\n\r\nEscape and warn the Planetary Defense Force!!";
                 GameManager.instance.UpdateObjectiveUI(StaticData.gameObjective_Static);
 
 
@@ -309,4 +320,15 @@ public class BossFight : MonoBehaviour
     {
         return fightStage;
     }
+
+    public void ResetBossHealth()
+    {
+        if (fightStage == 1)
+            boss.GetComponent<SharedEnemyAI>().SetHP(boss.GetComponent<SharedEnemyAI>().GetMaxHP());
+        else if (fightStage == 2)
+            boss.GetComponent<SharedEnemyAI>().SetHP(fightStage_2_threshhold);
+        else if (fightStage == 3)
+            boss.GetComponent<SharedEnemyAI>().SetHP(fightStage_3_threshhold);
+    }
+
 }

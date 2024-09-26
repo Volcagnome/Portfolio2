@@ -26,6 +26,16 @@ public class buttonFunctions : MonoBehaviour
         GameManager.instance.stateUnpaused();
     }
 
+    public void RestartEscapeSequence()
+    {
+        StaticData.totalTime_Static = 300;
+        StaticData.diedDuringEscape = true;
+
+        SceneManager.LoadScene("Main Scene Final Level");
+
+        respawn();
+    }
+
     public void quit()
     {
     #if UNITY_EDITOR
@@ -44,8 +54,10 @@ public class buttonFunctions : MonoBehaviour
 
     public void respawn()
     {
+       
         GameManager.instance.stateUnpaused();
         StartCoroutine(GameManager.instance.RespawnBuffer());
+        GameManager.instance.player.GetComponent<playerDamage>().SetPlayerDead(false);
         //GameManager.instance.player.GetComponent<playerDamage>().spawnPlayer();
         GameManager.instance.player.GetComponent<playerDamage>().setHP(GameManager.instance.player.GetComponent<playerDamage>().getMaxHP());
         GameManager.instance.player.GetComponent<playerMovement>().setStamina(GameManager.instance.player.GetComponent<playerMovement>().getMaxStamina());

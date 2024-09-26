@@ -107,6 +107,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
     bool usedToMax;
     bool isEmittingSmoke;
     bool isLowHp;
+    bool playerDead;
 
     // Start is called before the first frame update
     //Sets the player's health and max health stats pulled from the StaticPlayerData script.
@@ -422,8 +423,9 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
         StartCoroutine(flashRed());
 
         // lose condition, player HP 0:
-        if (HP <= 0)
+        if (HP <= 0 && !playerDead)
         {
+            playerDead = true;
             GameManager.instance.youLose();
         }
 
@@ -716,6 +718,8 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
 
     public int GetSelectedGun() { return selectedGun; } 
 
+    public void SetPlayerDead(bool status) { playerDead = status; }
+
     public List<pickupStats> GetWeaponList() { return weapons; }
 
 
@@ -723,6 +727,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
     // *** SPAWN *** //
     public void spawnPlayer()
     {
+        playerDead = false;
         HP = hpOG;
         adjustHPBar();
         controller.enabled = false;

@@ -34,6 +34,8 @@ public class StaticData : MonoBehaviour
 
     public static int commandCodesEntered_Static;
 
+    public static bool diedDuringEscape = false;
+
     ////////////////////////////////////////
     ///          PLAYER DATA             ///
     ///////////////////////////////////////
