@@ -765,12 +765,15 @@ public class SharedEnemyAI : MonoBehaviour
     //Sets Shoot animation trigger and waits for the configured shootRate number of seconds.
     protected virtual IEnumerator shoot(GameObject ammoType)
     {
-        anim.SetTrigger("Shoot");
+        if (!isStunned)
+        {
+            anim.SetTrigger("Shoot");
 
-        isShooting = true;
-                
-        yield return new WaitForSeconds(shootRate);
-        isShooting = false;
+            isShooting = true;
+
+            yield return new WaitForSeconds(shootRate);
+            isShooting = false;
+        }
     }
 
     //Instantiates a bullet when called by the shooting animation event.
