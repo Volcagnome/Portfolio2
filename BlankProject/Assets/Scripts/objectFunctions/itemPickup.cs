@@ -30,6 +30,8 @@ public class itemPickup : MonoBehaviour, IPickup
             displayedItem = Instantiate(item.itemModel, startingPosition, Quaternion.identity);
             displayedItem.transform.rotation = Quaternion.AngleAxis(startingAngle, startingAxes);
             displayedItem.GetComponent<Transform>().localScale *= item.modelScale;
+
+            pickupLight.SetActive(true);
         }
     }
 
@@ -44,7 +46,6 @@ public class itemPickup : MonoBehaviour, IPickup
         if (displayedItem != null && other != displayedItem.GetComponent<Collider>())
         {
             pickup(other);
-            pickupLight.SetActive(false);
         }
     }
 
@@ -62,6 +63,7 @@ public class itemPickup : MonoBehaviour, IPickup
                 other.gameObject.GetComponent<SharedEnemyAI>().SetHP(item.health + other.gameObject.GetComponent<SharedEnemyAI>().GetHP());
                 Destroy(displayedItem);
                 displayedItem=null;
+                pickupLight.SetActive(false);
                 break;
             }
                 case (pickupStats.pickupType.weapon):
@@ -69,6 +71,7 @@ public class itemPickup : MonoBehaviour, IPickup
                 other.gameObject.GetComponent<SharedEnemyAI>().SetShootRate(item.shootRate + other.gameObject.GetComponent<SharedEnemyAI>().GetShootRate());
                 Destroy(displayedItem);
                 displayedItem=null;
+                pickupLight.SetActive(false);
                 break;
             }
                 default:
@@ -91,6 +94,7 @@ public class itemPickup : MonoBehaviour, IPickup
                 GameManager.instance.player.GetComponent<playerDamage>().addWeapon(item);
                 Destroy(displayedItem);
                 displayedItem = null;
+                pickupLight.SetActive(false);
 
                 GameManager.instance.IncrementSceneWeaponPickupCounter();
                 break;
@@ -115,6 +119,7 @@ public class itemPickup : MonoBehaviour, IPickup
 
 
                 GameManager.instance.player.GetComponent<playerCrouch>().UnlockXrayAbility();
+                pickupLight.SetActive(false);
                 
                 Destroy(displayedItem);
                 displayedItem = null;
@@ -125,6 +130,7 @@ public class itemPickup : MonoBehaviour, IPickup
                 case (pickupStats.pickupType.commandCode):
                     Destroy(displayedItem);
                     displayedItem = null;
+                    pickupLight.SetActive(false);
 
                     GameManager.instance.PickedUpCommandCode();
                     break;
@@ -132,6 +138,7 @@ public class itemPickup : MonoBehaviour, IPickup
                 case (pickupStats.pickupType.securityPassword):
                     Destroy(displayedItem);
                     displayedItem= null;
+                    pickupLight.SetActive(false);
 
                     GameManager.instance.SecurityPasswordFound();
 
