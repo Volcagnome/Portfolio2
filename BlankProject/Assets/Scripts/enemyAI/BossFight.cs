@@ -118,7 +118,7 @@ public class BossFight : MonoBehaviour
                 StaticData.mainFrameDoorOpen = true;
             }
 
-            if (GameManager.instance.GetCommandCodesEntered() == 6)
+            if (StaticData.commandCodesEntered_Static == 6)
             {
                 if (!LeverCoverOpen.activeInHierarchy == true)
                 {

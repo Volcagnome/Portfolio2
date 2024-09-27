@@ -398,6 +398,7 @@ public class SharedEnemyAI : MonoBehaviour
         if(!isDead)
             agent.isStopped = false;
         detecting = false;
+        currentDetectTime = detectTime;
         yield break;
     }
 
