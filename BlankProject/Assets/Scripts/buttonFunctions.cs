@@ -47,9 +47,8 @@ public class buttonFunctions : MonoBehaviour
 
     public void ViewCredits()
     {
-        GameManager.instance.stateUnpaused();
         SceneManager.LoadScene("Credits");
-        
+        Time.timeScale = 1;
     }
 
     public void respawn()

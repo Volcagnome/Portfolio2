@@ -20,8 +20,6 @@ public class StaticData : MonoBehaviour
     //Tracks how many total command codes the player has collected so far
     public static int commandCodesCollectedTotal_Static;
 
-
-
     public static bool selfDestructActivated_Static;
 
     public static bool bossIsDead_Static;
@@ -35,6 +33,8 @@ public class StaticData : MonoBehaviour
     public static int commandCodesEntered_Static;
 
     public static bool diedDuringEscape = false;
+
+    public static float musicVolume_Static;
 
     ////////////////////////////////////////
     ///          PLAYER DATA             ///
