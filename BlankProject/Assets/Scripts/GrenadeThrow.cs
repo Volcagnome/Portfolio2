@@ -76,18 +76,21 @@ public class grenadeThrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Update UI:
-        GameManager.instance.empImage.enabled = (isEMP);
-        GameManager.instance.decoyImage.enabled = (isDecoy);
-
-        if (Input.GetButtonDown("Throw") && readyForThrow && maxThrows > 0 && grenades.Count > 0)
+        if (!GameManager.instance.isPaused)
         {
-            ThrowGrenade();
-        }
+            //Update UI:
+            GameManager.instance.empImage.enabled = (isEMP);
+            GameManager.instance.decoyImage.enabled = (isDecoy);
 
-        if (Input.GetButtonDown("Swap Grenades") && grenades.Count > 1)
-        {
-            SwapGrenades();
+            if (Input.GetButtonDown("Throw") && readyForThrow && maxThrows > 0 && grenades.Count > 0)
+            {
+                ThrowGrenade();
+            }
+
+            if (Input.GetButtonDown("Swap Grenades") && grenades.Count > 1)
+            {
+                SwapGrenades();
+            }
         }
     }
     public void AddGrenade(grenadeStats grenade)
