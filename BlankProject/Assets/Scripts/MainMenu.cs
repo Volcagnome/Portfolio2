@@ -104,6 +104,10 @@ public class MainMenu : MonoBehaviour
         brightnessTextValue.text = brightness.ToString("0.0");
     }
 
+    public void SetFullScreen()
+    {
+        Screen.fullScreen = !Screen.fullScreen; 
+    }
 
     public void GraphicsApply()
     {
