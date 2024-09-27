@@ -695,6 +695,9 @@ public class GameManager : MonoBehaviour
         {
             if(!EnemyManager.instance.GetIsBossFight())
                 enemy.GetComponent<SharedEnemyAI>().CalmEnemy();
+            
+            if(enemy.GetComponent<SharedEnemyAI>().GetEnemyType() != SharedEnemyAI.enemyType.Boss)
+                enemy.GetComponent<SharedEnemyAI>().SetHP(enemy.GetComponent<SharedEnemyAI>().GetMaxHP());
         }
 
         if (!StaticData.bossIsDead_Static && EnemyManager.instance.GetIsBossFight())
