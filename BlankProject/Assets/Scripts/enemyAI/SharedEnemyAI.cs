@@ -765,6 +765,7 @@ public class SharedEnemyAI : MonoBehaviour
     //Sets Shoot animation trigger and waits for the configured shootRate number of seconds.
     protected virtual IEnumerator shoot(GameObject ammoType)
     {
+        // If enemy isn't stunned, enemy is allowed to shoot:
         if (!isStunned)
         {
             anim.SetTrigger("Shoot");

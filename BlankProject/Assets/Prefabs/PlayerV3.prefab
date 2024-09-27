@@ -634,6 +634,37 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &8342646195638278120
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1365179632559923977}
+  m_Layer: 0
+  m_Name: ThrowPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1365179632559923977
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8342646195638278120}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: 5.8207655e-10, w: 1}
+  m_LocalPosition: {x: -0.25, y: 0.85, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8284814684954952058}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8609670482365957631
 GameObject:
   m_ObjectHideFlags: 0
@@ -824,6 +855,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8105281110314852485}
+  - {fileID: 1365179632559923977}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8666099751638355275
@@ -895,7 +927,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camPos: {fileID: 8105281110314852485}
-  throwPos: {fileID: 4827944566636450223}
+  throwPos: {fileID: 1365179632559923977}
   grenades: []
   grenadeEMP: {fileID: 11400000, guid: c9da41470a422434d8069c15dec7ae01, type: 2}
   grenadeDecoy: {fileID: 11400000, guid: c1d5c3b7dd45bd24da7cf8fa1e4e24ab, type: 2}
