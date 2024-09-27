@@ -329,9 +329,10 @@ public class GameManager : MonoBehaviour
 
     public void PlugInCode()
     {
-        if (sceneCommandCodesCollected > 0)
+        if (commandCodesCollectedTotal > 0)
         {
             commandCodesEntered++;
+            StaticData.commandCodesEntered_Static++;
             commandCodesCollectedTotal--;
         }
         
@@ -378,8 +379,8 @@ public class GameManager : MonoBehaviour
         };
 
         StaticData.levelData[SceneManager.GetActiveScene().buildIndex] = state;
-        StaticData.commandCodesCollectedTotal_Static = sceneCommandCodesCollected;
-        StaticData.commandCodesEntered_Static = commandCodesEntered;
+        StaticData.commandCodesCollectedTotal_Static = commandCodesCollectedTotal;
+
     }
 
     public void LoadPlayerPickupData(playerPickupState state)
@@ -392,7 +393,9 @@ public class GameManager : MonoBehaviour
         sceneWeaponPickupsTotal = state.sceneWeaponPickupsTotal_Static;
         sceneSecurityPassword = state.sceneSecurityPassword_Static;
         securityPasswordDisplay.GetComponent<TMP_Text>().text = sceneSecurityPassword.ToString();
-        commandCodesEntered = StaticData.commandCodesEntered_Static;
+
+        commandCodesCollectedTotal = commandCodesCollectedTotal_Static;
+
     }
 
     public void DestroyDefaultObjects(string tag)

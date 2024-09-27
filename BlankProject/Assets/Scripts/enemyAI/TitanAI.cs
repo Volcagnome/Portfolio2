@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -132,8 +133,6 @@ public class TitanAI : SharedEnemyAI, IDamage
 
                 AlertAllies();
                 FoundPlayer();
-                if(!inBashingDistance && !isRepositioning)
-                    agent.stoppingDistance = combatStoppingDistance;
 
                 enemyDetectionLevel = 100f;
                 playerInViewIndicator.SetActive(true);
@@ -196,9 +195,6 @@ public class TitanAI : SharedEnemyAI, IDamage
     protected override void FoundPlayer()
     {
 
-        agent.SetDestination(GameManager.instance.player.transform.position);
-        agent.stoppingDistance = combatStoppingDistance;
-
         if (currentAmmo < 0)
             weapon_R.transform.LookAt(GameManager.instance.player.transform.position + new Vector3(0, -90f, 0)) ;
 
@@ -208,17 +204,23 @@ public class TitanAI : SharedEnemyAI, IDamage
 
             if (playerInView)
             {
+                playerDirection = GameManager.instance.player.transform.position - shootPos.position;
+
                 RaycastHit hit;
-                if (Physics.Raycast(shootPos.position + new Vector3(-0.5f, 0f, 0f), playerDirection, out hit))
+                if (Physics.Raycast(shootPos.position, playerDirection, out hit))
                 {
-                    if (!hit.collider.gameObject.CompareTag("Player") && angleToPlayer <= FOV_Angle)
+                    if (!hit.collider.gameObject.CompareTag("Player") 
+                        && !hit.collider.gameObject.GetComponent<damage>())
                     {
-                        isRepositioning = true;
-                        Debug.Log("test");
-                        NavMeshHit navHit;
-                        NavMesh.SamplePosition(transform.position + new Vector3(0f, 0f, -2f), out navHit, 5f, 1);
-                        agent.stoppingDistance = idleStoppingDistance;
-                        agent.SetDestination(navHit.position);
+
+                            isRepositioning = true;
+                            NavMeshHit navHit;
+                            NavMesh.SamplePosition(transform.position + new Vector3(0f, 0f, -2f), out navHit, 5f, 1);
+                            agent.stoppingDistance = idleStoppingDistance;
+                            agent.SetDestination(navHit.position);
+                        
+                            if (Vector3.Distance(transform.position, agent.pathEndPosition) < 0.05f)
+                                isRepositioning = false;
                     }
                     else
                     {
@@ -226,7 +228,7 @@ public class TitanAI : SharedEnemyAI, IDamage
                         agent.stoppingDistance = combatStoppingDistance;
                         if (currentAmmo > 0)
                             StartCoroutine(shoot(ammoType));
-                        else if (currentAmmo == 0)
+                        else if (currentAmmo <= 0)
                         {
                             anim.SetTrigger("Reload");
                             anim.SetBool("isReloaded", false);
@@ -234,8 +236,7 @@ public class TitanAI : SharedEnemyAI, IDamage
                     }
                 }
             }
-            else
-                isRepositioning = false;
+
         }
 
         else if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) <= 7f && !isBashing)
