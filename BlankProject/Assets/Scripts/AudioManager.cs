@@ -20,6 +20,10 @@ public class AudioManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        instance = this;
+
+        BGMusic.volume = StaticData.musicVolume_Static;
+
         if(SceneManager.GetActiveScene().name == "Main Scene Final Level")
         {
             if (!StaticData.bossIsDead_Static && BossFight.instance.GetBossFightStage() > 0)
@@ -29,8 +33,7 @@ public class AudioManager : MonoBehaviour
             }
         }
 
-        instance = this;
-        if (StaticData.selfDestructActivated_Static)
+        if (StaticData.selfDestructActivated_Static && SceneManager.GetActiveScene().name != "Credits")
         {
             BGMusic.clip = music[(int)musicTrack.escapeMusic];
             BGMusic.Play();
@@ -68,12 +71,12 @@ public class AudioManager : MonoBehaviour
         BGMusic.clip = track;
         BGMusic.Play();
 
-        while (BGMusic.volume <0.5f)
+        while (BGMusic.volume < StaticData.musicVolume_Static)
         {
             BGMusic.volume = Mathf.Lerp(BGMusic.volume, 1f, Time.deltaTime * 2f);
 
-            if (BGMusic.volume > 0.4f)
-                BGMusic.volume = 0.5f;
+            if (BGMusic.volume > StaticData.musicVolume_Static - 0.1f)
+                BGMusic.volume = StaticData.musicVolume_Static;
             yield return null;
         }
         yield break;
