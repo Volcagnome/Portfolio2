@@ -61,10 +61,10 @@ public class grenadeThrow : MonoBehaviour
         // Adding default grenades:
         grenadeEMP.ammoCount = empAmmo;
         grenadeDecoy.ammoCount = decoyAmmo;
-        addGrenade(grenadeEMP);
-        addGrenade(grenadeDecoy);
+        AddGrenade(grenadeEMP);
+        AddGrenade(grenadeDecoy);
         
-        selectedGrenade = 1;
+        selectedGrenade = 0;
 
         // Set grenades to max grenade count.
         maxThrows = grenades[selectedGrenade].ammoCount;
@@ -82,7 +82,7 @@ public class grenadeThrow : MonoBehaviour
 
         if (Input.GetButtonDown("Throw") && readyForThrow && maxThrows > 0 && grenades.Count > 0)
         {
-            throwGrenade();
+            ThrowGrenade();
         }
 
         if (Input.GetButtonDown("Swap Grenades") && grenades.Count > 1)
@@ -90,7 +90,7 @@ public class grenadeThrow : MonoBehaviour
             SwapGrenades();
         }
     }
-    public void addGrenade(grenadeStats grenade)
+    public void AddGrenade(grenadeStats grenade)
     {
         currentGrenade = grenade;
         grenades.Add(grenade);
@@ -141,7 +141,7 @@ public class grenadeThrow : MonoBehaviour
         currentGrenade = selection;
     }
 
-    void throwGrenade()
+    void ThrowGrenade()
     {
         readyForThrow = false;
 
@@ -164,11 +164,35 @@ public class grenadeThrow : MonoBehaviour
         GameManager.instance.grenadeCount.text = maxThrows.ToString();
 
         // Cooldown grenade throwing:
-        Invoke(nameof(resetGrenade), grenadeCooldown);
+        Invoke(nameof(ResetGrenade), grenadeCooldown);
     }
 
-    private void resetGrenade()
+    private void ResetGrenade()
     {
         readyForThrow = true;
+    }
+
+    public void RefillGrenades()
+    {
+        // Starting grenade set to first grenade in the list:
+        selectedGrenade = 0;
+
+        // Adding default grenades:
+        grenadeEMP.ammoCount = empAmmo;
+        grenadeDecoy.ammoCount = decoyAmmo;
+        // search grenades array for each grenade type and reset it's ammo count
+        // to the original value.
+        for (int i = 0; i < grenades.Count; i++)
+        {
+            if (grenades[i].isEMP)
+                grenades[i].ammoCount = empAmmo;
+
+            else if (grenades[i].isDecoy)
+                grenades[i].ammoCount = decoyAmmo;
+        }
+        // Update values of the selected grenade:
+        SetGrenade(grenades[selectedGrenade]);
+        // Update UI to display grenade count:
+        GameManager.instance.grenadeCount.text = maxThrows.ToString();
     }
 }

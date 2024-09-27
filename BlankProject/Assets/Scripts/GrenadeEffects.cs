@@ -6,13 +6,15 @@ public class grenadeEffects : MonoBehaviour
 {
     // For storing the grenade being used:
     grenadeStats ThrowThisGrenade;
-
-    Vector3 decoyPos;
+    Rigidbody grenadeRB;
+    Vector3 grenadePos;
 
     // Start is called before the first frame update
     void Start()
     {
+        // Assign thrown grenade's fields:
         ThrowThisGrenade = GameManager.instance.grenadeScript.currentGrenade;
+        grenadeRB = ThrowThisGrenade.grenadeModel.GetComponent<Rigidbody>();
 
         // EMP effects:
         if (ThrowThisGrenade.isEMP)
@@ -20,7 +22,7 @@ public class grenadeEffects : MonoBehaviour
             StartCoroutine(ExplodeEMP());
         }
 
-        // Distraction throwable:
+        // Decoy effects:
         else if (ThrowThisGrenade.isDecoy)
         {
             StartCoroutine(ExplodeDecoy());
@@ -30,6 +32,12 @@ public class grenadeEffects : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Check if player is dead, if so, destroy game object:
+        if (GameManager.instance.damageScript.GetPlayerDead()) { Destroy(gameObject); }
+
+        // Store current grenade location:
+        grenadePos = gameObject.transform.position;
+
         // Updates to current decoy position:
         if (ThrowThisGrenade.isDecoy)
         {
@@ -81,9 +89,6 @@ public class grenadeEffects : MonoBehaviour
         // Wait for a few seconds before attracting enemies to position:
         yield return new WaitForSeconds(ThrowThisGrenade.startFuse);
 
-        // Store current grenade location:
-        decoyPos = gameObject.transform.position;
-
         if (ThrowThisGrenade.isDecoy)
         {
             SharedEnemyAI enemy;
@@ -105,7 +110,7 @@ public class grenadeEffects : MonoBehaviour
 
                         // Calls method that updates FindIntruder and waits for a few seconds before
                         // resuming bot behaviors.
-                        enemy.DistractBots(decoyPos, ThrowThisGrenade.distractTime);
+                        enemy.DistractBots(grenadePos, ThrowThisGrenade.distractTime);
                     }
                 }
             }
@@ -115,7 +120,7 @@ public class grenadeEffects : MonoBehaviour
     private void checkAOE()
     {
         // Store current grenade location:
-        decoyPos = gameObject.transform.position;
+        grenadePos = gameObject.transform.position;
 
         // EMP grenade effects:
         if (ThrowThisGrenade.isEMP)
@@ -139,11 +144,9 @@ public class grenadeEffects : MonoBehaviour
                         target.GetComponent<IDamage>().takeDamage(ThrowThisGrenade.aoeDamage);
                     }
                     // Add grenade's stun time to disable enemy for that amount of time:
-
-                    StartCoroutine(enemy.WaitForStun(ThrowThisGrenade.stunTime, decoyPos));
+                    StartCoroutine(enemy.WaitForStun(ThrowThisGrenade.stunTime, grenadePos));
                 }
             }
         }
-
     }
 }

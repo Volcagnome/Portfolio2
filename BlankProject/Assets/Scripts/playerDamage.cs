@@ -719,7 +719,7 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
     public int GetSelectedGun() { return selectedGun; } 
 
     public void SetPlayerDead(bool status) { playerDead = status; }
-
+    public bool GetPlayerDead() { return playerDead; }
     public List<pickupStats> GetWeaponList() { return weapons; }
 
 
@@ -728,10 +728,13 @@ public class playerDamage : MonoBehaviour, IDamage, IStatusEffect
     public void spawnPlayer()
     {
         playerDead = false;
+        // refill health:
         HP = hpOG;
         adjustHPBar();
+        // refill grenade count:
+        GameManager.instance.grenadeScript.RefillGrenades();
+        // Disable player controller:
         controller.enabled = false;
-        //transform.position = GameManager.instance.playerSpawn.transform.position;
         transform.position = GameManager.instance.currentSpawn.transform.position;
         controller.enabled = true;
     }

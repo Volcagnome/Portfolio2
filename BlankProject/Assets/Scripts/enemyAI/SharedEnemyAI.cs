@@ -595,7 +595,10 @@ public class SharedEnemyAI : MonoBehaviour
     public IEnumerator distractStatus(float distractTime)
     {
         yield return new WaitForSeconds(distractTime);
-        CalmEnemy();
+        // If enemy isn't alerted, it will return to it's original position:
+        if (!isAlerted) {
+            CalmEnemy();
+        }
     }
 
     public IEnumerator WaitForStun(float stunTime, Vector3 grenadePos)
