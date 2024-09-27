@@ -11,8 +11,11 @@ public class MainMenu : MonoBehaviour
 
     [Header("Volume Settings")]
     [SerializeField] private TMP_Text volumeTextValue = null;
+    [SerializeField] private TMP_Text musicVolumeTextValue = null;
     [SerializeField] private Slider volumeSliderValue = null;
+    [SerializeField] private Slider musicVolumeSliderValue = null;
     [SerializeField] private float defaultVolume = 0.5f;
+    [SerializeField] private float musicDefaultVolume = 0.7f;
 
 
     [Header("GamePlay Settings")]
@@ -65,15 +68,21 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Credits");
     }
 
-    public void SetVolume(float volume)
+    public void SetMasterVolume(float volume)
     {
         AudioListener.volume = volume;
-        volumeTextValue.text = volume.ToString("0.0");
+        volumeTextValue.text = volume.ToString("0.0");   
+    }
+    public void SetMusicVolume(float volume)
+    {
+        StaticData.musicVolume_Static = volume;
+        musicVolumeTextValue.text = volume.ToString("0.0");
     }
 
     public void VolumeApply()
     {
         PlayerPrefs.SetFloat("masterVolume", AudioListener.volume);
+        PlayerPrefs.SetFloat("musicVolume", StaticData.musicVolume_Static);
         StartCoroutine(ConfirmationBox());
     }
 
@@ -130,7 +139,11 @@ public class MainMenu : MonoBehaviour
             AudioListener.volume = defaultVolume;
             volumeSliderValue.value = defaultVolume;
             volumeTextValue.text = defaultVolume.ToString("0.0");
+            StaticData.musicVolume_Static = musicDefaultVolume;
+            musicVolumeSliderValue.value = musicDefaultVolume;
+            musicVolumeTextValue.text = musicDefaultVolume.ToString("0.0");
             VolumeApply();
+
         }
 
         if (MenuType == "GamePlay")

@@ -34,7 +34,7 @@ public class StaticData : MonoBehaviour
 
     public static bool diedDuringEscape = false;
 
-    public static float musicVolume_Static;
+    public static float musicVolume_Static = 1f;
 
     ////////////////////////////////////////
     ///          PLAYER DATA             ///

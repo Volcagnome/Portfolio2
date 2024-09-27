@@ -41,6 +41,11 @@ public class AudioManager : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        BGMusic.volume = StaticData.musicVolume_Static;
+    }
+
 
     IEnumerator FadeOut(AudioClip track)
     { 
